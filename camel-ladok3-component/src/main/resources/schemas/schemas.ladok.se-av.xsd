@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:av="http://schemas.ladok.se/avisering" xmlns:base="http://schemas.ladok.se" xmlns:dap="http://schemas.ladok.se/dap" xmlns:ex="http://schemas.ladok.se/examen" elementFormDefault="qualified" targetNamespace="http://schemas.ladok.se/avisering" version="1.0">
+
+  <xs:import namespace="http://schemas.ladok.se" schemaLocation="schemas.ladok.se.xsd"/>
+
+  <xs:element name="Leveranspreferens" type="av:Leveranspreferens"/>
+
+  <xs:complexType name="Leveranspreferens">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Aviseringskategori" type="av:Aviseringskategori"/>
+          <xs:element minOccurs="0" name="Leveransalternativ" nillable="true" type="av:Leveransalternativ"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="Aviseringskategori">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RESULTATINFORMATION"/>
+      <xs:enumeration value="ATTESTERINGSINFORMATION"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Leveransalternativ">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EPOST"/>
+      <xs:enumeration value="INGEN"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

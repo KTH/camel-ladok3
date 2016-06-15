@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:base="http://schemas.ladok.se" xmlns:dap="http://schemas.ladok.se/dap" elementFormDefault="qualified" targetNamespace="http://schemas.ladok.se" version="1.0">
+
+  <xs:import namespace="http://schemas.ladok.se/dap" schemaLocation="schemas.ladok.se-dap.xsd"/>
+
+  <xs:element name="Antagningsforfarande" type="base:Antagningsforfarande"/>
+
+  <xs:element name="Antagningsforfaranden" type="base:Antagningsforfaranden"/>
+
+  <xs:element name="Anvandare" type="base:Anvandare"/>
+
+  <xs:element name="BaseKatalogEntitet" type="base:BaseKatalogEntitet"/>
+
+  <xs:element name="BaseKatalogI18nEntitet" type="base:BaseKatalogI18nEntitet"/>
+
+  <xs:element name="Benamning" type="base:Benamning"/>
+
+  <xs:element name="Benamningar" type="base:Benamningar"/>
+
+  <xs:element name="Datatyp" type="base:Datatyp"/>
+
+  <xs:element name="Datumperiod" type="base:Datumperiod"/>
+
+  <xs:element name="EnumDummy" type="base:EnumDummy"/>
+
+  <xs:element name="Grunddatakategorilista" type="base:Grunddatakategorilista"/>
+
+  <xs:element name="Grunddatatyp" type="base:Grunddatatyp"/>
+
+  <xs:element name="Handelsetyp" type="base:Handelsetyp"/>
+
+  <xs:element name="Hinder" type="base:Hinder"/>
+
+  <xs:element name="Hinderlista" type="base:Hinderlista"/>
+
+  <xs:element name="LadokException" type="base:LadokException"/>
+
+  <xs:element name="Links" type="base:Links"/>
+
+  <xs:element name="Omfattning" type="base:Omfattning"/>
+
+  <xs:element name="Organisation" type="base:Organisation"/>
+
+  <xs:element name="Organisationslista" type="base:Organisationslista"/>
+
+  <xs:element name="PermissionToData" type="base:PermissionToData"/>
+
+  <xs:element name="ProcessStatus" type="base:ProcessStatus"/>
+
+  <xs:element name="ProcessStatusLista" type="base:ProcessStatusLista"/>
+
+  <xs:element name="RESTRef" type="base:RESTRef"/>
+
+  <xs:element name="Student" type="base:Student"/>
+
+  <xs:element name="Studentrestriktion" type="base:Studentrestriktion"/>
+
+  <xs:element name="StudentrestriktionPaLarosate" type="base:StudentrestriktionPaLarosate"/>
+
+  <xs:element name="Studentrestriktioner" type="base:Studentrestriktioner"/>
+
+  <xs:element name="StudentrestriktionerPaLarosate" type="base:StudentrestriktionerPaLarosate"/>
+
+  <xs:element name="UserPermission" type="base:UserPermission"/>
+
+  <xs:element name="UserPermissions" type="base:UserPermissions"/>
+
+  <xs:element name="Utbildningsgrundtyp" type="base:Utbildningsgrundtyp"/>
+
+  <xs:element name="Valregler" type="base:Valregler"/>
+
+  <xs:complexType name="StudentrestriktionPaLarosate">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AvserLarosateId" type="xs:int"/>
+          <xs:element minOccurs="0" name="Motivering" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="BaseEntitet">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SenastSparad" type="xs:string"/>
+          <xs:element minOccurs="0" name="SenastAndradAv" type="xs:string"/>
+          <xs:element minOccurs="0" name="Uid" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Grunddatatyp">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Hemdoman" type="xs:string"/>
+          <xs:element minOccurs="0" name="I18nNyckel" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudentrestriktionerPaLarosate">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:StudentrestriktionPaLarosate"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RESTRef">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:Benamning"/>
+      <xs:element minOccurs="0" name="link" type="dap:RelationLink"/>
+      <xs:element minOccurs="0" name="Uid" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Benamning">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Sprakkod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Text" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="BaseKatalogEntitet">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Kod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Antagningsforfaranden">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:Antagningsforfarande"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Antagningsforfarande">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AcceptansKravs" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="I18n" type="xs:string"/>
+          <xs:element minOccurs="0" name="Nyckel" type="base:AntagningsforfarandeNyckel"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Datumperiod">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SistaDag" type="xs:string"/>
+          <xs:element minOccurs="0" name="StartDag" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Organisationslista">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:Organisation"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Organisation">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Kod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Organisationsenhetstyp" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Benamningar">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:Benamning"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Student">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PermissionToData">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="DataIdentiteter" type="xs:string"/>
+      <xs:element minOccurs="0" name="LarosateID" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UserPermissions">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anvandarnamn" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="UserPermissionsList" type="base:UserPermission"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UserPermission">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="PermissionsToData" type="base:PermissionToData"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Systemaktiviteter" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Grunddatakategorilista">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Grunddatakategorier" type="base:Grunddatatyp"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Anvandare">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anvandarnamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Valregler">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Regler" type="base:Valregel"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="EnumDummy">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="base:Datatyp"/>
+      <xs:element minOccurs="0" name="Grundtyp" type="base:Utbildningsgrundtyp"/>
+      <xs:element minOccurs="0" ref="base:Handelsetyp"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="EnkeltGrunddatavarde">
+    <xs:complexContent>
+      <xs:extension base="base:Grunddatavarde">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Beskrivningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="ID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Kod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="Grunddatavarde">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Hinder">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="I18nNyckel" type="xs:string"/>
+      <xs:element minOccurs="0" name="Stoppande" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="Text" type="base:Benamningar"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ProcessStatusLista">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:ProcessStatus"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ProcessStatus">
+    <xs:complexContent>
+      <xs:extension base="base:BaseKatalogI18nEntitet">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="BaseKatalogI18nEntitet">
+    <xs:complexContent>
+      <xs:extension base="base:BaseKatalogEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="I18nNyckel" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Hinderlista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:Hinder"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Omfattning">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Omfattningsenhet" type="xs:string"/>
+          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="KatalogID">
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+
+  <xs:complexType name="LadokException">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Detaljkod" type="xs:string"/>
+          <xs:element minOccurs="0" name="DetaljkodText" type="xs:string"/>
+          <xs:element minOccurs="0" name="FelUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Felgrupp" type="xs:string"/>
+          <xs:element minOccurs="0" name="FelgruppText" type="xs:string"/>
+          <xs:element minOccurs="0" name="Felkategori" type="xs:string"/>
+          <xs:element minOccurs="0" name="FelkategoriText" type="xs:string"/>
+          <xs:element minOccurs="0" name="FelkallaAttributID" type="xs:string"/>
+          <xs:element minOccurs="0" name="FelkallaObjektID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Meddelande" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Links">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Studentrestriktioner">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:Studentrestriktion"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Studentrestriktion">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Motivering" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="Grunddatavardelista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="Sokresultat">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element name="TotaltAntalPoster" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="AntagningsforfarandeNyckel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LADOKINTERN_ANTAGNING_ACCEPTANS_KRAVS_EJ"/>
+      <xs:enumeration value="LADOKINTERN_ANTAGNING_ACCEPTANS_KRAVS"/>
+      <xs:enumeration value="LADOKEXTERN_ANTAGNING"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Valregel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="VALJ_OMFATTNING"/>
+      <xs:enumeration value="VALJ_X"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Datatyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="boolean"/>
+      <xs:enumeration value="date"/>
+      <xs:enumeration value="datumperiod"/>
+      <xs:enumeration value="string"/>
+      <xs:enumeration value="katalogdata"/>
+      <xs:enumeration value="kurstillfallen"/>
+      <xs:enumeration value="personnummer"/>
+      <xs:enumeration value="integer"/>
+      <xs:enumeration value="period_i_ordning"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Utbildningsgrundtyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MODUL"/>
+      <xs:enumeration value="KURS"/>
+      <xs:enumeration value="KURSPAKETERING"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Handelsetyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UPPDATERAD"/>
+      <xs:enumeration value="SKAPAD"/>
+      <xs:enumeration value="BORTTAGEN"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
