@@ -6,12 +6,8 @@ import java.net.URI;
 import java.security.KeyStore;
 import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLEngine;
-import javax.net.ssl.SSLParameters;
-import javax.net.ssl.SSLSocketFactory;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
@@ -33,35 +29,19 @@ public class Ladok3Component extends UriEndpointComponent {
         Ladok3Endpoint endpoint = new Ladok3Endpoint(uri, this);
         setProperties(endpoint, parameters);
 
-        URI formattedUri = new URI(uri);
+        final URI formattedUri = new URI(uri);
         endpoint.setHost(formattedUri.getHost());
 
-        intializeSSL(endpoint);
+        final KeyStore keyStore = KeyStore.getInstance("PKCS12");
+        keyStore.load(new FileInputStream(new File(endpoint.getCert())), endpoint.getKey().toCharArray());
+
+        final KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        kmf.init(keyStore, endpoint.getKey().toCharArray());
+
+        final SSLContext context = SSLContext.getInstance("TLS");
+        context.init(kmf.getKeyManagers(), null, null);
+        
+        endpoint.setSocketFactory(context.getSocketFactory());
         return endpoint;
     }
-
-    private void intializeSSL(Ladok3Endpoint endpoint) throws Exception {
-        try {
-	        final KeyStore keyStore = KeyStore.getInstance("PKCS12");
-	        keyStore.load(new FileInputStream(new File(endpoint.getCert())), endpoint.getKey().toCharArray());
-	
-	        final KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-	        kmf.init(keyStore, endpoint.getKey().toCharArray());
-	
-	        final SSLContext serverContext = SSLContext.getInstance("TLS");
-	        serverContext.init(kmf.getKeyManagers(), null, null);
-	
-	        final SSLEngine engine = serverContext.createSSLEngine();
-	        final SSLParameters sslParams = new SSLParameters();
-	        sslParams.setNeedClientAuth(true);
-	        engine.setSSLParameters(sslParams);
-	
-	        final SSLSocketFactory socketFactory = serverContext.getSocketFactory();
-	        HttpsURLConnection.setDefaultSSLSocketFactory(socketFactory);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	throw e;
-        }
-    }
-    
 }

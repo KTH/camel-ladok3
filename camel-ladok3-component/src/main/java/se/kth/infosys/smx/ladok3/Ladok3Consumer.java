@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
@@ -26,8 +28,12 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
     @Override
     protected int poll() throws Exception {
-        URL feedUrl = new URL("https://" + endpoint.getHost() + "/handelser/feed/recent");
-        XmlReader reader = new XmlReader(feedUrl);
+    	URL feedUrl = new URL("https://" + endpoint.getHost() + "/handelser/feed/recent");
+
+    	HttpsURLConnection connection = (HttpsURLConnection) feedUrl.openConnection();
+        connection.setSSLSocketFactory(endpoint.getSocketFactory());
+        XmlReader reader = new XmlReader(connection.getInputStream());
+
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed feed = input.build(reader);
         List<SyndEntry> entries = feed.getEntries();

@@ -1,5 +1,7 @@
 package se.kth.infosys.smx.ladok3;
 
+import javax.net.ssl.SSLSocketFactory;
+
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
@@ -21,6 +23,8 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     @UriParam(name = "key", defaultValue = "private key for certificate") @Metadata(required = "true")
     private String key;
 
+    private SSLSocketFactory socketFactory;
+    
     public Ladok3Endpoint(String uri, Ladok3Component component) throws Exception {
         super(uri, component);
     }
@@ -84,4 +88,12 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     public void setHost(String host) {
         this.host = host;
     }
+
+	public SSLSocketFactory getSocketFactory() {
+		return socketFactory;
+	}
+
+	public void setSocketFactory(SSLSocketFactory socketFactory) {
+		this.socketFactory = socketFactory;
+	}
 }
