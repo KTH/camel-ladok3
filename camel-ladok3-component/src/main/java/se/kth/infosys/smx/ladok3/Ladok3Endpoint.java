@@ -1,5 +1,10 @@
 package se.kth.infosys.smx.ladok3;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
 
 import org.apache.camel.Consumer;
@@ -24,11 +29,11 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     private String key;
 
     private SSLSocketFactory socketFactory;
-    
+
     public Ladok3Endpoint(String uri, Ladok3Component component) throws Exception {
         super(uri, component);
     }
-    
+
     public Producer createProducer() throws Exception {
         return new Ladok3Producer(this);
     }
@@ -89,11 +94,18 @@ public class Ladok3Endpoint extends DefaultEndpoint {
         this.host = host;
     }
 
-	public SSLSocketFactory getSocketFactory() {
-		return socketFactory;
-	}
+    public SSLSocketFactory getSocketFactory() {
+        return socketFactory;
+    }
 
-	public void setSocketFactory(SSLSocketFactory socketFactory) {
-		this.socketFactory = socketFactory;
-	}
+    public void setSocketFactory(SSLSocketFactory socketFactory) {
+        this.socketFactory = socketFactory;
+    }
+
+
+    public InputStream get(URL url) throws IOException {
+        final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        connection.setSSLSocketFactory(socketFactory);
+        return connection.getInputStream();
+    }
 }
