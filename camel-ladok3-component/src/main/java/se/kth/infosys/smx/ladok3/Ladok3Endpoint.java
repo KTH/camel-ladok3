@@ -21,12 +21,21 @@ import org.apache.camel.spi.UriPath;
  */
 @UriEndpoint(scheme = "ladok3", title = "ladok3", syntax="ladok3://host?cert=file&key=password", consumerClass = Ladok3Consumer.class, label = "ladok3")
 public class Ladok3Endpoint extends DefaultEndpoint {
-    @UriPath @Metadata(required = "true")
+    @UriPath
+    @Metadata(required = "true")
     private String host;
-    @UriParam(name = "cert", defaultValue = "Path to file containing certificate in PKCS12 format") @Metadata(required = "true")
+
+    @UriParam(name = "cert", description = "Path to file containing certificate in PKCS12 format")
+    @Metadata(required = "true")
     private String cert;
-    @UriParam(name = "key", defaultValue = "private key for certificate") @Metadata(required = "true")
+
+    @UriParam(name = "key", description = "Private key for certificate")
+    @Metadata(required = "true")
     private String key;
+
+    @UriParam(name = "feedId", defaultValue = "0", description = "ATOM feed id to start consuming from")
+    @Metadata(required = "true")
+    private int feedId = 0;
 
     private SSLSocketFactory socketFactory;
 
@@ -44,6 +53,12 @@ public class Ladok3Endpoint extends DefaultEndpoint {
 
     public boolean isSingleton() {
         return false;
+    }
+
+    public InputStream get(URL url) throws IOException {
+        final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        connection.setSSLSocketFactory(socketFactory);
+        return connection.getInputStream();
     }
 
     /**
@@ -79,7 +94,7 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     }
 
     /**
-     * The Ladok3 host environment, mit-ik.ladok.se etc.
+     * The Ladok3 host environment, api.mit-ik.ladok.se etc.
      * @return the host name
      */
     public String getHost() {
@@ -87,7 +102,7 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     }
 
     /**
-     * The ladok3 host environmnet, mit-ik.ladok.se etc.
+     * The ladok3 host environment, api.mit-ik.ladok.se etc.
      * @param host the fully qualified host name.
      */
     public void setHost(String host) {
@@ -102,10 +117,11 @@ public class Ladok3Endpoint extends DefaultEndpoint {
         this.socketFactory = socketFactory;
     }
 
+    public int getFeedId() {
+        return feedId;
+    }
 
-    public InputStream get(URL url) throws IOException {
-        final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-        connection.setSSLSocketFactory(socketFactory);
-        return connection.getInputStream();
+    public void setFeedId(int feedId) {
+        this.feedId = feedId;
     }
 }

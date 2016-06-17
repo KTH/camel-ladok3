@@ -26,7 +26,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
     @Override
     protected int poll() throws Exception {
-        URL feedUrl = new URL("https://" + endpoint.getHost() + "/handelser/feed/recent");
+        URL feedUrl = new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost()));
 
         XmlReader reader = new XmlReader(endpoint.get(feedUrl));
 
