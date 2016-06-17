@@ -1,11 +1,20 @@
 package se.kth.infosys.smx.ladok3;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.junit.Test;
 
-public class ladok3ComponentTest extends CamelTestSupport {
+public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
+    @Override
+    protected String[] loadConfigAdminConfigurationFile() {
+        // which .cfg file to use, and the name of the persistence-id
+        return new String[]{"src/test/resources/test.properties", "se.kth.infosys.smx.ladok3"};
+    }
+
+    @Override
+    protected String getBlueprintDescriptor() {
+        return "/OSGI-INF/blueprint/blueprint.xml";
+    }
 
     @Test
     public void testladok3() throws Exception {
@@ -13,16 +22,5 @@ public class ladok3ComponentTest extends CamelTestSupport {
         mock.expectedMinimumMessageCount(1);       
         
         assertMockEndpointsSatisfied();
-    }
-
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            public void configure() {
-                from("ladok3://foo")
-                  .to("ladok3://bar")
-                  .to("mock:result");
-            }
-        };
     }
 }

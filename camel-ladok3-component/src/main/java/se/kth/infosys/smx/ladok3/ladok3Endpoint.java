@@ -12,30 +12,25 @@ import org.apache.camel.spi.UriPath;
 /**
  * Represents a ladok3 endpoint.
  */
-@UriEndpoint(scheme = "ladok3", title = "ladok3", syntax="ladok3:name", consumerClass = ladok3Consumer.class, label = "ladok3")
-public class ladok3Endpoint extends DefaultEndpoint {
+@UriEndpoint(scheme = "ladok3", title = "ladok3", syntax="ladok3://host?cert=file&key=password", consumerClass = Ladok3Consumer.class, label = "ladok3")
+public class Ladok3Endpoint extends DefaultEndpoint {
     @UriPath @Metadata(required = "true")
-    private String name;
-    @UriParam(defaultValue = "10")
-    private int option = 10;
+    private String host;
+    @UriParam(name = "cert", defaultValue = "Path to file containing certificate in PKCS12 format") @Metadata(required = "true")
+    private String cert;
+    @UriParam(name = "key", defaultValue = "private key for certificate") @Metadata(required = "true")
+    private String key;
 
-    public ladok3Endpoint() {
-    }
-
-    public ladok3Endpoint(String uri, ladok3Component component) {
+    public Ladok3Endpoint(String uri, Ladok3Component component) throws Exception {
         super(uri, component);
     }
 
-    public ladok3Endpoint(String endpointUri) {
-        super(endpointUri);
-    }
-
     public Producer createProducer() throws Exception {
-        return new ladok3Producer(this);
+        return new Ladok3Producer(this);
     }
 
     public Consumer createConsumer(Processor processor) throws Exception {
-        return new ladok3Consumer(this, processor);
+        return new Ladok3Consumer(this, processor);
     }
 
     public boolean isSingleton() {
@@ -43,24 +38,50 @@ public class ladok3Endpoint extends DefaultEndpoint {
     }
 
     /**
-     * Some description of this option, and what it does
+     * Path to certificate file.
+     * @return the path
      */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+    public String getCert() {
+        return cert;
     }
 
     /**
-     * Some description of this option, and what it does
+     * Path to certificate file
+     * @param cert the path to the certificate file.
      */
-    public void setOption(int option) {
-        this.option = option;
+    public void setCert(String cert) {
+        this.cert = cert;
     }
 
-    public int getOption() {
-        return option;
+    /**
+     * Private key for the certificate file.
+     * @return the key
+     */
+    public String getKey() {
+        return key;
+    }
+
+    /**
+     * Private key for the certificate file.
+     * @param key the key
+     */
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    /**
+     * The Ladok3 host environment, mit-ik.ladok.se etc.
+     * @return the host name
+     */
+    public String getHost() {
+        return host;
+    }
+
+    /**
+     * The ladok3 host environmnet, mit-ik.ladok.se etc.
+     * @param host the fully qualified host name.
+     */
+    public void setHost(String host) {
+        this.host = host;
     }
 }

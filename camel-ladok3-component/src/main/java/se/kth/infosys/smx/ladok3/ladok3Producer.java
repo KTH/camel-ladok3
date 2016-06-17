@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 /**
  * The ladok3 producer.
  */
-public class ladok3Producer extends DefaultProducer {
-    private static final Logger LOG = LoggerFactory.getLogger(ladok3Producer.class);
-    private ladok3Endpoint endpoint;
+public class Ladok3Producer extends DefaultProducer {
+    private static final Logger LOG = LoggerFactory.getLogger(Ladok3Producer.class);
+    private Ladok3Endpoint endpoint;
 
-    public ladok3Producer(ladok3Endpoint endpoint) {
+    public Ladok3Producer(Ladok3Endpoint endpoint) throws Exception {
         super(endpoint);
         this.endpoint = endpoint;
     }
