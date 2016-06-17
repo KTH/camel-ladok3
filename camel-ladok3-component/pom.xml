@@ -45,6 +45,11 @@
       <artifactId>camel-core</artifactId>
       <version>${camel-version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.rometools</groupId>
+      <artifactId>rome</artifactId>
+      <version>1.6.0</version>
+    </dependency>
     
     <!-- support camel documentation -->
     <dependency>
@@ -72,12 +77,6 @@
       <artifactId>camel-test-blueprint</artifactId>
       <version>${camel-version}</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.rometools</groupId>
-      <artifactId>rome</artifactId>
-      <version>1.6.0</version>
-      <type>bundle</type>
     </dependency>
   </dependencies>
 
@@ -135,6 +134,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
+            <Embed-Dependency>rome</Embed-Dependency>
             <Bundle-SymbolicName>se.kth.infosys.smx.camel-ladok3-component</Bundle-SymbolicName>
             <Export-Service>org.apache.camel.spi.ComponentResolver;component=ladok3</Export-Service>
             <Export-Package>se.ladok.schemas</Export-Package>
