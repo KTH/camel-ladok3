@@ -24,7 +24,7 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     public Ladok3Endpoint(String uri, Ladok3Component component) throws Exception {
         super(uri, component);
     }
-
+    
     public Producer createProducer() throws Exception {
         return new Ladok3Producer(this);
     }
@@ -34,7 +34,7 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     }
 
     public boolean isSingleton() {
-        return true;
+        return false;
     }
 
     /**
