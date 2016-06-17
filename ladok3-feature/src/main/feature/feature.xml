@@ -37,9 +37,9 @@
 <!--     <bundle start-level='100' start="false">mvn:se.kth.infosys.smx/camel-ug-amq-route/${project.version}</bundle> -->
 
     <config name="se.kth.infosys.smx.ladok3">
-      host = api.mit-ik.ladok.se
-      cert = /path/to/cert.p12
-      key = password-for-cert
+      ladok3.host = api.mit-ik.ladok.se
+      ladok3.cert.file = /path/to/cert.p12
+      ladok3.cert.key = password-for-cert
     </config>
   </feature>
 </features>

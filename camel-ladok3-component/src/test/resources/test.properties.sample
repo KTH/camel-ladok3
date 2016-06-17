@@ -1,2 +1,8 @@
-ladok3.cert.file=
-ladok3.cert.password=
+# The Ladok3 host environment to talk to.
+ladok3.host=api.mit-ik.ladok.se
+
+# The certificate file (PKCS12 format)
+ladok3.cert.file=/some/path
+
+# The private key for the certificate file.
+ladok3.cert.password=some-password
