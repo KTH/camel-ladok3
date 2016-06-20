@@ -30,6 +30,12 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     @Override
     protected int poll() throws Exception {
         URL feedUrl = rewindFeed(new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost())));
+
+        if (feedUrl == null) {
+            log.debug("Ladok feed ID: {} is up to date, nothing to do.", endpoint.getFeedId());
+            return 0;
+        }
+
         log.debug("Start fetching events from: {}", feedUrl);
 
         Exchange exchange = endpoint.createExchange();
