@@ -1,5 +1,7 @@
 package se.kth.infosys.smx.ladok3;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -8,8 +10,9 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
 
-import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.feed.synd.SyndLink;
+import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
@@ -26,13 +29,8 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
     @Override
     protected int poll() throws Exception {
-        URL feedUrl = new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost()));
-
-        XmlReader reader = new XmlReader(endpoint.get(feedUrl));
-
-        SyndFeedInput input = new SyndFeedInput();
-        SyndFeed feed = input.build(reader);
-        List<SyndEntry> entries = feed.getEntries();
+        URL feedUrl = rewindFeed(new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost())));
+        log.debug("Start fetching events from: {}", feedUrl);
 
         Exchange exchange = endpoint.createExchange();
 
@@ -50,5 +48,40 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                 getExceptionHandler().handleException("Error processing exchange", exchange, exchange.getException());
             }
         }
+    }
+
+    private SyndFeed getFeed(URL feedUrl) throws IOException, FeedException {
+        log.debug("fetching feed: {}", feedUrl);
+        XmlReader reader = new XmlReader(endpoint.get(feedUrl));
+        SyndFeedInput input = new SyndFeedInput();
+        return input.build(reader);
+    }
+
+    private URL getLink(String rel, List<SyndLink> links) throws MalformedURLException {
+        for (SyndLink link : links) {
+            if (link.getRel().equals(rel)) {
+                return new URL(link.getHref());
+            }
+        }
+        return null;
+    }
+
+    private int feedId(SyndFeed feed) {
+        return Integer.parseInt(feed.getUri().trim().substring(7)); // "getUri() -> urn:id:123"
+    }
+
+    private URL rewindFeed(URL url) throws IOException, FeedException {
+        SyndFeed feed = getFeed(url);
+
+        if (feedId(feed) == endpoint.getFeedId()) {
+            return getLink("next-archive", feed.getLinks());
+        }
+
+        URL prevArchive = getLink("prev-archive", feed.getLinks());
+        if (prevArchive == null) {
+            return getLink("via", feed.getLinks());
+        }
+
+        return rewindFeed(prevArchive);
     }
 }
