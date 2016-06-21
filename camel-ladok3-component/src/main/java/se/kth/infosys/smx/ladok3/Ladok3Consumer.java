@@ -36,15 +36,19 @@ import se.ladok.schemas.events.BaseEvent;
 public class Ladok3Consumer extends ScheduledPollConsumer {
     private final Ladok3Endpoint endpoint;
     private final Unmarshaller unmarshaller = JAXBContext.newInstance("se.ladok.schemas").createUnmarshaller();
-    private static final Map<String, String> CLASSES = new HashMap<String, String>();
+
+    // This is a horrible hack. The ATOM feed should be fixed so that we don't have to
+    // keep a map between the ATOM entry category and the XSD class representation.
+    // fjo 2016-06-21
+    private static final Map<String, String> CATEGORY_TO_CLASS_MAP = new HashMap<String, String>();
 
     public Ladok3Consumer(Ladok3Endpoint endpoint, Processor processor) throws Exception {
         super(endpoint, processor);
         this.endpoint = endpoint;
 
-        CLASSES.put("se.ladok.utbildningsinformation.interfaces.events.utbildningstillfalle.KurstillfälleTillStatusEvent", "se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent");
-        CLASSES.put("se.ladok.utbildningsinformation.interfaces.events.utbildning.KurspaketeringTillStatusEvent", "se.ladok.schemas.utbildningsinformation.KurspaketeringTillStatusEvent");
-        CLASSES.put("se.ladok.utbildningsinformation.interfaces.events.struktur.StrukturEvent", "se.ladok.schemas.utbildningsinformation.StrukturEvent");
+        CATEGORY_TO_CLASS_MAP.put("se.ladok.utbildningsinformation.interfaces.events.utbildningstillfalle.KurstillfälleTillStatusEvent", "se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent");
+        CATEGORY_TO_CLASS_MAP.put("se.ladok.utbildningsinformation.interfaces.events.utbildning.KurspaketeringTillStatusEvent", "se.ladok.schemas.utbildningsinformation.KurspaketeringTillStatusEvent");
+        CATEGORY_TO_CLASS_MAP.put("se.ladok.utbildningsinformation.interfaces.events.struktur.StrukturEvent", "se.ladok.schemas.utbildningsinformation.StrukturEvent");
     }
 
     @Override
@@ -70,9 +74,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
             final String category = entry.getCategories().get(0).getName();
 
             if ("application/vnd.ladok+xml".equals(content.getType())) {
-                if (CLASSES.containsKey(category)) {
+                if (CATEGORY_TO_CLASS_MAP.containsKey(category)) {
                     Source source = new StreamSource(new StringReader(content.getValue()));
-                    JAXBElement<?> root = unmarshaller.unmarshal(source, Class.forName(CLASSES.get(category)));
+                    JAXBElement<?> root = unmarshaller.unmarshal(source, Class.forName(CATEGORY_TO_CLASS_MAP.get(category)));
                     BaseEvent event = (BaseEvent) root.getValue();
 
                     doExchangeForEvent(event, feedId(feed), ++messageCount);
