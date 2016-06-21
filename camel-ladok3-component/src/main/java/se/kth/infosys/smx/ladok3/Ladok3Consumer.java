@@ -49,10 +49,11 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     @Override
     protected int poll() throws Exception {
         final URL feedUrl = rewindFeed(new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost())));
+        int i = 0;
 
         if (feedUrl == null) {
             log.debug("Ladok feed ID: {} is up to date, nothing to do.", endpoint.getFeedId());
-            return 0;
+            return i;
         }
 
         log.debug("Start fetching events from: {}", feedUrl);
@@ -74,22 +75,24 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 //                    if (event instanceof KurspaketeringTillStatusEvent) {
 //                        KurspaketeringTillStatusEvent realEvent = (KurspaketeringTillStatusEvent) event;
 //                    }
+                    doExchangeForEvent(event);
+                    i++;
                 } else {
                     log.error("Unknown Ladok type: {}", category);
                 }
             }
         }
+        return i;
+    }
 
+    private void doExchangeForEvent(BaseEvent event) throws Exception {
         final Exchange exchange = endpoint.createExchange();
 
-        // create a message body
-        Date now = new Date();
-        exchange.getIn().setBody("Hello World! The time is " + now);
+        exchange.getIn().setBody(event);
 
         try {
             // send message to next processor in the route
             getProcessor().process(exchange);
-            return 1; // number of messages polled
         } finally {
             // log exception if an exception occurred and was not handled
             if (exchange.getException() != null) {
