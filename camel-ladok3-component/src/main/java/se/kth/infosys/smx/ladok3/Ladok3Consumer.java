@@ -49,18 +49,21 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
     @Override
     protected int poll() throws Exception {
+        int messageCount = 0;
+
         log.info("Getting Ladok events, last read feed ID was: {}", endpoint.getFeedId());
 
         final URL feedUrl = rewindFeed(new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost())));
-        int i = 0;
 
         if (feedUrl == null) {
             log.debug("Ladok feed ID: {} is up to date, nothing to do", endpoint.getFeedId());
-            return i;
+            return messageCount;
         }
 
         final SyndFeed feed = getFeed(feedUrl);
         log.info("Getting Ladok events for feed ID {}, URL: {}", feedId(feed), feedUrl);
+
+        sendControlMessage(Ladok3Message.MessageType.StartFeed, feedId(feed), ++messageCount);
 
         for (SyndEntry entry : feed.getEntries()) {
             final SyndContent content = entry.getContents().get(0);
@@ -71,34 +74,53 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                     Source source = new StreamSource(new StringReader(content.getValue()));
                     JAXBElement<?> root = unmarshaller.unmarshal(source, Class.forName(CLASSES.get(category)));
                     BaseEvent event = (BaseEvent) root.getValue();
-                    log.debug("Got event: {} {}", event.getHandelseUID(), event.getClass().getName());
 
-                    doExchangeForEvent(event, feedId(feed), ++i);
+                    doExchangeForEvent(event, feedId(feed), ++messageCount);
                 } else {
                     log.error("Unknown Ladok type: {}", category);
                 }
             }
         }
+
+        sendControlMessage(Ladok3Message.MessageType.EndFeed, feedId(feed), ++messageCount);
+
         endpoint.setFeedId(feedId(feed));
         log.info("Done getting Ladok events for feed ID {}", endpoint.getFeedId());
-        return i;
+        return messageCount;
     }
 
     private void doExchangeForEvent(BaseEvent event, long feedId, int n) throws Exception {
         final Exchange exchange = endpoint.createExchange();
 
+        log.debug("Creating message for event: {} {}", event.getHandelseUID(), event.getClass().getName());
+
         final Message message = exchange.getIn();
+        message.setHeader(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Event);
         message.setHeader(Ladok3Message.Header.FeedId, Long.toString(feedId));
-        message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
         message.setHeader(Ladok3Message.Header.GroupID, Long.toString(feedId));
         message.setHeader(Ladok3Message.Header.GroupSeq, Integer.toString(n));
+        message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
         message.setBody(event);
-        
+
         try {
-            // send message to next processor in the route
             getProcessor().process(exchange);
         } finally {
-            // log exception if an exception occurred and was not handled
+            if (exchange.getException() != null) {
+                getExceptionHandler().handleException("Error processing exchange", exchange, exchange.getException());
+            }
+        }
+    }
+
+    protected void sendControlMessage(String messageType, long feedId, int n) throws Exception {
+        Exchange exchange = endpoint.createExchange();
+        try {
+            Message message = exchange.getIn();
+            message.setHeader(Ladok3Message.Header.MessageType, messageType);
+            message.setHeader(Ladok3Message.Header.FeedId, Long.toString(feedId));
+            message.setHeader(Ladok3Message.Header.GroupID, Long.toString(feedId));
+            message.setHeader(Ladok3Message.Header.GroupSeq, Integer.toString(n));
+            getProcessor().process(exchange);
+        } finally {
             if (exchange.getException() != null) {
                 getExceptionHandler().handleException("Error processing exchange", exchange, exchange.getException());
             }
@@ -124,6 +146,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         return null;
     }
 
+    /*
+     * Return the Ladok3 feed ID of the feed as a number.
+     */
     private long feedId(SyndFeed feed) {
         return Long.parseLong(feed.getUri().trim().substring(7)); // "getUri() -> urn:id:123"
     }
