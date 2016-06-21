@@ -89,6 +89,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
         final Message message = exchange.getIn();
         message.setHeader(Ladok3Message.Header.FeedId, Long.toString(feedId));
+        message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
         message.setHeader(Ladok3Message.Header.GroupID, Long.toString(feedId));
         message.setHeader(Ladok3Message.Header.GroupSeq, Integer.toString(n));
         message.setBody(event);
