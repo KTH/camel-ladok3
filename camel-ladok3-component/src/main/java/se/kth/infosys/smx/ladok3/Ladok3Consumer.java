@@ -1,6 +1,7 @@
 package se.kth.infosys.smx.ladok3;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
@@ -8,12 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -22,22 +27,23 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
-import se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent;
+import se.ladok.schemas.events.BaseEvent;
 
 /**
  * The ladok3 consumer.
  */
 public class Ladok3Consumer extends ScheduledPollConsumer {
     private final Ladok3Endpoint endpoint;
-    private final XmlMapper mapper = new XmlMapper();
+    private final Unmarshaller unmarshaller = JAXBContext.newInstance("se.ladok.schemas").createUnmarshaller();
     private static final Map<String, String> CLASSES = new HashMap<String, String>();
 
     public Ladok3Consumer(Ladok3Endpoint endpoint, Processor processor) throws Exception {
         super(endpoint, processor);
         this.endpoint = endpoint;
 
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         CLASSES.put("se.ladok.utbildningsinformation.interfaces.events.utbildningstillfalle.KurstillfälleTillStatusEvent", "se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent");
+        CLASSES.put("se.ladok.utbildningsinformation.interfaces.events.utbildning.KurspaketeringTillStatusEvent", "se.ladok.schemas.utbildningsinformation.KurspaketeringTillStatusEvent");
+        CLASSES.put("se.ladok.utbildningsinformation.interfaces.events.struktur.StrukturEvent", "se.ladok.schemas.utbildningsinformation.StrukturEvent");
     }
 
     @Override
@@ -52,24 +58,22 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         log.debug("Start fetching events from: {}", feedUrl);
         final SyndFeed feed = getFeed(feedUrl);
         for (SyndEntry entry : feed.getEntries()) {
-            log.debug("Got entry: {}", entry.getUri());
             final SyndContent content = entry.getContents().get(0);
-
             final String category = entry.getCategories().get(0).getName();
 
             if ("application/vnd.ladok+xml".equals(content.getType())) {
-//                String xml = content.getValue().replace("<events:", "<ui:").replace("</events:", "</ui:");
-                String xml = content.getValue();
-                log.debug("Got event: {}", xml);
-
                 if (CLASSES.containsKey(category)) {
-                    Object obj = mapper.readValue(xml, Class.forName(CLASSES.get(category)));
-                    log.debug("Initialized: {}", obj);
+                    Source source = new StreamSource(new StringReader(content.getValue()));
+                    JAXBElement<?> root = unmarshaller.unmarshal(source, Class.forName(CLASSES.get(category)));
+                    BaseEvent event = (BaseEvent) root.getValue();
+                    log.debug("Got event: {} {}", event.getHandelseUID(), event.getClass().getName());
 
-                    if (obj instanceof KurstillfalleTillStatusEvent) {
-                        KurstillfalleTillStatusEvent event = (KurstillfalleTillStatusEvent) obj;
-//                        log.debug("Va? {}", event.getEventContext().getLarosateID());
-                    }
+//                    if (event instanceof KurstillfalleTillStatusEvent) {
+//                        KurstillfalleTillStatusEvent realEvent = (KurstillfalleTillStatusEvent) event;
+//                    }
+//                    if (event instanceof KurspaketeringTillStatusEvent) {
+//                        KurspaketeringTillStatusEvent realEvent = (KurspaketeringTillStatusEvent) event;
+//                    }
                 } else {
                     log.error("Unknown Ladok type: {}", category);
                 }
