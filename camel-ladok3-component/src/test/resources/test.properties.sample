@@ -6,3 +6,6 @@ ladok3.cert.file=/some/path
 
 # The private key for the certificate file.
 ladok3.cert.password=some-password
+
+# The last read feed id
+ladok3.feed.last_read=0

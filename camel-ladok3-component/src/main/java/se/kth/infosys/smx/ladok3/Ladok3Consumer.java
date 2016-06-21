@@ -10,6 +10,8 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
 
+import com.rometools.rome.feed.synd.SyndContent;
+import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndLink;
 import com.rometools.rome.io.FeedException;
@@ -29,7 +31,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
     @Override
     protected int poll() throws Exception {
-        URL feedUrl = rewindFeed(new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost())));
+        final URL feedUrl = rewindFeed(new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost())));
 
         if (feedUrl == null) {
             log.debug("Ladok feed ID: {} is up to date, nothing to do.", endpoint.getFeedId());
@@ -37,8 +39,14 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         }
 
         log.debug("Start fetching events from: {}", feedUrl);
+        final SyndFeed feed = getFeed(feedUrl);
+        for (SyndEntry entry : feed.getEntries()) {
+            log.debug("Got entry: {}", entry.getUri());
+            final SyndContent content = entry.getContents().get(0);
+            log.debug("Got content type: {}, value: {}", content.getType(), content.getValue());
+        }
 
-        Exchange exchange = endpoint.createExchange();
+        final Exchange exchange = endpoint.createExchange();
 
         // create a message body
         Date now = new Date();
@@ -58,11 +66,14 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
     private SyndFeed getFeed(URL feedUrl) throws IOException, FeedException {
         log.debug("fetching feed: {}", feedUrl);
-        XmlReader reader = new XmlReader(endpoint.get(feedUrl));
-        SyndFeedInput input = new SyndFeedInput();
+        final XmlReader reader = new XmlReader(endpoint.get(feedUrl));
+        final SyndFeedInput input = new SyndFeedInput();
         return input.build(reader);
     }
 
+    /*
+     * Return URL for link with given "rel" label.
+     */
     private URL getLink(String rel, List<SyndLink> links) throws MalformedURLException {
         for (SyndLink link : links) {
             if (link.getRel().equals(rel)) {
@@ -76,16 +87,19 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         return Integer.parseInt(feed.getUri().trim().substring(7)); // "getUri() -> urn:id:123"
     }
 
+    /*
+     * Given a feed URL, find the latest unread feed URL, or null if there is no unread feed.
+     */
     private URL rewindFeed(URL url) throws IOException, FeedException {
-        SyndFeed feed = getFeed(url);
+        final SyndFeed feed = getFeed(url);
 
         if (feedId(feed) == endpoint.getFeedId()) {
             return getLink("next-archive", feed.getLinks());
         }
 
-        URL prevArchive = getLink("prev-archive", feed.getLinks());
+        final URL prevArchive = getLink("prev-archive", feed.getLinks());
         if (prevArchive == null) {
-            return getLink("via", feed.getLinks());
+            return getLink("self", feed.getLinks());
         }
 
         return rewindFeed(prevArchive);
