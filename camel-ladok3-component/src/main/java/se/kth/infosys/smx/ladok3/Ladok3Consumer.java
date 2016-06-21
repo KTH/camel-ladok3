@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +15,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
 
@@ -27,6 +27,7 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
+import se.kth.infosys.smx.ladok3.internal.Ladok3Message;
 import se.ladok.schemas.events.BaseEvent;
 
 /**
@@ -48,16 +49,19 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
     @Override
     protected int poll() throws Exception {
+        log.info("Getting Ladok events, last read feed ID was: {}", endpoint.getFeedId());
+
         final URL feedUrl = rewindFeed(new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost())));
         int i = 0;
 
         if (feedUrl == null) {
-            log.debug("Ladok feed ID: {} is up to date, nothing to do.", endpoint.getFeedId());
+            log.debug("Ladok feed ID: {} is up to date, nothing to do", endpoint.getFeedId());
             return i;
         }
 
-        log.debug("Start fetching events from: {}", feedUrl);
         final SyndFeed feed = getFeed(feedUrl);
+        log.info("Getting Ladok events for feed ID {}, URL: {}", feedId(feed), feedUrl);
+
         for (SyndEntry entry : feed.getEntries()) {
             final SyndContent content = entry.getContents().get(0);
             final String category = entry.getCategories().get(0).getName();
@@ -69,27 +73,26 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                     BaseEvent event = (BaseEvent) root.getValue();
                     log.debug("Got event: {} {}", event.getHandelseUID(), event.getClass().getName());
 
-//                    if (event instanceof KurstillfalleTillStatusEvent) {
-//                        KurstillfalleTillStatusEvent realEvent = (KurstillfalleTillStatusEvent) event;
-//                    }
-//                    if (event instanceof KurspaketeringTillStatusEvent) {
-//                        KurspaketeringTillStatusEvent realEvent = (KurspaketeringTillStatusEvent) event;
-//                    }
-                    doExchangeForEvent(event);
-                    i++;
+                    doExchangeForEvent(event, feedId(feed), ++i);
                 } else {
                     log.error("Unknown Ladok type: {}", category);
                 }
             }
         }
+        endpoint.setFeedId(feedId(feed));
+        log.info("Done getting Ladok events for feed ID {}", endpoint.getFeedId());
         return i;
     }
 
-    private void doExchangeForEvent(BaseEvent event) throws Exception {
+    private void doExchangeForEvent(BaseEvent event, long feedId, int n) throws Exception {
         final Exchange exchange = endpoint.createExchange();
 
-        exchange.getIn().setBody(event);
-
+        final Message message = exchange.getIn();
+        message.setHeader(Ladok3Message.Header.FeedId, Long.toString(feedId));
+        message.setHeader(Ladok3Message.Header.GroupID, Long.toString(feedId));
+        message.setHeader(Ladok3Message.Header.GroupSeq, Integer.toString(n));
+        message.setBody(event);
+        
         try {
             // send message to next processor in the route
             getProcessor().process(exchange);
@@ -120,8 +123,8 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         return null;
     }
 
-    private int feedId(SyndFeed feed) {
-        return Integer.parseInt(feed.getUri().trim().substring(7)); // "getUri() -> urn:id:123"
+    private long feedId(SyndFeed feed) {
+        return Long.parseLong(feed.getUri().trim().substring(7)); // "getUri() -> urn:id:123"
     }
 
     /*
@@ -136,7 +139,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
         final URL prevArchive = getLink("prev-archive", feed.getLinks());
         if (prevArchive == null) {
-            return getLink("self", feed.getLinks());
+            return getLink("via", feed.getLinks());
         }
 
         return rewindFeed(prevArchive);
