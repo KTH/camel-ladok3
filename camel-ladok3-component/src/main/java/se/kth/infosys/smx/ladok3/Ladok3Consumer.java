@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -18,15 +22,22 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
+import se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent;
+
 /**
  * The ladok3 consumer.
  */
 public class Ladok3Consumer extends ScheduledPollConsumer {
     private final Ladok3Endpoint endpoint;
+    private final XmlMapper mapper = new XmlMapper();
+    private static final Map<String, String> CLASSES = new HashMap<String, String>();
 
     public Ladok3Consumer(Ladok3Endpoint endpoint, Processor processor) throws Exception {
         super(endpoint, processor);
         this.endpoint = endpoint;
+
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        CLASSES.put("se.ladok.utbildningsinformation.interfaces.events.utbildningstillfalle.KurstillfälleTillStatusEvent", "se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent");
     }
 
     @Override
@@ -43,7 +54,26 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         for (SyndEntry entry : feed.getEntries()) {
             log.debug("Got entry: {}", entry.getUri());
             final SyndContent content = entry.getContents().get(0);
-            log.debug("Got content type: {}, value: {}", content.getType(), content.getValue());
+
+            final String category = entry.getCategories().get(0).getName();
+
+            if ("application/vnd.ladok+xml".equals(content.getType())) {
+//                String xml = content.getValue().replace("<events:", "<ui:").replace("</events:", "</ui:");
+                String xml = content.getValue();
+                log.debug("Got event: {}", xml);
+
+                if (CLASSES.containsKey(category)) {
+                    Object obj = mapper.readValue(xml, Class.forName(CLASSES.get(category)));
+                    log.debug("Initialized: {}", obj);
+
+                    if (obj instanceof KurstillfalleTillStatusEvent) {
+                        KurstillfalleTillStatusEvent event = (KurstillfalleTillStatusEvent) obj;
+//                        log.debug("Va? {}", event.getEventContext().getLarosateID());
+                    }
+                } else {
+                    log.error("Unknown Ladok type: {}", category);
+                }
+            }
         }
 
         final Exchange exchange = endpoint.createExchange();

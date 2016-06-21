@@ -3,11 +3,11 @@
 
   <xs:import namespace="http://schemas.ladok.se/dap" schemaLocation="schemas.ladok.se-dap.xsd"/>
 
-  <xs:element name="Antagningsforfarande" type="base:Antagningsforfarande"/>
+  <xs:element name="AntagningsforfarandeElement" type="base:Antagningsforfarande"/>
 
   <xs:element name="Antagningsforfaranden" type="base:Antagningsforfaranden"/>
 
-  <xs:element name="Anvandare" type="base:Anvandare"/>
+  <xs:element name="AnvandareElement" type="base:Anvandare"/>
 
   <xs:element name="BaseKatalogEntitet" type="base:BaseKatalogEntitet"/>
 
@@ -15,11 +15,11 @@
 
   <xs:element name="Benamning" type="base:Benamning"/>
 
-  <xs:element name="Benamningar" type="base:Benamningar"/>
+  <xs:element name="BenamningarElement" type="base:Benamningar"/>
 
   <xs:element name="Datatyp" type="base:Datatyp"/>
 
-  <xs:element name="Datumperiod" type="base:Datumperiod"/>
+  <xs:element name="DatumperiodElement" type="base:Datumperiod"/>
 
   <xs:element name="EnumDummy" type="base:EnumDummy"/>
 
@@ -31,13 +31,13 @@
 
   <xs:element name="Hinder" type="base:Hinder"/>
 
-  <xs:element name="Hinderlista" type="base:Hinderlista"/>
+  <xs:element name="HinderlistaElement" type="base:Hinderlista"/>
 
   <xs:element name="LadokException" type="base:LadokException"/>
 
   <xs:element name="Links" type="base:Links"/>
 
-  <xs:element name="Omfattning" type="base:Omfattning"/>
+  <xs:element name="OmfattningElement" type="base:Omfattning"/>
 
   <xs:element name="Organisation" type="base:Organisation"/>
 
@@ -45,46 +45,27 @@
 
   <xs:element name="PermissionToData" type="base:PermissionToData"/>
 
-  <xs:element name="ProcessStatus" type="base:ProcessStatus"/>
+  <xs:element name="ProcessStatusElement" type="base:ProcessStatus"/>
 
-  <xs:element name="ProcessStatusLista" type="base:ProcessStatusLista"/>
+  <xs:element name="ProcessStatusListaElement" type="base:ProcessStatusLista"/>
 
-  <xs:element name="RESTRef" type="base:RESTRef"/>
+  <xs:element name="RESTRefElement" type="base:RESTRef"/>
 
-  <xs:element name="Student" type="base:Student"/>
-
-  <xs:element name="Studentrestriktion" type="base:Studentrestriktion"/>
-
-  <xs:element name="StudentrestriktionPaLarosate" type="base:StudentrestriktionPaLarosate"/>
-
-  <xs:element name="Studentrestriktioner" type="base:Studentrestriktioner"/>
-
-  <xs:element name="StudentrestriktionerPaLarosate" type="base:StudentrestriktionerPaLarosate"/>
+  <xs:element name="StudentElement" type="base:Student"/>
 
   <xs:element name="UserPermission" type="base:UserPermission"/>
 
-  <xs:element name="UserPermissions" type="base:UserPermissions"/>
+  <xs:element name="UserPermissionsElement" type="base:UserPermissions"/>
 
   <xs:element name="Utbildningsgrundtyp" type="base:Utbildningsgrundtyp"/>
 
   <xs:element name="Valregler" type="base:Valregler"/>
 
-  <xs:complexType name="StudentrestriktionPaLarosate">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AvserLarosateId" type="xs:int"/>
-          <xs:element minOccurs="0" name="Motivering" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType abstract="true" name="BaseEntitet">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" name="SenastSparad" type="xs:string"/>
+          <xs:element minOccurs="0" name="SenastSparad" type="xs:dateTime"/>
           <xs:element minOccurs="0" name="SenastAndradAv" type="xs:string"/>
           <xs:element minOccurs="0" name="Uid" type="xs:string"/>
         </xs:sequence>
@@ -98,16 +79,6 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="Hemdoman" type="xs:string"/>
           <xs:element minOccurs="0" name="I18nNyckel" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudentrestriktionerPaLarosate">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:StudentrestriktionPaLarosate"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -147,7 +118,7 @@
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:Antagningsforfarande"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Antagningsforfarande" type="base:Antagningsforfarande"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -169,8 +140,8 @@
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" name="SistaDag" type="xs:string"/>
-          <xs:element minOccurs="0" name="StartDag" type="xs:string"/>
+          <xs:element minOccurs="0" name="Startdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Slutdatum" type="xs:date"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -186,7 +157,7 @@
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" ref="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="Kod" type="xs:string"/>
           <xs:element minOccurs="0" name="Organisationsenhetstyp" type="xs:string"/>
         </xs:sequence>
@@ -285,7 +256,7 @@
     <xs:complexContent>
       <xs:extension base="base:Grunddatavarde">
         <xs:sequence>
-          <xs:element minOccurs="0" ref="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="Beskrivningar" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
           <xs:element minOccurs="0" name="ID" type="xs:string"/>
@@ -313,7 +284,7 @@
 
   <xs:complexType name="ProcessStatusLista">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:ProcessStatus"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ProcessStatus" type="base:ProcessStatus"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -387,26 +358,6 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Studentrestriktioner">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:Studentrestriktion"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Studentrestriktion">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Motivering" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType abstract="true" name="Grunddatavardelista">
     <xs:complexContent>
       <xs:extension base="dap:Base">
@@ -427,9 +378,9 @@
 
   <xs:simpleType name="AntagningsforfarandeNyckel">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="LADOKEXTERN_ANTAGNING"/>
       <xs:enumeration value="LADOKINTERN_ANTAGNING_ACCEPTANS_KRAVS_EJ"/>
       <xs:enumeration value="LADOKINTERN_ANTAGNING_ACCEPTANS_KRAVS"/>
-      <xs:enumeration value="LADOKEXTERN_ANTAGNING"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -442,31 +393,31 @@
 
   <xs:simpleType name="Datatyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="boolean"/>
-      <xs:enumeration value="date"/>
       <xs:enumeration value="datumperiod"/>
-      <xs:enumeration value="string"/>
-      <xs:enumeration value="katalogdata"/>
+      <xs:enumeration value="integer"/>
+      <xs:enumeration value="boolean"/>
+      <xs:enumeration value="period_i_ordning"/>
       <xs:enumeration value="kurstillfallen"/>
       <xs:enumeration value="personnummer"/>
-      <xs:enumeration value="integer"/>
-      <xs:enumeration value="period_i_ordning"/>
+      <xs:enumeration value="date"/>
+      <xs:enumeration value="string"/>
+      <xs:enumeration value="katalogdata"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Utbildningsgrundtyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="MODUL"/>
-      <xs:enumeration value="KURS"/>
       <xs:enumeration value="KURSPAKETERING"/>
+      <xs:enumeration value="KURS"/>
+      <xs:enumeration value="MODUL"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Handelsetyp">
     <xs:restriction base="xs:string">
       <xs:enumeration value="UPPDATERAD"/>
-      <xs:enumeration value="SKAPAD"/>
       <xs:enumeration value="BORTTAGEN"/>
+      <xs:enumeration value="SKAPAD"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
