@@ -56,19 +56,15 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     protected int poll() throws Exception {
         int messageCount = 0;
 
-        log.info("Getting Ladok events, last read feed ID was: {}", endpoint.getFeedId());
+        log.info("Getting Ladok events, last read ID was: {}", endpoint.getLastEntry());
 
         SyndFeed feed = getLastUnreadFeed(new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost())));
 
         do {
             log.info("Getting Ladok events for feed ID {}", feedId(feed));
-            endpoint.setFeedId(feedId(feed));
 
-            for (SyndEntry entry : sortedEntries(feed)) {
-                if (isRead(entry)) {
-                    log.debug("ATOM entry with id {} read, skipping", entry.getUri());
-                    continue;
-                }
+            List<SyndEntry> entries = unreadEntries(feed);
+            for (SyndEntry entry : entries) {
                 final SyndContent content = entry.getContents().get(0);
 
                 if ("application/vnd.ladok+xml".equals(content.getType())) {
@@ -84,11 +80,11 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                     } else {
                         log.error("Unknown Ladok type: {}", category);
                     }
-                    endpoint.setEntryId(entry.getUri());
+                    endpoint.setLastEntry(entry.getUri());
                 }
             }
             if (isLast(feed)) {
-                log.info("Done getting Ladok events for feed ID {}", endpoint.getFeedId());
+                log.info("Done getting Ladok events.");
                 return messageCount;
             }
             feed = getFeed(getLink("next-archive", feed.getLinks()));
@@ -114,15 +110,6 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                 getExceptionHandler().handleException("Error processing exchange", exchange, exchange.getException());
             }
         }
-    }
-
-    /*
-     * Returns a list with entries sorted in reverse order, which should be latest last.
-     */
-    private List<SyndEntry> sortedEntries(final SyndFeed feed) {
-        final List<SyndEntry> entries = feed.getEntries();
-        Collections.reverse(entries);
-        return entries;
     }
 
     /*
@@ -162,10 +149,27 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     }
 
     /*
-     * True if this ATOM entry is already handled by the component.
+     * Return true if the feed contains an entry with given ID.
      */
-    private boolean isRead(SyndEntry entry) {
-        return entry.getUri().compareTo(endpoint.getEntryId()) <= 0;
+    private boolean entriesContainsEntry(List<SyndEntry> entries, String entryId) {
+        for (SyndEntry entry : entries) {
+            if (entry.getUri().equals(entryId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<SyndEntry> unreadEntries(SyndFeed feed) {
+        List<SyndEntry> entries = feed.getEntries();
+        Collections.reverse(entries);
+        if (entriesContainsEntry(feed.getEntries(), endpoint.getLastEntry()) && ! entries.isEmpty()) {
+            SyndEntry entry; 
+            do {
+                entry = entries.remove(0);
+            } while(! entry.getUri().equals(endpoint.getLastEntry()));
+        }
+        return entries;
     }
 
     /*
@@ -174,7 +178,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     private SyndFeed getLastUnreadFeed(URL url) throws IOException, FeedException {
         final SyndFeed feed = getFeed(url);
 
-        if (feedId(feed) > endpoint.getFeedId()) {
+        if (! entriesContainsEntry(feed.getEntries(), endpoint.getLastEntry())) {
             final URL prevArchive = getLink("prev-archive", feed.getLinks());
             if (prevArchive == null) {
                 return feed;
