@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -168,19 +169,20 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
      * Get unread entries in feed in oldest to latest order.
      */
     private List<SyndEntry> unreadEntries(SyndFeed feed) {
-        List<SyndEntry> entries = feed.getEntries();
-        if (entries.isEmpty()) {
-            return entries;
-        }
+        final List<SyndEntry> entries = feed.getEntries();
+        final List<SyndEntry> unmatchedEntries = new ArrayList<SyndEntry>(entries.size());
 
         Collections.reverse(entries);
-        if (entriesContainsEntry(feed.getEntries(), endpoint.getLastEntry())) {
-            SyndEntry entry; 
-            do {
-                entry = entries.remove(0);
-            } while(! entry.getUri().equals(endpoint.getLastEntry()));
+
+        while (! entries.isEmpty()) {
+            final SyndEntry entry = entries.remove(0);
+            if (entry.getUri().equals(endpoint.getLastEntry())) {
+                return entries;
+            }
+            unmatchedEntries.add(entry);
         }
-        return entries;
+
+        return unmatchedEntries;
     }
 
     /*
