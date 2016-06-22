@@ -34,7 +34,7 @@
 
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
     <route id="read-atom-feed">
-      <from uri="ladok3://{{ladok3.host}}?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;feedId={{ladok3.feed.last_read}}" />
+      <from uri="ladok3://{{ladok3.host}}?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;feedId={{ladok3.feed.last_feed}}&amp;entryId={{ladok3.feed.last_entry}}" />
       <to uri="log:se.kth.infosys.smx.ladok3?level=INFO&amp;showAll=true" />
       <to uri="mock:result" />
     </route>

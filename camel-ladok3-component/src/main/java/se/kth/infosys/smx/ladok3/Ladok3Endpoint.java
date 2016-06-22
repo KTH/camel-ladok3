@@ -34,8 +34,10 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     private String key;
 
     @UriParam(name = "feedId", defaultValue = "0", description = "ATOM feed id to start consuming from")
-    @Metadata(required = "true")
     private long feedId = 0;
+
+    @UriParam(name = "entryId", defaultValue = "", description = "Entry id to start consuming from")
+    private String entryId = "";
 
     private SSLSocketFactory socketFactory;
 
@@ -123,5 +125,13 @@ public class Ladok3Endpoint extends DefaultEndpoint {
 
     public void setFeedId(long feedId) {
         this.feedId = feedId;
+    }
+
+    public String getEntryId() {
+        return entryId;
+    }
+
+    public void setEntryId(String entryId) {
+        this.entryId = entryId;
     }
 }

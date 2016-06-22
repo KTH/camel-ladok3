@@ -8,4 +8,7 @@ ladok3.cert.file=/some/path
 ladok3.cert.password=some-password
 
 # The last read feed id
-ladok3.feed.last_read=0
+ladok3.feed.last_feed=0
+
+# The last read entry id
+ladok3.feed.last_entry="xxx"

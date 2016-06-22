@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,53 +58,53 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
         log.info("Getting Ladok events, last read feed ID was: {}", endpoint.getFeedId());
 
-        final URL feedUrl = rewindFeed(new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost())));
+        SyndFeed feed = getLastUnreadFeed(new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost())));
 
-        if (feedUrl == null) {
-            log.debug("Ladok feed ID: {} is up to date, nothing to do", endpoint.getFeedId());
-            return messageCount;
-        }
+        do {
+            log.info("Getting Ladok events for feed ID {}", feedId(feed));
+            endpoint.setFeedId(feedId(feed));
 
-        final SyndFeed feed = getFeed(feedUrl);
-        log.info("Getting Ladok events for feed ID {}, URL: {}", feedId(feed), feedUrl);
+            for (SyndEntry entry : sortedEntries(feed)) {
+                if (isRead(entry)) {
+                    log.debug("ATOM entry with id {} read, skipping", entry.getUri());
+                    continue;
+                }
+                final SyndContent content = entry.getContents().get(0);
 
-        sendControlMessage(Ladok3Message.MessageType.StartFeed, feedId(feed), ++messageCount);
+                if ("application/vnd.ladok+xml".equals(content.getType())) {
+                    final String category = entry.getCategories().get(0).getName();
 
-        for (SyndEntry entry : feed.getEntries()) {
-            final SyndContent content = entry.getContents().get(0);
-            final String category = entry.getCategories().get(0).getName();
+                    if (CATEGORY_TO_CLASS_MAP.containsKey(category)) {
+                        Source source = new StreamSource(new StringReader(content.getValue()));
+                        JAXBElement<?> root = unmarshaller.unmarshal(source, Class.forName(CATEGORY_TO_CLASS_MAP.get(category)));
+                        BaseEvent event = (BaseEvent) root.getValue();
 
-            if ("application/vnd.ladok+xml".equals(content.getType())) {
-                if (CATEGORY_TO_CLASS_MAP.containsKey(category)) {
-                    Source source = new StreamSource(new StringReader(content.getValue()));
-                    JAXBElement<?> root = unmarshaller.unmarshal(source, Class.forName(CATEGORY_TO_CLASS_MAP.get(category)));
-                    BaseEvent event = (BaseEvent) root.getValue();
-
-                    doExchangeForEvent(event, feedId(feed), ++messageCount);
-                } else {
-                    log.error("Unknown Ladok type: {}", category);
+                        doExchangeForEvent(event, feedId(feed), entry.getUri());
+                        messageCount++;
+                    } else {
+                        log.error("Unknown Ladok type: {}", category);
+                    }
+                    endpoint.setEntryId(entry.getUri());
                 }
             }
-        }
-
-        sendControlMessage(Ladok3Message.MessageType.EndFeed, feedId(feed), ++messageCount);
-
-        endpoint.setFeedId(feedId(feed));
-        log.info("Done getting Ladok events for feed ID {}", endpoint.getFeedId());
-        return messageCount;
+            if (isLast(feed)) {
+                log.info("Done getting Ladok events for feed ID {}", endpoint.getFeedId());
+                return messageCount;
+            }
+            feed = getFeed(getLink("next-archive", feed.getLinks()));
+        } while (true);
     }
 
-    private void doExchangeForEvent(BaseEvent event, long feedId, int n) throws Exception {
+    private void doExchangeForEvent(BaseEvent event, long feedId, String entryId) throws Exception {
         final Exchange exchange = endpoint.createExchange();
 
         log.debug("Creating message for event: {} {}", event.getHandelseUID(), event.getClass().getName());
 
         final Message message = exchange.getIn();
-        message.setHeader(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Event);
         message.setHeader(Ladok3Message.Header.FeedId, Long.toString(feedId));
-        message.setHeader(Ladok3Message.Header.GroupID, Long.toString(feedId));
-        message.setHeader(Ladok3Message.Header.GroupSeq, Integer.toString(n));
+        message.setHeader(Ladok3Message.Header.EntryId, entryId);
         message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
+        message.setHeader(Ladok3Message.Header.EventId, event.getHandelseUID());
         message.setBody(event);
 
         try {
@@ -115,22 +116,18 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         }
     }
 
-    protected void sendControlMessage(String messageType, long feedId, int n) throws Exception {
-        Exchange exchange = endpoint.createExchange();
-        try {
-            Message message = exchange.getIn();
-            message.setHeader(Ladok3Message.Header.MessageType, messageType);
-            message.setHeader(Ladok3Message.Header.FeedId, Long.toString(feedId));
-            message.setHeader(Ladok3Message.Header.GroupID, Long.toString(feedId));
-            message.setHeader(Ladok3Message.Header.GroupSeq, Integer.toString(n));
-            getProcessor().process(exchange);
-        } finally {
-            if (exchange.getException() != null) {
-                getExceptionHandler().handleException("Error processing exchange", exchange, exchange.getException());
-            }
-        }
+    /*
+     * Returns a list with entries sorted in reverse order, which should be latest last.
+     */
+    private List<SyndEntry> sortedEntries(final SyndFeed feed) {
+        final List<SyndEntry> entries = feed.getEntries();
+        Collections.reverse(entries);
+        return entries;
     }
 
+    /*
+     * Get feed from URL.
+     */
     private SyndFeed getFeed(URL feedUrl) throws IOException, FeedException {
         log.debug("fetching feed: {}", feedUrl);
         final XmlReader reader = new XmlReader(endpoint.get(feedUrl));
@@ -158,20 +155,33 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     }
 
     /*
-     * Given a feed URL, find the latest unread feed URL, or null if there is no unread feed.
+     * True if this is the last available feed.
      */
-    private URL rewindFeed(URL url) throws IOException, FeedException {
+    private boolean isLast(SyndFeed feed) throws MalformedURLException {
+        return getLink("next-archive", feed.getLinks()) == null;
+    }
+
+    /*
+     * True if this ATOM entry is already handled by the component.
+     */
+    private boolean isRead(SyndEntry entry) {
+        return entry.getUri().compareTo(endpoint.getEntryId()) <= 0;
+    }
+
+    /*
+     * Given a feed URL, get the latest feed not yet completed.
+     */
+    private SyndFeed getLastUnreadFeed(URL url) throws IOException, FeedException {
         final SyndFeed feed = getFeed(url);
 
-        if (feedId(feed) == endpoint.getFeedId()) {
-            return getLink("next-archive", feed.getLinks());
+        if (feedId(feed) > endpoint.getFeedId()) {
+            final URL prevArchive = getLink("prev-archive", feed.getLinks());
+            if (prevArchive == null) {
+                return feed;
+            }
+            return getLastUnreadFeed(prevArchive);
         }
 
-        final URL prevArchive = getLink("prev-archive", feed.getLinks());
-        if (prevArchive == null) {
-            return getLink("via", feed.getLinks());
-        }
-
-        return rewindFeed(prevArchive);
+        return feed;
     }
 }
