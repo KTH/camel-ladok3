@@ -96,20 +96,15 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                     final Document document = builder.parse(new InputSource(new StringReader(content.getValue())));
                     final Node rootElement = document.getFirstChild();
 
-                    final String eventClass = 
-                            SCHEMAS_BASE_PACKAGE
-                            + "."
-                            + rootElement.getNamespaceURI().substring(SCHEMA_BASE_URL.length()).replace("/", ".")
-                            + "."
-                            + rootElement.getLocalName();
+                    final String eventClass = ladokEventClass(rootElement);
 
                     final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(eventClass));
                     final BaseEvent event = (BaseEvent) root.getValue();
 
                     doExchangeForEvent(event, feedId(feed), entry.getUri());
                     messageCount++;
-                    endpoint.setLastEntry(entry.getUri());
                 }
+                endpoint.setLastEntry(entry.getUri());
             }
             if (isLast(feed)) {
                 log.info("Done consuming Ladok events, generated {} messages", messageCount);
@@ -119,6 +114,23 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         }
     }
 
+    /*
+     * Derive ladok3 event class name from namespace the same way xcj does,
+     * but hard coded for ladok3 use case.
+     */
+    private String ladokEventClass(final Node rootElement) {
+        final String eventClass = 
+                SCHEMAS_BASE_PACKAGE
+                + "."
+                + rootElement.getNamespaceURI().substring(SCHEMA_BASE_URL.length()).replace("/", ".")
+                + "."
+                + rootElement.getLocalName();
+        return eventClass;
+    }
+
+    /*
+     * Generate exchange for Ladok event and dispatch to next processor.
+     */
     private void doExchangeForEvent(BaseEvent event, long feedId, String entryId) throws Exception {
         final Exchange exchange = endpoint.createExchange();
 
