@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
@@ -19,6 +21,9 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -27,6 +32,7 @@ import com.rometools.rome.feed.synd.SyndLink;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
+import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
 import se.kth.infosys.smx.ladok3.internal.Ladok3Message;
 import se.ladok.schemas.events.BaseEvent;
@@ -38,18 +44,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     private final Ladok3Endpoint endpoint;
     private final Unmarshaller unmarshaller = JAXBContext.newInstance("se.ladok.schemas").createUnmarshaller();
 
-    // This is a horrible hack. The ATOM feed should be fixed so that we don't have to
-    // keep a map between the ATOM entry category and the XSD class representation.
-    // fjo 2016-06-21
-    private static final Map<String, String> CATEGORY_TO_CLASS_MAP = new HashMap<String, String>();
-
     public Ladok3Consumer(Ladok3Endpoint endpoint, Processor processor) throws Exception {
         super(endpoint, processor);
         this.endpoint = endpoint;
-
-        CATEGORY_TO_CLASS_MAP.put("se.ladok.utbildningsinformation.interfaces.events.utbildningstillfalle.KurstillfälleTillStatusEvent", "se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent");
-        CATEGORY_TO_CLASS_MAP.put("se.ladok.utbildningsinformation.interfaces.events.utbildning.KurspaketeringTillStatusEvent", "se.ladok.schemas.utbildningsinformation.KurspaketeringTillStatusEvent");
-        CATEGORY_TO_CLASS_MAP.put("se.ladok.utbildningsinformation.interfaces.events.struktur.StrukturEvent", "se.ladok.schemas.utbildningsinformation.StrukturEvent");
     }
 
     @Override
@@ -68,18 +65,25 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                 final SyndContent content = entry.getContents().get(0);
 
                 if ("application/vnd.ladok+xml".equals(content.getType())) {
-                    final String category = entry.getCategories().get(0).getName();
 
-                    if (CATEGORY_TO_CLASS_MAP.containsKey(category)) {
-                        Source source = new StreamSource(new StringReader(content.getValue()));
-                        JAXBElement<?> root = unmarshaller.unmarshal(source, Class.forName(CATEGORY_TO_CLASS_MAP.get(category)));
-                        BaseEvent event = (BaseEvent) root.getValue();
+                    DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+                    builderFactory.setNamespaceAware(true);
+                    DocumentBuilder builder = builderFactory.newDocumentBuilder();
+                    InputSource is = new InputSource();
+                    is.setCharacterStream(new StringReader(content.getValue()));
+                    Document document = builder.parse(is);
+                    Node rootElement = document.getFirstChild();
 
-                        doExchangeForEvent(event, feedId(feed), entry.getUri());
-                        messageCount++;
-                    } else {
-                        log.error("Unknown Ladok type: {}", category);
-                    }
+                    final String category = "se.ladok.schemas." 
+                            + rootElement.getNamespaceURI().substring("http://schemas.ladok.se/".length())
+                            + "."
+                            + rootElement.getLocalName();
+
+                    JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(category));
+                    BaseEvent event = (BaseEvent) root.getValue();
+
+                    doExchangeForEvent(event, feedId(feed), entry.getUri());
+                    messageCount++;
                     endpoint.setLastEntry(entry.getUri());
                 }
             }
@@ -152,7 +156,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
      * Return true if the feed contains an entry with given ID.
      */
     private boolean entriesContainsEntry(List<SyndEntry> entries, String entryId) {
-        for (SyndEntry entry : entries) {
+        for (final SyndEntry entry : entries) {
             if (entry.getUri().equals(entryId)) {
                 return true;
             }
@@ -160,10 +164,17 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         return false;
     }
 
+    /*
+     * Get unread entries in feed in oldest to latest order.
+     */
     private List<SyndEntry> unreadEntries(SyndFeed feed) {
         List<SyndEntry> entries = feed.getEntries();
+        if (entries.isEmpty()) {
+            return entries;
+        }
+
         Collections.reverse(entries);
-        if (entriesContainsEntry(feed.getEntries(), endpoint.getLastEntry()) && ! entries.isEmpty()) {
+        if (entriesContainsEntry(feed.getEntries(), endpoint.getLastEntry())) {
             SyndEntry entry; 
             do {
                 entry = entries.remove(0);
