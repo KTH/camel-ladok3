@@ -96,9 +96,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                     final Document document = builder.parse(new InputSource(new StringReader(content.getValue())));
                     final Node rootElement = document.getFirstChild();
 
-                    final String eventClass = ladokEventClass(rootElement);
-
-                    final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(eventClass));
+                    final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
                     final BaseEvent event = (BaseEvent) root.getValue();
 
                     doExchangeForEvent(event, feedId(feed), entry.getUri());
