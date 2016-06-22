@@ -87,7 +87,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         SyndFeed feed = getLastUnreadFeed(recentURL);
 
         for (;;) {
-            log.info("Getting Ladok events for feed ID {}", feedId(feed));
+            log.info("Getting Ladok events for feed {}", feed.getUri());
 
             for (SyndEntry entry : unreadEntries(feed)) {
                 final SyndContent content = entry.getContents().get(0);
@@ -99,7 +99,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                     final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
                     final BaseEvent event = (BaseEvent) root.getValue();
 
-                    doExchangeForEvent(event, feedId(feed), entry.getUri());
+                    doExchangeForEvent(event, entry.getUri());
                     messageCount++;
                 }
                 endpoint.setLastEntry(entry.getUri());
@@ -129,13 +129,12 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     /*
      * Generate exchange for Ladok event and dispatch to next processor.
      */
-    private void doExchangeForEvent(BaseEvent event, long feedId, String entryId) throws Exception {
+    private void doExchangeForEvent(BaseEvent event, String entryId) throws Exception {
         final Exchange exchange = endpoint.createExchange();
 
         log.debug("Creating message for event: {} {}", event.getHandelseUID(), event.getClass().getName());
 
         final Message message = exchange.getIn();
-        message.setHeader(Ladok3Message.Header.FeedId, Long.toString(feedId));
         message.setHeader(Ladok3Message.Header.EntryId, entryId);
         message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
         message.setHeader(Ladok3Message.Header.EventId, event.getHandelseUID());
@@ -170,13 +169,6 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
             }
         }
         return null;
-    }
-
-    /*
-     * Return the Ladok3 feed ID of the feed as a number.
-     */
-    private long feedId(SyndFeed feed) {
-        return Long.parseLong(feed.getUri().trim().substring(7)); // "getUri() -> urn:id:123"
     }
 
     /*
