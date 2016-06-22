@@ -36,7 +36,7 @@
   <artifactId>camel-ladok3-component</artifactId>
   <packaging>bundle</packaging>
 
-  <name>Camel ladok3 Component</name>
+  <name>Camel Ladok3 Component</name>
   <url>https://www.kth.se</url>
 
   <dependencies>
@@ -174,4 +174,5 @@
     </plugins>
   </build>
 
+  <description>The Ladok3 Endpoint Component</description>
 </project>

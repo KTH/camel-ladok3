@@ -86,4 +86,9 @@
       </plugin>
     </plugins>
   </build>
+  <organization>
+    <name>Kungliga Tekniska högskolan</name>
+    <url>https://www.kth.se</url>
+  </organization>
+  <url>https://www.kth.se</url>
 </project>
