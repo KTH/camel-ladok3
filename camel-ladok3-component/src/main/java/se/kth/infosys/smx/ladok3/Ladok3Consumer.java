@@ -5,17 +5,13 @@ import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
@@ -32,7 +28,6 @@ import com.rometools.rome.feed.synd.SyndLink;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
-import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
 import se.kth.infosys.smx.ladok3.internal.Ladok3Message;
 import se.ladok.schemas.events.BaseEvent;
@@ -41,46 +36,51 @@ import se.ladok.schemas.events.BaseEvent;
  * The ladok3 consumer.
  */
 public class Ladok3Consumer extends ScheduledPollConsumer {
+    private static final String SCHEMAS_BASE_PACKAGE = "se.ladok.schemas";
+    private static final String SCHEMA_BASE_URL = "http://schemas.ladok.se/";
     private final Ladok3Endpoint endpoint;
-    private final Unmarshaller unmarshaller = JAXBContext.newInstance("se.ladok.schemas").createUnmarshaller();
+    private final Unmarshaller unmarshaller;
+    private final DocumentBuilder builder;
+    private final URL recentURL;
 
     public Ladok3Consumer(Ladok3Endpoint endpoint, Processor processor) throws Exception {
         super(endpoint, processor);
         this.endpoint = endpoint;
+
+        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+        builderFactory.setNamespaceAware(true);
+        builder = builderFactory.newDocumentBuilder();
+
+        unmarshaller = JAXBContext.newInstance(SCHEMAS_BASE_PACKAGE).createUnmarshaller();
+        recentURL = new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost()));
     }
 
     @Override
     protected int poll() throws Exception {
         int messageCount = 0;
 
-        log.info("Getting Ladok events, last read ID was: {}", endpoint.getLastEntry());
+        log.info("Consuming Ladok ATOM feeds, last read ID was: {}", endpoint.getLastEntry());
+        SyndFeed feed = getLastUnreadFeed(recentURL);
 
-        SyndFeed feed = getLastUnreadFeed(new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost())));
-
-        do {
+        for (;;) {
             log.info("Getting Ladok events for feed ID {}", feedId(feed));
 
-            List<SyndEntry> entries = unreadEntries(feed);
-            for (SyndEntry entry : entries) {
+            for (SyndEntry entry : unreadEntries(feed)) {
                 final SyndContent content = entry.getContents().get(0);
 
                 if ("application/vnd.ladok+xml".equals(content.getType())) {
+                    final Document document = builder.parse(new InputSource(new StringReader(content.getValue())));
+                    final Node rootElement = document.getFirstChild();
 
-                    DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-                    builderFactory.setNamespaceAware(true);
-                    DocumentBuilder builder = builderFactory.newDocumentBuilder();
-                    InputSource is = new InputSource();
-                    is.setCharacterStream(new StringReader(content.getValue()));
-                    Document document = builder.parse(is);
-                    Node rootElement = document.getFirstChild();
-
-                    final String category = "se.ladok.schemas." 
-                            + rootElement.getNamespaceURI().substring("http://schemas.ladok.se/".length())
+                    final String eventClass = 
+                            SCHEMAS_BASE_PACKAGE
+                            + "."
+                            + rootElement.getNamespaceURI().substring(SCHEMA_BASE_URL.length()).replace("/", ".")
                             + "."
                             + rootElement.getLocalName();
 
-                    JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(category));
-                    BaseEvent event = (BaseEvent) root.getValue();
+                    final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(eventClass));
+                    final BaseEvent event = (BaseEvent) root.getValue();
 
                     doExchangeForEvent(event, feedId(feed), entry.getUri());
                     messageCount++;
@@ -88,11 +88,11 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                 }
             }
             if (isLast(feed)) {
-                log.info("Done getting Ladok events.");
+                log.info("Done consuming Ladok events, generated {} messages", messageCount);
                 return messageCount;
             }
             feed = getFeed(getLink("next-archive", feed.getLinks()));
-        } while (true);
+        }
     }
 
     private void doExchangeForEvent(BaseEvent event, long feedId, String entryId) throws Exception {
@@ -127,7 +127,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     }
 
     /*
-     * Return URL for link with given "rel" label.
+     * Return URL for link with given "rel" label or null if not found.
      */
     private URL getLink(String rel, List<SyndLink> links) throws MalformedURLException {
         for (SyndLink link : links) {
@@ -146,7 +146,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     }
 
     /*
-     * True if this is the last available feed.
+     * True if feed is currently the last available.
      */
     private boolean isLast(SyndFeed feed) throws MalformedURLException {
         return getLink("next-archive", feed.getLinks()) == null;
