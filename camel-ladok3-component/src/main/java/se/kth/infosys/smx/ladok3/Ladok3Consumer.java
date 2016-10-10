@@ -108,9 +108,11 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
             endpoint.setLastEntry(entry.getUri());
         }
 
-        log.info("Consumed Ladok ATOM feed {} up to id {}", 
-                feed.getURL(),
-                endpoint.getLastEntry());
+        if (messageCount > 0) {
+            log.info("Consumed Ladok ATOM feed {} up to id {}", 
+                    feed.getURL(),
+                    endpoint.getLastEntry());
+        }
 
         if (feed.isLast()) {
             endpoint.setLastFeedURL(feed.getURL());
