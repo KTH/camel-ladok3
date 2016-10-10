@@ -25,6 +25,7 @@ package se.kth.infosys.smx.ladok3;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -58,6 +59,9 @@ public class Ladok3Endpoint extends DefaultEndpoint {
 
     @UriParam(name = "lastEntry", defaultValue = "", description = "Entry id to start consuming from")
     private String lastEntry = "";
+
+    @UriParam(name = "lastFeed", defaultValue = "", description = "Feed to start consuming from")
+    private String lastFeed = "";
 
     private SSLSocketFactory socketFactory;
 
@@ -145,5 +149,21 @@ public class Ladok3Endpoint extends DefaultEndpoint {
 
     public void setLastEntry(String lastEntry) {
         this.lastEntry = lastEntry;
+    }
+
+    public String getLastFeed() {
+        return lastFeed;
+    }
+
+    public void setLastFeed(String lastFeed) {
+        this.lastFeed = lastFeed;
+    }
+
+    public void setLastFeedURL(URL lastURL) {
+        this.lastFeed = lastURL.toString();
+    }
+
+    public URL getLastFeedURL() throws MalformedURLException {
+        return new URL(this.lastFeed);
     }
 }

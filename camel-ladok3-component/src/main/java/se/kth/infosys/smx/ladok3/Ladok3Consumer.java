@@ -83,34 +83,42 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     @Override
     protected int poll() throws Exception {
         int messageCount = 0;
+        Ladok3Feed feed;
 
-        log.info("Consuming Ladok ATOM feeds, last read ID was: {}", endpoint.getLastEntry());
-        SyndFeed feed = getLastUnreadFeed();
-
-        for (;;) {
-            log.info("Getting Ladok events for feed {}", feed.getUri());
-
-            for (SyndEntry entry : unreadEntries(feed)) {
-                final SyndContent content = entry.getContents().get(0);
-
-                if ("application/vnd.ladok+xml".equals(content.getType())) {
-                    final Document document = builder.parse(new InputSource(new StringReader(content.getValue())));
-                    final Node rootElement = document.getFirstChild();
-
-                    final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
-                    final BaseEvent event = (BaseEvent) root.getValue();
-
-                    doExchangeForEvent(event, entry.getUri());
-                    messageCount++;
-                }
-                endpoint.setLastEntry(entry.getUri());
-            }
-            if (isLast(feed)) {
-                log.info("Done consuming Ladok events, generated {} messages", messageCount);
-                return messageCount;
-            }
-            feed = getFeed(getLink("next-archive", feed.getLinks()));
+        if ("".equals(endpoint.getLastFeed())) {
+            feed = getLastUnreadFeed();
+            endpoint.setLastFeedURL(feed.getURL());
+        } else {
+            feed = new Ladok3Feed(endpoint.getLastFeedURL());
         }
+
+        for (SyndEntry entry : feed.unreadEntries()) {
+            final SyndContent content = entry.getContents().get(0);
+
+            if ("application/vnd.ladok+xml".equals(content.getType())) {
+                final Document document = builder.parse(new InputSource(new StringReader(content.getValue())));
+                final Node rootElement = document.getFirstChild();
+
+                final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
+                final BaseEvent event = (BaseEvent) root.getValue();
+
+                doExchangeForEvent(event, entry.getUri(), feed);
+                messageCount++;
+            }
+            endpoint.setLastEntry(entry.getUri());
+        }
+
+        log.info("Consumed Ladok ATOM feed {} up to id {}", 
+                feed.getURL(),
+                endpoint.getLastEntry());
+
+        if (feed.isLast()) {
+            endpoint.setLastFeedURL(feed.getURL());
+        } else {
+            endpoint.setLastFeedURL(feed.getLink("next-archive"));
+        }
+
+        return messageCount;
     }
 
     /*
@@ -130,13 +138,14 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     /*
      * Generate exchange for Ladok event and dispatch to next processor.
      */
-    private void doExchangeForEvent(BaseEvent event, String entryId) throws Exception {
+    private void doExchangeForEvent(BaseEvent event, String entryId, Ladok3Feed feed) throws Exception {
         final Exchange exchange = endpoint.createExchange();
 
         log.debug("Creating message for event: {} {}", event.getHandelseUID(), event.getClass().getName());
 
         final Message message = exchange.getIn();
         message.setHeader(Ladok3Message.Header.EntryId, entryId);
+        message.setHeader(Ladok3Message.Header.Feed, feed.getURL().toString());
         message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
         message.setHeader(Ladok3Message.Header.EventId, event.getHandelseUID());
         message.setBody(event);
@@ -151,87 +160,105 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     }
 
     /*
-     * Get feed from URL.
-     */
-    private SyndFeed getFeed(URL feedUrl) throws IOException, FeedException {
-        log.debug("fetching feed: {}", feedUrl);
-        final XmlReader reader = new XmlReader(endpoint.get(feedUrl));
-        final SyndFeedInput input = new SyndFeedInput();
-        return input.build(reader);
-    }
-
-    /*
-     * Return URL for link with given "rel" label or null if not found.
-     */
-    private URL getLink(String rel, List<SyndLink> links) throws MalformedURLException {
-        for (SyndLink link : links) {
-            if (link.getRel().equals(rel)) {
-                return new URL(link.getHref());
-            }
-        }
-        return null;
-    }
-
-    /*
-     * True if feed is currently the last available.
-     */
-    private boolean isLast(SyndFeed feed) throws MalformedURLException {
-        return getLink("next-archive", feed.getLinks()) == null;
-    }
-
-    /*
-     * Return true if the feed contains an entry with given ID.
-     */
-    private boolean entriesContainsEntry(List<SyndEntry> entries, String entryId) {
-        for (final SyndEntry entry : entries) {
-            if (entry.getUri().equals(entryId)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /*
-     * Get unread entries in feed in oldest to latest order.
-     */
-    private List<SyndEntry> unreadEntries(SyndFeed feed) {
-        final List<SyndEntry> entries = feed.getEntries();
-        final List<SyndEntry> unmatchedEntries = new ArrayList<SyndEntry>(entries.size());
-
-        Collections.reverse(entries);
-
-        while (! entries.isEmpty()) {
-            final SyndEntry entry = entries.remove(0);
-            if (entry.getUri().equals(endpoint.getLastEntry())) {
-                return entries;
-            }
-            unmatchedEntries.add(entry);
-        }
-
-        return unmatchedEntries;
-    }
-
-    /*
      * Get the latest feed not yet completed.
      */
-    private SyndFeed getLastUnreadFeed() throws IOException, FeedException {
+    private Ladok3Feed getLastUnreadFeed() throws IOException, FeedException {
         if ("".equals(endpoint.getLastEntry())) {
-            return getFeed(new URL(String.format(FIRST_FEED_FORMAT, endpoint.getHost())));
+            return new Ladok3Feed(new URL(String.format(FIRST_FEED_FORMAT, endpoint.getHost())));
         }
 
-        SyndFeed feed = getFeed(new URL(String.format(LAST_FEED_FORMAT, endpoint.getHost())));
+        Ladok3Feed feed = new Ladok3Feed(new URL(String.format(LAST_FEED_FORMAT, endpoint.getHost())));
 
         for (;;) {
-            if (entriesContainsEntry(feed.getEntries(), endpoint.getLastEntry())) {
+            if (feed.containsEntry(endpoint.getLastEntry())) {
                 return feed;
             }
 
-            URL prevArchive = getLink("prev-archive", feed.getLinks());
+            URL prevArchive = feed.getLink("prev-archive");
             if (prevArchive == null) {
                 throw new FeedException("At end of the archive without finding Ladok3 event ID: '"
                         + endpoint.getLastEntry() + "'");
             }
-            feed = getFeed(prevArchive);
+            feed = new Ladok3Feed(prevArchive);
+        }
+    }
+
+    /*
+     * Inner class to wrap the SyndFeed with it's corresponding URL and convenvience methods.
+     */
+    private final class Ladok3Feed {
+        private final SyndFeed feed;
+        private final URL url;
+
+        /*
+         * Create the feed from the URL.
+         */
+        public Ladok3Feed(final URL url) throws IOException, IllegalArgumentException, FeedException {
+            this.url = url;
+
+            log.debug("fetching feed: {}", url);
+            final XmlReader reader = new XmlReader(endpoint.get(url));
+            final SyndFeedInput input = new SyndFeedInput();
+            feed = input.build(reader);
+        }
+
+        /*
+         * Return true if the feed contains an entry with given ID.
+         */
+        public boolean containsEntry(String entryId) {
+            for (final SyndEntry entry : feed.getEntries()) {
+                if (entry.getUri().equals(entryId)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /*
+         * True if feed is currently the last available.
+         */
+        private boolean isLast() throws MalformedURLException {
+            return getLink("next-archive") == null;
+        }
+
+        /*
+         * Return the URL for this feed.
+         */
+        public URL getURL() {
+            return url;
+        }
+
+        /*
+         * Get the link with specified rel label "next-archive", "prev-archive", etc, 
+         * or null if the link does not exist.
+         */
+        public URL getLink(String rel) throws MalformedURLException {
+            for (SyndLink link : feed.getLinks()) {
+                if (link.getRel().equals(rel)) {
+                    return new URL(link.getHref());
+                }
+            }
+            return null;
+        }
+
+        /*
+         * Get unread entries in feed in oldest to latest order.
+         */
+        private List<SyndEntry> unreadEntries() {
+            final List<SyndEntry> entries = feed.getEntries();
+            final List<SyndEntry> unmatchedEntries = new ArrayList<SyndEntry>(entries.size());
+
+            Collections.reverse(entries);
+
+            while (! entries.isEmpty()) {
+                final SyndEntry entry = entries.remove(0);
+                if (entry.getUri().equals(endpoint.getLastEntry())) {
+                    return entries;
+                }
+                unmatchedEntries.add(entry);
+            }
+
+            return unmatchedEntries;
         }
     }
 }
