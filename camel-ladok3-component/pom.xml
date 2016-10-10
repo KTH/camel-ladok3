@@ -45,11 +45,11 @@
       <artifactId>camel-core</artifactId>
       <version>${camel-version}</version>
     </dependency>
-<!--     <dependency> -->
-<!--       <groupId>org.apache.camel</groupId> -->
-<!--       <artifactId>camel-jacksonxml</artifactId> -->
-<!--       <version>${camel-version}</version> -->
-<!--     </dependency> -->
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-jacksonxml</artifactId>
+      <version>${camel-version}</version>
+    </dependency>
     <dependency>
       <groupId>com.rometools</groupId>
       <artifactId>rome</artifactId>

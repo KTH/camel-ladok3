@@ -62,10 +62,12 @@ import se.ladok.schemas.events.BaseEvent;
 public class Ladok3Consumer extends ScheduledPollConsumer {
     private static final String SCHEMAS_BASE_PACKAGE = "se.ladok.schemas";
     private static final String SCHEMA_BASE_URL = "http://schemas.ladok.se/";
+    private static final String FIRST_FEED_FORMAT = "https://%s/handelser/feed/first";
+    private static final String LAST_FEED_FORMAT = "https://%s/handelser/feed/recent";
+
     private final Ladok3Endpoint endpoint;
     private final Unmarshaller unmarshaller;
     private final DocumentBuilder builder;
-    private final URL recentURL;
 
     public Ladok3Consumer(Ladok3Endpoint endpoint, Processor processor) throws Exception {
         super(endpoint, processor);
@@ -76,7 +78,6 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         builder = builderFactory.newDocumentBuilder();
 
         unmarshaller = JAXBContext.newInstance(SCHEMAS_BASE_PACKAGE).createUnmarshaller();
-        recentURL = new URL(String.format("https://%s/handelser/feed/recent", endpoint.getHost()));
     }
 
     @Override
@@ -84,7 +85,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         int messageCount = 0;
 
         log.info("Consuming Ladok ATOM feeds, last read ID was: {}", endpoint.getLastEntry());
-        SyndFeed feed = getLastUnreadFeed(recentURL);
+        SyndFeed feed = getLastUnreadFeed();
 
         for (;;) {
             log.info("Getting Ladok events for feed {}", feed.getUri());
@@ -211,19 +212,26 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     }
 
     /*
-     * Given a feed URL, get the latest feed not yet completed.
+     * Get the latest feed not yet completed.
      */
-    private SyndFeed getLastUnreadFeed(URL url) throws IOException, FeedException {
-        final SyndFeed feed = getFeed(url);
-
-        if (! entriesContainsEntry(feed.getEntries(), endpoint.getLastEntry())) {
-            final URL prevArchive = getLink("prev-archive", feed.getLinks());
-            if (prevArchive == null) {
-                return feed;
-            }
-            return getLastUnreadFeed(prevArchive);
+    private SyndFeed getLastUnreadFeed() throws IOException, FeedException {
+        if ("".equals(endpoint.getLastEntry())) {
+            return getFeed(new URL(String.format(FIRST_FEED_FORMAT, endpoint.getHost())));
         }
 
-        return feed;
+        SyndFeed feed = getFeed(new URL(String.format(LAST_FEED_FORMAT, endpoint.getHost())));
+
+        for (;;) {
+            if (entriesContainsEntry(feed.getEntries(), endpoint.getLastEntry())) {
+                return feed;
+            }
+
+            URL prevArchive = getLink("prev-archive", feed.getLinks());
+            if (prevArchive == null) {
+                throw new FeedException("At end of the archive without finding Ladok3 event ID: '"
+                        + endpoint.getLastEntry() + "'");
+            }
+            feed = getFeed(prevArchive);
+        }
     }
 }
