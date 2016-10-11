@@ -80,6 +80,12 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         unmarshaller = JAXBContext.newInstance(SCHEMAS_BASE_PACKAGE).createUnmarshaller();
     }
 
+    /*
+     * Will fetch and handle one Ladok3 feed each poll until we are the last feed.
+     * Handles any unread events for the last feed for each poll.
+     * 
+     * @see org.apache.camel.impl.ScheduledPollConsumer#poll()
+     */
     @Override
     protected int poll() throws Exception {
         int messageCount = 0;
@@ -87,9 +93,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
         if ("".equals(endpoint.getLastFeed())) {
             feed = getLastUnreadFeed();
-            endpoint.setLastFeedURL(feed.getURL());
+            endpoint.setNextURL(feed.getURL());
         } else {
-            feed = new Ladok3Feed(endpoint.getLastFeedURL());
+            feed = new Ladok3Feed(endpoint.getNextURL());
         }
 
         for (SyndEntry entry : feed.unreadEntries()) {
@@ -109,22 +115,20 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         }
 
         if (messageCount > 0) {
-            log.info("Consumed Ladok ATOM feed {} up to id {}", 
-                    feed.getURL(),
-                    endpoint.getLastEntry());
+            log.info("Consumed Ladok ATOM feed {} up to id {}", feed.getURL(), endpoint.getLastEntry());
         }
 
         if (feed.isLast()) {
-            endpoint.setLastFeedURL(feed.getURL());
+            endpoint.setNextURL(feed.getURL());
         } else {
-            endpoint.setLastFeedURL(feed.getLink("next-archive"));
+            endpoint.setNextURL(feed.getLink("next-archive"));
         }
 
         return messageCount;
     }
 
     /*
-     * Derive ladok3 event class name from namespace the same way xcj does,
+     * Derive Ladok3 event class name from namespace the same way xcj does,
      * but hard coded for ladok3 use case.
      */
     private String ladokEventClass(final Node rootElement) {
@@ -138,7 +142,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     }
 
     /*
-     * Generate exchange for Ladok event and dispatch to next processor.
+     * Generate exchange for Ladok3 event and dispatch to next processor.
      */
     private void doExchangeForEvent(BaseEvent event, String entryId, Ladok3Feed feed) throws Exception {
         final Exchange exchange = endpoint.createExchange();
@@ -162,7 +166,10 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     }
 
     /*
-     * Get the latest feed not yet completed.
+     * Get the latest feed not yet completed. Will return the first URL if no 
+     * events have been read, or search for the feed from the most recent to
+     * the one containing the last known event. This may take a *lot* of time
+     * if the consumer is not run regularly.
      */
     private Ladok3Feed getLastUnreadFeed() throws IOException, FeedException {
         if ("".equals(endpoint.getLastEntry())) {
@@ -186,7 +193,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     }
 
     /*
-     * Inner class to wrap the SyndFeed with it's corresponding URL and convenvience methods.
+     * Inner class to wrap the SyndFeed with it's corresponding URL and convenience methods.
      */
     private final class Ladok3Feed {
         private final SyndFeed feed;

@@ -159,11 +159,11 @@ public class Ladok3Endpoint extends DefaultEndpoint {
         this.lastFeed = lastFeed;
     }
 
-    public void setLastFeedURL(URL lastURL) {
+    public void setNextURL(URL lastURL) {
         this.lastFeed = lastURL.toString();
     }
 
-    public URL getLastFeedURL() throws MalformedURLException {
+    public URL getNextURL() throws MalformedURLException {
         return new URL(this.lastFeed);
     }
 }
