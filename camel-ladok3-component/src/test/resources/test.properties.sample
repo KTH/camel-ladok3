@@ -8,4 +8,7 @@ ladok3.cert.file=/some/path
 ladok3.cert.password=some-password
 
 # The last read entry id
-ladok3.feed.last_entry="xxx"
+ladok3.feed.last_id="xxx"
+
+# The last read entry id
+ladok3.feed.last="https://api.mit-ik.ladok.se:443/uppfoljning/feed/5137"
