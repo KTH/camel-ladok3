@@ -42,7 +42,7 @@ public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
     @Test
     public void testladok3() throws Exception {
         MockEndpoint mock = getMockEndpoint("mock:result");
-        mock.expectedMinimumMessageCount(1);
+        mock.expectedMinimumMessageCount(2);
         assertMockEndpointsSatisfied();
     }
 }

@@ -177,7 +177,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
             // No info about where to begin, start from beginning.
             return new Ladok3Feed(new URL(String.format(FIRST_FEED_FORMAT, endpoint.getHost())));
         }
-        if ("".equals(endpoint.getLastFeed())) {
+        if (! "".equals(endpoint.getLastFeed())) {
             // We have a previous feed, return it.
             return new Ladok3Feed(endpoint.getNextURL());
         }
