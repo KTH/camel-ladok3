@@ -57,7 +57,12 @@ import se.kth.infosys.smx.ladok3.internal.Ladok3Message;
 import se.ladok.schemas.events.BaseEvent;
 
 /**
- * The ladok3 consumer.
+ * The ladok3 consumer. Will read Ladok3 events from the ATOM feed and create
+ * exchanges with the event in the body in a Java POJO representation based 
+ * on the XSD:s published by Ladok. The exchange includes some headers with
+ * event type, feed and event ids. The consumer has options to control where 
+ * in the feed archive to start reading events and the headers can be used to
+ * persist information about the position in the feed to handle restarts.
  */
 public class Ladok3Consumer extends ScheduledPollConsumer {
     private static final String SCHEMAS_BASE_PACKAGE = "se.ladok.schemas";
@@ -91,12 +96,8 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         int messageCount = 0;
         Ladok3Feed feed;
 
-        if ("".equals(endpoint.getLastFeed())) {
-            feed = getLastUnreadFeed();
-            endpoint.setNextURL(feed.getURL());
-        } else {
-            feed = new Ladok3Feed(endpoint.getNextURL());
-        }
+        feed = getLastUnreadFeed();
+        endpoint.setNextURL(feed.getURL());
 
         for (SyndEntry entry : feed.unreadEntries()) {
             final SyndContent content = entry.getContents().get(0);
@@ -121,7 +122,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         if (feed.isLast()) {
             endpoint.setNextURL(feed.getURL());
         } else {
-            endpoint.setNextURL(feed.getLink("next-archive"));
+            endpoint.setNextURL(feed.getLink(Ladok3Feed.NEXT));
         }
 
         return messageCount;
@@ -167,15 +168,22 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
     /*
      * Get the latest feed not yet completed. Will return the first URL if no 
-     * events have been read, or search for the feed from the most recent to
-     * the one containing the last known event. This may take a *lot* of time
-     * if the consumer is not run regularly.
+     * events have been read, last known URL if any, or search for the feed from
+     * the most recent to the one containing the last known event. The latter may 
+     * take a *lot* of time if the consumer is not run regularly.
      */
     private Ladok3Feed getLastUnreadFeed() throws IOException, FeedException {
-        if ("".equals(endpoint.getLastEntry())) {
+        if ("".equals(endpoint.getLastFeed()) && "".equals(endpoint.getLastEntry())) {
+            // No info about where to begin, start from beginning.
             return new Ladok3Feed(new URL(String.format(FIRST_FEED_FORMAT, endpoint.getHost())));
         }
+        if ("".equals(endpoint.getLastFeed())) {
+            // We have a previous feed, return it.
+            return new Ladok3Feed(endpoint.getNextURL());
+        }
 
+        // We have a previous entry but no feed, try to find entry,
+        // starting at the end working towards beginning.
         Ladok3Feed feed = new Ladok3Feed(new URL(String.format(LAST_FEED_FORMAT, endpoint.getHost())));
 
         for (;;) {
@@ -183,7 +191,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                 return feed;
             }
 
-            URL prevArchive = feed.getLink("prev-archive");
+            URL prevArchive = feed.getLink(Ladok3Feed.PREV);
             if (prevArchive == null) {
                 throw new FeedException("At end of the archive without finding Ladok3 event ID: '"
                         + endpoint.getLastEntry() + "'");
@@ -198,6 +206,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     private final class Ladok3Feed {
         private final SyndFeed feed;
         private final URL url;
+
+        private static final String NEXT = "next-archive";
+        private static final String PREV = "prev-archive";
 
         /*
          * Create the feed from the URL.
@@ -227,7 +238,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
          * True if feed is currently the last available.
          */
         private boolean isLast() throws MalformedURLException {
-            return getLink("next-archive") == null;
+            return getLink(NEXT) == null;
         }
 
         /*
