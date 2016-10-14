@@ -46,6 +46,16 @@ last_id=${in.header.ladok3AtomEntryId}
   </camelContext>
 ```
 
+# The project
+
+There are three parts in the project
+
+1. ladok3-rest is a library to talk to Ladok3 REST api services. It includes the 
+   data model derived from the XSD published by Ladok.
+1. camel-ladok3-component is Camel Component defining a ladok3 endpoint to use in
+   Camel routes.
+1. ladok3-feature is a Karaf Feature packaging of the camel-ladok3-component.
+
 ## Testing
 
 You can build without tests using `mvn -Dmaven.test.skip=true package`. In order to run
