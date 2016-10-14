@@ -21,14 +21,23 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
---><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.kth.infosys.smx</groupId>
   <artifactId>ladok3</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+
   <name>KTH Ladok3 Integration</name>
   <description>Project for components making up the ladok3 feature.</description>
+  <url>https://www.kth.se</url>
+
+  <organization>
+    <name>Kungliga Tekniska högskolan</name>
+    <url>https://www.kth.se</url>
+  </organization>
+
   <modules>
     <module>ladok3-rest</module>
     <module>camel-ladok3-component</module>
@@ -83,30 +92,6 @@
           <tag>${project.artifactId}-${project.version}</tag>
         </configuration>
       </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <encoding>UTF-8</encoding>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
-  <organization>
-    <name>Kungliga Tekniska högskolan</name>
-    <url>https://www.kth.se</url>
-  </organization>
-  <url>https://www.kth.se</url>
 </project>
