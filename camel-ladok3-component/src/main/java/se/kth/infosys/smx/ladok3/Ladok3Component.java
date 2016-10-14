@@ -63,8 +63,8 @@ public class Ladok3Component extends UriEndpointComponent {
 
         final SSLContext context = SSLContext.getInstance("TLS");
         context.init(kmf.getKeyManagers(), null, null);
-        
-        endpoint.setSocketFactory(context.getSocketFactory());
+
+        endpoint.setContext(context);
         return endpoint;
     }
 }

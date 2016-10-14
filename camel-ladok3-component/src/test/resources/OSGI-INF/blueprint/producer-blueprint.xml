@@ -33,8 +33,9 @@
   <cm:property-placeholder persistent-id="se.kth.infosys.smx.ladok3" update-strategy="reload" />
 
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
-    <route id="read-atom-feed">
-      <from uri="ladok3://{{ladok3.host}}?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}" />
+    <route id="run-producer">
+      <from uri="timer:once?repeatCount=1"/>
+      <to uri="ladok3://{{ladok3.host}}?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}" />
       <to uri="log:se.kth.infosys.smx.ladok3?level=INFO&amp;showAll=true" />
       <marshal>
         <jacksonxml />
@@ -43,5 +44,4 @@
       <to uri="mock:result" />
     </route>
   </camelContext>
-
 </blueprint>

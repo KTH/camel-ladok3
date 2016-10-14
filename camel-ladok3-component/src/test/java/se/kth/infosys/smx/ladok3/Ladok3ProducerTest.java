@@ -23,32 +23,26 @@
  */
 package se.kth.infosys.smx.ladok3;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultProducer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
+import org.junit.Test;
 
-import se.kth.infosys.smx.ladok3.internal.Ladok3StudentInformationService;
-import se.ladok.schemas.studentinformation.Student;
-
-/**
- * The ladok3 producer.
- */
-public class Ladok3Producer extends DefaultProducer {
-    private static final Logger logger = LoggerFactory.getLogger(Ladok3Producer.class);
-    private final Ladok3StudentInformationService studentInformationService;
-
-    public Ladok3Producer(Ladok3Endpoint endpoint) throws Exception {
-        super(endpoint);
-        studentInformationService = new Ladok3StudentInformationService(endpoint.getHost(), endpoint.getCert(), endpoint.getKey());
+public class Ladok3ProducerTest extends CamelBlueprintTestSupport {
+    @Override
+    protected String[] loadConfigAdminConfigurationFile() {
+        // which .cfg file to use, and the name of the persistence-id
+        return new String[]{"src/test/resources/test.properties", "se.kth.infosys.smx.ladok3"};
     }
 
-    public void process(Exchange exchange) throws Exception {
-        final String personnummer = "197103210170";
+    @Override
+    protected String getBlueprintDescriptor() {
+        return "/OSGI-INF/blueprint/producer-blueprint.xml";
+    }
 
-        Student student = studentInformationService.getStudentByPersonnummer(personnummer);
-
-        logger.debug("found: " + student.getFornamn() + " " + student.getEfternamn());
-        exchange.getIn().setBody(student);
+    @Test
+    public void testladok3() throws Exception {
+        MockEndpoint mock = getMockEndpoint("mock:result");
+        mock.expectedMinimumMessageCount(1);
+        assertMockEndpointsSatisfied();
     }
 }

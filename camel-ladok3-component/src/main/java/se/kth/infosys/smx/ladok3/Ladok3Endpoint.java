@@ -29,7 +29,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.SSLContext;
 
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
@@ -63,7 +63,7 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     @UriParam(name = "lastFeed", defaultValue = "", description = "Feed to start consuming from")
     private String lastFeed = "";
 
-    private SSLSocketFactory socketFactory;
+    private SSLContext context;
 
     public Ladok3Endpoint(String uri, Ladok3Component component) throws Exception {
         super(uri, component);
@@ -83,7 +83,7 @@ public class Ladok3Endpoint extends DefaultEndpoint {
 
     public InputStream get(URL url) throws IOException {
         final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-        connection.setSSLSocketFactory(socketFactory);
+        connection.setSSLSocketFactory(context.getSocketFactory());
         return connection.getInputStream();
     }
 
@@ -135,14 +135,6 @@ public class Ladok3Endpoint extends DefaultEndpoint {
         this.host = host;
     }
 
-    public SSLSocketFactory getSocketFactory() {
-        return socketFactory;
-    }
-
-    public void setSocketFactory(SSLSocketFactory socketFactory) {
-        this.socketFactory = socketFactory;
-    }
-
     public String getLastEntry() {
         return lastEntry;
     }
@@ -165,5 +157,13 @@ public class Ladok3Endpoint extends DefaultEndpoint {
 
     public URL getNextURL() throws MalformedURLException {
         return new URL(this.lastFeed);
+    }
+
+    public SSLContext getContext() {
+        return context;
+    }
+
+    public void setContext(SSLContext context) {
+        this.context = context;
     }
 }
