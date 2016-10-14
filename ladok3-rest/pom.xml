@@ -43,25 +43,6 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <encoding>UTF-8</encoding>
-        </configuration>
-      </plugin>
-
       <!-- to generate the MANIFEST-FILE of the bundle -->
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -73,7 +54,7 @@
             <Embed-Dependency>rome</Embed-Dependency>
             <Bundle-SymbolicName>se.kth.infosys.ladok3</Bundle-SymbolicName>
             <Import-Package>*</Import-Package>
-            <Export-Package>se.kth.infosys.ladok3</Export-Package>
+            <Export-Package>se.ladok.schemas,se.kth.infosys.ladok3</Export-Package>
           </instructions>
         </configuration>
         <executions> 
