@@ -28,7 +28,7 @@ import org.apache.camel.impl.DefaultProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.kth.infosys.smx.ladok3.internal.Ladok3StudentInformationService;
+import se.kth.infosys.ladok3.Ladok3StudentInformationService;
 import se.ladok.schemas.studentinformation.Student;
 
 /**

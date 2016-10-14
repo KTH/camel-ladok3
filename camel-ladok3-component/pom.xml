@@ -51,38 +51,17 @@
       <version>${camel-version}</version>
     </dependency>
     <dependency>
+      <groupId>com.rometools</groupId>
+      <artifactId>rome</artifactId>
+      <version>1.6.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-transports-http-jetty</artifactId>
       <version>3.1.6</version>
       <type>bundle</type>
     </dependency>
-    <dependency>
-      <groupId>org.ow2.asm</groupId>
-      <artifactId>asm</artifactId>
-      <version>5.0.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.ow2.asm</groupId>
-      <artifactId>asm-commons</artifactId>
-      <version>5.0.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.enterprise</artifactId>
-      <version>5.0.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-cxf</artifactId>
-      <version>${camel-version}</version>
-      <type>bundle</type>
-    </dependency>
-    <dependency>
-      <groupId>com.rometools</groupId>
-      <artifactId>rome</artifactId>
-      <version>1.6.0</version>
-    </dependency>
-    
+
     <!-- support camel documentation -->
     <dependency>
       <groupId>org.apache.camel</groupId>
@@ -109,6 +88,11 @@
       <artifactId>camel-test-blueprint</artifactId>
       <version>${camel-version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>se.kth.infosys.smx</groupId>
+      <artifactId>ladok3-rest</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
@@ -169,7 +153,6 @@
             <Embed-Dependency>rome</Embed-Dependency>
             <Bundle-SymbolicName>se.kth.infosys.smx.camel-ladok3-component</Bundle-SymbolicName>
             <Export-Service>org.apache.camel.spi.ComponentResolver;component=ladok3</Export-Service>
-            <Export-Package>se.ladok.schemas</Export-Package>
           </instructions>
         </configuration>
         <executions> 
@@ -181,22 +164,6 @@
             </goals> 
           </execution> 
         </executions> 
-      </plugin>
-
-      <plugin>
-        <groupId>org.jvnet.jaxb2.maven2</groupId>
-        <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>0.13.1</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <schemaDirectory>src/main/resources/schemas</schemaDirectory>
-        </configuration>
       </plugin>
     </plugins>
   </build>

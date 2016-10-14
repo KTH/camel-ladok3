@@ -1,4 +1,4 @@
-package se.kth.infosys.smx.ladok3.internal;
+package se.kth.infosys.ladok3;
 
 import javax.ws.rs.client.WebTarget;
 

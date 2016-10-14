@@ -1,4 +1,4 @@
-package se.kth.infosys.smx.ladok3;
+package se.kth.infosys.ladok3;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,7 +7,6 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.kth.infosys.smx.ladok3.internal.Ladok3StudentInformationService;
 import se.ladok.schemas.studentinformation.Student;
 
 public class Ladok3StudentInformationServiceTest {
