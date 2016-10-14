@@ -26,6 +26,7 @@ Assuming a property place holder in Karaf an example of a configuration could be
 
 A simple manner to keep track of your position in the stream between runs is to load these 
 from a properties file in the camel context which is updated based on the headers in the exchanges.
+This file would have to be created by some other means before the first run.
 
 ```
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
