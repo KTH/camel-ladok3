@@ -23,8 +23,11 @@
  */
 package se.kth.infosys.ladok3;
 
+import java.util.Map;
+
 import javax.ws.rs.client.WebTarget;
 
+import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
 
 public class Ladok3StudentInformationService extends LadokService {
@@ -42,5 +45,20 @@ public class Ladok3StudentInformationService extends LadokService {
                 .request()
                 .accept(STUDENTINFORMATION_XML)
                 .get(Student.class);
+    }
+
+    public SokresultatStudentinformationRepresentation searchStudents(Map<String, Object> params) {
+        WebTarget request = studentinformation.path("/student/filtrera");
+
+        for (String param : params.keySet()) {
+            request = request.queryParam(param, params.get(param));
+        }
+
+        return request
+                .queryParam("limit", 400)
+                .queryParam("page", 1)
+                .request()
+                .accept(STUDENTINFORMATION_XML)
+                .get(SokresultatStudentinformationRepresentation.class);
     }
 }

@@ -25,12 +25,16 @@ package se.kth.infosys.ladok3;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
+import se.ladok.schemas.studentinformation.StudentISokresultat;
 
 public class Ladok3StudentInformationServiceTest {
     private Ladok3StudentInformationService studentInformationService;
@@ -45,6 +49,24 @@ public class Ladok3StudentInformationServiceTest {
         String key = properties.getProperty("ladok3.cert.key");
 
         studentInformationService = new Ladok3StudentInformationService(host, certFile, key);
+    }
+
+    @Test
+    public void searchStudents() {
+        String personnummer = properties.getProperty("ladok3.test.Ladok3StudentInformationServiceTest.getStudentByPersonnummer.personnummer");
+        String fornamn = properties.getProperty("ladok3.test.Ladok3StudentInformationServiceTest.getStudentByPersonnummer.fornamn");
+        String efternamn = properties.getProperty("ladok3.test.Ladok3StudentInformationServiceTest.getStudentByPersonnummer.efternamn");
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("personnummer", personnummer);
+
+        SokresultatStudentinformationRepresentation res = studentInformationService.searchStudents(params);
+        assertEquals(1, res.getTotaltAntalPoster());
+
+        StudentISokresultat student = res.getResultat().get(0);
+        assertEquals(fornamn, student.getFornamn());
+        assertEquals(efternamn, student.getEfternamn());
+        assertEquals(personnummer, student.getPersonnummer());
     }
 
     @Test
