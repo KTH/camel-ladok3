@@ -60,7 +60,7 @@ public class Ladok3StudentInformationServiceTest {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("personnummer", personnummer);
 
-        SokresultatStudentinformationRepresentation res = studentInformationService.searchStudents(params);
+        SokresultatStudentinformationRepresentation res = studentInformationService.studentFiltrera(params);
         assertEquals(1, res.getTotaltAntalPoster());
 
         StudentISokresultat student = res.getResultat().get(0);
@@ -75,7 +75,7 @@ public class Ladok3StudentInformationServiceTest {
         String fornamn = properties.getProperty("ladok3.test.Ladok3StudentInformationServiceTest.getStudentByPersonnummer.fornamn");
         String efternamn = properties.getProperty("ladok3.test.Ladok3StudentInformationServiceTest.getStudentByPersonnummer.efternamn");
 
-        Student student = studentInformationService.getStudentByPersonnummer(personnummer);
+        Student student = studentInformationService.studentPersonnummer(personnummer);
 
         assertEquals(personnummer, student.getPersonnummer());
         assertEquals(fornamn, student.getFornamn());

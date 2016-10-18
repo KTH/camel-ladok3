@@ -46,7 +46,7 @@ public class Ladok3Producer extends DefaultProducer {
     public void process(Exchange exchange) throws Exception {
         final String personnummer = "197103210170";
 
-        Student student = studentInformationService.getStudentByPersonnummer(personnummer);
+        Student student = studentInformationService.studentPersonnummer(personnummer);
 
         logger.debug("found: " + student.getFornamn() + " " + student.getEfternamn());
         exchange.getIn().setBody(student);

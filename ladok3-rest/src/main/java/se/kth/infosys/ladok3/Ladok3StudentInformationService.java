@@ -39,7 +39,7 @@ public class Ladok3StudentInformationService extends LadokService {
         this.studentinformation = client.target(String.format("https://%s/studentinformation", host));
     }
 
-    public Student getStudentByPersonnummer(String personnummer) {
+    public Student studentPersonnummer(String personnummer) {
         return studentinformation.path("/student/personnummer/{personnummer}")
                 .resolveTemplate("personnummer", personnummer)
                 .request()
@@ -47,16 +47,17 @@ public class Ladok3StudentInformationService extends LadokService {
                 .get(Student.class);
     }
 
-    public SokresultatStudentinformationRepresentation searchStudents(Map<String, Object> params) {
+    public SokresultatStudentinformationRepresentation studentFiltrera(Map<String, Object> params) {
         WebTarget request = studentinformation.path("/student/filtrera");
+
+        params.putIfAbsent("limit", 400);
+        params.putIfAbsent("page", 1);
 
         for (String param : params.keySet()) {
             request = request.queryParam(param, params.get(param));
         }
 
         return request
-                .queryParam("limit", 400)
-                .queryParam("page", 1)
                 .request()
                 .accept(STUDENTINFORMATION_XML)
                 .get(SokresultatStudentinformationRepresentation.class);
