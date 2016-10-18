@@ -34,7 +34,7 @@ import javax.ws.rs.client.ClientBuilder;
 
 public class LadokService {
     protected final Client client;
-    
+
     protected LadokService(String host, String certFile, String key) throws Exception {
         final KeyStore keyStore = KeyStore.getInstance("PKCS12");
         keyStore.load(new FileInputStream(new File(certFile)), key.toCharArray());
