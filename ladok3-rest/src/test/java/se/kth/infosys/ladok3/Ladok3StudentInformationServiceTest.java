@@ -26,12 +26,15 @@ package se.kth.infosys.ladok3;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import se.ladok.schemas.dap.RelationLink;
+import se.ladok.schemas.dap.ServiceIndex;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
@@ -49,6 +52,18 @@ public class Ladok3StudentInformationServiceTest {
         String key = properties.getProperty("ladok3.cert.key");
 
         studentInformationService = new Ladok3StudentInformationService(host, certFile, key);
+    }
+
+    @Test
+    public void testServiceIndex() {
+        ServiceIndex index = studentInformationService.serviceIndex();
+        List<RelationLink> links = index.getLink();
+
+        for (RelationLink link : links) {
+            System.out.println(link.getRel());
+            System.out.println(link.getUri());
+        }
+        assert(links.size() > 0);
     }
 
     @Test

@@ -32,9 +32,21 @@ import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
-public class LadokService {
+import se.ladok.schemas.dap.ServiceIndex;
+
+/**
+ * Abstract base class for Ladok REST services.
+ */
+public abstract class LadokService {
     protected final Client client;
 
+    /**
+     * Initialize the service client with authentication certificates.
+     * @param host The targeted Ladok environment.
+     * @param certFile The path to the certificate file.
+     * @param key The certificate file key phrase.
+     * @throws Exception on errors.
+     */
     protected LadokService(String host, String certFile, String key) throws Exception {
         final KeyStore keyStore = KeyStore.getInstance("PKCS12");
         keyStore.load(new FileInputStream(new File(certFile)), key.toCharArray());
@@ -47,4 +59,18 @@ public class LadokService {
 
         client = ClientBuilder.newBuilder().sslContext(context).build();
     }
+
+    /**
+     * Get the service index for the service.
+     * 
+     * NOTE: This could probably have been made generic in the base class, but
+     * the "ACCEPT" types are different for each service. The idea to keep an abstract
+     * definition here is to use it in order to provide a generic structure to make
+     * lookups into this information. However, while the Ladok project says we should
+     * use this index, why we should and for what purpose really escapes me, so I'm 
+     * stalling it for now. - fjo 20161018
+     * 
+     * @return The service index
+     */
+    public abstract ServiceIndex serviceIndex();
 }

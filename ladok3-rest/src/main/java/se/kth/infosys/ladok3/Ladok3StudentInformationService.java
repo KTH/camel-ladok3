@@ -27,6 +27,7 @@ import java.util.Map;
 
 import javax.ws.rs.client.WebTarget;
 
+import se.ladok.schemas.dap.ServiceIndex;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
 
@@ -48,6 +49,17 @@ public class Ladok3StudentInformationService extends LadokService {
     public Ladok3StudentInformationService(String host, String certFile, String key) throws Exception {
         super(host, certFile, key);
         this.studentinformation = client.target(String.format("https://%s/studentinformation", host));
+    }
+
+    /**
+     * Retrieve the service index for the studentinformation service.
+     * @return the service index.
+     */
+    public ServiceIndex serviceIndex() {
+        return studentinformation.path("/service/index")
+                .request()
+                .accept(STUDENTINFORMATION_XML)
+                .get(ServiceIndex.class);
     }
 
     /**
