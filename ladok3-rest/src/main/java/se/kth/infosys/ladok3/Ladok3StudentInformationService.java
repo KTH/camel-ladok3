@@ -32,7 +32,9 @@ import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresen
 import se.ladok.schemas.studentinformation.Student;
 
 /**
- * A class representing the Ladok studentinformation service.
+ * A class representing the Ladok studentinformation service. It is using JAX RS 
+ * which means that errors will be thrown as unchecked runtime exceptions. See 
+ * JAX RS client documentation.
  */
 public class Ladok3StudentInformationService extends LadokService {
     private static final String STUDENTINFORMATION_XML = "application/vnd.ladok-studentinformation+xml";
@@ -41,7 +43,7 @@ public class Ladok3StudentInformationService extends LadokService {
     /**
      * Constructor Web Service client end representing the Ladok studentinformation endpoint.
      * 
-     * @param host The hostname of the targeted Ladok environment, i.e. mit-ik.ladok.se
+     * @param host The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
      * @param certFile The path to the certificate to use for authentication.
      * @param key The key to certificate.
      * @throws Exception on errors.
@@ -52,8 +54,7 @@ public class Ladok3StudentInformationService extends LadokService {
     }
 
     /**
-     * Retrieve the service index for the studentinformation service.
-     * @return the service index.
+     * {@inheritDoc}
      */
     public ServiceIndex serviceIndex() {
         return studentinformation.path("/service/index")
@@ -87,9 +88,12 @@ public class Ladok3StudentInformationService extends LadokService {
      * SokresultatStudentinformationRepresentation res =
      *     studentInformationService.studentFiltrera(params);
      * </code>
+     * 
+     * Objects passed as values will be rendered into parameters using their 
+     * toString() method.
      *
-     * @param params
-     * @return the search result.
+     * @param params A map between parameter strings and their object values.
+     * @return The search result.
      */
     public SokresultatStudentinformationRepresentation studentFiltrera(Map<String, Object> params) {
         WebTarget request = studentinformation.path("/student/filtrera");
