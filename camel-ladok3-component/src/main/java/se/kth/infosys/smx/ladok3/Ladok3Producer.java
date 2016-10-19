@@ -44,11 +44,14 @@ public class Ladok3Producer extends DefaultProducer {
     }
 
     public void process(Exchange exchange) throws Exception {
-        final String personnummer = "197103210170";
+        Object object = exchange.getIn().getBody();
+        
+        if (object instanceof Student) {
+            Student student = (Student) object;
 
-        Student student = studentInformationService.studentPersonnummer(personnummer);
-
-        logger.debug("found: " + student.getFornamn() + " " + student.getEfternamn());
-        exchange.getIn().setBody(student);
+            logger.debug("Getting Ladok data for student: " + student.getUid());
+            Student fromLadok = studentInformationService.studentUID(student.getUid());
+            exchange.getOut().setBody(fromLadok);
+        }
     }
 }

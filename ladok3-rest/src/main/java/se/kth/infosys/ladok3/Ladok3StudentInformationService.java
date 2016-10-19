@@ -77,6 +77,19 @@ public class Ladok3StudentInformationService extends LadokService {
     }
 
     /**
+     * Retrieve a student given its UID.
+     * @param uid The unique identifier for the student.
+     * @return The student matching the UID
+     */
+    public Student studentUID(String uid) {
+        return studentinformation.path("/student/{uid}")
+                .resolveTemplate("uuid", uid)
+                .request()
+                .accept(STUDENTINFORMATION_XML)
+                .get(Student.class);
+    }
+
+    /**
      * Calls /student/filtrera with query parameters as specified in the params Map. 
      * See Ladok REST documentation for more information about parameters. Only 
      * difference is that this method will default to "limit=400" and "page=1"
