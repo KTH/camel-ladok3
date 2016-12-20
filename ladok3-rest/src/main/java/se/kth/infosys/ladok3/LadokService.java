@@ -57,7 +57,10 @@ public abstract class LadokService {
         final SSLContext context = SSLContext.getInstance("TLS");
         context.init(kmf.getKeyManagers(), null, null);
 
-        client = ClientBuilder.newBuilder().sslContext(context).build();
+        client = ClientBuilder.newBuilder().sslContext(context)
+                .build()
+                .register(Ladok3RequestFilter.class)
+                .register(Ladok3ResponseFilter.class);
     }
 
     /**
