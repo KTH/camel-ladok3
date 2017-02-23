@@ -12,13 +12,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType abstract="true" name="BaseEvent">
-    <xs:sequence>
-      <xs:element ref="events:EventContext"/>
-      <xs:element name="HandelseUID" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType abstract="true" name="BaseEventRepresentationMedHandelsetyp">
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -27,6 +20,13 @@
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="BaseEvent">
+    <xs:sequence>
+      <xs:element ref="events:EventContext"/>
+      <xs:element name="HandelseUID" type="xs:string"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType abstract="true" name="grunddataBaseEvent">

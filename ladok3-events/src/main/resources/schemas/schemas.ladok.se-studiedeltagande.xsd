@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:base="http://schemas.ladok.se" xmlns:dap="http://schemas.ladok.se/dap" xmlns:events="http://schemas.ladok.se/events" xmlns:sd="http://schemas.ladok.se/studiedeltagande" elementFormDefault="qualified" targetNamespace="http://schemas.ladok.se/studiedeltagande" version="1.0">
+
+  <xs:import namespace="http://schemas.ladok.se/events" schemaLocation="schemas.ladok.se-events.xsd"/>
+
+  <xs:import namespace="http://schemas.ladok.se" schemaLocation="schemas.ladok.se.xsd"/>
+
+  <xs:element name="AktorEvent" type="sd:AktorEvent"/>
+
+  <xs:element name="AndradPlaceringIPlanEvent" type="sd:AndradPlaceringIPlanEvent"/>
+
+  <xs:element name="AnknytningEvent" type="sd:AnknytningEvent"/>
+
+  <xs:element name="AterbudEvent" type="sd:AterbudEvent"/>
+
+  <xs:element name="AterkalladOmregistreringEvent" type="sd:AterkalladOmregistreringEvent"/>
+
+  <xs:element name="AterkalladPaborjadUtbildningEvent" type="sd:AterkalladPaborjadUtbildningEvent"/>
+
+  <xs:element name="AterkalladregistreringEvent" type="sd:AterkalladregistreringEvent"/>
+
+  <xs:element name="AterkallatPaborjatUtbildningstillfalleEvent" type="sd:AterkallatPaborjatUtbildningstillfalleEvent"/>
+
+  <xs:element name="AvbrottBorttagetEvent" type="sd:AvbrottBorttagetEvent"/>
+
+  <xs:element name="AvbrottEvent" type="sd:AvbrottEvent"/>
+
+  <xs:element name="AvklaradBorttagetEvent" type="sd:AvklaradBorttagetEvent"/>
+
+  <xs:element name="AvklaradEvent" type="sd:AvklaradEvent"/>
+
+  <xs:element name="ForvantatDeltagandeSkapadEvent" type="sd:ForvantatDeltagandeSkapadEvent"/>
+
+  <xs:element name="GruppEvent" type="sd:GruppEvent"/>
+
+  <xs:element name="IndividuelltAtagandeBestalltEvent" type="sd:IndividuelltAtagandeBestalltEvent"/>
+
+  <xs:element name="OmregistreringEvent" type="sd:OmregistreringEvent"/>
+
+  <xs:element name="PaborjadUtbildningEvent" type="sd:PaborjadUtbildningEvent"/>
+
+  <xs:element name="PaborjatUtbildningstillfalleEvent" type="sd:PaborjatUtbildningstillfalleEvent"/>
+
+  <xs:element name="RegistreringEvent" type="sd:RegistreringEvent"/>
+
+  <xs:element name="StatusForStudieavgiftsbetalningUppdateradEvent" type="sd:StatusForStudieavgiftsbetalningUppdateradEvent"/>
+
+  <xs:element name="StudentTillLarosateEvent" type="sd:StudentTillLarosateEvent"/>
+
+  <xs:element name="StudieaktivitetBorttagetEvent" type="sd:StudieaktivitetBorttagetEvent"/>
+
+  <xs:element name="StudieaktivitetDokumenteradEvent" type="sd:StudieaktivitetDokumenteradEvent"/>
+
+  <xs:element name="StudieaktivitetForEvent" type="sd:StudieaktivitetForEvent"/>
+
+  <xs:element name="Studieavgiftsbetalningsvarde" type="sd:Studieavgiftsbetalningsvarde"/>
+
+  <xs:element name="StudiefinansieringIEvent" type="sd:StudiefinansieringIEvent"/>
+
+  <xs:element name="UppehallBorttagetEvent" type="sd:UppehallBorttagetEvent"/>
+
+  <xs:element name="UppehallEvent" type="sd:UppehallEvent"/>
+
+  <xs:complexType name="RegistreringEvent">
+    <xs:complexContent>
+      <xs:extension base="sd:RegistreringBasEvent">
+        <xs:sequence>
+          <xs:element name="Omfattningsvarde" type="xs:string"/>
+          <xs:element name="Studieavgiftsbetalning" type="sd:Studieavgiftsbetalningsvarde"/>
+          <xs:element name="StudieperiodSlut" type="xs:date"/>
+          <xs:element name="StudieperiodStart" type="xs:date"/>
+          <xs:element name="ArAnpassad" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="RegistreringBasEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ForegaendeKurstillfalleUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="ForegaendeRegistreringUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="ForegaendeStudieperiodSlut" type="xs:date"/>
+          <xs:element minOccurs="0" name="ForegaendeStudieperiodStart" type="xs:date"/>
+          <xs:element minOccurs="0" name="ForegaendeTillfallesantagningUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="ForegaendeUtbildningsinstansUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="InomKurspaketeringstillfalle" type="sd:InomKurspaketeringstillfalleEventPart"/>
+          <xs:element name="KursUID" type="xs:string"/>
+          <xs:element name="KurstillfalleUID" type="xs:string"/>
+          <xs:element name="Period" type="xs:int"/>
+          <xs:element name="RegistreringUID" type="xs:string"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="TillfallesantagningUID" type="xs:string"/>
+          <xs:element name="UtbildningsinstansUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="InomKurspaketeringstillfalleEventPart">
+    <xs:sequence>
+      <xs:element name="KurspaketeringUID" type="xs:string"/>
+      <xs:element name="KurspaketeringstillfalleUID" type="xs:string"/>
+      <xs:element name="UtbildningstypID" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AndradPlaceringIPlanEvent">
+    <xs:complexContent>
+      <xs:extension base="sd:RegistreringBasEvent">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ForegaendeInomKurspakteringstillfalle" type="sd:InomKurspaketeringstillfalleEventPart"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ForvantatDeltagandeSkapadEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="PaketerandeUtbildningstillfalleUID" type="xs:string"/>
+          <xs:element name="Senaredelmarkering" type="xs:boolean"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Studieavgiftsbetalning" type="sd:Studieavgiftsbetalningsvarde"/>
+          <xs:element minOccurs="0" name="TidigareTillfallesantagningUID" type="xs:string"/>
+          <xs:element name="TillfallesantagningUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UppehallEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="ExternReferens" type="xs:string"/>
+          <xs:element name="KurspaketeringUID" type="xs:string"/>
+          <xs:element name="KurspaketeringstillfalleUID" type="xs:string"/>
+          <xs:element name="PlaneratSlutdatum" type="xs:date"/>
+          <xs:element name="RattAttAterupptaStudier" type="xs:boolean"/>
+          <xs:element name="Startdatum" type="xs:date"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="UppehallUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PaborjadUtbildningEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="UtbildningUID" type="xs:string"/>
+          <xs:element name="UtbildningsinstansUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+          <xs:element name="UtbildningstypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AterkalladPaborjadUtbildningEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="Orsak" type="sd:OrsakTillAterkallningEventPart"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="UtbildningUID" type="xs:string"/>
+          <xs:element name="UtbildningstypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AktorEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="AktorUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+          <xs:element name="Eventtyp" type="xs:string"/>
+          <xs:element name="Fornamn" type="xs:string"/>
+          <xs:element name="Roll" type="xs:string"/>
+          <xs:element minOccurs="0" name="Slutdatum" type="xs:date"/>
+          <xs:element name="Startdatum" type="xs:date"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="TillfallesantagnigUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AterkalladOmregistreringEvent">
+    <xs:complexContent>
+      <xs:extension base="sd:AterkalladregistreringEvent">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AterkalladregistreringEvent">
+    <xs:complexContent>
+      <xs:extension base="sd:RegistreringBasEvent">
+        <xs:sequence>
+          <xs:element name="Orsak" type="sd:OrsakTillAterkallningEventPart"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AterkallatPaborjatUtbildningstillfalleEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="Orsak" type="sd:OrsakTillAterkallningEventPart"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="UtbildningUID" type="xs:string"/>
+          <xs:element name="UtbildningsinstansUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfallestypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PaborjatUtbildningstillfalleEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PaborjandeDatum" type="xs:date"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="TillfallesantagningUID" type="xs:string"/>
+          <xs:element name="UtbildningUID" type="xs:string"/>
+          <xs:element name="UtbildningsinstansUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfallestypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UppehallBorttagetEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="KurspaketeringUID" type="xs:string"/>
+          <xs:element name="PlaneratSlutdatum" type="xs:date"/>
+          <xs:element name="Startdatum" type="xs:date"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="UppehallUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GruppEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="Anvandare" type="xs:string"/>
+          <xs:element name="Engelskbenamning" type="xs:string"/>
+          <xs:element name="Eventtyp" type="xs:string"/>
+          <xs:element name="GruppUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Gruppkod" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Koppladestudenter" type="xs:string"/>
+          <xs:element name="Svenskbenamning" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="IndividuelltAtagandeBestalltEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="ReferensUID" type="xs:string"/>
+          <xs:element name="Referensbenamning" type="xs:string"/>
+          <xs:element name="RotkurspaketeringstillfalleUID" type="xs:string"/>
+          <xs:element name="RotkurspaketeringstillfalleUtbildningstypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AterbudEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="TillfallesantagningUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+          <xs:element name="Aterbudsdatum" type="xs:date"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudentTillLarosateEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Tilltalsnamn" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AvklaradBorttagetEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="UtbildningUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+          <xs:element name="UtbildningstypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudieaktivitetDokumenteradEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="Eventtyp" type="xs:string"/>
+          <xs:element name="RotkurspaketeringUID" type="xs:string"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="Studieaktivitet" type="sd:StudieaktivitetForEvent"/>
+          <xs:element name="StudieaktivitetUID" type="xs:string"/>
+          <xs:element name="UtbildningsinstansUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudieaktivitetForEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="KurspaketeringstillfalleUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="KurspaketeringstillfallesantagningUID" type="xs:string"/>
+          <xs:element name="PeriodID" type="xs:int"/>
+          <xs:element name="Procent" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Studiefinansiering" type="sd:StudiefinansieringIEvent"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudiefinansieringIEvent">
+    <xs:sequence>
+      <xs:element name="Procent" type="xs:int"/>
+      <xs:element name="StudiefinansieringstypID" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="StudieaktivitetBorttagetEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="StudieaktivitetUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AvbrottBorttagetEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="UtbildningUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+          <xs:element name="UtbildningstypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AvklaradEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AvklaradDatum" type="xs:date"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="UtbildningUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleVidAvklarandeUID" type="xs:string"/>
+          <xs:element name="UtbildningstypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StatusForStudieavgiftsbetalningUppdateradEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="Studieavgiftsbetalning" type="sd:Studieavgiftsbetalningsvarde"/>
+          <xs:element name="TillfallesantagningUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AvbrottEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Avbrottsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="ExternReferens" type="xs:string"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element name="UtbildningUID" type="xs:string"/>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+          <xs:element name="UtbildningstypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="OmregistreringEvent">
+    <xs:complexContent>
+      <xs:extension base="sd:RegistreringBasEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string"/>
+          <xs:element name="StudieperiodSlut" type="xs:date"/>
+          <xs:element name="StudieperiodStart" type="xs:date"/>
+          <xs:element name="ArAnpassad" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AnknytningEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="Anknytningsperiod" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element name="Eventtyp" type="xs:string"/>
+          <xs:element name="ExternPartID" type="xs:string"/>
+          <xs:element name="TillfallesantagningUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="Studieavgiftsbetalningsvarde">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.betald"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_aktuell"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.aterbetald"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_provad"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_betald"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="OrsakTillAterkallningEventPart">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="studiedeltagande.domain.aterkalla.orsak.borttagen_registrering"/>
+      <xs:enumeration value="studiedeltagande.domain.aterkalla.orsak.avbrott"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

@@ -33,6 +33,73 @@
 
   <xs:element name="Tjanstestatus" type="service:Tjanstestatus"/>
 
+  <xs:complexType abstract="true" name="EventEnvelope">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EventId" type="xs:string"/>
+          <xs:element minOccurs="0" name="EventType" type="xs:string"/>
+          <xs:element minOccurs="0" name="HandelseData" type="xs:string"/>
+          <xs:element minOccurs="0" name="HandelseTyp" type="xs:string"/>
+          <xs:element minOccurs="0" name="Message" type="xs:string"/>
+          <xs:element name="PublisherId" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="NumberOfProducedEventsByType">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Count" type="xs:long"/>
+          <xs:element minOccurs="0" name="EventType" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SequenceNumber">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SequenceNumber" type="xs:long"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PendingEventLista">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="PendingEvents" type="service:PendingEventEnvelope"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PendingEventEnvelope">
+    <xs:complexContent>
+      <xs:extension base="service:EventEnvelope">
+        <xs:sequence>
+          <xs:element name="LarosatesId" type="xs:int"/>
+          <xs:element name="RetryCounter" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="EventTypesSubscribedOn">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Subscriptions" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="Tjanstestatus">
     <xs:sequence>
       <xs:element name="AllaPublicerareLasbara" type="xs:boolean"/>
@@ -65,17 +132,6 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="NumberOfProducedEventsByType">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Count" type="xs:long"/>
-          <xs:element minOccurs="0" name="EventType" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="PublisherSequenceNumberList">
     <xs:complexContent>
       <xs:extension base="dap:Base">
@@ -92,42 +148,6 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="PublisherId" type="xs:int"/>
           <xs:element minOccurs="0" name="Sekvensnummer" type="xs:long"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="PendingEventEnvelope">
-    <xs:complexContent>
-      <xs:extension base="service:EventEnvelope">
-        <xs:sequence>
-          <xs:element name="LarosatesId" type="xs:int"/>
-          <xs:element name="RetryCounter" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="EventEnvelope">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="EventId" type="xs:string"/>
-          <xs:element minOccurs="0" name="EventType" type="xs:string"/>
-          <xs:element minOccurs="0" name="HandelseData" type="xs:string"/>
-          <xs:element minOccurs="0" name="HandelseTyp" type="xs:string"/>
-          <xs:element minOccurs="0" name="Message" type="xs:string"/>
-          <xs:element name="PublisherId" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="EventCount">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="EventCount" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -153,31 +173,11 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="SequenceNumber">
+  <xs:complexType name="EventCount">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" name="SequenceNumber" type="xs:long"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="PendingEventLista">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="PendingEvents" type="service:PendingEventEnvelope"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="EventTypesSubscribedOn">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Subscriptions" type="xs:string"/>
+          <xs:element minOccurs="0" name="EventCount" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

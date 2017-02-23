@@ -1,0 +1,7 @@
+/bin/
+/target/
+*~
+/.settings
+/.classpath
+pom.xml.versionsBackup
+/src/test/resources/test.properties

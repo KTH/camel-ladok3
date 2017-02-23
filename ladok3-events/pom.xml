@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!--
   MIT License
 
@@ -22,57 +22,22 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
-    <artifactId>ladok3</artifactId>
     <groupId>se.kth.infosys.smx</groupId>
+    <artifactId>ladok3</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camel-ladok3-component</artifactId>
+  <artifactId>ladok3-events</artifactId>
   <packaging>bundle</packaging>
 
-  <name>Camel Ladok3 Component</name>
-  <description>The Ladok3 Endpoint Component</description>
+  <name>ladok3-events</name>
   <url>https://www.kth.se</url>
 
   <dependencies>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-core</artifactId>
-      <version>${camel-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-jacksonxml</artifactId>
-      <version>${camel-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.rometools</groupId>
-      <artifactId>rome</artifactId>
-      <version>1.6.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-transports-http-jetty</artifactId>
-      <version>3.1.6</version>
-      <type>bundle</type>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.enterprise</artifactId>
-      <version>5.0.0</version>
-    </dependency>
-    <!-- support camel documentation -->
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>apt</artifactId>
-      <version>${camel-version}</version>
-    </dependency>
-
     <!-- logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -86,28 +51,20 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- testing -->
     <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-test-blueprint</artifactId>
-      <version>${camel-version}</version>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-rs-client</artifactId>
+      <version>3.1.7</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>se.kth.infosys.smx</groupId>
-      <artifactId>ladok3-events</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>se.kth.infosys.smx</groupId>
-      <artifactId>ladok3-rest</artifactId>
-      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
   <build>
-    <defaultGoal>install</defaultGoal>
-
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -118,30 +75,19 @@
           <target>1.8</target>
         </configuration>
       </plugin>
-
-      <!-- generate components meta-data and validate component includes documentation etc -->
       <plugin>
-        <groupId>org.apache.camel</groupId>
-        <artifactId>camel-package-maven-plugin</artifactId>
-        <version>${camel-version}</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.0</version>
         <executions>
           <execution>
-            <id>prepare</id>
+            <id>attach-sources</id>
             <goals>
-              <goal>prepare-components</goal>
+              <goal>jar</goal>
             </goals>
-            <phase>generate-resources</phase>
-          </execution>
-          <execution>
-            <id>validate</id>
-            <goals>
-              <goal>validate-components</goal>
-            </goals>
-            <phase>prepare-package</phase>
           </execution>
         </executions>
       </plugin>
-
       <!-- to generate the MANIFEST-FILE of the bundle -->
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -150,9 +96,8 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Embed-Dependency>rome</Embed-Dependency>
-            <Bundle-SymbolicName>se.kth.infosys.smx.camel-ladok3-component</Bundle-SymbolicName>
-            <Export-Service>org.apache.camel.spi.ComponentResolver;component=ladok3</Export-Service>
+            <Bundle-SymbolicName>se.kth.infosys.ladok3</Bundle-SymbolicName>
+            <Export-Package>se.ladok.schemas,se.kth.infosys.ladok3</Export-Package>
           </instructions>
         </configuration>
         <executions> 
@@ -164,6 +109,22 @@
             </goals> 
           </execution> 
         </executions> 
+      </plugin>
+
+      <plugin>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <version>0.13.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <schemaDirectory>src/main/resources/schemas</schemaDirectory>
+        </configuration>
       </plugin>
     </plugins>
   </build>
