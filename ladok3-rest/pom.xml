@@ -96,7 +96,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Bundle-SymbolicName>se.kth.infosys.ladok3</Bundle-SymbolicName>
+            <Bundle-SymbolicName>se.kth.infosys.ladok3-rest</Bundle-SymbolicName>
             <Export-Package>se.ladok.schemas,se.kth.infosys.ladok3</Export-Package>
           </instructions>
         </configuration>

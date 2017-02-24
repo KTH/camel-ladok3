@@ -38,29 +38,11 @@
   <url>https://www.kth.se</url>
 
   <dependencies>
-    <!-- logging -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${slf4j-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j-version}</version>
-      <scope>test</scope>
-    </dependency>
-
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-rs-client</artifactId>
       <version>3.1.7</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 
@@ -96,8 +78,8 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Bundle-SymbolicName>se.kth.infosys.ladok3</Bundle-SymbolicName>
-            <Export-Package>se.ladok.schemas,se.kth.infosys.ladok3</Export-Package>
+            <Bundle-SymbolicName>se.kth.infosys.ladok3-events</Bundle-SymbolicName>
+            <Export-Package>se.ladok.schemas</Export-Package>
           </instructions>
         </configuration>
         <executions> 
