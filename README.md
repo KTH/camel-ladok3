@@ -52,6 +52,10 @@ There are three parts in the project
 
 1. ladok3-rest is a library to talk to Ladok3 REST api services. It includes the 
    data model derived from the XSD published by Ladok.
+1. ladok3-events is a library with data model for events derived from the XSD
+   published by Ladok. They are currently separated from the model used in
+   ladok3-rest since they currently differ in some common files. It's unclear
+   if that is intentional.
 1. camel-ladok3-component is Camel Component defining a ladok3 endpoint to use in
    Camel routes.
 1. ladok3-feature is a Karaf Feature packaging of the camel-ladok3-component.
