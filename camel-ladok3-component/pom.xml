@@ -95,7 +95,7 @@
     </dependency>
     <dependency>
       <groupId>se.kth.infosys.smx</groupId>
-      <artifactId>ladok3-events</artifactId>
+      <artifactId>ladok3-model</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

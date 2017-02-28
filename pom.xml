@@ -39,7 +39,7 @@
   </organization>
 
   <modules>
-    <module>ladok3-events</module>
+    <module>ladok3-model</module>
     <module>ladok3-rest</module>
     <module>camel-ladok3-component</module>
     <module>ladok3-feature</module>

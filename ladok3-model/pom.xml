@@ -31,7 +31,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ladok3-events</artifactId>
+  <artifactId>ladok3-model</artifactId>
   <packaging>bundle</packaging>
 
   <name>ladok3-events</name>

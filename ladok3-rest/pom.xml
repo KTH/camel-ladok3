@@ -38,6 +38,12 @@
   <url>https://www.kth.se</url>
 
   <dependencies>
+    <dependency>
+      <groupId>se.kth.infosys.smx</groupId>
+      <artifactId>ladok3-model</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <!-- logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -88,6 +94,7 @@
           </execution>
         </executions>
       </plugin>
+
       <!-- to generate the MANIFEST-FILE of the bundle -->
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -109,22 +116,6 @@
             </goals> 
           </execution> 
         </executions> 
-      </plugin>
-
-      <plugin>
-        <groupId>org.jvnet.jaxb2.maven2</groupId>
-        <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>0.13.1</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <schemaDirectory>src/main/resources/schemas</schemaDirectory>
-        </configuration>
       </plugin>
     </plugins>
   </build>
