@@ -70,6 +70,7 @@
           </execution>
         </executions>
       </plugin>
+
       <!-- to generate the MANIFEST-FILE of the bundle -->
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -78,7 +79,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Bundle-SymbolicName>se.kth.infosys.ladok3-events</Bundle-SymbolicName>
+            <Bundle-SymbolicName>se.kth.infosys.ladok3-model</Bundle-SymbolicName>
             <Export-Package>se.ladok.schemas</Export-Package>
           </instructions>
         </configuration>
