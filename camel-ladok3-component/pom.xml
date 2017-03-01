@@ -2,7 +2,7 @@
 <!--
   MIT License
 
-  Copyright (c) 2016 Kungliga Tekniska högskolan
+  Copyright (c) 2017 Kungliga Tekniska högskolan
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
 
   <parent>
     <artifactId>ladok3</artifactId>
-    <groupId>se.kth.infosys.smx</groupId>
+    <groupId>se.kth.infosys.smx.ladok3</groupId>
     <version>0.0.1</version>
   </parent>
 
@@ -51,12 +51,12 @@
       <version>1.7.1</version>
     </dependency>
     <dependency>
-      <groupId>se.kth.infosys.smx</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>ladok3-rest</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>se.kth.infosys.smx</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>ladok3-model</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -103,16 +103,6 @@
     <defaultGoal>install</defaultGoal>
 
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-
       <!-- generate components meta-data and validate component includes documentation etc -->
       <plugin>
         <groupId>org.apache.camel</groupId>

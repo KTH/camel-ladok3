@@ -2,7 +2,7 @@
 <!--
   MIT License
 
-  Copyright (c) 2016 Kungliga Tekniska högskolan
+  Copyright (c) 2017 Kungliga Tekniska högskolan
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,60 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>se.kth.infosys.smx</groupId>
+  <groupId>se.kth.infosys.smx.ladok3</groupId>
   <artifactId>ladok3</artifactId>
   <version>0.0.1</version>
   <packaging>pom</packaging>
 
   <name>KTH Ladok3 Integration</name>
-  <description>Project for components making up the ladok3 feature.</description>
+  <description>Project for components making up the ladok3 integration.</description>
   <url>https://www.kth.se</url>
 
   <organization>
     <name>Kungliga Tekniska högskolan</name>
     <url>https://www.kth.se</url>
   </organization>
+
+  <!-- License information required by Sonatype -->
+  <licenses>
+    <license>
+      <name>The MIT License (MIT)</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+  
+  <!-- Source control management required by Sonatype -->
+  <scm>
+    <url>https://github.com/kth/camel-ladok3</url>
+    <developerConnection>fjo@kth.se</developerConnection>
+    <connection>https://github.com/kth/camel-ladok3</connection>
+  </scm>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/kth/camel-ladok3/issues</url>
+  </issueManagement>
+
+  <!-- Developer connection information required by Sonatype -->
+  <developers>
+    <developer>
+      <name>Fredrik Jönsson</name>
+      <email>fjo@kth.se</email>
+      <organization>KTH</organization>
+      <organizationUrl>http://www.kth.se/profile/fjo</organizationUrl>
+    </developer>
+  </developers>
+
+  <!-- The actual Sonatype distribution repository -->
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
 
   <modules>
     <module>ladok3-model</module>
@@ -47,7 +88,6 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 
   <dependencyManagement>
@@ -69,11 +109,63 @@
         <artifactId>versions-maven-plugin</artifactId>
         <version>2.2</version>
       </plugin>
+
       <plugin>
-        <artifactId>maven-scm-plugin</artifactId>
-        <version>1.9.4</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
         <configuration>
-          <tag>${project.artifactId}-${project.version}</tag>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+
+      <!-- Sources required by Sonatype -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Signing required by Sonatype -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <!-- JavaDoc required by Sonatype -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.3</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <excludePackageNames>se.ladok.schemas</excludePackageNames>
         </configuration>
       </plugin>
     </plugins>
