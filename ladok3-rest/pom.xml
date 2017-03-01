@@ -28,7 +28,7 @@
   <parent>
     <groupId>se.kth.infosys.smx</groupId>
     <artifactId>ladok3</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
   </parent>
 
   <artifactId>ladok3-rest</artifactId>
@@ -38,29 +38,38 @@
   <url>https://www.kth.se</url>
 
   <dependencies>
+    <dependency>
+      <groupId>se.kth.infosys.smx</groupId>
+      <artifactId>ladok3-model</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <!-- logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>${slf4j-version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j-version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-rs-client</artifactId>
-      <version>3.1.7</version>
+      <version>3.1.9</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>2.2.11</version>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
 
@@ -88,6 +97,7 @@
           </execution>
         </executions>
       </plugin>
+
       <!-- to generate the MANIFEST-FILE of the bundle -->
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -96,8 +106,8 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Bundle-SymbolicName>se.kth.infosys.ladok3</Bundle-SymbolicName>
-            <Export-Package>se.ladok.schemas,se.kth.infosys.ladok3</Export-Package>
+            <Bundle-SymbolicName>se.kth.infosys.ladok3-rest</Bundle-SymbolicName>
+            <Export-Package>se.kth.infosys.ladok3</Export-Package>
           </instructions>
         </configuration>
         <executions> 
@@ -109,22 +119,6 @@
             </goals> 
           </execution> 
         </executions> 
-      </plugin>
-
-      <plugin>
-        <groupId>org.jvnet.jaxb2.maven2</groupId>
-        <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>0.13.1</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <schemaDirectory>src/main/resources/schemas</schemaDirectory>
-        </configuration>
       </plugin>
     </plugins>
   </build>

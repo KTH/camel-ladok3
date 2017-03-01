@@ -3,7 +3,11 @@
 
   <xs:import namespace="http://schemas.ladok.se" schemaLocation="schemas.ladok.se.xsd"/>
 
+  <xs:element name="AviseringEnumDummy" type="av:AviseringEnumDummy"/>
+
   <xs:element name="Leveranspreferens" type="av:Leveranspreferens"/>
+
+  <xs:element name="Leveranspreferenser" type="av:Leveranspreferenser"/>
 
   <xs:complexType name="Leveranspreferens">
     <xs:complexContent>
@@ -14,6 +18,22 @@
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Leveranspreferenser">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="av:Leveranspreferens"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="AviseringEnumDummy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Leveransalternativ" type="av:Leveransalternativ"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:simpleType name="Aviseringskategori">
