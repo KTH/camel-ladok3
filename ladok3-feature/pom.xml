@@ -3,7 +3,7 @@
 <!--
   MIT License
 
-  Copyright (c) 2016 Kungliga Tekniska högskolan
+  Copyright (c) 2017 Kungliga Tekniska högskolan
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,8 @@
 
   <parent>
     <artifactId>ladok3</artifactId>
-    <groupId>se.kth.infosys.smx</groupId>
-    <version>0.0.1</version>
+    <groupId>se.kth.infosys.smx.ladok3</groupId>
+    <version>0.0.2</version>
   </parent>
 
   <artifactId>ladok3-feature</artifactId>
@@ -55,13 +55,8 @@
         <artifactId>karaf-maven-plugin</artifactId>
 
         <configuration>
-<!--           <startLevel>50</startLevel> -->
           <aggregateFeatures>true</aggregateFeatures>
           <resolver>(obr)</resolver>
-<!--           <checkDependencyChange>true</checkDependencyChange> -->
-<!--           <failOnDependencyChange>false</failOnDependencyChange> -->
-<!--           <logDependencyChanges>true</logDependencyChanges> -->
-<!--           <overwriteChangedDependencies>true</overwriteChangedDependencies> -->
         </configuration>
       </plugin>
     </plugins>

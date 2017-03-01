@@ -1,3 +1,9 @@
+#
+# This is subject to change. The currently used files are not retrieved
+# this way but provided in a zip-file out of band, due to issues
+# with the currently published XSD:s.
+#
+
 https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se.xsd
 https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se-dap.xsd
 https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se-events.xsd

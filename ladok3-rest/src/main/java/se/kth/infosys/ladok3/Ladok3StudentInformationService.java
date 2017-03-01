@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 Kungliga Tekniska högskolan
+ * Copyright (c) 2017 Kungliga Tekniska högskolan
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -65,7 +65,7 @@ public class Ladok3StudentInformationService extends LadokService {
 
     /**
      * Retrieve a student given a personnummer.
-     * @param personnummer
+     * @param personnummer identifying the student.
      * @return The student matching the personnummer
      */
     public Student studentPersonnummer(String personnummer) {
@@ -95,15 +95,15 @@ public class Ladok3StudentInformationService extends LadokService {
      * difference is that this method will default to "limit=400" and "page=1"
      * unless something else is specified. E.g:
      *
-     * <code>
+     * {@code
      * Map<String, Object> params = new HashMap<String, Object>();
      * params.put("personnummer", "19870412031234");
      * SokresultatStudentinformationRepresentation res =
      *     studentInformationService.studentFiltrera(params);
-     * </code>
      * 
      * Objects passed as values will be rendered into parameters using their 
      * toString() method.
+     * }
      *
      * @param params A map between parameter strings and their object values.
      * @return The search result.
