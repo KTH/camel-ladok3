@@ -181,6 +181,11 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     }
 
     public void setEvents(String events) {
-        this.events = new HashSet<String>(Arrays.asList(events.split(",")));
+        this.events = new HashSet<String>();
+        for (String event : events.split(",")) {
+            if (! event.isEmpty()) {
+                this.events.add(event);
+            }
+        }
     }
 }
