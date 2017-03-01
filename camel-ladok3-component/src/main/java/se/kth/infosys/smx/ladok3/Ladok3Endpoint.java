@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -57,11 +59,14 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     @Metadata(required = "true")
     private String key;
 
-    @UriParam(name = "lastEntry", defaultValue = "", description = "Entry id to start consuming from")
+    @UriParam(label = "consumer", name = "lastEntry", defaultValue = "", description = "Entry id to start consuming from")
     private String lastEntry = "";
 
-    @UriParam(name = "lastFeed", defaultValue = "", description = "Feed to start consuming from")
+    @UriParam(label = "consumer", name = "lastFeed", defaultValue = "", description = "Feed to start consuming from")
     private String lastFeed = "";
+
+    @UriParam(label = "consumer", name = "events", description = "List of event names to generate messages for.")
+    private HashSet<String> events = new HashSet<String>();
 
     private SSLContext context;
 
@@ -165,5 +170,22 @@ public class Ladok3Endpoint extends DefaultEndpoint {
 
     public void setContext(SSLContext context) {
         this.context = context;
+    }
+
+    public HashSet<String> getEvents() {
+        return events;
+    }
+
+    public void setEvents(HashSet<String> events) {
+        this.events = events;
+    }
+
+    public void setEvents(String events) {
+        this.events = new HashSet<String>();
+        for (String event : events.split(",")) {
+            if (! event.isEmpty()) {
+                this.events.add(event);
+            }
+        }
     }
 }

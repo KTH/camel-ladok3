@@ -106,11 +106,13 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                 final Document document = builder.parse(new InputSource(new StringReader(content.getValue())));
                 final Node rootElement = document.getFirstChild();
 
-                final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
-                final BaseEvent event = (BaseEvent) root.getValue();
+                if (endpoint.getEvents().isEmpty() || endpoint.getEvents().contains(rootElement.getLocalName())) {
+                    final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
+                    final BaseEvent event = (BaseEvent) root.getValue();
 
-                doExchangeForEvent(event, entry.getUri(), feed);
-                messageCount++;
+                    doExchangeForEvent(event, entry.getUri(), feed);
+                    messageCount++;
+                }
             }
             endpoint.setLastEntry(entry.getUri());
         }
@@ -133,13 +135,10 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
      * but hard coded for ladok3 use case.
      */
     private String ladokEventClass(final Node rootElement) {
-        final String eventClass = 
-                SCHEMAS_BASE_PACKAGE
-                + "."
-                + rootElement.getNamespaceURI().substring(SCHEMA_BASE_URL.length()).replace("/", ".")
-                + "."
-                + rootElement.getLocalName();
-        return eventClass;
+        return String.format("%s.%s.%s",
+            SCHEMAS_BASE_PACKAGE,
+            rootElement.getNamespaceURI().substring(SCHEMA_BASE_URL.length()).replace("/", "."),
+            rootElement.getLocalName());
     }
 
     /*

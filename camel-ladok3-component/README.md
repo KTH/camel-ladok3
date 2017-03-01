@@ -6,7 +6,7 @@ this component and the ladok3-model and ladok3-rest supporting libraries.
 
 ## The Consumer
 
-The consumer uses a URI of the form: `ladok3://host.ladok.se?cert=path-to-cert&key=cert-passphrase[&lastEntry=x][&lastFeed=y]`
+The consumer uses a URI of the form: `ladok3://host.ladok.se?cert=path-to-cert&key=cert-passphrase[&lastEntry=x][&lastFeed=y][&events=u,v,x]`
 
 Assuming a property place holder in Karaf an example of a configuration could be:
 
