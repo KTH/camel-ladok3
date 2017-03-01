@@ -13,11 +13,13 @@ public class Ladok3RequestFilter implements ClientRequestFilter {
 
     @Override
     public void filter(ClientRequestContext requestContext) throws IOException {
-        LOG.debug("Target: {}", requestContext.getUri().toString());
-        LOG.debug("Method: {}", requestContext.getMethod());
-        LOG.debug("Headers: {}", requestContext.getStringHeaders());
-        if (requestContext.getEntity() != null) {
-            LOG.debug(requestContext.getEntity().toString());
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Target: {}", requestContext.getUri().toString());
+            LOG.trace("Method: {}", requestContext.getMethod());
+            LOG.trace("Headers: {}", requestContext.getStringHeaders());
+            if (requestContext.getEntity() != null) {
+                LOG.trace(requestContext.getEntity().toString());
+            }
         }
     }
 }
