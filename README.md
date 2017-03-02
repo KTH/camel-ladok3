@@ -7,16 +7,21 @@ Apache Camel in particular.
 
 There are three parts in the project
 
-1. ladok3-rest is a JAXRS based client library to talk to Ladok3 REST api services.
+1. [ladok3-rest](ladok3-rest/README.md) is a JAXRS based client library to talk to Ladok3 REST api services.
    It is currently just a proof of concept and incomplete.
-1. ladok3-model is a library with data model for events and other objects
+1. [ladok3-model](ladok3-model/README.md) is a library with data model for events and other objects
    derived from the XSD published by Ladok.
-1. camel-ladok3-component is Camel Component defining a ladok3 endpoint to use in
-   Camel routes. As a consumer it consumes events from Ladok3 atom-feeds (complete),
-   and as a producer it uses the REST interface to query and write to Ladok
-   (proof of concept and incomplete).
-1. ladok3-feature is a Karaf Feature packaging of the camel-ladok3-component. It
+1. [camel-ladok3-component](camel-ladok3-component/README.md) is Camel Component defining a
+   ladok3 endpoint to use in Camel routes. As a consumer it consumes events from Ladok3 
+   atom-feeds (complete), and as a producer it uses the REST interface to query and 
+   write to Ladok (proof of concept and incomplete).
+1. [ladok3-feature](ladok3-feature/README.md) is a Karaf Feature packaging of the camel-ladok3-component. It
    is currently not used by us and untested but included for completeness.
+   
+## Using
+
+All components are published to Maven central with groupId se.kth.infosys.smx.ladok3.
+See the readme of each component for details.
 
 ## Development
 
