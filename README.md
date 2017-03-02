@@ -20,7 +20,8 @@ There are three parts in the project
    
 ## Using
 
-All components are published to Maven central with groupId se.kth.infosys.smx.ladok3.
+All components are published to Maven central with groupId
+[se.kth.infosys.smx.ladok3](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22se.kth.infosys.smx.ladok3%22).
 See the readme of each component for details.
 
 ## Development
