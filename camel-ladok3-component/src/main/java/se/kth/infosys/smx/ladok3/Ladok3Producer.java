@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import se.kth.infosys.ladok3.Ladok3StudentInformationService;
 import se.kth.infosys.ladok3.LadokService;
+import se.kth.infosys.smx.ladok3.internal.Ladok3Message;
 import se.kth.infosys.smx.ladok3.internal.StudentServiceHelper;
 
 /**
@@ -67,7 +68,7 @@ public class Ladok3Producer extends DefaultProducer {
     public void process(Exchange exchange) throws Exception {
         String api = getEndpoint().getApi();
         if (api == null) {
-            api = ExchangeHelper.getMandatoryHeader(exchange, "some-header", String.class);
+            api = ExchangeHelper.getMandatoryHeader(exchange, Ladok3Message.Header.Service, String.class);
         }
 
         switch (api) {
@@ -83,10 +84,10 @@ public class Ladok3Producer extends DefaultProducer {
     private void handleStudentRequest(Exchange exchange) throws Exception {
         String operation = getEndpoint().getOperation();
         if (operation == null) {
-            operation = ExchangeHelper.getMandatoryHeader(exchange, "some-header", String.class);
+            operation = ExchangeHelper.getMandatoryHeader(exchange, Ladok3Message.Header.Operation, String.class);
         }
 
-        Ladok3StudentInformationService service = (Ladok3StudentInformationService) services.get("student");
+        final Ladok3StudentInformationService service = (Ladok3StudentInformationService) services.get("student");
 
         switch (operation) {
         case "PERSONNUMMER":

@@ -35,7 +35,10 @@
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
     <route id="run-producer">
       <from uri="timer:once?repeatCount=1"/>
-      <to uri="ladok3://{{ladok3.host}}?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}" />
+      <setHeader headerName="ladok3KeyValue">
+        <constant>197103210170</constant>
+      </setHeader>
+      <to uri="ladok3://{{ladok3.host}}/student/personnummer?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}" />
       <to uri="log:se.kth.infosys.smx.ladok3?level=INFO&amp;showAll=true" />
       <marshal>
         <jacksonxml />

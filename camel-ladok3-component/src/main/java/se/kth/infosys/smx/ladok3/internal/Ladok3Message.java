@@ -29,5 +29,9 @@ public class Ladok3Message {
         public static final String Feed = "ladok3AtomFeed";
         public static final String EventType = "ladok3EventType";
         public static final String EventId = "ladok3EventId";
+        public static final String KeyType = "ladok3KeyType";
+        public static final String KeyValue = "ladok3KeyValue";
+        public static final String Service = "ladok3Service";
+        public static final String Operation = "ladok3ServiceOperation";
     }
 }
