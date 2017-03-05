@@ -25,6 +25,7 @@ package se.kth.infosys.ladok3;
 
 import java.util.Map;
 
+import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.WebTarget;
 
 import se.ladok.schemas.dap.ServiceIndex;
@@ -50,6 +51,18 @@ public class Ladok3StudentInformationService extends LadokService {
      */
     public Ladok3StudentInformationService(String host, String certFile, String key) throws Exception {
         super(host, certFile, key);
+        this.studentinformation = client.target(String.format("https://%s/studentinformation", host));
+    }
+
+    /**
+     * Constructor Web Service client end representing the Ladok studentinformation endpoint.
+     * 
+     * @param host The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
+     * @param context the SSLContext containing necessary information. 
+     * @throws Exception on errors.
+     */
+    public Ladok3StudentInformationService(String host, SSLContext context) throws Exception {
+        super(context);
         this.studentinformation = client.target(String.format("https://%s/studentinformation", host));
     }
 

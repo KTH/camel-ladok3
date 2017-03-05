@@ -40,6 +40,7 @@ import org.apache.camel.impl.UriEndpointComponent;
  * Represents the component that manages {@link Ladok3Endpoint}.
  */
 public class Ladok3Component extends UriEndpointComponent {
+
     public Ladok3Component() {
         super(Ladok3Endpoint.class);
     }

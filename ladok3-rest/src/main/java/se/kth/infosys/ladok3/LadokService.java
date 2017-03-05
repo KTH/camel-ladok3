@@ -64,6 +64,18 @@ public abstract class LadokService {
     }
 
     /**
+     * Initialize the service client with authentication certificates.
+     * @param context the SSLContext containing necessary information.
+     * @throws Exception on errors.
+     */
+    protected LadokService(SSLContext context) throws Exception {
+        client = ClientBuilder.newBuilder().sslContext(context)
+                .build()
+                .register(Ladok3RequestFilter.class)
+                .register(Ladok3ResponseFilter.class);
+    }
+
+    /**
      * Get the service index for the service.
      * 
      * NOTE: This could probably have been made generic in the base class, but
