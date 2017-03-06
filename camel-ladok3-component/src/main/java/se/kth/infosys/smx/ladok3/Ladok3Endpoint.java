@@ -70,9 +70,6 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     @UriPath(label = "producer", description = "Ladok3 REST API path")
     private String api;
 
-    @UriPath(label = "producer", description = "Ladok3 operation")
-    private String operation;
-
     private SSLContext context;
 
     public Ladok3Endpoint(String uri, Ladok3Component component) throws Exception {
@@ -200,13 +197,5 @@ public class Ladok3Endpoint extends DefaultEndpoint {
 
     public void setApi(String api) {
         this.api = api;
-    }
-
-    public String getOperation() {
-        return operation;
-    }
-
-    public void setOperation(String operation) {
-        this.operation = operation;
     }
 }

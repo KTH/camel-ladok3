@@ -34,10 +34,9 @@ import org.apache.camel.util.ExchangeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.kth.infosys.ladok3.Ladok3StudentInformationService;
-import se.kth.infosys.ladok3.LadokService;
 import se.kth.infosys.smx.ladok3.internal.Ladok3Message;
-import se.kth.infosys.smx.ladok3.internal.StudentServiceHelper;
+import se.kth.infosys.smx.ladok3.internal.Ladok3ServiceWrapper;
+import se.kth.infosys.smx.ladok3.internal.Ladok3StudentServiceWrapper;
 
 /**
  * The ladok3 producer.
@@ -45,23 +44,20 @@ import se.kth.infosys.smx.ladok3.internal.StudentServiceHelper;
 public class Ladok3Producer extends DefaultProducer {
     private static final Logger log = LoggerFactory.getLogger(Ladok3Producer.class);
 
-    private static final Pattern PRODUCER_PATTERN = Pattern.compile("(/(?<service>student))+(/(?<operation>personnummer|filtrera))+");
+    private static final Pattern API_PATTERN = Pattern.compile("(^/(?<api>student))+.*");
 
-    public static final HashMap<String, LadokService> services = new HashMap<>();
+    public static final HashMap<String, Ladok3ServiceWrapper> services = new HashMap<>();
 
     public Ladok3Producer(Ladok3Endpoint endpoint) throws Exception {
         super(endpoint);
         final URI uri = new URI(endpoint.getEndpointUri());
 
-        Matcher matcher = PRODUCER_PATTERN.matcher(uri.getPath());
+        Matcher matcher = API_PATTERN.matcher(uri.getPath());
         if (matcher.matches()) {
-            endpoint.setApi(matcher.group("service").toUpperCase());
-            endpoint.setOperation(matcher.group("operation").toUpperCase());
+            endpoint.setApi(matcher.group("api").toUpperCase());
         }
 
-        services.put("student", new Ladok3StudentInformationService(
-                uri.getHost(),
-                endpoint.getContext()));
+        services.put("student", new Ladok3StudentServiceWrapper(uri, endpoint.getContext()));
     }
 
 
@@ -73,28 +69,10 @@ public class Ladok3Producer extends DefaultProducer {
 
         switch (api) {
         case "STUDENT":
-            handleStudentRequest(exchange);
+            services.get("student").doExchange(exchange);
             break;
         default:
             throw new UnsupportedOperationException("Ladok3 service: " + api + " not supported");
-        }
-    }
-
-
-    private void handleStudentRequest(Exchange exchange) throws Exception {
-        String operation = getEndpoint().getOperation();
-        if (operation == null) {
-            operation = ExchangeHelper.getMandatoryHeader(exchange, Ladok3Message.Header.Operation, String.class);
-        }
-
-        final Ladok3StudentInformationService service = (Ladok3StudentInformationService) services.get("student");
-
-        switch (operation) {
-        case "PERSONNUMMER":
-            StudentServiceHelper.handleStudentPersonnummerRequest(exchange, service);
-            break;
-        default:
-            StudentServiceHelper.handleStudentUidRequest(exchange, service);
         }
     }
 
