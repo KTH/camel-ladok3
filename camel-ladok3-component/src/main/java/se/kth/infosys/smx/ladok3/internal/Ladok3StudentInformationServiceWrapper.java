@@ -12,11 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.kth.infosys.ladok3.Ladok3StudentInformationService;
+import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.Student;
 
 public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrapper {
     private static final Logger log = LoggerFactory.getLogger(Ladok3StudentInformationServiceWrapper.class);
-    private static final Pattern URL_PATTERN = Pattern.compile("^/student(/(?<operation>personnummer|filtrera))+.*");
+    private static final Pattern URL_PATTERN = Pattern.compile("^/student(/(?<operation>personnummer|kontaktinformation|filtrera))+.*");
     private Ladok3StudentInformationService service;
     private String pathOperation;
 
@@ -33,6 +34,9 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         case "personnummer":
             handleStudentPersonnummerRequest(exchange, service);
             break;
+        case "kontaktinformation":
+            handleStudentKontaktinformationRequest(exchange, service);
+            break;
         default: // uid request
             handleStudentUidRequest(exchange, service);
         }
@@ -47,6 +51,18 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
 
         log.debug("Getting Ladok data for student with pnr: {}", personnummer);
         Student fromLadok = service.studentPersonnummer(personnummer);
+        exchange.getOut().setBody(fromLadok);
+    }
+
+    private void handleStudentKontaktinformationRequest(final Exchange exchange, final Ladok3StudentInformationService service) throws Exception {
+        String uid = exchange.getIn().getHeader(Ladok3Message.Header.KeyValue, String.class);
+        if (uid == null || uid.isEmpty()) {
+            Student student = exchange.getIn().getMandatoryBody(Student.class);
+            uid = student.getUid();
+        }
+
+        log.debug("Getting kontaktinformation for student with uid: {}", uid);
+        Kontaktuppgifter fromLadok = service.kontaktuppgifter(uid);
         exchange.getOut().setBody(fromLadok);
     }
 

@@ -29,6 +29,7 @@ import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.WebTarget;
 
 import se.ladok.schemas.dap.ServiceIndex;
+import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
 
@@ -96,10 +97,23 @@ public class Ladok3StudentInformationService extends LadokService {
      */
     public Student studentUID(String uid) {
         return studentinformation.path("/student/{uid}")
-                .resolveTemplate("uuid", uid)
+                .resolveTemplate("uid", uid)
                 .request()
                 .accept(STUDENTINFORMATION_XML)
                 .get(Student.class);
+    }
+
+    /**
+     * Retrieve contact information for a student given its UID.
+     * @param uid The unique identifier for the student.
+     * @return The contact information matching the UID
+     */
+    public Kontaktuppgifter kontaktuppgifter(String uid) {
+        return studentinformation.path("/student/{uid}/kontaktuppgifter")
+                .resolveTemplate("uid", uid)
+                .request()
+                .accept(STUDENTINFORMATION_XML)
+                .get(Kontaktuppgifter.class);
     }
 
     /**
