@@ -14,13 +14,13 @@ import org.slf4j.LoggerFactory;
 import se.kth.infosys.ladok3.Ladok3StudentInformationService;
 import se.ladok.schemas.studentinformation.Student;
 
-public class Ladok3StudentServiceWrapper implements Ladok3ServiceWrapper {
-    private static final Logger log = LoggerFactory.getLogger(Ladok3StudentServiceWrapper.class);
+public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrapper {
+    private static final Logger log = LoggerFactory.getLogger(Ladok3StudentInformationServiceWrapper.class);
     private static final Pattern URL_PATTERN = Pattern.compile("^/student(/(?<operation>personnummer|filtrera))+.*");
     private Ladok3StudentInformationService service;
     private String pathOperation;
 
-    public Ladok3StudentServiceWrapper(URI uri, SSLContext context) throws Exception {
+    public Ladok3StudentInformationServiceWrapper(URI uri, SSLContext context) throws Exception {
         this.service = new Ladok3StudentInformationService(uri.getHost(), context);
         Matcher matcher = URL_PATTERN.matcher(uri.getPath());
         if (matcher.matches()) {

@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import se.kth.infosys.smx.ladok3.internal.Ladok3Message;
 import se.kth.infosys.smx.ladok3.internal.Ladok3ServiceWrapper;
-import se.kth.infosys.smx.ladok3.internal.Ladok3StudentServiceWrapper;
+import se.kth.infosys.smx.ladok3.internal.Ladok3StudentInformationServiceWrapper;
 
 /**
  * The ladok3 producer.
@@ -44,9 +44,10 @@ import se.kth.infosys.smx.ladok3.internal.Ladok3StudentServiceWrapper;
 public class Ladok3Producer extends DefaultProducer {
     private static final Logger log = LoggerFactory.getLogger(Ladok3Producer.class);
 
-    private static final Pattern API_PATTERN = Pattern.compile("(^/(?<api>student))+.*");
-
-    public static final HashMap<String, Ladok3ServiceWrapper> services = new HashMap<>();
+    // First segment of URL (or ladok3Service header) should match the list 
+    // of "supported" services in the HashMap apis.
+    private static final Pattern API_PATTERN = Pattern.compile("(^/(?<api>[a-zA-Z]*))+.*");
+    private static final HashMap<String, Ladok3ServiceWrapper> services = new HashMap<>();
 
     public Ladok3Producer(Ladok3Endpoint endpoint) throws Exception {
         super(endpoint);
@@ -54,10 +55,10 @@ public class Ladok3Producer extends DefaultProducer {
 
         Matcher matcher = API_PATTERN.matcher(uri.getPath());
         if (matcher.matches()) {
-            endpoint.setApi(matcher.group("api").toUpperCase());
+            endpoint.setApi(matcher.group("api").toLowerCase());
         }
 
-        services.put("student", new Ladok3StudentServiceWrapper(uri, endpoint.getContext()));
+        services.put("student", new Ladok3StudentInformationServiceWrapper(uri, endpoint.getContext()));
     }
 
 
@@ -67,13 +68,11 @@ public class Ladok3Producer extends DefaultProducer {
             api = ExchangeHelper.getMandatoryHeader(exchange, Ladok3Message.Header.Service, String.class);
         }
 
-        switch (api) {
-        case "STUDENT":
-            services.get("student").doExchange(exchange);
-            break;
-        default:
+        Ladok3ServiceWrapper service = services.get(api);
+        if (service == null) {
             throw new UnsupportedOperationException("Ladok3 service: " + api + " not supported");
         }
+        service.doExchange(exchange);
     }
 
 
