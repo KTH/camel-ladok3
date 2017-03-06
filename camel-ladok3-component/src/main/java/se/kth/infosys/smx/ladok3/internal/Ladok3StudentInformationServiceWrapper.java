@@ -24,13 +24,13 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         this.service = new Ladok3StudentInformationService(uri.getHost(), context);
         Matcher matcher = URL_PATTERN.matcher(uri.getPath());
         if (matcher.matches()) {
-            pathOperation = matcher.group("operation").toUpperCase();
+            pathOperation = matcher.group("operation").toLowerCase();
         }
     }
 
     public void doExchange(Exchange exchange) throws Exception {
         switch (currentOperation(exchange)) {
-        case "PERSONNUMMER":
+        case "personnummer":
             handleStudentPersonnummerRequest(exchange, service);
             break;
         default: // uid request
