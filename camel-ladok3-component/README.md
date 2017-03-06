@@ -13,9 +13,19 @@ REST API, but could also be used for other request/response purposes.
 It is, like the ladok3-rest library it is built on, so far more a proof of
 concept than really useful so far, implementing just a few API calls.
 
-## The Consumer
+## The consumer
 
 The consumer uses a URI of the form: `ladok3://host.ladok.se?cert=path-to-cert&key=cert-passphrase[&lastEntry=x][&lastFeed=y][&events=u,v,x]`
+
+### Parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| cert      | Path to a file containing a certificate in PKCS12 format |
+| key       | Password for the certificate file |
+| lastEntry | The last event ID, an opaque string recieved from Ladok3 |
+| lastFeed  | The last feed ID, an opaque string recieved from Ladok3 |
+| events    | A comma separated list of event types in the feed to generate messages for |
 
 Assuming a property place holder in Karaf an example of a configuration could be:
 
@@ -74,3 +84,36 @@ in the URL path has precedence over message headers.
 
 The body of the resulting message is the information returned by Ladok3, in the form of an POJO object
 of the `se.ladok.schemas` object tree.
+
+### Use case
+
+A *very* fictional use case:
+
+```
+  <camelContext>
+    <route>
+      <from uri="ladok3://{{ladok-environment}}" />
+      <filter>
+        <simple>${in.body.class} == "StudentEvent"</simple>
+        <setHeader headerName="ladok3Key">
+          <simple>${in.body.studentUID}</simple>
+        </setHeader>
+        <enrich strategyRef="aggregationStrategy">
+          <to uri="ladok3://{{ladok-environment}}/student" />
+        </enrich>
+        <to uri="log:ladok3-log" />
+      </filter>
+    </route>
+  </camelContext>
+```
+
+
+### Expanding the producer
+
+Add basic JAX-RS calls to [../ladok3-rest](../ladok3-rest) if necessary, see `Ladok3StudentInformationService`.
+Add calls referencing ladok3-rest to
+`se.kth.infosys.smx.ladok3.internal.Ladok3StudentInformationServiceWrapper`.
+
+If adding a new Ladok3 service not previously used, create a new wrapper similar to the
+`Ladok3StudentInformationServiceWrapper` and add a registration of it to the
+`Ladok3Producer` constructor.
