@@ -59,5 +59,18 @@ last_id=${in.header.ladok3AtomEntryId}
 
 ## The producer
 
-The consumer uses a URI of the form: `ladok3://host.ladok.se?cert=path-to-cert&key=cert-passphrase`
+Unlike the consumer, the producer is not feature complete and more of a proof of concept. The goal
+is to provide enough relevant funtionality for message enrichment of the Atom feed data where
+necesseary and not to cover all of the Ladok3 REST API.
 
+The producer uses a URI of the form: `ladok3://host.ladok.se[/<service>][/<operation>]?cert=path-to-cert&key=cert-passphrase`
+
+The `service` parameter corresponds to the service URL for the corresponding Ladok3 service. Currently "student" is
+the only service implemented, and even then only a few calls of it.
+
+The `service` and `operation` parameters can be left out and replaced with message headers `ladok3Service` and
+`ladok3Operation` which are mandatory unless the information is provided in the URL path. Information provided
+in the URL path has precedence over message headers.
+
+The body of the resulting message is the information returned by Ladok3, in the form of an POJO object
+of the `se.ladok.schemas` object tree.
