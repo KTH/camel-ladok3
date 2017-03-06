@@ -16,7 +16,7 @@ import se.ladok.schemas.studentinformation.Student;
 
 public class Ladok3StudentServiceWrapper implements Ladok3ServiceWrapper {
     private static final Logger log = LoggerFactory.getLogger(Ladok3StudentServiceWrapper.class);
-    private static final Pattern URL_PATTERN = Pattern.compile("(/student(/(?<operation>personnummer|filtrera))+.*");
+    private static final Pattern URL_PATTERN = Pattern.compile("^/student(/(?<operation>personnummer|filtrera))+.*");
     private Ladok3StudentInformationService service;
     private String pathOperation;
 
