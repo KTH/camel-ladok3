@@ -93,7 +93,7 @@ A *very* fictional use case, but you get the idea:
   <camelContext>
     <route>
       <!-- Reading from Atom feed -->
-      <from uri="ladok3://{{ladok-environment}}" />
+      <from uri="ladok3://{{ladok3.host}}?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}" />
       <!-- Filter out student events. -->
       <filter>
         <simple>${in.body.class} == "StudentEvent"</simple>
@@ -105,7 +105,7 @@ A *very* fictional use case, but you get the idea:
         <enrich strategyRef="aggregationStrategy">
           <constant>ladok3://{{ladok3.host}}/student?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}</constant>
         </enrich>
-        <!-- Retrieve student kontakt information -->
+        <!-- Retrieve student kontaktinformation -->
         <enrich strategyRef="aggregationStrategy">
           <constant>ladok3://{{ladok3.host}}/student/kontaktinformation?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}</constant>
         </enrich>

@@ -42,6 +42,7 @@ import se.kth.infosys.smx.ladok3.internal.Ladok3StudentInformationServiceWrapper
  * The ladok3 producer.
  */
 public class Ladok3Producer extends DefaultProducer {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(Ladok3Producer.class);
 
     // First segment of URL (or ladok3Service header) should match the list 

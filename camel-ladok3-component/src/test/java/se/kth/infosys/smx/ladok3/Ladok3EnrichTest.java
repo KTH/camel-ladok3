@@ -48,6 +48,7 @@ public class Ladok3EnrichTest extends CamelBlueprintTestSupport {
         mock.expectedMinimumMessageCount(1);
         assertMockEndpointsSatisfied();
         Exchange exchange = mock.getExchanges().get(0);
+        @SuppressWarnings("unchecked")
         ArrayList<Object> aggregation = exchange.getIn().getBody(ArrayList.class);
         assertFalse(aggregation.isEmpty());
     }
