@@ -87,19 +87,27 @@ of the `se.ladok.schemas` object tree.
 
 ### Use case
 
-A *very* fictional use case:
+A *very* fictional use case, but you get the idea:
 
 ```
   <camelContext>
     <route>
+      <!-- Reading from Atom feed -->
       <from uri="ladok3://{{ladok-environment}}" />
+      <!-- Filter out student events. -->
       <filter>
         <simple>${in.body.class} == "StudentEvent"</simple>
+        <!-- Prepare for getting student information. -->
         <setHeader headerName="ladok3Key">
           <simple>${in.body.studentUID}</simple>
         </setHeader>
+        <!-- Retrieve student information -->
         <enrich strategyRef="aggregationStrategy">
-          <to uri="ladok3://{{ladok-environment}}/student" />
+          <constant>ladok3://{{ladok3.host}}/student?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}</constant>
+        </enrich>
+        <!-- Retrieve student kontakt information -->
+        <enrich strategyRef="aggregationStrategy">
+          <constant>ladok3://{{ladok3.host}}/student/kontaktinformation?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}</constant>
         </enrich>
         <to uri="log:ladok3-log" />
       </filter>
