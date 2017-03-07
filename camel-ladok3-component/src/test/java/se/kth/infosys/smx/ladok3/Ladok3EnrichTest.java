@@ -23,6 +23,9 @@
  */
 package se.kth.infosys.smx.ladok3;
 
+import java.util.ArrayList;
+
+import org.apache.camel.Exchange;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.junit.Test;
@@ -44,5 +47,8 @@ public class Ladok3EnrichTest extends CamelBlueprintTestSupport {
         MockEndpoint mock = getMockEndpoint("mock:result");
         mock.expectedMinimumMessageCount(1);
         assertMockEndpointsSatisfied();
+        Exchange exchange = mock.getExchanges().get(0);
+        ArrayList<Object> aggregation = exchange.getIn().getBody(ArrayList.class);
+        assertFalse(aggregation.isEmpty());
     }
 }
