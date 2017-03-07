@@ -57,10 +57,26 @@ public abstract class LadokService {
         final SSLContext context = SSLContext.getInstance("TLS");
         context.init(kmf.getKeyManagers(), null, null);
 
-        client = ClientBuilder.newBuilder().sslContext(context)
-                .build()
-                .register(Ladok3RequestFilter.class)
-                .register(Ladok3ResponseFilter.class);
+        client = clientFactory(context);
+    }
+
+    /**
+     * Initialize the service client with authentication certificates.
+     * @param context the SSLContext containing necessary information.
+     * @throws Exception on errors.
+     */
+    protected LadokService(SSLContext context) throws Exception {
+        client = clientFactory(context);
+    }
+
+    /*
+     * Private helper method.
+     */
+    private static Client clientFactory(SSLContext context) {
+        return ClientBuilder.newBuilder().sslContext(context)
+            .build()
+            .register(Ladok3RequestFilter.class)
+            .register(Ladok3ResponseFilter.class);
     }
 
     /**

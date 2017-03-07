@@ -32,6 +32,8 @@
 
   <cm:property-placeholder persistent-id="se.kth.infosys.smx.ladok3" update-strategy="reload" />
 
+  <bean id="aggregationStrategy" class="se.kth.infosys.smx.ladok3.utils.Ladok3ListAggregationStrategy"/>
+
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
     <route id="run-producer">
       <from uri="timer:once?repeatCount=1"/>
@@ -39,7 +41,10 @@
         <constant>197103210170</constant>
       </setHeader>
       <to uri="ladok3://{{ladok3.host}}/student/personnummer?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}" />
-      <to uri="log:se.kth.infosys.smx.ladok3?level=INFO&amp;showAll=true" />
+      <removeHeaders pattern="ladok3KeyValue"/>
+      <enrich strategyRef="aggregationStrategy">
+        <constant>ladok3://{{ladok3.host}}/student/kontaktinformation?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}</constant>
+      </enrich>
       <marshal>
         <jacksonxml />
       </marshal>

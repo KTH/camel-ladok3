@@ -25,9 +25,11 @@ package se.kth.infosys.ladok3;
 
 import java.util.Map;
 
+import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.WebTarget;
 
 import se.ladok.schemas.dap.ServiceIndex;
+import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
 
@@ -50,6 +52,18 @@ public class Ladok3StudentInformationService extends LadokService {
      */
     public Ladok3StudentInformationService(String host, String certFile, String key) throws Exception {
         super(host, certFile, key);
+        this.studentinformation = client.target(String.format("https://%s/studentinformation", host));
+    }
+
+    /**
+     * Constructor Web Service client end representing the Ladok studentinformation endpoint.
+     * 
+     * @param host The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
+     * @param context the SSLContext containing necessary information. 
+     * @throws Exception on errors.
+     */
+    public Ladok3StudentInformationService(String host, SSLContext context) throws Exception {
+        super(context);
         this.studentinformation = client.target(String.format("https://%s/studentinformation", host));
     }
 
@@ -83,10 +97,23 @@ public class Ladok3StudentInformationService extends LadokService {
      */
     public Student studentUID(String uid) {
         return studentinformation.path("/student/{uid}")
-                .resolveTemplate("uuid", uid)
+                .resolveTemplate("uid", uid)
                 .request()
                 .accept(STUDENTINFORMATION_XML)
                 .get(Student.class);
+    }
+
+    /**
+     * Retrieve contact information for a student given its UID.
+     * @param uid The unique identifier for the student.
+     * @return The contact information matching the UID
+     */
+    public Kontaktuppgifter kontaktuppgifter(String uid) {
+        return studentinformation.path("/student/{uid}/kontaktuppgifter")
+                .resolveTemplate("uid", uid)
+                .request()
+                .accept(STUDENTINFORMATION_XML)
+                .get(Kontaktuppgifter.class);
     }
 
     /**

@@ -21,17 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package se.kth.infosys.smx.ladok3.internal;
+package se.kth.infosys.smx.ladok3;
 
-public class Ladok3Message {
-    public final class Header {
-        public static final String EntryId = "ladok3AtomEntryId";
-        public static final String Feed = "ladok3AtomFeed";
-        public static final String EventType = "ladok3EventType";
-        public static final String EventId = "ladok3EventId";
-        public static final String KeyType = "ladok3KeyType";
-        public static final String KeyValue = "ladok3KeyValue";
-        public static final String Service = "ladok3Service";
-        public static final String Operation = "ladok3ServiceOperation";
+import java.util.ArrayList;
+
+import org.apache.camel.Exchange;
+import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
+import org.junit.Test;
+
+public class Ladok3EnrichTest extends CamelBlueprintTestSupport {
+    @Override
+    protected String[] loadConfigAdminConfigurationFile() {
+        // which .cfg file to use, and the name of the persistence-id
+        return new String[]{"src/test/resources/test.properties", "se.kth.infosys.smx.ladok3"};
+    }
+
+    @Override
+    protected String getBlueprintDescriptor() {
+        return "/OSGI-INF/blueprint/producer-enrich-blueprint.xml";
+    }
+
+    @Test
+    public void testladok3() throws Exception {
+        MockEndpoint mock = getMockEndpoint("mock:result");
+        mock.expectedMinimumMessageCount(1);
+        assertMockEndpointsSatisfied();
+        Exchange exchange = mock.getExchanges().get(0);
+        @SuppressWarnings("unchecked")
+        ArrayList<Object> aggregation = exchange.getIn().getBody(ArrayList.class);
+        assertFalse(aggregation.isEmpty());
     }
 }

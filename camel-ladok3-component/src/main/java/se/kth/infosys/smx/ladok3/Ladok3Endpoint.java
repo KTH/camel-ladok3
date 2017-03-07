@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.HashSet;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -67,6 +66,9 @@ public class Ladok3Endpoint extends DefaultEndpoint {
 
     @UriParam(label = "consumer", name = "events", description = "List of event names to generate messages for.")
     private HashSet<String> events = new HashSet<String>();
+
+    @UriPath(label = "producer", description = "Ladok3 REST API path")
+    private String api;
 
     private SSLContext context;
 
@@ -187,5 +189,13 @@ public class Ladok3Endpoint extends DefaultEndpoint {
                 this.events.add(event);
             }
         }
+    }
+
+    public String getApi() {
+        return api;
+    }
+
+    public void setApi(String api) {
+        this.api = api;
     }
 }

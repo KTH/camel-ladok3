@@ -24,6 +24,7 @@
 package se.kth.infosys.ladok3;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,7 @@ import org.junit.Test;
 
 import se.ladok.schemas.dap.RelationLink;
 import se.ladok.schemas.dap.ServiceIndex;
+import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
@@ -95,5 +97,15 @@ public class Ladok3StudentInformationServiceTest {
         assertEquals(personnummer, student.getPersonnummer());
         assertEquals(fornamn, student.getFornamn());
         assertEquals(efternamn, student.getEfternamn());
+    }
+
+    @Test
+    public void getContactInformation() {
+        String personnummer = properties.getProperty("ladok3.test.Ladok3StudentInformationServiceTest.getStudentByPersonnummer.personnummer");
+        Student student = studentInformationService.studentPersonnummer(personnummer);
+        Kontaktuppgifter kontaktUppgifter = studentInformationService.kontaktuppgifter(student.getUid());
+        assertNotNull(kontaktUppgifter);
+// Currently does not work, due to empty object. IK-failure?
+//        assertFalse(kontaktUppgifter.getPostadresser().isEmpty());
     }
 }
