@@ -24,6 +24,29 @@ All components are published to Maven central with groupId
 [se.kth.infosys.smx.ladok3](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22se.kth.infosys.smx.ladok3%22).
 See the readme of each component for details.
 
+### Authentication
+
+Ladok3 uses certificates for authentication which are requested from the Ladok3 support.
+The REST library and component assumes that these are in the form of a PKCS12 keystore
+with certificate and key combined, protected by a password.
+
+Given the current form recieved from Ladok3 and that extraction of the key and certficate
+is done as instructed in the accompanying email resulting in files `certificate.key` and
+`certificate.crt` ("certificate" should be replaced with your specifics), convertion
+can be done as with openssl.
+
+```
+openssl pkcs12 -export \
+  -out certificate.p12 \
+  -inkey certificate.key \
+  -in certificate.crt \
+  -certfile Ladok3.LED.MIT.API.Chain.CA.pem
+```
+
+The password to use with the api and camel component is the one you enter for protecting
+the exported keystore when running above command.
+
+
 ## Development
 
 The project uses git-flow branch strategy, see
