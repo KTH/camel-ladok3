@@ -25,6 +25,8 @@ package se.kth.infosys.smx.ladok3;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import java.net.URI;
 import java.security.KeyStore;
 import java.util.Map;
@@ -52,6 +54,11 @@ public class Ladok3Component extends UriEndpointComponent {
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
         Ladok3Endpoint endpoint = new Ladok3Endpoint(uri, this);
         setProperties(endpoint, parameters);
+
+        if (CookieHandler.getDefault() == null) {
+            CookieManager cookieManager = new CookieManager();
+            CookieHandler.setDefault(cookieManager);
+        }
 
         final URI formattedUri = new URI(uri);
         endpoint.setHost(formattedUri.getHost());
