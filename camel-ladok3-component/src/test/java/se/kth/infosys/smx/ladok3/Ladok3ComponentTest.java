@@ -23,11 +23,14 @@
  */
 package se.kth.infosys.smx.ladok3;
 
+import org.apache.camel.Message;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.junit.Test;
 
 public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
+    private Message message = null;
+
     @Override
     protected String[] loadConfigAdminConfigurationFile() {
         // which .cfg file to use, and the name of the persistence-id
@@ -44,5 +47,12 @@ public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
         MockEndpoint mock = getMockEndpoint("mock:result");
         mock.expectedMinimumMessageCount(2);
         assertMockEndpointsSatisfied();
+        message = mock.getExchanges().get(0).getIn();
+
+        assertEquals(
+                String.format("ladok3-atom:%s",  message.getHeader("ladok3AtomEntryId", String.class)),
+                message.getMessageId());
+
+        assertFalse(message.getHeader("ladok3IsLastFeed", Boolean.class));
     }
 }
