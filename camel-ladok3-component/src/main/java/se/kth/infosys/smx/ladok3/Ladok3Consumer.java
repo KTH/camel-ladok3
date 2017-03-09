@@ -150,8 +150,10 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         log.debug("Creating message for event: {} {}", event.getHandelseUID(), event.getClass().getName());
 
         final Message message = exchange.getIn();
+        message.setMessageId(String.format("ladok3-atom:%s", entryId));
         message.setHeader(Ladok3Message.Header.EntryId, entryId);
         message.setHeader(Ladok3Message.Header.Feed, feed.getURL().toString());
+        message.setHeader(Ladok3Message.Header.IsLastFeed, feed.isLast());
         message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
         message.setHeader(Ladok3Message.Header.EventId, event.getHandelseUID());
         message.setBody(event);
