@@ -1,6 +1,6 @@
 # Release notes
 
-## 0.0.5-SNAPSHOT
+## 0.0.5
 
 Add ladok3IsLastFeed header.
 Set messageID to well-known ladok3-atom:<entry id>. This can be
