@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.6
+
+Add default cookie manager to camel component.
+
 ## 0.0.5
 
 Add ladok3IsLastFeed header.
