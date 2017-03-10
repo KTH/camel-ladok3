@@ -120,7 +120,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
             endpoint.setLastEntry(entry.getUri());
         }
 
-        doControlExchange(feed, true);
+        doControlExchange(feed, false);
         messageCount++;
 
         log.debug("Consumed Ladok ATOM feed {} up to id {}", feed.getURL(), endpoint.getLastEntry());
