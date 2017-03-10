@@ -71,13 +71,20 @@ last_id=${in.header.ladok3AtomEntryId}
 
 | Header | Type | Description |
 |--------|------|-------------|
-| ladok3EventType | String | Class name of the event |
-| ladok3EventId | String | The Ladok3 UID of the event |
+| ladok3MessageType | String | Either of ladok3FeedStart, ladok3FeedDone or ladok3Event |
 | ladok3AtomFeed | String | The URL of the Ladok3 feed where the event is found |
 | ladok3AtomEntryId | String | The Atom entry ID of the Atom feed entry the event is found in |
 | ladok3IsLastFeed | Boolean | Whether the feed is the currently last feed of all feeds |
+| ladok3EventType | String | Class name of the event, only for type ladok3Event |
+| ladok3EventId | String | The Ladok3 UID of the event, only for type ladok3Event |
 
-In addition the JMS message id is set to the string `ladok3-atom:<ladok3AtomEntryId>`
+Typically messages are sent in batches for each feed read from Ladok3.
+
+1. Message with header `ladok3MessageType: ladok3FeedStart` and null body.
+1. A number of messages with header `ladok3MessageType: ladok3Event` and body of type se.ladok.schemas.
+1. Message with header `ladok3MessageType: ladok3FeedDone` and null body.
+
+Messages of type ladok3Event gets a message id of the form `ladok3-atom:<ladok3AtomEntryId>`
 in order to be useful with deduplication techniques.
 
 ## The producer

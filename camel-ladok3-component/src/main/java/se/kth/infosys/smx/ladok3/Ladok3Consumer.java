@@ -99,6 +99,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         feed = getLastUnreadFeed();
         endpoint.setNextURL(feed.getURL());
 
+        doControlExchange(feed, true);
+        messageCount++;
+
         for (SyndEntry entry : feed.unreadEntries()) {
             final SyndContent content = entry.getContents().get(0);
 
@@ -116,6 +119,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
             }
             endpoint.setLastEntry(entry.getUri());
         }
+
+        doControlExchange(feed, true);
+        messageCount++;
 
         if (messageCount > 0) {
             log.info("Consumed Ladok ATOM feed {} up to id {}", feed.getURL(), endpoint.getLastEntry());
@@ -142,12 +148,34 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     }
 
     /*
+     * Generate start of feed exchange
+     */
+    private void doControlExchange(final Ladok3Feed feed, final boolean start) throws Exception {
+        final Exchange exchange = endpoint.createExchange();
+
+        final Message message = exchange.getIn();
+        message.setHeader(Ladok3Message.Header.Feed, feed.getURL().toString());
+        message.setHeader(Ladok3Message.Header.IsLastFeed, feed.isLast());
+        if (start) {
+            message.setHeader(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Start);
+        } else {
+            message.setHeader(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Done);
+        }
+
+        try {
+            getProcessor().process(exchange);
+        } finally {
+            if (exchange.getException() != null) {
+                getExceptionHandler().handleException("Error processing exchange", exchange, exchange.getException());
+            }
+        }
+    }
+
+    /*
      * Generate exchange for Ladok3 event and dispatch to next processor.
      */
     private void doExchangeForEvent(BaseEvent event, String entryId, Ladok3Feed feed) throws Exception {
         final Exchange exchange = endpoint.createExchange();
-
-        log.debug("Creating message for event: {} {}", event.getHandelseUID(), event.getClass().getName());
 
         final Message message = exchange.getIn();
         message.setMessageId(String.format("ladok3-atom:%s", entryId));

@@ -23,6 +23,9 @@
  */
 package se.kth.infosys.smx.ladok3;
 
+import java.util.List;
+
+import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
@@ -47,8 +50,13 @@ public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
         MockEndpoint mock = getMockEndpoint("mock:result");
         mock.expectedMinimumMessageCount(2);
         assertMockEndpointsSatisfied();
-        message = mock.getExchanges().get(0).getIn();
 
+        final List<Exchange> exchanges = mock.getExchanges();
+
+        message = exchanges.get(0).getIn();
+        assertEquals("ladok3FeedStart", message.getHeader("ladok3MessageType", String.class));
+
+        message = exchanges.get(1).getIn();
         assertEquals(
                 String.format("ladok3-atom:%s",  message.getHeader("ladok3AtomEntryId", String.class)),
                 message.getMessageId());
