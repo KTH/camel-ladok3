@@ -34,5 +34,11 @@ public class Ladok3Message {
         public static final String Service = "ladok3Service";
         public static final String Operation = "ladok3ServiceOperation";
         public static final String IsLastFeed = "ladok3IsLastFeed";
+        public static final String MessageType = "ladok3MessageType";
+    }
+    public final class MessageType {
+        public static final String Start = "ladok3FeedStart";
+        public static final String Event = "ladok3Event";
+        public static final String Done = "ladok3FeedDone";
     }
 }
