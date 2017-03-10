@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.7
+
+Add control messages at start and end of feed to use down the line.
+
 ## 0.0.6
 
 Add default cookie manager to camel component.
