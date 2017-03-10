@@ -72,7 +72,6 @@ last_id=${in.header.ladok3AtomEntryId}
 | Header | Type | Description |
 |--------|------|-------------|
 | ladok3EventType | String | Class name of the event |
-| ladok3EventId | String | The Ladok3 UID of the event |
 | ladok3AtomFeed | String | The URL of the Ladok3 feed where the event is found |
 | ladok3AtomEntryId | String | The Atom entry ID of the Atom feed entry the event is found in |
 | ladok3IsLastFeed | Boolean | Whether the feed is the currently last feed of all feeds |

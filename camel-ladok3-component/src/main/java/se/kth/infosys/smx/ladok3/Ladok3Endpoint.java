@@ -58,6 +58,10 @@ public class Ladok3Endpoint extends DefaultEndpoint {
     @Metadata(required = "true")
     private String key;
 
+    @UriParam(label = "consumer", name = "format", description = "Generate messages with body in format xml, pojo", defaultValue="xml")
+    @Metadata(required = "false")
+    private String format = "xml";
+
     @UriParam(label = "consumer", name = "lastEntry", defaultValue = "", description = "Entry id to start consuming from")
     private String lastEntry = "";
 
@@ -197,5 +201,13 @@ public class Ladok3Endpoint extends DefaultEndpoint {
 
     public void setApi(String api) {
         this.api = api;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format.toLowerCase();
     }
 }

@@ -28,7 +28,7 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.junit.Test;
 
-public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
+public class Ladok3ComponentXmlTest extends CamelBlueprintTestSupport {
     private Message message = null;
 
     @Override
@@ -39,13 +39,13 @@ public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
 
     @Override
     protected String getBlueprintDescriptor() {
-        return "/OSGI-INF/blueprint/component-blueprint.xml";
+        return "/OSGI-INF/blueprint/component-xml-blueprint.xml";
     }
 
     @Test
     public void testladok3() throws Exception {
         MockEndpoint mock = getMockEndpoint("mock:result");
-        mock.expectedMinimumMessageCount(2);
+        mock.expectedMinimumMessageCount(10);
         assertMockEndpointsSatisfied();
         message = mock.getExchanges().get(0).getIn();
 

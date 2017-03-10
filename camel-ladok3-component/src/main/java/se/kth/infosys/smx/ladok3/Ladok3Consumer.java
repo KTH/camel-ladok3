@@ -25,8 +25,10 @@ package se.kth.infosys.smx.ladok3;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +38,10 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
@@ -44,6 +50,7 @@ import org.apache.camel.impl.ScheduledPollConsumer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -70,15 +77,26 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     private static final String FIRST_FEED_FORMAT = "https://%s/handelser/feed/first";
     private static final String LAST_FEED_FORMAT = "https://%s/handelser/feed/recent";
 
+    /**
+     * Endpoint parameter "format" argument value for XML formatted bodies.
+     */
+    public static final String BODY_XML = "xml";
+
+    /**
+     * Endpoint parameter "format" argument value for Pojo formatted bodies.
+     */
+    public static final String BODY_POJO = "pojo";
+
     private final Ladok3Endpoint endpoint;
     private final Unmarshaller unmarshaller;
     private final DocumentBuilder builder;
+    private final Transformer transformer = TransformerFactory.newInstance().newTransformer();
 
-    public Ladok3Consumer(Ladok3Endpoint endpoint, Processor processor) throws Exception {
+    public Ladok3Consumer(final Ladok3Endpoint endpoint, final Processor processor) throws Exception {
         super(endpoint, processor);
         this.endpoint = endpoint;
 
-        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+        final DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         builderFactory.setNamespaceAware(true);
         builder = builderFactory.newDocumentBuilder();
 
@@ -93,28 +111,21 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
      */
     @Override
     protected int poll() throws Exception {
-        int messageCount = 0;
         Ladok3Feed feed;
-
+        int messageCount = 0; 
+        
         feed = getLastUnreadFeed();
         endpoint.setNextURL(feed.getURL());
 
-        for (SyndEntry entry : feed.unreadEntries()) {
-            final SyndContent content = entry.getContents().get(0);
-
-            if ("application/vnd.ladok+xml".equals(content.getType())) {
-                final Document document = builder.parse(new InputSource(new StringReader(content.getValue())));
-                final Node rootElement = document.getFirstChild();
-
-                if (endpoint.getEvents().isEmpty() || endpoint.getEvents().contains(rootElement.getLocalName())) {
-                    final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
-                    final BaseEvent event = (BaseEvent) root.getValue();
-
-                    doExchangeForEvent(event, entry.getUri(), feed);
-                    messageCount++;
-                }
-            }
-            endpoint.setLastEntry(entry.getUri());
+        switch (endpoint.getFormat()) {
+        case BODY_POJO:
+            messageCount = doExchangesPojo(feed);
+            break;
+        case BODY_XML:
+            messageCount = doExchangesXml(feed);
+            break;
+        default:
+            throw new UnsupportedOperationException("Unsupported body format: " + endpoint.getFormat());
         }
 
         if (messageCount > 0) {
@@ -131,6 +142,54 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     }
 
     /*
+     * Do exchanges in XML format avoiding the marshal to Ladok3 object model.
+     */
+    private int doExchangesXml(final Ladok3Feed feed) throws Exception {
+        int messageCount = 0;
+
+        for (final SyndEntry entry : feed.unreadEntries()) {
+            final Node event = extractEventXML(entry);
+
+            if (endpoint.getEvents().isEmpty() || endpoint.getEvents().contains(event.getLocalName())) {
+                doExchangeForEvent(event, entry.getUri(), feed);
+                messageCount++;
+            }
+            endpoint.setLastEntry(entry.getUri());
+        }
+        return messageCount;
+    }
+
+    /*
+     * Do exchanges in POJO format using the Ladok3 object model.
+     */
+    private int doExchangesPojo(final Ladok3Feed feed) throws Exception {
+        int messageCount = 0;
+
+        for (final SyndEntry entry : feed.unreadEntries()) {
+            final Node rootElement = extractEventXML(entry);
+
+            if (endpoint.getEvents().isEmpty() || endpoint.getEvents().contains(rootElement.getLocalName())) {
+                final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
+                final BaseEvent event = (BaseEvent) root.getValue();
+
+                doExchangeForEvent(event, entry.getUri(), feed);
+                messageCount++;
+            }
+            endpoint.setLastEntry(entry.getUri());
+        }
+        return messageCount;
+    }
+
+    /*
+     * Extracts a Ladok3 Event XML Node from the Atom feed entry.
+     */
+    private Node extractEventXML(final SyndEntry entry) throws SAXException, IOException {
+        final SyndContent content = entry.getContents().get(0);
+        final Document document = builder.parse(new InputSource(new StringReader(content.getValue())));
+        return document.getFirstChild();
+    }
+
+    /*
      * Derive Ladok3 event class name from namespace the same way xcj does,
      * but hard coded for ladok3 use case.
      */
@@ -144,18 +203,47 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     /*
      * Generate exchange for Ladok3 event and dispatch to next processor.
      */
-    private void doExchangeForEvent(BaseEvent event, String entryId, Ladok3Feed feed) throws Exception {
+    private void doExchangeForEvent(final Node event, final String entryId, final Ladok3Feed feed) throws Exception {
         final Exchange exchange = endpoint.createExchange();
+        final String eventType = ladokEventClass(event);
 
-        log.debug("Creating message for event: {} {}", event.getHandelseUID(), event.getClass().getName());
+        log.trace("Creating message for entry: {} {}", entryId, eventType);
 
         final Message message = exchange.getIn();
         message.setMessageId(String.format("ladok3-atom:%s", entryId));
         message.setHeader(Ladok3Message.Header.EntryId, entryId);
         message.setHeader(Ladok3Message.Header.Feed, feed.getURL().toString());
         message.setHeader(Ladok3Message.Header.IsLastFeed, feed.isLast());
-        message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
-        message.setHeader(Ladok3Message.Header.EventId, event.getHandelseUID());
+        message.setHeader(Ladok3Message.Header.EventType, eventType);
+
+        final StringWriter writer = new StringWriter();
+        transformer.transform(new DOMSource(event), new StreamResult(writer));
+        message.setBody(writer.toString().getBytes(StandardCharsets.UTF_8));
+
+        try {
+            getProcessor().process(exchange);
+        } finally {
+            if (exchange.getException() != null) {
+                getExceptionHandler().handleException("Error processing exchange", exchange, exchange.getException());
+            }
+        }
+    }
+
+    /*
+     * Generate exchange for Ladok3 event and dispatch to next processor.
+     */
+    private void doExchangeForEvent(final BaseEvent event, final String entryId, final Ladok3Feed feed) throws Exception {
+        final Exchange exchange = endpoint.createExchange();
+        final String eventType = event.getClass().getName();
+
+        log.trace("Creating message for entry: {} {}", entryId, eventType);
+
+        final Message message = exchange.getIn();
+        message.setMessageId(String.format("ladok3-atom:%s", entryId));
+        message.setHeader(Ladok3Message.Header.EntryId, entryId);
+        message.setHeader(Ladok3Message.Header.Feed, feed.getURL().toString());
+        message.setHeader(Ladok3Message.Header.IsLastFeed, feed.isLast());
+        message.setHeader(Ladok3Message.Header.EventType, eventType);
         message.setBody(event);
 
         try {
