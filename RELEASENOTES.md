@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.10
+
+Don't send control messages when there are no event messages sent.
+
 ## 0.0.9
 
 Use a ScheduledPollEndpoint with the ScheduledPollConsumer to get
