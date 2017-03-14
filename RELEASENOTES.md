@@ -1,5 +1,14 @@
 # Release notes
 
+## 0.0.9
+
+Use a ScheduledPollEndpoint with the ScheduledPollConsumer to get
+the options.
+
+## 0.0.8
+
+Add entryId to control message and fix bug.
+
 ## 0.0.7
 
 Add control messages at start and end of feed to use down the line.
