@@ -99,10 +99,15 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         feed = getLastUnreadFeed();
         endpoint.setNextURL(feed.getURL());
 
+        List<SyndEntry> unreadEntries = feed.unreadEntries();
+        if (unreadEntries.isEmpty()) {
+            return 0;
+        }
+
         doControlExchange(feed, true);
         messageCount++;
 
-        for (SyndEntry entry : feed.unreadEntries()) {
+        for (SyndEntry entry : unreadEntries) {
             final SyndContent content = entry.getContents().get(0);
 
             if ("application/vnd.ladok+xml".equals(content.getType())) {
