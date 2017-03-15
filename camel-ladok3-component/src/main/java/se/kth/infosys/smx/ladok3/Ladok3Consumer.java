@@ -94,13 +94,16 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     @Override
     protected int poll() throws Exception {
         int messageCount = 0;
-        Ladok3Feed feed;
+        Ladok3Feed feed = getLastUnreadFeed();
 
-        feed = getLastUnreadFeed();
         endpoint.setNextURL(feed.getURL());
 
         List<SyndEntry> unreadEntries = feed.unreadEntries();
+
         if (unreadEntries.isEmpty()) {
+            if (! feed.isLast()) {
+                endpoint.setNextURL(feed.getLink(Ladok3Feed.NEXT));
+            }
             return 0;
         }
 
