@@ -31,6 +31,8 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.junit.Test;
 
+import se.kth.infosys.smx.ladok3.internal.Ladok3Message;
+
 public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
     private Message message = null;
 
@@ -49,6 +51,7 @@ public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
     public void testladok3() throws Exception {
         MockEndpoint mock = getMockEndpoint("mock:result");
         mock.expectedMinimumMessageCount(2);
+        mock.expectedHeaderValuesReceivedInAnyOrder(Ladok3Message.Header.SequenceNumber, 0, 1);
         assertMockEndpointsSatisfied();
 
         final List<Exchange> exchanges = mock.getExchanges();

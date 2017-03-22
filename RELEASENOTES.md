@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.0.11
+
+Support down stream re-sequencing with new header.
+Support down stream de-duplication.
+
 ## 0.0.10
 
 Don't send control messages when there are no event messages sent.
