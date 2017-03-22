@@ -89,7 +89,7 @@ Messages of type ladok3Event gets a message id of the form `ladok3-atom:<ladok3A
 in order to be useful with deduplication techniques.
 
 All messages gets a sequence number, including control messages, in order to support
-down stream (re-sequencing)[http://camel.apache.org/resequencer.html], e.g.
+down stream [re-sequencing](http://camel.apache.org/resequencer.html), e.g.
 
 ```
 <resequence>
