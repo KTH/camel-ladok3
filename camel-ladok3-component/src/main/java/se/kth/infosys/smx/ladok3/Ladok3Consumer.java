@@ -73,6 +73,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     private final Ladok3Endpoint endpoint;
     private final Unmarshaller unmarshaller;
     private final DocumentBuilder builder;
+    private long sequenceNumber = 0;
 
     public Ladok3Consumer(Ladok3Endpoint endpoint, Processor processor) throws Exception {
         super(endpoint, processor);
@@ -160,6 +161,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         final Exchange exchange = endpoint.createExchange();
 
         final Message message = exchange.getIn();
+        message.setHeader(Ladok3Message.Header.SequenceNumber, sequenceNumber++);
         message.setHeader(Ladok3Message.Header.Feed, feed.getURL().toString());
         message.setHeader(Ladok3Message.Header.EntryId, endpoint.getLastEntry());
         message.setHeader(Ladok3Message.Header.IsLastFeed, feed.isLast());
@@ -186,6 +188,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
         final Message message = exchange.getIn();
         message.setMessageId(String.format("ladok3-atom:%s", entryId));
+        message.setHeader(Ladok3Message.Header.SequenceNumber, sequenceNumber++);
         message.setHeader(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Event);
         message.setHeader(Ladok3Message.Header.EntryId, entryId);
         message.setHeader(Ladok3Message.Header.Feed, feed.getURL().toString());
