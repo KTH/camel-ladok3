@@ -71,6 +71,7 @@ last_id=${in.header.ladok3AtomEntryId}
 
 | Header | Type | Description |
 |--------|------|-------------|
+| ladok3MessageSequenceNumber | long | The sequence number of the message in the stream. Can be used for down stream re-sequencing. |
 | ladok3MessageType | String | Either of ladok3FeedStart, ladok3FeedDone or ladok3Event |
 | ladok3AtomFeed | String | The URL of the Ladok3 feed where the event is found |
 | ladok3AtomEntryId | String | The Atom entry ID of the Atom feed entry the event is found in |
@@ -86,6 +87,17 @@ Typically messages are sent in batches for each feed read from Ladok3.
 
 Messages of type ladok3Event gets a message id of the form `ladok3-atom:<ladok3AtomEntryId>`
 in order to be useful with deduplication techniques.
+
+All messages gets a sequence number, including control messages, in order to support
+down stream (re-sequencing)[http://camel.apache.org/resequencer.html], e.g.
+
+```
+<resequence>
+  <stream-config capacity="10000" timeout="10000" />
+  <header>ladok3MessageSequenceNumber</header>
+  <to uri="mock:result" />
+</resequence>
+```
 
 ## The producer
 
