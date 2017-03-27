@@ -21,12 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package se.kth.infosys.smx.ladok3.internal;
+package se.kth.infosys.smx.ladok3;
 
-/**
- * @deprecated use se.kth.infossys.smx.ladok3.Ladok3Message instead.
- */
-@Deprecated
 public class Ladok3Message {
     public final class Header {
         public static final String EntryId = "ladok3AtomEntryId";
