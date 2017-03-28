@@ -25,8 +25,10 @@ package se.kth.infosys.ladok3;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -107,5 +109,35 @@ public class Ladok3StudentInformationServiceTest {
         assertNotNull(kontaktUppgifter);
 // Currently does not work, due to empty object. IK-failure?
 //        assertFalse(kontaktUppgifter.getPostadresser().isEmpty());
+    }
+
+    @Test
+    public void testStudentFilteraIterator() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("efternamn", "*");
+        params.put("limit", 5);
+
+        Iterator<StudentISokresultat> iterator = studentInformationService.studentFiltreraIterator(params);
+        assertNotNull(iterator);
+        assertTrue(iterator.hasNext());
+
+        for (int i = 0; i < 7; i++) {
+            assertNotNull(iterator.next());
+        }
+    }
+
+    @Test
+    public void testStudentFilteraStudentIterator() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("efternamn", "*");
+        params.put("limit", 5);
+
+        Iterator<Student> iterator = studentInformationService.studentFiltreraStudentIterator(params);
+        assertNotNull(iterator);
+        assertTrue(iterator.hasNext());
+
+        for (int i = 0; i < 7; i++) {
+            assertNotNull(iterator.next());
+        }
     }
 }

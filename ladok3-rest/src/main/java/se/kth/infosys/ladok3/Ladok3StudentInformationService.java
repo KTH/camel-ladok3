@@ -23,15 +23,19 @@
  */
 package se.kth.infosys.ladok3;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.WebTarget;
 
+import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraIterator;
+import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraStudentIterator;
 import se.ladok.schemas.dap.ServiceIndex;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
+import se.ladok.schemas.studentinformation.StudentISokresultat;
 
 /**
  * A class representing the Ladok studentinformation service. It is using JAX RS 
@@ -149,5 +153,28 @@ public class Ladok3StudentInformationService extends LadokService {
                 .request()
                 .accept(STUDENTINFORMATION_XML)
                 .get(SokresultatStudentinformationRepresentation.class);
+    }
+
+    /**
+     * Higher abstraction of {@link #studentFiltrera} method which returns 
+     * an iterator of StudentISokresultat hiding all paging related issues.
+     * 
+     * @param params A map between parameter strings and their object values.
+     * @return an iterator for all search results matching params.
+     */
+    public Iterator<StudentISokresultat> studentFiltreraIterator(Map<String, Object> params) {
+        return new Ladok3StudentFiltreraIterator(this, params);
+    }
+
+    /**
+     * Higher abstraction of {@link #studentFiltrera} method which returns 
+     * an iterator of Student hiding all paging related and call to student information
+     * service issues.
+     * 
+     * @param params A map between parameter strings and their object values.
+     * @return an iterator for all search results matching params.
+     */
+    public Iterator<Student> studentFiltreraStudentIterator(Map<String, Object> params) {
+        return new Ladok3StudentFiltreraStudentIterator(this, params);
     }
 }
