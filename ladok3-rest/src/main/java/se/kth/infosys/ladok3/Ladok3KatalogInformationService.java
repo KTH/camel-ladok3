@@ -26,11 +26,14 @@ package se.kth.infosys.ladok3;
 import java.util.Map;
 
 import javax.net.ssl.SSLContext;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 import se.ladok.schemas.dap.ServiceIndex;
 import se.ladok.schemas.kataloginformation.Anvandare;
 import se.ladok.schemas.kataloginformation.AnvandareLista;
+import se.ladok.schemas.kataloginformation.Anvandarinformation;
 
 /**
  * A class representing the Ladok kataloginformation service. It is using JAX RS 
@@ -38,7 +41,7 @@ import se.ladok.schemas.kataloginformation.AnvandareLista;
  * JAX RS client documentation.
  */
 public class Ladok3KatalogInformationService extends LadokService {
-    private static final String SERVICE_XML = "application/vnd.ladok-kataloginformation+xml";
+    private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-kataloginformation+xml");
     private static final String SERVICE = "kataloginformation";
     private final WebTarget kataloginformation;
 
@@ -73,7 +76,7 @@ public class Ladok3KatalogInformationService extends LadokService {
     public ServiceIndex serviceIndex() {
         return kataloginformation.path("/service/index")
                 .request()
-                .accept(SERVICE_XML)
+                .accept(SERVICE_TYPE)
                 .get(ServiceIndex.class);
     }
 
@@ -86,8 +89,52 @@ public class Ladok3KatalogInformationService extends LadokService {
         return kataloginformation.path("/anvandare/{uid}")
                 .resolveTemplate("uid", uid)
                 .request()
-                .accept(SERVICE_XML)
+                .accept(SERVICE_TYPE)
                 .get(Anvandare.class);
+    }
+
+    /**
+     * Retrieve Anvandarinformation for a user (anvandare) given its UID.
+     * @param uid The unique identifier for the user.
+     * @return The user information matching the UID
+     */
+    public Anvandarinformation anvandarInformation(String uid) {
+        return kataloginformation.path("/anvandare/{uid}/anvandarinformation")
+                .resolveTemplate("uid", uid)
+                .request()
+                .accept(SERVICE_TYPE)
+                .get(Anvandarinformation.class);
+    }
+
+
+    /**
+     * Create Anvandarinformation for a user (anvandare) given its UID.
+     * @param uid The unique identifier for the user.
+     * @param anvandarinformation the user information object.
+     * @return The resulting user information.
+     */
+    public Anvandarinformation createAnvandarInformation(String uid,
+            Anvandarinformation anvandarinformation) {
+        return kataloginformation.path("/anvandare/{uid}/anvandarinformation")
+                .resolveTemplate("uid", uid)
+                .request()
+                .accept(SERVICE_TYPE)
+                .post(Entity.entity(anvandarinformation, SERVICE_TYPE), Anvandarinformation.class);
+    }
+
+    /**
+     * Update Anvandarinformation for a user (anvandare) given its UID.
+     * @param uid The unique identifier for the user.
+     * @param anvandarinformation the user information object.
+     * @return The resulting user information.
+     */
+    public Anvandarinformation updateAnvandarInformation(String uid,
+            Anvandarinformation anvandarinformation) {
+        return kataloginformation.path("/anvandare/{uid}/anvandarinformation")
+                .resolveTemplate("uid", uid)
+                .request()
+                .accept(SERVICE_TYPE)
+                .put(Entity.entity(anvandarinformation, SERVICE_TYPE), Anvandarinformation.class);
     }
 
     /**
@@ -116,7 +163,7 @@ public class Ladok3KatalogInformationService extends LadokService {
 
         return request
                 .request()
-                .accept(SERVICE_XML)
+                .accept(SERVICE_TYPE)
                 .get(AnvandareLista.class);
     }
 
@@ -146,7 +193,7 @@ public class Ladok3KatalogInformationService extends LadokService {
 
         return request
                 .request()
-                .accept(SERVICE_XML)
+                .accept(SERVICE_TYPE)
                 .get(AnvandareLista.class);
     }
 }

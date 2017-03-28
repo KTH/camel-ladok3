@@ -28,6 +28,7 @@ import java.util.Map;
 
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraIterator;
 import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraStudentIterator;
@@ -43,7 +44,7 @@ import se.ladok.schemas.studentinformation.StudentISokresultat;
  * JAX RS client documentation.
  */
 public class Ladok3StudentInformationService extends LadokService {
-    private static final String STUDENTINFORMATION_XML = "application/vnd.ladok-studentinformation+xml";
+    private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-studentinformation+xml");
     private static final String SERVICE = "studentinformation";
 
     private final WebTarget studentinformation;
@@ -79,7 +80,7 @@ public class Ladok3StudentInformationService extends LadokService {
     public ServiceIndex serviceIndex() {
         return studentinformation.path("/service/index")
                 .request()
-                .accept(STUDENTINFORMATION_XML)
+                .accept(SERVICE_TYPE)
                 .get(ServiceIndex.class);
     }
 
@@ -92,7 +93,7 @@ public class Ladok3StudentInformationService extends LadokService {
         return studentinformation.path("/student/personnummer/{personnummer}")
                 .resolveTemplate("personnummer", personnummer)
                 .request()
-                .accept(STUDENTINFORMATION_XML)
+                .accept(SERVICE_TYPE)
                 .get(Student.class);
     }
 
@@ -105,7 +106,7 @@ public class Ladok3StudentInformationService extends LadokService {
         return studentinformation.path("/student/{uid}")
                 .resolveTemplate("uid", uid)
                 .request()
-                .accept(STUDENTINFORMATION_XML)
+                .accept(SERVICE_TYPE)
                 .get(Student.class);
     }
 
@@ -118,7 +119,7 @@ public class Ladok3StudentInformationService extends LadokService {
         return studentinformation.path("/student/{uid}/kontaktuppgifter")
                 .resolveTemplate("uid", uid)
                 .request()
-                .accept(STUDENTINFORMATION_XML)
+                .accept(SERVICE_TYPE)
                 .get(Kontaktuppgifter.class);
     }
 
@@ -153,7 +154,7 @@ public class Ladok3StudentInformationService extends LadokService {
 
         return request
                 .request()
-                .accept(STUDENTINFORMATION_XML)
+                .accept(SERVICE_TYPE)
                 .get(SokresultatStudentinformationRepresentation.class);
     }
 
