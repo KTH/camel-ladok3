@@ -44,6 +44,8 @@ import se.ladok.schemas.studentinformation.StudentISokresultat;
  */
 public class Ladok3StudentInformationService extends LadokService {
     private static final String STUDENTINFORMATION_XML = "application/vnd.ladok-studentinformation+xml";
+    private static final String SERVICE = "studentinformation";
+
     private final WebTarget studentinformation;
 
     /**
@@ -56,7 +58,7 @@ public class Ladok3StudentInformationService extends LadokService {
      */
     public Ladok3StudentInformationService(String host, String certFile, String key) throws Exception {
         super(host, certFile, key);
-        this.studentinformation = client.target(String.format("https://%s/studentinformation", host));
+        this.studentinformation = client.target(String.format("https://%s/%s", host, SERVICE));
     }
 
     /**
@@ -68,7 +70,7 @@ public class Ladok3StudentInformationService extends LadokService {
      */
     public Ladok3StudentInformationService(String host, SSLContext context) throws Exception {
         super(context);
-        this.studentinformation = client.target(String.format("https://%s/studentinformation", host));
+        this.studentinformation = client.target(String.format("https://%s/%s", host, SERVICE));
     }
 
     /**
