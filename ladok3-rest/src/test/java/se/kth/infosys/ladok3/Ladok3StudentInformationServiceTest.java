@@ -140,4 +140,18 @@ public class Ladok3StudentInformationServiceTest {
             assertNotNull(iterator.next());
         }
     }
+
+    @Test
+    public void testStudentFilteraStudentIteratorNoParams() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("limit", 5);
+
+        Iterator<Student> iterator = studentInformationService.studentFiltreraStudentIterator(params);
+        assertNotNull(iterator);
+        assertTrue(iterator.hasNext());
+
+        for (int i = 0; i < 7; i++) {
+            assertNotNull(iterator.next());
+        }
+    }
 }
