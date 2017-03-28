@@ -27,8 +27,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.net.CookieHandler;
-import java.net.CookieManager;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -51,11 +49,6 @@ public class Ladok3StudentInformationServiceTest {
 
     @Before
     public void setup() throws Exception {
-        if (CookieHandler.getDefault() == null) {
-            CookieManager cookieManager = new CookieManager();
-            CookieHandler.setDefault(cookieManager);
-        }
-
         properties.load(ClassLoader.getSystemResourceAsStream("test.properties"));
 
         String host = properties.getProperty("ladok3.host");

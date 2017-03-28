@@ -26,8 +26,6 @@ package se.kth.infosys.ladok3;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.net.CookieHandler;
-import java.net.CookieManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,11 +50,6 @@ public class Ladok3KatalogInformationServiceTest {
 
     @Before
     public void setup() throws Exception {
-        if (CookieHandler.getDefault() == null) {
-            CookieManager cookieManager = new CookieManager();
-            CookieHandler.setDefault(cookieManager);
-        }
-
         properties.load(ClassLoader.getSystemResourceAsStream("test.properties"));
 
         String host = properties.getProperty("ladok3.host");

@@ -25,6 +25,8 @@ package se.kth.infosys.ladok3;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import java.security.KeyStore;
 
 import javax.net.ssl.KeyManagerFactory;
@@ -41,6 +43,12 @@ import se.ladok.schemas.dap.ServiceIndex;
  */
 public abstract class LadokService {
     protected final Client client;
+    static {
+        if (CookieHandler.getDefault() == null) {
+            CookieManager cookieManager = new CookieManager();
+            CookieHandler.setDefault(cookieManager);
+        }
+    }
 
     /**
      * Initialize the service client with authentication certificates.
