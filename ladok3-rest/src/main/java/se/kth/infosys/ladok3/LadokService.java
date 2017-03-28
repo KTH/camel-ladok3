@@ -32,6 +32,8 @@ import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
+import se.kth.infosys.ladok3.internal.Ladok3RequestFilter;
+import se.kth.infosys.ladok3.internal.Ladok3ResponseFilter;
 import se.ladok.schemas.dap.ServiceIndex;
 
 /**
