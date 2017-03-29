@@ -112,7 +112,7 @@ public class Ladok3StudentInformationServiceTest {
     }
 
     @Test
-    public void testStudentFilteraIterator() {
+    public void testStudentFiltreraIterator() {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("efternamn", "*");
         params.put("limit", 5);
@@ -127,7 +127,7 @@ public class Ladok3StudentInformationServiceTest {
     }
 
     @Test
-    public void testStudentFilteraStudentIterator() {
+    public void testStudentFiltreraStudentIterator() {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("efternamn", "*");
         params.put("limit", 5);
@@ -142,7 +142,7 @@ public class Ladok3StudentInformationServiceTest {
     }
 
     @Test
-    public void testStudentFilteraStudentIteratorNoParams() {
+    public void testStudentFiltreraStudentIteratorNoParams() {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("limit", 5);
 
