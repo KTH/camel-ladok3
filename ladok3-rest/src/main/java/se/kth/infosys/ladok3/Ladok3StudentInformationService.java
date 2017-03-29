@@ -47,8 +47,6 @@ public class Ladok3StudentInformationService extends LadokService {
     private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-studentinformation+xml");
     private static final String SERVICE = "studentinformation";
 
-    private final WebTarget studentinformation;
-
     /**
      * Constructor Web Service client end representing the Ladok studentinformation endpoint.
      * 
@@ -58,8 +56,7 @@ public class Ladok3StudentInformationService extends LadokService {
      * @throws Exception on errors.
      */
     public Ladok3StudentInformationService(String host, String certFile, String key) throws Exception {
-        super(host, certFile, key);
-        this.studentinformation = client.target(String.format("https://%s/%s", host, SERVICE));
+        super(host, certFile, key, SERVICE);
     }
 
     /**
@@ -70,15 +67,14 @@ public class Ladok3StudentInformationService extends LadokService {
      * @throws Exception on errors.
      */
     public Ladok3StudentInformationService(String host, SSLContext context) throws Exception {
-        super(context);
-        this.studentinformation = client.target(String.format("https://%s/%s", host, SERVICE));
+        super(host, context, SERVICE);
     }
 
     /**
      * {@inheritDoc}
      */
     public ServiceIndex serviceIndex() {
-        return studentinformation.path("/service/index")
+        return target.path("/service/index")
                 .request()
                 .accept(SERVICE_TYPE)
                 .get(ServiceIndex.class);
@@ -90,7 +86,7 @@ public class Ladok3StudentInformationService extends LadokService {
      * @return The student matching the personnummer
      */
     public Student studentPersonnummer(String personnummer) {
-        return studentinformation.path("/student/personnummer/{personnummer}")
+        return target.path("/student/personnummer/{personnummer}")
                 .resolveTemplate("personnummer", personnummer)
                 .request()
                 .accept(SERVICE_TYPE)
@@ -103,7 +99,7 @@ public class Ladok3StudentInformationService extends LadokService {
      * @return The student matching the UID
      */
     public Student studentUID(String uid) {
-        return studentinformation.path("/student/{uid}")
+        return target.path("/student/{uid}")
                 .resolveTemplate("uid", uid)
                 .request()
                 .accept(SERVICE_TYPE)
@@ -116,7 +112,7 @@ public class Ladok3StudentInformationService extends LadokService {
      * @return The contact information matching the UID
      */
     public Kontaktuppgifter kontaktuppgifter(String uid) {
-        return studentinformation.path("/student/{uid}/kontaktuppgifter")
+        return target.path("/student/{uid}/kontaktuppgifter")
                 .resolveTemplate("uid", uid)
                 .request()
                 .accept(SERVICE_TYPE)
@@ -143,7 +139,7 @@ public class Ladok3StudentInformationService extends LadokService {
      * @return The search result.
      */
     public SokresultatStudentinformationRepresentation studentFiltrera(Map<String, Object> params) {
-        WebTarget request = studentinformation.path("/student/filtrera");
+        WebTarget request = target.path("/student/filtrera");
 
         params.putIfAbsent("limit", 400);
         params.putIfAbsent("page", 1);

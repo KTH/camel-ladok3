@@ -33,6 +33,7 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 
 import se.kth.infosys.ladok3.internal.Ladok3RequestFilter;
 import se.kth.infosys.ladok3.internal.Ladok3ResponseFilter;
@@ -42,7 +43,9 @@ import se.ladok.schemas.dap.ServiceIndex;
  * Abstract base class for Ladok REST services.
  */
 public abstract class LadokService {
-    protected final Client client;
+    /** The constructed web target to use in sub classes. */
+    protected final WebTarget target;
+
     static {
         if (CookieHandler.getDefault() == null) {
             CookieManager cookieManager = new CookieManager();
@@ -55,9 +58,14 @@ public abstract class LadokService {
      * @param host The targeted Ladok environment.
      * @param certFile The path to the certificate file.
      * @param key The certificate file key phrase.
+     * @param service The Ladok3 service path, e.g. "studentinformation".
      * @throws Exception on errors.
      */
-    protected LadokService(String host, String certFile, String key) throws Exception {
+    protected LadokService(
+            final String host,
+            final String certFile,
+            final String key,
+            final String service) throws Exception {
         final KeyStore keyStore = KeyStore.getInstance("PKCS12");
         keyStore.load(new FileInputStream(new File(certFile)), key.toCharArray());
 
@@ -67,22 +75,26 @@ public abstract class LadokService {
         final SSLContext context = SSLContext.getInstance("TLS");
         context.init(kmf.getKeyManagers(), null, null);
 
-        client = clientFactory(context);
+        target = clientFactory(context).target(String.format("https://%s/%s", host, service));
     }
 
     /**
      * Initialize the service client with authentication certificates.
      * @param context the SSLContext containing necessary information.
+     * @param service The Ladok3 service path, e.g. "studentinformation".
      * @throws Exception on errors.
      */
-    protected LadokService(SSLContext context) throws Exception {
-        client = clientFactory(context);
+    protected LadokService(
+            final String host,
+            final SSLContext context,
+            final String service) throws Exception {
+        target = clientFactory(context).target(String.format("https://%s/%s", host, service));
     }
 
     /*
      * Private helper method.
      */
-    private static Client clientFactory(SSLContext context) {
+    private static Client clientFactory(final SSLContext context) {
         return ClientBuilder.newBuilder().sslContext(context)
             .build()
             .register(Ladok3RequestFilter.class)

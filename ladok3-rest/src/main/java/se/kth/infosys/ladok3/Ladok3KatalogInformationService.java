@@ -43,7 +43,6 @@ import se.ladok.schemas.kataloginformation.Anvandarinformation;
 public class Ladok3KatalogInformationService extends LadokService {
     private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-kataloginformation+xml");
     private static final String SERVICE = "kataloginformation";
-    private final WebTarget kataloginformation;
 
     /**
      * Constructor Web Service client end representing the Ladok kataloginformation endpoint.
@@ -54,8 +53,7 @@ public class Ladok3KatalogInformationService extends LadokService {
      * @throws Exception on errors.
      */
     public Ladok3KatalogInformationService(String host, String certFile, String key) throws Exception {
-        super(host, certFile, key);
-        this.kataloginformation = client.target(String.format("https://%s/%s", host, SERVICE));
+        super(host, certFile, key, SERVICE);
     }
 
     /**
@@ -66,15 +64,14 @@ public class Ladok3KatalogInformationService extends LadokService {
      * @throws Exception on errors.
      */
     public Ladok3KatalogInformationService(String host, SSLContext context) throws Exception {
-        super(context);
-        this.kataloginformation = client.target(String.format("https://%s/%s", host, SERVICE));
+        super(host, context, SERVICE);
     }
 
     /**
      * {@inheritDoc}
      */
     public ServiceIndex serviceIndex() {
-        return kataloginformation.path("/service/index")
+        return target.path("/service/index")
                 .request()
                 .accept(SERVICE_TYPE)
                 .get(ServiceIndex.class);
@@ -86,7 +83,7 @@ public class Ladok3KatalogInformationService extends LadokService {
      * @return The user matching the UID
      */
     public Anvandare anvandareUID(String uid) {
-        return kataloginformation.path("/anvandare/{uid}")
+        return target.path("/anvandare/{uid}")
                 .resolveTemplate("uid", uid)
                 .request()
                 .accept(SERVICE_TYPE)
@@ -99,23 +96,23 @@ public class Ladok3KatalogInformationService extends LadokService {
      * @return The user information matching the UID
      */
     public Anvandarinformation anvandarInformation(String uid) {
-        return kataloginformation.path("/anvandare/{uid}/anvandarinformation")
+        return target.path("/anvandare/{uid}/anvandarinformation")
                 .resolveTemplate("uid", uid)
                 .request()
                 .accept(SERVICE_TYPE)
                 .get(Anvandarinformation.class);
     }
 
-
     /**
      * Create Anvandarinformation for a user (anvandare) given its UID.
+     * 
      * @param uid The unique identifier for the user.
      * @param anvandarinformation the user information object.
      * @return The resulting user information.
      */
     public Anvandarinformation createAnvandarInformation(String uid,
             Anvandarinformation anvandarinformation) {
-        return kataloginformation.path("/anvandare/{uid}/anvandarinformation")
+        return target.path("/anvandare/{uid}/anvandarinformation")
                 .resolveTemplate("uid", uid)
                 .request()
                 .accept(SERVICE_TYPE)
@@ -124,13 +121,14 @@ public class Ladok3KatalogInformationService extends LadokService {
 
     /**
      * Update Anvandarinformation for a user (anvandare) given its UID.
+     * 
      * @param uid The unique identifier for the user.
      * @param anvandarinformation the user information object.
      * @return The resulting user information.
      */
     public Anvandarinformation updateAnvandarInformation(String uid,
             Anvandarinformation anvandarinformation) {
-        return kataloginformation.path("/anvandare/{uid}/anvandarinformation")
+        return target.path("/anvandare/{uid}/anvandarinformation")
                 .resolveTemplate("uid", uid)
                 .request()
                 .accept(SERVICE_TYPE)
@@ -155,7 +153,7 @@ public class Ladok3KatalogInformationService extends LadokService {
      * @return The search result.
      */
     public AnvandareLista getAnvandare(Map<String, Object> params) {
-        WebTarget request = kataloginformation.path("/anvandare");
+        WebTarget request = target.path("/anvandare");
 
         for (String param : params.keySet()) {
             request = request.queryParam(param, params.get(param));
@@ -185,7 +183,7 @@ public class Ladok3KatalogInformationService extends LadokService {
      * @return The search result.
      */
     public AnvandareLista anvandareFiltrerade(Map<String, Object> params) {
-        WebTarget request = kataloginformation.path("/anvandare/filtrerade");
+        WebTarget request = target.path("/anvandare/filtrerade");
 
         for (String param : params.keySet()) {
             request = request.queryParam(param, params.get(param));
