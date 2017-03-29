@@ -75,7 +75,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         }
 
         log.debug("Getting Ladok data for student with uid: {}", uid);
-        Student fromLadok = service.studentUID(uid);
+        Student fromLadok = service.student(uid);
         exchange.getOut().setBody(fromLadok);
     }
 

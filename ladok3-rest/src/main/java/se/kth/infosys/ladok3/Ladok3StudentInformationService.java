@@ -98,7 +98,7 @@ public class Ladok3StudentInformationService extends LadokService {
      * @param uid The unique identifier for the student.
      * @return The student matching the UID
      */
-    public Student studentUID(String uid) {
+    public Student student(String uid) {
         return target.path("/student/{uid}")
                 .resolveTemplate("uid", uid)
                 .request()

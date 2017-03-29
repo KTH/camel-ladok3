@@ -20,7 +20,7 @@ public class Ladok3StudentFiltreraStudentIterator implements Iterator<Student> {
     @Override
     public Student next() {
         if (iterator.hasNext()) {
-            return service.studentUID(iterator.next().getUid());
+            return service.student(iterator.next().getUid());
         }
         return null;
     }

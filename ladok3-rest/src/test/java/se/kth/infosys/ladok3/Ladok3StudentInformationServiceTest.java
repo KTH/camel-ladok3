@@ -63,10 +63,6 @@ public class Ladok3StudentInformationServiceTest {
         ServiceIndex index = studentInformationService.serviceIndex();
         List<RelationLink> links = index.getLink();
 
-        for (RelationLink link : links) {
-            System.out.println(link.getRel());
-            System.out.println(link.getUri());
-        }
         assert(links.size() > 0);
     }
 
