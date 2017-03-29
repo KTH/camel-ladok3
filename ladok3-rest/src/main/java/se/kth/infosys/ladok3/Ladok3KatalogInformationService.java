@@ -82,7 +82,7 @@ public class Ladok3KatalogInformationService extends LadokService {
      * @param uid The unique identifier for the user.
      * @return The user matching the UID
      */
-    public Anvandare anvandareUID(String uid) {
+    public Anvandare anvandare(String uid) {
         return target.path("/anvandare/{uid}")
                 .resolveTemplate("uid", uid)
                 .request()
@@ -91,7 +91,35 @@ public class Ladok3KatalogInformationService extends LadokService {
     }
 
     /**
+     * Create a user.
+     * 
+     * @param anvandare The user object.
+     * @return The created user.
+     */
+    public Anvandare createAnvandare(Anvandare anvandare) {
+        return target.path("/anvandare")
+                .request()
+                .accept(SERVICE_TYPE)
+                .post(Entity.entity(anvandare, SERVICE_TYPE), Anvandare.class);
+    }
+
+    /**
+     * Update a user.
+     * 
+     * @param anvandare The user object.
+     * @return The updated user.
+     */
+    public Anvandare updateAnvandare(Anvandare anvandare) {
+        return target.path("/anvandare/{uid}")
+                .resolveTemplate("uid", anvandare.getUid())
+                .request()
+                .accept(SERVICE_TYPE)
+                .put(Entity.entity(anvandare, SERVICE_TYPE), Anvandare.class);
+    }
+
+    /**
      * Retrieve Anvandarinformation for a user (anvandare) given its UID.
+     * 
      * @param uid The unique identifier for the user.
      * @return The user information matching the UID
      */
@@ -104,16 +132,14 @@ public class Ladok3KatalogInformationService extends LadokService {
     }
 
     /**
-     * Create Anvandarinformation for a user (anvandare) given its UID.
+     * Create Anvandarinformation for a user (anvandare).
      * 
-     * @param uid The unique identifier for the user.
      * @param anvandarinformation the user information object.
      * @return The resulting user information.
      */
-    public Anvandarinformation createAnvandarInformation(String uid,
-            Anvandarinformation anvandarinformation) {
+    public Anvandarinformation createAnvandarInformation(Anvandarinformation anvandarinformation) {
         return target.path("/anvandare/{uid}/anvandarinformation")
-                .resolveTemplate("uid", uid)
+                .resolveTemplate("uid", anvandarinformation.getAnvandareUID())
                 .request()
                 .accept(SERVICE_TYPE)
                 .post(Entity.entity(anvandarinformation, SERVICE_TYPE), Anvandarinformation.class);
@@ -126,10 +152,9 @@ public class Ladok3KatalogInformationService extends LadokService {
      * @param anvandarinformation the user information object.
      * @return The resulting user information.
      */
-    public Anvandarinformation updateAnvandarInformation(String uid,
-            Anvandarinformation anvandarinformation) {
+    public Anvandarinformation updateAnvandarInformation(Anvandarinformation anvandarinformation) {
         return target.path("/anvandare/{uid}/anvandarinformation")
-                .resolveTemplate("uid", uid)
+                .resolveTemplate("uid", anvandarinformation.getAnvandareUID())
                 .request()
                 .accept(SERVICE_TYPE)
                 .put(Entity.entity(anvandarinformation, SERVICE_TYPE), Anvandarinformation.class);
@@ -152,7 +177,7 @@ public class Ladok3KatalogInformationService extends LadokService {
      * @param params A map between parameter strings and their object values.
      * @return The search result.
      */
-    public AnvandareLista getAnvandare(Map<String, Object> params) {
+    public AnvandareLista anvandare(Map<String, Object> params) {
         WebTarget request = target.path("/anvandare");
 
         for (String param : params.keySet()) {

@@ -10,5 +10,9 @@
       <annox:annotateClass>@javax.xml.bind.annotation.XmlRootElement(name="Anvandarinformation")
       </annox:annotateClass>
     </jaxb:bindings>
+    <jaxb:bindings node='xs:complexType[@name="Anvandare"]'>
+      <annox:annotateClass>@javax.xml.bind.annotation.XmlRootElement(name="Anvandare")
+      </annox:annotateClass>
+    </jaxb:bindings>
   </jaxb:bindings>
 </jaxb:bindings>

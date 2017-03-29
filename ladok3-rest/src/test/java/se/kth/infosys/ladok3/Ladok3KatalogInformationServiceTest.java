@@ -24,12 +24,15 @@
 package se.kth.infosys.ladok3;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.ws.rs.ClientErrorException;
 
@@ -80,7 +83,7 @@ public class Ladok3KatalogInformationServiceTest {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("anvandarnamn", username);
 
-        AnvandareLista anvandare = katalogInformationService.getAnvandare(params);
+        AnvandareLista anvandare = katalogInformationService.anvandare(params);
         assertEquals(1, anvandare.getAnvandare().size());
         Anvandare user = anvandare.getAnvandare().get(0);
 
@@ -88,39 +91,59 @@ public class Ladok3KatalogInformationServiceTest {
         assertEquals(efternamn, user.getEfternamn().toUpperCase());
         assertEquals(username, user.getAnvandarnamn());
 
-        Anvandare res = katalogInformationService.anvandareUID(user.getUid());
+        Anvandare res = katalogInformationService.anvandare(user.getUid());
         assertEquals(fornamn, res.getFornamn().toUpperCase());
         assertEquals(efternamn, res.getEfternamn().toUpperCase());
         assertEquals(username, user.getAnvandarnamn());
     }
 
     @Test
-    public void anvandarInformationTest() {
-        String username = properties.getProperty("ladok3.test.Ladok3KataglogInformationServiceTest.searchAnvandare.username");
-
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("anvandarnamn", username);
-
-        AnvandareLista anvandare = katalogInformationService.getAnvandare(params);
-        assertEquals(1, anvandare.getAnvandare().size());
-        Anvandare user = anvandare.getAnvandare().get(0);
-
-        Anvandarinformation information = katalogInformationService.anvandarInformation(user.getUid());
-        assertNotNull(information);
-
+    public void anvandarTest() {
         try {
-            information.setSms(objectFactory.createAnvandarinformationSms("123 123 123"));
-            information.setUid(user.getUid());
-            information = katalogInformationService.createAnvandarInformation(user.getUid(), information);
-            assertNotNull(information);
-            assertEquals("123 123 123", information.getSms().getValue());
+            Anvandare anvandare = objectFactory.createAnvandare();
+            anvandare.setAnvandarnamn("test-anvandare@kth.se");
+            anvandare.setFornamn("Fornamn");
+            anvandare.setEfternamn("Efternamn");
+            Anvandare created = katalogInformationService.createAnvandare(anvandare);
+            assertNotNull(created);
+            assertFalse(created.getUid().isEmpty());
         } catch (ClientErrorException e) {
             assertEquals(409, e.getResponse().getStatus());
         }
 
-        information.setSms(objectFactory.createAnvandarinformationSms("321 321 321"));
-        information = katalogInformationService.updateAnvandarInformation(user.getUid(), information);
-        assertNotNull(information);
-        assertEquals("321 321 321", information.getSms().getValue());
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("anvandarnamn", "test-anvandare@kth.se");
+        AnvandareLista search = katalogInformationService.anvandare(params);
+        assertEquals(1, search.getAnvandare().size());
+
+        Anvandare update = search.getAnvandare().get(0);
+        update.setFornamn("NyttFornamn");
+        Anvandare updated = katalogInformationService.updateAnvandare(update);
+        assertEquals("NyttFornamn", updated.getFornamn());
+        assertEquals(update.getUid(), updated.getUid());
+        assertEquals(update.getAnvandarnamn(), updated.getAnvandarnamn());
+
+        update.setFornamn("Fornamn");
+        updated = katalogInformationService.updateAnvandare(update);
+
+        try {
+            Anvandarinformation information = objectFactory.createAnvandarinformation();
+            information.setAnvandareUID(updated.getUid());
+            information.setEpost(objectFactory.createAnvandarinformationEpost("test-anvandare@kth.se"));
+            information.setSms(objectFactory.createAnvandarinformationSms("123 123 123"));
+            Anvandarinformation createdInformation = katalogInformationService.createAnvandarInformation(information);
+            assertNotNull(createdInformation);
+            assertFalse(createdInformation.getUid().isEmpty());
+        } catch (ClientErrorException e) {
+            assertEquals(409, e.getResponse().getStatus());
+        }
+
+        String sms = String.valueOf(ThreadLocalRandom.current().nextInt(1000, 10000));
+        Anvandarinformation information = katalogInformationService.anvandarInformation(updated.getUid());
+        information.setSms(objectFactory.createAnvandarinformationSms(sms));
+        Anvandarinformation updatedInformation = katalogInformationService.updateAnvandarInformation(information);
+        assertNotNull(updatedInformation);
+        assertEquals(information.getUid(), updatedInformation.getUid());
+        assertEquals(sms, updatedInformation.getSms().getValue());
     }
 }
