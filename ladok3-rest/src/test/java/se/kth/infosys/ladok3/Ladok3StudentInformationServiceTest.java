@@ -101,7 +101,7 @@ public class Ladok3StudentInformationServiceTest {
     public void getContactInformation() {
         String personnummer = properties.getProperty("ladok3.test.Ladok3StudentInformationServiceTest.getStudentByPersonnummer.personnummer");
         Student student = studentInformationService.studentPersonnummer(personnummer);
-        Kontaktuppgifter kontaktUppgifter = studentInformationService.kontaktuppgifter(student.getUid());
+        Kontaktuppgifter kontaktUppgifter = studentInformationService.studentKontaktuppgifter(student.getUid());
         assertNotNull(kontaktUppgifter);
 // Currently does not work, due to empty object. IK-failure?
 //        assertFalse(kontaktUppgifter.getPostadresser().isEmpty());

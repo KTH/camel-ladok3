@@ -63,7 +63,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         }
 
         log.debug("Getting kontaktinformation for student with uid: {}", uid);
-        Kontaktuppgifter fromLadok = service.kontaktuppgifter(uid);
+        Kontaktuppgifter fromLadok = service.studentKontaktuppgifter(uid);
         exchange.getOut().setBody(fromLadok);
     }
 

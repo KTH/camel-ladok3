@@ -111,7 +111,7 @@ public class Ladok3StudentInformationService extends LadokService {
      * @param uid The unique identifier for the student.
      * @return The contact information matching the UID
      */
-    public Kontaktuppgifter kontaktuppgifter(String uid) {
+    public Kontaktuppgifter studentKontaktuppgifter(String uid) {
         return target.path("/student/{uid}/kontaktuppgifter")
                 .resolveTemplate("uid", uid)
                 .request()
