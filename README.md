@@ -8,7 +8,11 @@ Apache Camel in particular.
 There are three parts in the project
 
 1. [ladok3-rest](ladok3-rest) is a JAXRS based client library to talk to Ladok3 REST api services.
-   It is currently just a proof of concept and incomplete.
+   The primary goal is to implement necessary methods for integration with the identity
+   management solution at KTH and not a complete Ladok3 interface library.
+   I.e., focus is on methods useful for identity, group and authorization
+   management purposes. Other integrations concerning student records and such may
+   be driven by other technology and possibly never warrant implementation in Java at KTH.
 1. [ladok3-model](ladok3-model) is a library with data model for events and other objects
    derived from the XSD published by Ladok.
 1. [camel-ladok3-component](camel-ladok3-component) is Camel Component defining a
