@@ -1,5 +1,13 @@
 # Release notes
 
+## 0.0.12
+
+Refactorization of API.
+Start using interface classes to support mockups down stream.
+Extract more common bits to base class.
+Basic necessary bits of studentinformation and kataloginformation
+implemented.
+
 ## 0.0.11
 
 Support down stream re-sequencing with new header.
