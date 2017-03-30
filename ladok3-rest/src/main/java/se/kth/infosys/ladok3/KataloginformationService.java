@@ -73,7 +73,7 @@ public interface KataloginformationService extends Service {
     public Anvandarinformation createAnvandarinformation(Anvandarinformation anvandarinformation);
 
     /**
-     * Update Anvandarinformation for a user (anvandare) given its UID.
+     * Update Anvandarinformation for a user (anvandare).
      * 
      * @param anvandarinformation the user information object.
      * @return The resulting user information.
@@ -83,16 +83,18 @@ public interface KataloginformationService extends Service {
     /**
      * Calls /anvandare with query parameters as specified in the params Map. 
      * See Ladok REST documentation for more information about parameters.
-     *
+     * 
+     * <pre>
      * {@code
      * Map<String, Object> params = new HashMap<String, Object>();
      * params.put("anvandarnamn", "fjo@kth.se");
      * AnvadarLista res =
      *     katatlogInformationService.anvandareFiltrerade(params);
+     * }
+     * </pre>
      * 
      * Objects passed as values will be rendered into parameters using their 
      * toString() method.
-     * }
      *
      * @param params A map between parameter strings and their object values.
      * @return The search result.
@@ -102,16 +104,18 @@ public interface KataloginformationService extends Service {
     /**
      * Calls /anvandare/filtrerade with query parameters as specified in the params Map. 
      * See Ladok REST documentation for more information about parameters.
-     *
+     * 
+     * <pre>
      * {@code
      * Map<String, Object> params = new HashMap<String, Object>();
      * params.put("anvandarnamn", "fjo@kth.se");
      * AnvadarLista res =
      *     katatlogInformationService.anvandareFiltrerade(params);
+     * }
+     * </pre>
      * 
      * Objects passed as values will be rendered into parameters using their 
      * toString() method.
-     * }
      *
      * @param params A map between parameter strings and their object values.
      * @return The search result.

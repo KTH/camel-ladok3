@@ -62,15 +62,17 @@ public interface StudentinformationService extends Service {
      * difference is that this method will default to "limit=400" and "page=1"
      * unless something else is specified. E.g:
      *
+     * <pre>
      * {@code
      * Map<String, Object> params = new HashMap<String, Object>();
      * params.put("personnummer", "19870412031234");
      * SokresultatStudentinformationRepresentation res =
      *     studentInformationService.studentFiltrera(params);
+     * }
+     * </pre>
      * 
      * Objects passed as values will be rendered into parameters using their 
      * toString() method.
-     * }
      *
      * @param params A map between parameter strings and their object values.
      * @return The search result.
