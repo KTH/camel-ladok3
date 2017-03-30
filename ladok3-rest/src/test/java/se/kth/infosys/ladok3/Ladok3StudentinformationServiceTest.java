@@ -43,8 +43,8 @@ import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresen
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 
-public class Ladok3StudentInformationServiceTest {
-    private Ladok3StudentInformationService studentInformationService;
+public class Ladok3StudentinformationServiceTest {
+    private StudentinformationService studentInformationService;
     private Properties properties = new Properties();
 
     @Before
@@ -55,7 +55,7 @@ public class Ladok3StudentInformationServiceTest {
         String certFile = properties.getProperty("ladok3.cert.file");
         String key = properties.getProperty("ladok3.cert.key");
 
-        studentInformationService = new Ladok3StudentInformationService(host, certFile, key);
+        studentInformationService = new Ladok3StudentinformationService(host, certFile, key);
     }
 
     @Test

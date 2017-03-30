@@ -45,8 +45,8 @@ import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
 import se.ladok.schemas.kataloginformation.ObjectFactory;
 
-public class Ladok3KatalogInformationServiceTest {
-    private Ladok3KatalogInformationService katalogInformationService;
+public class Ladok3KataloginformationServiceTest {
+    private KataloginformationService katalogInformationService;
     private Properties properties = new Properties();
     private static final ObjectFactory objectFactory = new ObjectFactory();
 
@@ -58,7 +58,7 @@ public class Ladok3KatalogInformationServiceTest {
         String certFile = properties.getProperty("ladok3.cert.file");
         String key = properties.getProperty("ladok3.cert.key");
 
-        katalogInformationService = new Ladok3KatalogInformationService(host, certFile, key);
+        katalogInformationService = new Ladok3KataloginformationService(host, certFile, key);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class Ladok3KatalogInformationServiceTest {
             information.setAnvandareUID(updated.getUid());
             information.setEpost(objectFactory.createAnvandarinformationEpost("test-anvandare@kth.se"));
             information.setSms(objectFactory.createAnvandarinformationSms("123 123 123"));
-            Anvandarinformation createdInformation = katalogInformationService.createAnvandarInformation(information);
+            Anvandarinformation createdInformation = katalogInformationService.createAnvandarinformation(information);
             assertNotNull(createdInformation);
             assertFalse(createdInformation.getUid().isEmpty());
         } catch (ClientErrorException e) {
@@ -134,9 +134,9 @@ public class Ladok3KatalogInformationServiceTest {
         }
 
         String sms = String.valueOf(ThreadLocalRandom.current().nextInt(1000, 10000));
-        Anvandarinformation information = katalogInformationService.anvandarInformation(updated.getUid());
+        Anvandarinformation information = katalogInformationService.anvandarinformation(updated.getUid());
         information.setSms(objectFactory.createAnvandarinformationSms(sms));
-        Anvandarinformation updatedInformation = katalogInformationService.updateAnvandarInformation(information);
+        Anvandarinformation updatedInformation = katalogInformationService.updateAnvandarinformation(information);
         assertNotNull(updatedInformation);
         assertEquals(information.getUid(), updatedInformation.getUid());
         assertEquals(sms, updatedInformation.getSms().getValue());

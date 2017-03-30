@@ -32,6 +32,7 @@ import javax.ws.rs.core.MediaType;
 
 import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraIterator;
 import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraStudentIterator;
+import se.kth.infosys.ladok3.internal.LadokService;
 import se.ladok.schemas.dap.ServiceIndex;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
@@ -43,7 +44,7 @@ import se.ladok.schemas.studentinformation.StudentISokresultat;
  * which means that errors will be thrown as unchecked runtime exceptions. See 
  * JAX RS client documentation.
  */
-public class Ladok3StudentInformationService extends LadokService {
+public class Ladok3StudentinformationService extends LadokService implements StudentinformationService {
     private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-studentinformation+xml");
     private static final String SERVICE = "studentinformation";
 
@@ -55,7 +56,7 @@ public class Ladok3StudentInformationService extends LadokService {
      * @param key The key to certificate.
      * @throws Exception on errors.
      */
-    public Ladok3StudentInformationService(String host, String certFile, String key) throws Exception {
+    public Ladok3StudentinformationService(String host, String certFile, String key) throws Exception {
         super(host, certFile, key, SERVICE);
     }
 
@@ -66,7 +67,7 @@ public class Ladok3StudentInformationService extends LadokService {
      * @param context the SSLContext containing necessary information. 
      * @throws Exception on errors.
      */
-    public Ladok3StudentInformationService(String host, SSLContext context) throws Exception {
+    public Ladok3StudentinformationService(String host, SSLContext context) throws Exception {
         super(host, context, SERVICE);
     }
 
@@ -81,9 +82,7 @@ public class Ladok3StudentInformationService extends LadokService {
     }
 
     /**
-     * Retrieve a student given a personnummer.
-     * @param personnummer identifying the student.
-     * @return The student matching the personnummer
+     * {@inheritDoc}
      */
     public Student studentPersonnummer(String personnummer) {
         return target.path("/student/personnummer/{personnummer}")
@@ -94,9 +93,7 @@ public class Ladok3StudentInformationService extends LadokService {
     }
 
     /**
-     * Retrieve a student given its UID.
-     * @param uid The unique identifier for the student.
-     * @return The student matching the UID
+     * {@inheritDoc}
      */
     public Student student(String uid) {
         return target.path("/student/{uid}")
@@ -107,9 +104,7 @@ public class Ladok3StudentInformationService extends LadokService {
     }
 
     /**
-     * Retrieve contact information for a student given its UID.
-     * @param uid The unique identifier for the student.
-     * @return The contact information matching the UID
+     * {@inheritDoc}
      */
     public Kontaktuppgifter studentKontaktuppgifter(String uid) {
         return target.path("/student/{uid}/kontaktuppgifter")
@@ -120,23 +115,7 @@ public class Ladok3StudentInformationService extends LadokService {
     }
 
     /**
-     * Calls /student/filtrera with query parameters as specified in the params Map. 
-     * See Ladok REST documentation for more information about parameters. Only 
-     * difference is that this method will default to "limit=400" and "page=1"
-     * unless something else is specified. E.g:
-     *
-     * {@code
-     * Map<String, Object> params = new HashMap<String, Object>();
-     * params.put("personnummer", "19870412031234");
-     * SokresultatStudentinformationRepresentation res =
-     *     studentInformationService.studentFiltrera(params);
-     * 
-     * Objects passed as values will be rendered into parameters using their 
-     * toString() method.
-     * }
-     *
-     * @param params A map between parameter strings and their object values.
-     * @return The search result.
+     * {@inheritDoc}
      */
     public SokresultatStudentinformationRepresentation studentFiltrera(Map<String, Object> params) {
         WebTarget request = target.path("/student/filtrera");
@@ -155,23 +134,14 @@ public class Ladok3StudentInformationService extends LadokService {
     }
 
     /**
-     * Higher abstraction of {@link #studentFiltrera} method which returns 
-     * an iterator of StudentISokresultat hiding all paging related issues.
-     * 
-     * @param params A map between parameter strings and their object values.
-     * @return an iterator for all search results matching params.
+     * {@inheritDoc}
      */
     public Iterator<StudentISokresultat> studentFiltreraIterator(Map<String, Object> params) {
         return new Ladok3StudentFiltreraIterator(this, params);
     }
 
     /**
-     * Higher abstraction of {@link #studentFiltrera} method which returns 
-     * an iterator of Student hiding all paging related and call to student information
-     * service issues.
-     * 
-     * @param params A map between parameter strings and their object values.
-     * @return an iterator for all search results matching params.
+     * {@inheritDoc}
      */
     public Iterator<Student> studentFiltreraStudentIterator(Map<String, Object> params) {
         return new Ladok3StudentFiltreraStudentIterator(this, params);

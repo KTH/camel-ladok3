@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package se.kth.infosys.ladok3;
+package se.kth.infosys.ladok3.internal;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,10 +34,6 @@ import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-
-import se.kth.infosys.ladok3.internal.Ladok3RequestFilter;
-import se.kth.infosys.ladok3.internal.Ladok3ResponseFilter;
-import se.ladok.schemas.dap.ServiceIndex;
 
 /**
  * Abstract base class for Ladok REST services.
@@ -100,18 +96,4 @@ public abstract class LadokService {
             .register(Ladok3RequestFilter.class)
             .register(Ladok3ResponseFilter.class);
     }
-
-    /**
-     * Get the service index for the service.
-     * 
-     * NOTE: This could probably have been made generic in the base class, but
-     * the "ACCEPT" types are different for each service. The idea to keep an abstract
-     * definition here is to use it in order to provide a generic structure to make
-     * lookups into this information. However, while the Ladok project says we should
-     * use this index, why we should and for what purpose really escapes me, so I'm 
-     * stalling it for now. - fjo 20161018
-     * 
-     * @return The service index
-     */
-    public abstract ServiceIndex serviceIndex();
 }

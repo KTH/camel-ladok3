@@ -3,12 +3,12 @@ package se.kth.infosys.ladok3.internal;
 import java.util.Iterator;
 import java.util.Map;
 
-import se.kth.infosys.ladok3.Ladok3StudentInformationService;
+import se.kth.infosys.ladok3.Ladok3StudentinformationService;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 
 public class Ladok3StudentFiltreraIterator implements Iterator<StudentISokresultat> {
-    protected Ladok3StudentInformationService service;
+    protected Ladok3StudentinformationService service;
     protected SokresultatStudentinformationRepresentation result;
     protected Iterator<StudentISokresultat> iterator;
 
@@ -17,7 +17,7 @@ public class Ladok3StudentFiltreraIterator implements Iterator<StudentISokresult
     private int limit = 400;
 
     public Ladok3StudentFiltreraIterator(
-            Ladok3StudentInformationService ladok3StudentInformationService,
+            Ladok3StudentinformationService ladok3StudentInformationService,
             Map<String, Object> params) {
         this.service = ladok3StudentInformationService;
         this.params = params;
