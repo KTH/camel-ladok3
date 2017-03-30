@@ -13,3 +13,7 @@ ladok3.cert.password=some-password
 ladok3.test.Ladok3StudentInformationServiceTest.getStudentByPersonnummer.personnummer=001234567689
 ladok3.test.Ladok3StudentInformationServiceTest.getStudentByPersonnummer.fornamn=FÖRNAMN
 ladok3.test.Ladok3StudentInformationServiceTest.getStudentByPersonnummer.efternamn=EFTERNAMN
+
+ladok3.test.Ladok3KataglogInformationServiceTest.searchAnvandare.username=anvandare@larosate.se
+ladok3.test.Ladok3KataglogInformationServiceTest.searchAnvandare.fornamn=FÖRNAMN
+ladok3.test.Ladok3KataglogInformationServiceTest.searchAnvandare.efternamn=EFTERNAMN

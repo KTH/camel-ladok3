@@ -31,7 +31,7 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.junit.Test;
 
-import se.kth.infosys.smx.ladok3.internal.Ladok3Message;
+import se.kth.infosys.smx.ladok3.Ladok3Message;
 
 public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
     private Message message = null;

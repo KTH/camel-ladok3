@@ -53,7 +53,7 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
-import se.kth.infosys.smx.ladok3.internal.Ladok3Message;
+import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.events.BaseEvent;
 
 /**

@@ -25,8 +25,10 @@ package se.kth.infosys.ladok3;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -41,8 +43,8 @@ import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresen
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 
-public class Ladok3StudentInformationServiceTest {
-    private Ladok3StudentInformationService studentInformationService;
+public class Ladok3StudentinformationServiceTest {
+    private StudentinformationService studentInformationService;
     private Properties properties = new Properties();
 
     @Before
@@ -53,7 +55,7 @@ public class Ladok3StudentInformationServiceTest {
         String certFile = properties.getProperty("ladok3.cert.file");
         String key = properties.getProperty("ladok3.cert.key");
 
-        studentInformationService = new Ladok3StudentInformationService(host, certFile, key);
+        studentInformationService = new Ladok3StudentinformationService(host, certFile, key);
     }
 
     @Test
@@ -61,10 +63,6 @@ public class Ladok3StudentInformationServiceTest {
         ServiceIndex index = studentInformationService.serviceIndex();
         List<RelationLink> links = index.getLink();
 
-        for (RelationLink link : links) {
-            System.out.println(link.getRel());
-            System.out.println(link.getUri());
-        }
         assert(links.size() > 0);
     }
 
@@ -103,9 +101,53 @@ public class Ladok3StudentInformationServiceTest {
     public void getContactInformation() {
         String personnummer = properties.getProperty("ladok3.test.Ladok3StudentInformationServiceTest.getStudentByPersonnummer.personnummer");
         Student student = studentInformationService.studentPersonnummer(personnummer);
-        Kontaktuppgifter kontaktUppgifter = studentInformationService.kontaktuppgifter(student.getUid());
+        Kontaktuppgifter kontaktUppgifter = studentInformationService.studentKontaktuppgifter(student.getUid());
         assertNotNull(kontaktUppgifter);
 // Currently does not work, due to empty object. IK-failure?
 //        assertFalse(kontaktUppgifter.getPostadresser().isEmpty());
+    }
+
+    @Test
+    public void testStudentFiltreraIterator() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("efternamn", "*");
+        params.put("limit", 5);
+
+        Iterator<StudentISokresultat> iterator = studentInformationService.studentFiltreraIterator(params);
+        assertNotNull(iterator);
+        assertTrue(iterator.hasNext());
+
+        for (int i = 0; i < 7; i++) {
+            assertNotNull(iterator.next());
+        }
+    }
+
+    @Test
+    public void testStudentFiltreraStudentIterator() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("efternamn", "*");
+        params.put("limit", 5);
+
+        Iterator<Student> iterator = studentInformationService.studentFiltreraStudentIterator(params);
+        assertNotNull(iterator);
+        assertTrue(iterator.hasNext());
+
+        for (int i = 0; i < 7; i++) {
+            assertNotNull(iterator.next());
+        }
+    }
+
+    @Test
+    public void testStudentFiltreraStudentIteratorNoParams() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("limit", 5);
+
+        Iterator<Student> iterator = studentInformationService.studentFiltreraStudentIterator(params);
+        assertNotNull(iterator);
+        assertTrue(iterator.hasNext());
+
+        for (int i = 0; i < 7; i++) {
+            assertNotNull(iterator.next());
+        }
     }
 }

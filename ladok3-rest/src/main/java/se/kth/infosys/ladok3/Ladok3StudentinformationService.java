@@ -23,24 +23,29 @@
  */
 package se.kth.infosys.ladok3;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
-import se.ladok.schemas.dap.ServiceIndex;
+import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraIterator;
+import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraStudentIterator;
+import se.kth.infosys.ladok3.internal.Ladok3Service;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
+import se.ladok.schemas.studentinformation.StudentISokresultat;
 
 /**
  * A class representing the Ladok studentinformation service. It is using JAX RS 
  * which means that errors will be thrown as unchecked runtime exceptions. See 
  * JAX RS client documentation.
  */
-public class Ladok3StudentInformationService extends LadokService {
-    private static final String STUDENTINFORMATION_XML = "application/vnd.ladok-studentinformation+xml";
-    private final WebTarget studentinformation;
+public class Ladok3StudentinformationService extends Ladok3Service implements StudentinformationService {
+    private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-studentinformation+xml");
+    private static final String SERVICE = "studentinformation";
 
     /**
      * Constructor Web Service client end representing the Ladok studentinformation endpoint.
@@ -50,9 +55,8 @@ public class Ladok3StudentInformationService extends LadokService {
      * @param key The key to certificate.
      * @throws Exception on errors.
      */
-    public Ladok3StudentInformationService(String host, String certFile, String key) throws Exception {
-        super(host, certFile, key);
-        this.studentinformation = client.target(String.format("https://%s/studentinformation", host));
+    public Ladok3StudentinformationService(String host, String certFile, String key) throws Exception {
+        super(host, certFile, key, SERVICE);
     }
 
     /**
@@ -62,81 +66,48 @@ public class Ladok3StudentInformationService extends LadokService {
      * @param context the SSLContext containing necessary information. 
      * @throws Exception on errors.
      */
-    public Ladok3StudentInformationService(String host, SSLContext context) throws Exception {
-        super(context);
-        this.studentinformation = client.target(String.format("https://%s/studentinformation", host));
+    public Ladok3StudentinformationService(String host, SSLContext context) throws Exception {
+        super(host, context, SERVICE);
     }
 
     /**
      * {@inheritDoc}
      */
-    public ServiceIndex serviceIndex() {
-        return studentinformation.path("/service/index")
-                .request()
-                .accept(STUDENTINFORMATION_XML)
-                .get(ServiceIndex.class);
-    }
-
-    /**
-     * Retrieve a student given a personnummer.
-     * @param personnummer identifying the student.
-     * @return The student matching the personnummer
-     */
     public Student studentPersonnummer(String personnummer) {
-        return studentinformation.path("/student/personnummer/{personnummer}")
+        return target.path("/student/personnummer/{personnummer}")
                 .resolveTemplate("personnummer", personnummer)
                 .request()
-                .accept(STUDENTINFORMATION_XML)
+                .accept(SERVICE_TYPE)
                 .get(Student.class);
     }
 
     /**
-     * Retrieve a student given its UID.
-     * @param uid The unique identifier for the student.
-     * @return The student matching the UID
+     * {@inheritDoc}
      */
-    public Student studentUID(String uid) {
-        return studentinformation.path("/student/{uid}")
+    public Student student(String uid) {
+        return target.path("/student/{uid}")
                 .resolveTemplate("uid", uid)
                 .request()
-                .accept(STUDENTINFORMATION_XML)
+                .accept(SERVICE_TYPE)
                 .get(Student.class);
     }
 
     /**
-     * Retrieve contact information for a student given its UID.
-     * @param uid The unique identifier for the student.
-     * @return The contact information matching the UID
+     * {@inheritDoc}
      */
-    public Kontaktuppgifter kontaktuppgifter(String uid) {
-        return studentinformation.path("/student/{uid}/kontaktuppgifter")
+    public Kontaktuppgifter studentKontaktuppgifter(String uid) {
+        return target.path("/student/{uid}/kontaktuppgifter")
                 .resolveTemplate("uid", uid)
                 .request()
-                .accept(STUDENTINFORMATION_XML)
+                .accept(SERVICE_TYPE)
                 .get(Kontaktuppgifter.class);
     }
 
     /**
-     * Calls /student/filtrera with query parameters as specified in the params Map. 
-     * See Ladok REST documentation for more information about parameters. Only 
-     * difference is that this method will default to "limit=400" and "page=1"
-     * unless something else is specified. E.g:
-     *
-     * {@code
-     * Map<String, Object> params = new HashMap<String, Object>();
-     * params.put("personnummer", "19870412031234");
-     * SokresultatStudentinformationRepresentation res =
-     *     studentInformationService.studentFiltrera(params);
-     * 
-     * Objects passed as values will be rendered into parameters using their 
-     * toString() method.
-     * }
-     *
-     * @param params A map between parameter strings and their object values.
-     * @return The search result.
+     * {@inheritDoc}
      */
     public SokresultatStudentinformationRepresentation studentFiltrera(Map<String, Object> params) {
-        WebTarget request = studentinformation.path("/student/filtrera");
+        WebTarget request = target.path("/student/filtrera");
 
         params.putIfAbsent("limit", 400);
         params.putIfAbsent("page", 1);
@@ -147,7 +118,21 @@ public class Ladok3StudentInformationService extends LadokService {
 
         return request
                 .request()
-                .accept(STUDENTINFORMATION_XML)
+                .accept(SERVICE_TYPE)
                 .get(SokresultatStudentinformationRepresentation.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Iterator<StudentISokresultat> studentFiltreraIterator(Map<String, Object> params) {
+        return new Ladok3StudentFiltreraIterator(this, params);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Iterator<Student> studentFiltreraStudentIterator(Map<String, Object> params) {
+        return new Ladok3StudentFiltreraStudentIterator(this, params);
     }
 }

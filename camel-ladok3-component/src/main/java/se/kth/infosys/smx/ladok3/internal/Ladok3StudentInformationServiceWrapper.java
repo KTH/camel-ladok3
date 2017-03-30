@@ -11,18 +11,20 @@ import org.apache.camel.util.ExchangeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.kth.infosys.ladok3.Ladok3StudentInformationService;
+import se.kth.infosys.ladok3.Ladok3StudentinformationService;
+import se.kth.infosys.ladok3.StudentinformationService;
+import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.Student;
 
 public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrapper {
     private static final Logger log = LoggerFactory.getLogger(Ladok3StudentInformationServiceWrapper.class);
     private static final Pattern URL_PATTERN = Pattern.compile("^/student(/(?<operation>personnummer|kontaktinformation|filtrera))+.*");
-    private Ladok3StudentInformationService service;
+    private StudentinformationService service;
     private String pathOperation;
 
     public Ladok3StudentInformationServiceWrapper(URI uri, SSLContext context) throws Exception {
-        this.service = new Ladok3StudentInformationService(uri.getHost(), context);
+        this.service = new Ladok3StudentinformationService(uri.getHost(), context);
         Matcher matcher = URL_PATTERN.matcher(uri.getPath());
         if (matcher.matches()) {
             pathOperation = matcher.group("operation").toLowerCase();
@@ -42,7 +44,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         }
     }
 
-    private void handleStudentPersonnummerRequest(final Exchange exchange, final Ladok3StudentInformationService service) throws Exception {
+    private void handleStudentPersonnummerRequest(final Exchange exchange, final StudentinformationService service) throws Exception {
         String personnummer = exchange.getIn().getHeader(Ladok3Message.Header.KeyValue, String.class);
         if (personnummer == null || personnummer.isEmpty()) {
             Student student = exchange.getIn().getMandatoryBody(Student.class);
@@ -54,7 +56,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         exchange.getOut().setBody(fromLadok);
     }
 
-    private void handleStudentKontaktinformationRequest(final Exchange exchange, final Ladok3StudentInformationService service) throws Exception {
+    private void handleStudentKontaktinformationRequest(final Exchange exchange, final StudentinformationService service) throws Exception {
         String uid = exchange.getIn().getHeader(Ladok3Message.Header.KeyValue, String.class);
         if (uid == null || uid.isEmpty()) {
             Student student = exchange.getIn().getMandatoryBody(Student.class);
@@ -62,11 +64,11 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         }
 
         log.debug("Getting kontaktinformation for student with uid: {}", uid);
-        Kontaktuppgifter fromLadok = service.kontaktuppgifter(uid);
+        Kontaktuppgifter fromLadok = service.studentKontaktuppgifter(uid);
         exchange.getOut().setBody(fromLadok);
     }
 
-    private void handleStudentUidRequest(final Exchange exchange, final Ladok3StudentInformationService service) throws Exception {
+    private void handleStudentUidRequest(final Exchange exchange, final StudentinformationService service) throws Exception {
         String uid = exchange.getIn().getHeader(Ladok3Message.Header.KeyValue, String.class);
         if (uid == null || uid.isEmpty()) {
             Student student = exchange.getIn().getMandatoryBody(Student.class);
@@ -74,7 +76,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         }
 
         log.debug("Getting Ladok data for student with uid: {}", uid);
-        Student fromLadok = service.studentUID(uid);
+        Student fromLadok = service.student(uid);
         exchange.getOut().setBody(fromLadok);
     }
 
