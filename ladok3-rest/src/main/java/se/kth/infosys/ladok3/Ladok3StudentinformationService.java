@@ -32,8 +32,7 @@ import javax.ws.rs.core.MediaType;
 
 import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraIterator;
 import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraStudentIterator;
-import se.kth.infosys.ladok3.internal.LadokService;
-import se.ladok.schemas.dap.ServiceIndex;
+import se.kth.infosys.ladok3.internal.Ladok3Service;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
@@ -44,7 +43,7 @@ import se.ladok.schemas.studentinformation.StudentISokresultat;
  * which means that errors will be thrown as unchecked runtime exceptions. See 
  * JAX RS client documentation.
  */
-public class Ladok3StudentinformationService extends LadokService implements StudentinformationService {
+public class Ladok3StudentinformationService extends Ladok3Service implements StudentinformationService {
     private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-studentinformation+xml");
     private static final String SERVICE = "studentinformation";
 
@@ -69,16 +68,6 @@ public class Ladok3StudentinformationService extends LadokService implements Stu
      */
     public Ladok3StudentinformationService(String host, SSLContext context) throws Exception {
         super(host, context, SERVICE);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public ServiceIndex serviceIndex() {
-        return target.path("/service/index")
-                .request()
-                .accept(SERVICE_TYPE)
-                .get(ServiceIndex.class);
     }
 
     /**

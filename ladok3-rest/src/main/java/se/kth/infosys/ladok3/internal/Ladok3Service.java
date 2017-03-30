@@ -34,11 +34,17 @@ import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
+import se.kth.infosys.ladok3.Service;
+import se.ladok.schemas.dap.ServiceIndex;
 
 /**
  * Abstract base class for Ladok REST services.
  */
-public abstract class LadokService {
+public abstract class Ladok3Service implements Service {
+    private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok+xml");
+
     /** The constructed web target to use in sub classes. */
     protected final WebTarget target;
 
@@ -50,14 +56,16 @@ public abstract class LadokService {
     }
 
     /**
-     * Initialize the service client with authentication certificates.
-     * @param host The targeted Ladok environment.
+     * Initialize the service client with authentication certificates using a PKCS12
+     * certificate file and key.
+     * 
+     * @param host The targeted Ladok environment, e.g mit-integration.ladok.se.
      * @param certFile The path to the certificate file.
      * @param key The certificate file key phrase.
      * @param service The Ladok3 service path, e.g. "studentinformation".
      * @throws Exception on errors.
      */
-    protected LadokService(
+    protected Ladok3Service(
             final String host,
             final String certFile,
             final String key,
@@ -75,12 +83,15 @@ public abstract class LadokService {
     }
 
     /**
-     * Initialize the service client with authentication certificates.
+     * Initialize the service client with authentication certificates using 
+     * a SSLContext configured by some other means in the application.
+     * 
+     * @param host The targeted Ladok environment, e.g mit-integration.ladok.se.
      * @param context the SSLContext containing necessary information.
      * @param service The Ladok3 service path, e.g. "studentinformation".
      * @throws Exception on errors.
      */
-    protected LadokService(
+    protected Ladok3Service(
             final String host,
             final SSLContext context,
             final String service) throws Exception {
@@ -95,5 +106,15 @@ public abstract class LadokService {
             .build()
             .register(Ladok3RequestFilter.class)
             .register(Ladok3ResponseFilter.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public ServiceIndex serviceIndex() {
+        return target.path("/service/index")
+                .request()
+                .accept(SERVICE_TYPE)
+                .get(ServiceIndex.class);
     }
 }

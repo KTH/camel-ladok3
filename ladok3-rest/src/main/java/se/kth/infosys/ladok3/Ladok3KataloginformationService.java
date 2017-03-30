@@ -30,8 +30,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import se.kth.infosys.ladok3.internal.LadokService;
-import se.ladok.schemas.dap.ServiceIndex;
+import se.kth.infosys.ladok3.internal.Ladok3Service;
 import se.ladok.schemas.kataloginformation.Anvandare;
 import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
@@ -41,7 +40,7 @@ import se.ladok.schemas.kataloginformation.Anvandarinformation;
  * which means that errors will be thrown as unchecked runtime exceptions. See 
  * JAX RS client documentation.
  */
-public class Ladok3KataloginformationService extends LadokService implements KataloginformationService {
+public class Ladok3KataloginformationService extends Ladok3Service implements KataloginformationService {
     private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-kataloginformation+xml");
     private static final String SERVICE = "kataloginformation";
 
@@ -66,16 +65,6 @@ public class Ladok3KataloginformationService extends LadokService implements Kat
      */
     public Ladok3KataloginformationService(String host, SSLContext context) throws Exception {
         super(host, context, SERVICE);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public ServiceIndex serviceIndex() {
-        return target.path("/service/index")
-                .request()
-                .accept(SERVICE_TYPE)
-                .get(ServiceIndex.class);
     }
 
     /**

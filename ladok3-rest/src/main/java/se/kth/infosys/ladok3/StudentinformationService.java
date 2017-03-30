@@ -34,7 +34,7 @@ import se.ladok.schemas.studentinformation.StudentISokresultat;
 /**
  * Interface representing the Ladok studentinformation service.
  */
-public interface StudentinformationService extends InformationService {
+public interface StudentinformationService extends Service {
     /**
      * Retrieve a student given a personnummer.
      * @param personnummer identifying the student.
