@@ -130,8 +130,8 @@ public class Ladok3KataloginformationServiceTest {
         try {
             Anvandarinformation information = objectFactory.createAnvandarinformation();
             information.setAnvandareUID(updated.getUid());
-            information.setEpost(objectFactory.createAnvandarinformationEpost("test-anvandare@kth.se"));
-            information.setSms(objectFactory.createAnvandarinformationSms("123 123 123"));
+            information.setEpost("test-anvandare@kth.se");
+            information.setSms("123 123 123");
             Anvandarinformation createdInformation = katalogInformationService.createAnvandarinformation(information);
             assertNotNull(createdInformation);
             assertFalse(createdInformation.getUid().isEmpty());
@@ -141,10 +141,15 @@ public class Ladok3KataloginformationServiceTest {
 
         String sms = String.valueOf(ThreadLocalRandom.current().nextInt(1000, 10000));
         Anvandarinformation information = katalogInformationService.anvandarinformation(updated.getUid());
-        information.setSms(objectFactory.createAnvandarinformationSms(sms));
+        information.setSms(sms);
         Anvandarinformation updatedInformation = katalogInformationService.updateAnvandarinformation(information);
         assertNotNull(updatedInformation);
         assertEquals(information.getUid(), updatedInformation.getUid());
-        assertEquals(sms, updatedInformation.getSms().getValue());
+        assertEquals(sms, updatedInformation.getSms());
+    }
+
+    @Test
+    public void bla() {
+        se.ladok.schemas.examen.ObjectFactory foo = new se.ladok.schemas.examen.ObjectFactory();
     }
 }

@@ -462,7 +462,7 @@
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Obligatorisk" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Obligatorisk" type="xs:boolean"/>
           <xs:element minOccurs="0" ref="ex:Preciseringstyp"/>
         </xs:sequence>
       </xs:extension>

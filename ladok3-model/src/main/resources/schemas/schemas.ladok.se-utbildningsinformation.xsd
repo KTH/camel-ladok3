@@ -846,11 +846,11 @@
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element minOccurs="0" name="Datatyp" type="ui:Attributdatatyp"/>
-          <xs:element minOccurs="0" name="AvserTillfalle" nillable="true" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="AvserTillfalle" type="xs:boolean"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="GrupperadeDefinitioner" nillable="true" type="ui:Attributdefinition"/>
           <xs:element minOccurs="0" name="Namn" type="xs:string"/>
           <xs:element name="ObligatoriskVidUtannonsering" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="Regexp" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Regexp" type="xs:string"/>
           <xs:element name="TillatAttributvarde" type="xs:boolean"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Utbildningsgrundtyper" type="base:Utbildningsgrundtyp"/>
           <xs:element name="VisaAnvandsEj" type="xs:boolean"/>
@@ -1692,7 +1692,7 @@
         <xs:sequence>
           <xs:element name="AvserTillfalle" type="xs:boolean"/>
           <xs:element minOccurs="0" name="Grundtyp" type="base:Utbildningsgrundtyp"/>
-          <xs:element minOccurs="0" name="NivaInomStudieordningID" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="NivaInomStudieordningID" type="xs:int"/>
           <xs:element minOccurs="0" ref="ui:Regler"/>
           <xs:element minOccurs="0" name="Sorteringsordning" type="xs:int"/>
           <xs:element minOccurs="0" name="StudieordningID" type="xs:int"/>
@@ -1705,9 +1705,9 @@
 
   <xs:complexType name="Regler">
     <xs:sequence>
-      <xs:element minOccurs="0" name="ForvaldOmfattning" nillable="true" type="xs:int"/>
+      <xs:element minOccurs="0" name="ForvaldOmfattning" type="xs:int"/>
       <xs:element name="HarOmfattning" type="xs:boolean"/>
-      <xs:element name="Individuell" nillable="true" type="xs:boolean"/>
+      <xs:element name="Individuell" type="xs:boolean"/>
       <xs:element name="Sjalvstandig" type="xs:boolean"/>
       <xs:element name="Versionshanteras" type="xs:boolean"/>
     </xs:sequence>

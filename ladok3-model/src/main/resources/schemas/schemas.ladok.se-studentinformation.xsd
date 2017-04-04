@@ -275,12 +275,12 @@
 
   <xs:complexType name="Postadress">
     <xs:sequence>
-      <xs:element minOccurs="0" name="CareOf" nillable="true" type="xs:string"/>
-      <xs:element minOccurs="0" name="Land" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="CareOf" type="xs:string"/>
+      <xs:element minOccurs="0" name="Land" type="xs:string"/>
       <xs:element minOccurs="0" name="PostadressTyp" type="si:PostadressTypRepresentation"/>
-      <xs:element minOccurs="0" name="Postnummer" nillable="true" type="xs:string"/>
-      <xs:element minOccurs="0" name="Postort" nillable="true" type="xs:string"/>
-      <xs:element minOccurs="0" name="Utdelningsadress" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Postnummer" type="xs:string"/>
+      <xs:element minOccurs="0" name="Postort" type="xs:string"/>
+      <xs:element minOccurs="0" name="Utdelningsadress" type="xs:string"/>
     </xs:sequence>
     <xs:attribute name="SenastAndrad" type="xs:dateTime"/>
   </xs:complexType>
@@ -524,7 +524,7 @@
     <xs:complexContent>
       <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
           <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
           <xs:element minOccurs="0" name="RestriktionEventPart" type="si:StudentrestriktionEventPart"/>
           <xs:element minOccurs="0" name="Restriktionstyp" type="si:RestriktionstypEventPart"/>
