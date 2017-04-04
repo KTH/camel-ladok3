@@ -147,9 +147,4 @@ public class Ladok3KataloginformationServiceTest {
         assertEquals(information.getUid(), updatedInformation.getUid());
         assertEquals(sms, updatedInformation.getSms());
     }
-
-    @Test
-    public void bla() {
-        se.ladok.schemas.examen.ObjectFactory foo = new se.ladok.schemas.examen.ObjectFactory();
-    }
 }
