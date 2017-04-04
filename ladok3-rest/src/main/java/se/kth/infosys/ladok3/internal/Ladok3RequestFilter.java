@@ -31,9 +31,17 @@ import javax.ws.rs.client.ClientRequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This is a client request filter that is set up to trace calls in {@link Ladok3Service}
+ * using SLF4J logging. To trace calls in your application, setup SLF4J logging
+ * appropriately and crank up the log level for se.kth.infosys.ladok3 to trace level.
+ */
 public class Ladok3RequestFilter implements ClientRequestFilter {
     private static final Logger LOG = LoggerFactory.getLogger(Ladok3RequestFilter.class);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void filter(ClientRequestContext requestContext) throws IOException {
         if (LOG.isTraceEnabled()) {

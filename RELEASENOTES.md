@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.0.13
+
+Modify model according to discussion in Google groups, remove
+nillable=true from simple types at least.
+
 ## 0.0.12
 
 Refactorization of API.

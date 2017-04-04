@@ -64,6 +64,11 @@ public class Ladok3StudentinformationServiceTest {
         List<RelationLink> links = index.getLink();
 
         assert(links.size() > 0);
+        Iterator<RelationLink> iterator = links.iterator();
+        while (iterator.hasNext()) {
+            RelationLink link = iterator.next();
+            System.out.println(link.getRel() + " " + link.getUri());
+        }
     }
 
     @Test

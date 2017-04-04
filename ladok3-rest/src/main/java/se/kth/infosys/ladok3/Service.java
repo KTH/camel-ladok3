@@ -2,6 +2,9 @@ package se.kth.infosys.ladok3;
 
 import se.ladok.schemas.dap.ServiceIndex;
 
+/**
+ * Base interface defining common parts of other interfaces.
+ */
 public interface Service {
     /**
      * Get the service index for the service.

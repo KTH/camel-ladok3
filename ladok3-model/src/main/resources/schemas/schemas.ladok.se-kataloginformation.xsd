@@ -1214,7 +1214,7 @@
         <xs:sequence>
           <xs:element name="AvserTillfalle" type="xs:boolean"/>
           <xs:element minOccurs="0" name="Grundtyp" type="xs:string"/>
-          <xs:element minOccurs="0" name="NivaInomStudieordningID" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="NivaInomStudieordningID" type="xs:int"/>
           <xs:element minOccurs="0" name="Regelverk" type="ki:RegelverkForUtbildningstyp"/>
           <xs:element minOccurs="0" name="Sorteringsordning" type="xs:int"/>
           <xs:element minOccurs="0" name="StudieordningID" type="xs:int"/>
@@ -1889,7 +1889,7 @@
         <xs:sequence>
           <xs:element name="AvserTillfalle" type="xs:boolean"/>
           <xs:element name="Grundtyp" type="base:Utbildningsgrundtyp"/>
-          <xs:element minOccurs="0" name="NivaInomStudieordningID" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="NivaInomStudieordningID" type="xs:int"/>
           <xs:element minOccurs="0" name="Regelverk" type="ki:RegelverkForUtbildningstyp"/>
           <xs:element name="Sorteringsordning" type="xs:int"/>
           <xs:element name="StudieordningID" type="xs:int"/>
@@ -2027,9 +2027,9 @@
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element minOccurs="0" name="AnvandareUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Epost" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Epost" type="xs:string"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Leveranspreferenser" nillable="true" type="av:Leveranspreferens"/>
-          <xs:element minOccurs="0" name="Sms" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Sms" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

@@ -39,7 +39,7 @@ import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 
 /**
- * A class representing the Ladok studentinformation service. It is using JAX RS 
+ * Real implementation of the Ladok studentinformation service. It is using JAX RS 
  * which means that errors will be thrown as unchecked runtime exceptions. See 
  * JAX RS client documentation.
  */

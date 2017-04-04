@@ -36,7 +36,7 @@ import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
 
 /**
- * A class representing the Ladok kataloginformation service. It is using JAX RS 
+ * Real implementation of the Ladok kataloginformation service. It is using JAX RS 
  * which means that errors will be thrown as unchecked runtime exceptions. See 
  * JAX RS client documentation.
  */
