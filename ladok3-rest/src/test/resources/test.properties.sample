@@ -5,7 +5,7 @@ ladok3.host=api.mit-ik.ladok.se
 ladok3.cert.file=/some/path
 
 # The private key for the certificate file.
-ladok3.cert.password=some-password
+ladok3.cert.key=some-password
 
 #
 # Test data:
