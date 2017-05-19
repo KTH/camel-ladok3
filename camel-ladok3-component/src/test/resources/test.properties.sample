@@ -5,10 +5,10 @@ ladok3.host=api.mit-ik.ladok.se
 ladok3.cert.file=/some/path
 
 # The private key for the certificate file.
-ladok3.cert.password=some-password
+ladok3.cert.key=some-password
 
 # The last read entry id
 ladok3.feed.last_id=
 
 # The last read entry id
-ladok3.feed.last="https://api.mit-ik.ladok.se:443/uppfoljning/feed/recent"
+ladok3.feed.last=https://api.mit-ik.ladok.se:443/uppfoljning/feed/first
