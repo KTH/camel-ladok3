@@ -26,7 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.kth.infosys.smx.ladok3</groupId>
   <artifactId>ladok3</artifactId>
-  <version>0.0.13</version>
+  <version>0.0.14-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>KTH Ladok3 Integration</name>
@@ -113,10 +113,18 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
+        <version>3.6.1</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+        <configuration>
+          <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
 
