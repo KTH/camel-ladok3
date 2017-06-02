@@ -40,7 +40,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultScheduledPollConsumer;
+import org.apache.camel.impl.ScheduledPollConsumer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -53,6 +53,7 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
+import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.events.BaseEvent;
 
 /**
@@ -63,7 +64,7 @@ import se.ladok.schemas.events.BaseEvent;
  * in the feed archive to start reading events and the headers can be used to
  * persist information about the position in the feed to handle restarts.
  */
-public class Ladok3Consumer extends DefaultScheduledPollConsumer {
+public class Ladok3Consumer extends ScheduledPollConsumer {
     private static final String SCHEMAS_BASE_PACKAGE = "se.ladok.schemas";
     private static final String SCHEMA_BASE_URL = "http://schemas.ladok.se/";
     private static final String FIRST_FEED_FORMAT = "https://%s/handelser/feed/first";
