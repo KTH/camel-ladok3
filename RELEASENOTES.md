@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.14
+
+Derive from DefaultScheduledPollConsumer in order to get options to work.
+
 ## 0.0.13
 
 Modify model according to discussion in Google groups, remove
