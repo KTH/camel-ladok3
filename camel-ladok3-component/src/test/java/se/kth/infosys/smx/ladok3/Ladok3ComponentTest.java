@@ -58,12 +58,6 @@ public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
 
         message = exchanges.get(0).getIn();
         assertEquals("ladok3FeedStart", message.getHeader("ladok3MessageType", String.class));
-
-        message = exchanges.get(1).getIn();
-        assertEquals(
-                String.format("ladok3-atom:%s",  message.getHeader("ladok3AtomEntryId", String.class)),
-                message.getMessageId());
-
         assertFalse(message.getHeader("ladok3IsLastFeed", Boolean.class));
     }
 }
