@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.14
+
+Make options to Camel ScheduledPollConsumer work.
+
 ## 0.0.13
 
 Modify model according to discussion in Google groups, remove
