@@ -17,6 +17,9 @@ concept than really useful so far, implementing just a few API calls.
 
 The consumer uses a URI of the form: `ladok3://host.ladok.se?cert=path-to-cert&key=cert-passphrase[&lastEntry=x][&lastFeed=y][&events=u,v,x]`
 
+It is based on the Camel polling consumer and supports its standard configuration
+options, see http://camel.apache.org/polling-consumer.html
+
 ### Parameters
 
 | Parameter | Description |
