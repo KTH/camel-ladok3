@@ -17,6 +17,9 @@ concept than really useful so far, implementing just a few API calls.
 
 The consumer uses a URI of the form: `ladok3://host.ladok.se?cert=path-to-cert&key=cert-passphrase[&lastEntry=x][&lastFeed=y][&events=u,v,x]`
 
+It is based on the Camel polling consumer and supports its standard configuration
+options, see http://camel.apache.org/polling-consumer.html
+
 ### Parameters
 
 | Parameter | Description |
@@ -84,9 +87,6 @@ Typically messages are sent in batches for each feed read from Ladok3.
 1. Message with header `ladok3MessageType: ladok3FeedStart` and null body.
 1. A number of messages with header `ladok3MessageType: ladok3Event` and body of type se.ladok.schemas.
 1. Message with header `ladok3MessageType: ladok3FeedDone` and null body.
-
-Messages of type ladok3Event gets a message id of the form `ladok3-atom:<ladok3AtomEntryId>`
-in order to be useful with deduplication techniques.
 
 All messages gets a sequence number, including control messages, in order to support
 down stream [re-sequencing](http://camel.apache.org/resequencer.html), e.g.

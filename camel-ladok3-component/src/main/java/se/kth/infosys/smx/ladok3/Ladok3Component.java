@@ -34,23 +34,13 @@ import java.util.Map;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 
-import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
-import org.apache.camel.impl.UriEndpointComponent;
+import org.apache.camel.impl.DefaultComponent;
 
 /**
  * Represents the component that manages {@link Ladok3Endpoint}.
  */
-public class Ladok3Component extends UriEndpointComponent {
-
-    public Ladok3Component() {
-        super(Ladok3Endpoint.class);
-    }
-
-    public Ladok3Component(CamelContext context) {
-        super(context, Ladok3Endpoint.class);
-    }
-
+public class Ladok3Component extends DefaultComponent {
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
         Ladok3Endpoint endpoint = new Ladok3Endpoint(uri, this);
         setProperties(endpoint, parameters);

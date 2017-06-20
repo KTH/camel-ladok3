@@ -34,7 +34,7 @@
 
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
     <route id="read-atom-feed">
-      <from uri="ladok3://{{ladok3.host}}?backoffErrorThreshold=2&amp;backoffIdleThreshold=2&amp;backoffMultiplier=10&amp;cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}&amp;events=NationellBevistypEvent,StudentEvent" />
+      <from uri="ladok3://{{ladok3.host}}?greedy=true&amp;delay=1000&amp;backoffErrorThreshold=2&amp;backoffIdleThreshold=2&amp;backoffMultiplier=10&amp;cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}&amp;events=NationellBevistypEvent,StudentEvent" />
       <to uri="log:se.kth.infosys.smx.ladok3?level=INFO&amp;showAll=true" />
       <marshal>
         <jacksonxml />
