@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.15
+
+Set connect and read timeouts on URLConnection.
+
 ## 0.0.14
 
 Make options to Camel ScheduledPollConsumer work.
