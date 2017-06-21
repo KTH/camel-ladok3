@@ -53,7 +53,6 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
-import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.events.BaseEvent;
 
 /**
@@ -256,9 +255,10 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
             this.url = url;
 
             log.debug("fetching feed: {}", url);
-            final XmlReader reader = new XmlReader(endpoint.get(url));
-            final SyndFeedInput input = new SyndFeedInput();
+            XmlReader reader = new XmlReader(endpoint.get(url));
+            SyndFeedInput input = new SyndFeedInput();
             feed = input.build(reader);
+            reader.close();
         }
 
         /*
