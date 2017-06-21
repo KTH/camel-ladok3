@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.16
+
+Close input stream properly.
+
 ## 0.0.15
 
 Set connect and read timeouts on URLConnection.
