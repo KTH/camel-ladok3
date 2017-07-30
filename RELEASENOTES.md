@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.0.17
+
+Remove in-function uses of final keyword with unclear effects.
+Instead use final keyword consistently in function signatures.
+
 ## 0.0.16
 
 Close input stream properly.
