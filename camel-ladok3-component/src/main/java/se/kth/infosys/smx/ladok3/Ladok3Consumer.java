@@ -111,15 +111,15 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         messageCount++;
 
         for (SyndEntry entry : unreadEntries) {
-            final SyndContent content = entry.getContents().get(0);
+            SyndContent content = entry.getContents().get(0);
 
             if ("application/vnd.ladok+xml".equals(content.getType())) {
-                final Document document = builder.parse(new InputSource(new StringReader(content.getValue())));
-                final Node rootElement = document.getFirstChild();
+                Document document = builder.parse(new InputSource(new StringReader(content.getValue())));
+                Node rootElement = document.getFirstChild();
 
                 if (endpoint.getEvents().isEmpty() || endpoint.getEvents().contains(rootElement.getLocalName())) {
-                    final JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
-                    final BaseEvent event = (BaseEvent) root.getValue();
+                    JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
+                    BaseEvent event = (BaseEvent) root.getValue();
 
                     doExchangeForEvent(event, entry.getUri(), feed);
                     messageCount++;
@@ -157,9 +157,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
      * Generate start of feed exchange
      */
     private void doControlExchange(final Ladok3Feed feed, final boolean start) throws Exception {
-        final Exchange exchange = endpoint.createExchange();
+        Exchange exchange = endpoint.createExchange();
 
-        final Message message = exchange.getIn();
+        Message message = exchange.getIn();
         message.setHeader(Ladok3Message.Header.SequenceNumber, sequenceNumber++);
         message.setHeader(Ladok3Message.Header.Feed, feed.getURL().toString());
         message.setHeader(Ladok3Message.Header.EntryId, endpoint.getLastEntry());
@@ -183,9 +183,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
      * Generate exchange for Ladok3 event and dispatch to next processor.
      */
     private void doExchangeForEvent(BaseEvent event, String entryId, Ladok3Feed feed) throws Exception {
-        final Exchange exchange = endpoint.createExchange();
+        Exchange exchange = endpoint.createExchange();
 
-        final Message message = exchange.getIn();
+        Message message = exchange.getIn();
         message.setHeader(Ladok3Message.Header.SequenceNumber, sequenceNumber++);
         message.setHeader(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Event);
         message.setHeader(Ladok3Message.Header.EntryId, entryId);
@@ -264,8 +264,8 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         /*
          * Return true if the feed contains an entry with given ID.
          */
-        public boolean containsEntry(String entryId) {
-            for (final SyndEntry entry : feed.getEntries()) {
+        public boolean containsEntry(final String entryId) {
+            for (SyndEntry entry : feed.getEntries()) {
                 if (entry.getUri().equals(entryId)) {
                     return true;
                 }
@@ -291,7 +291,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
          * Get the link with specified rel label "next-archive", "prev-archive", etc, 
          * or null if the link does not exist.
          */
-        public URL getLink(String rel) throws MalformedURLException {
+        public URL getLink(final String rel) throws MalformedURLException {
             for (SyndLink link : feed.getLinks()) {
                 if (link.getRel().equals(rel)) {
                     return new URL(link.getHref());
@@ -304,13 +304,13 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
          * Get unread entries in feed in oldest to latest order.
          */
         private List<SyndEntry> unreadEntries() {
-            final List<SyndEntry> entries = feed.getEntries();
-            final List<SyndEntry> unmatchedEntries = new ArrayList<SyndEntry>(entries.size());
+            List<SyndEntry> entries = feed.getEntries();
+            List<SyndEntry> unmatchedEntries = new ArrayList<SyndEntry>(entries.size());
 
             Collections.reverse(entries);
 
             while (! entries.isEmpty()) {
-                final SyndEntry entry = entries.remove(0);
+                SyndEntry entry = entries.remove(0);
                 if (entry.getUri().equals(endpoint.getLastEntry())) {
                     return entries;
                 }

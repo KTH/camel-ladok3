@@ -70,13 +70,13 @@ public abstract class Ladok3Service implements Service {
             final String certFile,
             final String key,
             final String service) throws Exception {
-        final KeyStore keyStore = KeyStore.getInstance("PKCS12");
+        KeyStore keyStore = KeyStore.getInstance("PKCS12");
         keyStore.load(new FileInputStream(new File(certFile)), key.toCharArray());
 
-        final KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         kmf.init(keyStore, key.toCharArray());
 
-        final SSLContext context = SSLContext.getInstance("TLS");
+        SSLContext context = SSLContext.getInstance("TLS");
         context.init(kmf.getKeyManagers(), null, null);
 
         target = clientFactory(context).target(String.format("https://%s/%s", host, service));

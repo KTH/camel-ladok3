@@ -55,7 +55,7 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
      * @param key The key to certificate.
      * @throws Exception on errors.
      */
-    public Ladok3StudentinformationService(String host, String certFile, String key) throws Exception {
+    public Ladok3StudentinformationService(final String host, final String certFile, final String key) throws Exception {
         super(host, certFile, key, SERVICE);
     }
 
@@ -66,14 +66,14 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
      * @param context the SSLContext containing necessary information. 
      * @throws Exception on errors.
      */
-    public Ladok3StudentinformationService(String host, SSLContext context) throws Exception {
+    public Ladok3StudentinformationService(final String host, final SSLContext context) throws Exception {
         super(host, context, SERVICE);
     }
 
     /**
      * {@inheritDoc}
      */
-    public Student studentPersonnummer(String personnummer) {
+    public Student studentPersonnummer(final String personnummer) {
         return target.path("/student/personnummer/{personnummer}")
                 .resolveTemplate("personnummer", personnummer)
                 .request()
@@ -84,7 +84,7 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
     /**
      * {@inheritDoc}
      */
-    public Student student(String uid) {
+    public Student student(final String uid) {
         return target.path("/student/{uid}")
                 .resolveTemplate("uid", uid)
                 .request()
@@ -95,7 +95,7 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
     /**
      * {@inheritDoc}
      */
-    public Kontaktuppgifter studentKontaktuppgifter(String uid) {
+    public Kontaktuppgifter studentKontaktuppgifter(final String uid) {
         return target.path("/student/{uid}/kontaktuppgifter")
                 .resolveTemplate("uid", uid)
                 .request()
@@ -106,7 +106,7 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
     /**
      * {@inheritDoc}
      */
-    public SokresultatStudentinformationRepresentation studentFiltrera(Map<String, Object> params) {
+    public SokresultatStudentinformationRepresentation studentFiltrera(final Map<String, Object> params) {
         WebTarget request = target.path("/student/filtrera");
 
         params.putIfAbsent("limit", 400);
@@ -125,14 +125,14 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
     /**
      * {@inheritDoc}
      */
-    public Iterator<StudentISokresultat> studentFiltreraIterator(Map<String, Object> params) {
+    public Iterator<StudentISokresultat> studentFiltreraIterator(final Map<String, Object> params) {
         return new Ladok3StudentFiltreraIterator(this, params);
     }
 
     /**
      * {@inheritDoc}
      */
-    public Iterator<Student> studentFiltreraStudentIterator(Map<String, Object> params) {
+    public Iterator<Student> studentFiltreraStudentIterator(final Map<String, Object> params) {
         return new Ladok3StudentFiltreraStudentIterator(this, params);
     }
 }

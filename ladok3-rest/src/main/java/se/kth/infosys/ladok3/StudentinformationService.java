@@ -40,21 +40,21 @@ public interface StudentinformationService extends Service {
      * @param personnummer identifying the student.
      * @return The student matching the personnummer
      */
-    public Student studentPersonnummer(String personnummer);
+    public Student studentPersonnummer(final String personnummer);
 
     /**
      * Retrieve a student given its UID.
      * @param uid The unique identifier for the student.
      * @return The student matching the UID
      */
-    public Student student(String uid);
+    public Student student(final String uid);
 
     /**
      * Retrieve contact information for a student given its UID.
      * @param uid The unique identifier for the student.
      * @return The contact information matching the UID
      */
-    public Kontaktuppgifter studentKontaktuppgifter(String uid);
+    public Kontaktuppgifter studentKontaktuppgifter(final String uid);
 
     /**
      * Calls /student/filtrera with query parameters as specified in the params Map. 
@@ -77,7 +77,7 @@ public interface StudentinformationService extends Service {
      * @param params A map between parameter strings and their object values.
      * @return The search result.
      */
-    public SokresultatStudentinformationRepresentation studentFiltrera(Map<String, Object> params);
+    public SokresultatStudentinformationRepresentation studentFiltrera(final Map<String, Object> params);
 
     /**
      * Higher abstraction of {@link #studentFiltrera} method which returns 
@@ -86,7 +86,7 @@ public interface StudentinformationService extends Service {
      * @param params A map between parameter strings and their object values.
      * @return an iterator for all search results matching params.
      */
-    public Iterator<StudentISokresultat> studentFiltreraIterator(Map<String, Object> params);
+    public Iterator<StudentISokresultat> studentFiltreraIterator(final Map<String, Object> params);
 
     /**
      * Higher abstraction of {@link #studentFiltrera} method which returns 
@@ -96,5 +96,5 @@ public interface StudentinformationService extends Service {
      * @param params A map between parameter strings and their object values.
      * @return an iterator for all search results matching params.
      */
-    public Iterator<Student> studentFiltreraStudentIterator(Map<String, Object> params);
+    public Iterator<Student> studentFiltreraStudentIterator(final Map<String, Object> params);
 }

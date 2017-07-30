@@ -90,8 +90,8 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
         return false;
     }
 
-    public InputStream get(URL url) throws IOException {
-        final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+    public InputStream get(final URL url) throws IOException {
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         connection.setReadTimeout(60000);
         connection.setConnectTimeout(10000);
         connection.setSSLSocketFactory(context.getSocketFactory());
