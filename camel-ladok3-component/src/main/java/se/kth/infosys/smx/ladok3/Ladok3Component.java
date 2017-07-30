@@ -50,16 +50,16 @@ public class Ladok3Component extends DefaultComponent {
             CookieHandler.setDefault(cookieManager);
         }
 
-        final URI formattedUri = new URI(uri);
+        URI formattedUri = new URI(uri);
         endpoint.setHost(formattedUri.getHost());
 
-        final KeyStore keyStore = KeyStore.getInstance("PKCS12");
+        KeyStore keyStore = KeyStore.getInstance("PKCS12");
         keyStore.load(new FileInputStream(new File(endpoint.getCert())), endpoint.getKey().toCharArray());
 
-        final KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         kmf.init(keyStore, endpoint.getKey().toCharArray());
 
-        final SSLContext context = SSLContext.getInstance("TLS");
+        SSLContext context = SSLContext.getInstance("TLS");
         context.init(kmf.getKeyManagers(), null, null);
 
         endpoint.setContext(context);

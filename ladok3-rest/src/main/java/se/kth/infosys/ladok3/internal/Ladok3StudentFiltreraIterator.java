@@ -17,8 +17,8 @@ public class Ladok3StudentFiltreraIterator implements Iterator<StudentISokresult
     private int limit = 400;
 
     public Ladok3StudentFiltreraIterator(
-            Ladok3StudentinformationService ladok3StudentInformationService,
-            Map<String, Object> params) {
+            final Ladok3StudentinformationService ladok3StudentInformationService,
+            final Map<String, Object> params) {
         this.service = ladok3StudentInformationService;
         this.params = params;
 

@@ -80,7 +80,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         exchange.getOut().setBody(fromLadok);
     }
 
-    private String currentOperation(Exchange exchange) throws Exception {
+    private String currentOperation(final Exchange exchange) throws Exception {
         if (pathOperation != null && ! pathOperation.isEmpty()) {
             return pathOperation;
         }

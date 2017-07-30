@@ -52,7 +52,7 @@ public class Ladok3KataloginformationService extends Ladok3Service implements Ka
      * @param key The key to certificate.
      * @throws Exception on errors.
      */
-    public Ladok3KataloginformationService(String host, String certFile, String key) throws Exception {
+    public Ladok3KataloginformationService(final String host, final String certFile, final String key) throws Exception {
         super(host, certFile, key, SERVICE);
     }
 
@@ -63,14 +63,14 @@ public class Ladok3KataloginformationService extends Ladok3Service implements Ka
      * @param context the SSLContext containing necessary information. 
      * @throws Exception on errors.
      */
-    public Ladok3KataloginformationService(String host, SSLContext context) throws Exception {
+    public Ladok3KataloginformationService(final String host, final SSLContext context) throws Exception {
         super(host, context, SERVICE);
     }
 
     /**
      * {@inheritDoc}
      */
-    public Anvandare anvandare(String uid) {
+    public Anvandare anvandare(final String uid) {
         return target.path("/anvandare/{uid}")
                 .resolveTemplate("uid", uid)
                 .request()
@@ -81,7 +81,7 @@ public class Ladok3KataloginformationService extends Ladok3Service implements Ka
     /**
      * {@inheritDoc}
      */
-    public Anvandare createAnvandare(Anvandare anvandare) {
+    public Anvandare createAnvandare(final Anvandare anvandare) {
         return target.path("/anvandare")
                 .request()
                 .accept(SERVICE_TYPE)
@@ -91,7 +91,7 @@ public class Ladok3KataloginformationService extends Ladok3Service implements Ka
     /**
      * {@inheritDoc}
      */
-    public Anvandare updateAnvandare(Anvandare anvandare) {
+    public Anvandare updateAnvandare(final Anvandare anvandare) {
         return target.path("/anvandare/{uid}")
                 .resolveTemplate("uid", anvandare.getUid())
                 .request()
@@ -102,7 +102,7 @@ public class Ladok3KataloginformationService extends Ladok3Service implements Ka
     /**
      * {@inheritDoc}
      */
-    public Anvandarinformation anvandarinformation(String uid) {
+    public Anvandarinformation anvandarinformation(final String uid) {
         return target.path("/anvandare/{uid}/anvandarinformation")
                 .resolveTemplate("uid", uid)
                 .request()
@@ -113,7 +113,7 @@ public class Ladok3KataloginformationService extends Ladok3Service implements Ka
     /**
      * {@inheritDoc}
      */
-    public Anvandarinformation createAnvandarinformation(Anvandarinformation anvandarinformation) {
+    public Anvandarinformation createAnvandarinformation(final Anvandarinformation anvandarinformation) {
         return target.path("/anvandare/{uid}/anvandarinformation")
                 .resolveTemplate("uid", anvandarinformation.getAnvandareUID())
                 .request()
@@ -124,7 +124,7 @@ public class Ladok3KataloginformationService extends Ladok3Service implements Ka
     /**
      * {@inheritDoc}
      */
-    public Anvandarinformation updateAnvandarinformation(Anvandarinformation anvandarinformation) {
+    public Anvandarinformation updateAnvandarinformation(final Anvandarinformation anvandarinformation) {
         return target.path("/anvandare/{uid}/anvandarinformation")
                 .resolveTemplate("uid", anvandarinformation.getAnvandareUID())
                 .request()
@@ -135,7 +135,7 @@ public class Ladok3KataloginformationService extends Ladok3Service implements Ka
     /**
      * {@inheritDoc}
      */
-    public AnvandareLista anvandare(Map<String, Object> params) {
+    public AnvandareLista anvandare(final Map<String, Object> params) {
         WebTarget request = target.path("/anvandare");
 
         for (String param : params.keySet()) {
@@ -151,7 +151,7 @@ public class Ladok3KataloginformationService extends Ladok3Service implements Ka
     /**
      * {@inheritDoc}
      */
-    public AnvandareLista anvandareFiltrerade(Map<String, Object> params) {
+    public AnvandareLista anvandareFiltrerade(final Map<String, Object> params) {
         WebTarget request = target.path("/anvandare/filtrerade");
 
         for (String param : params.keySet()) {

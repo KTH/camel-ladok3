@@ -52,7 +52,7 @@ public class Ladok3Producer extends DefaultProducer {
 
     public Ladok3Producer(Ladok3Endpoint endpoint) throws Exception {
         super(endpoint);
-        final URI uri = new URI(endpoint.getEndpointUri());
+        URI uri = new URI(endpoint.getEndpointUri());
 
         Matcher matcher = API_PATTERN.matcher(uri.getPath());
         if (matcher.matches()) {

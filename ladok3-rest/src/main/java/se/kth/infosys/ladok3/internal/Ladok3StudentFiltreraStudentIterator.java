@@ -11,8 +11,9 @@ public class Ladok3StudentFiltreraStudentIterator implements Iterator<Student> {
     private Ladok3StudentinformationService service;
     private Iterator<StudentISokresultat> iterator;
 
-    public Ladok3StudentFiltreraStudentIterator(Ladok3StudentinformationService ladok3StudentInformationService,
-            Map<String, Object> params) {
+    public Ladok3StudentFiltreraStudentIterator(
+            final Ladok3StudentinformationService ladok3StudentInformationService,
+            final Map<String, Object> params) {
         this.service = ladok3StudentInformationService;
         this.iterator = service.studentFiltreraIterator(params);
     }
