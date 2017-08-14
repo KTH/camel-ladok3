@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.0.18
+
+Update camel to 2.19.1.
+Update Ladok3 model to version 0.82.0.
+
 ## 0.0.17
 
 Remove in-function uses of final keyword with unclear effects.
