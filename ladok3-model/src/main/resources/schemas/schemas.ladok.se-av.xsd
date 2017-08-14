@@ -3,30 +3,50 @@
 
   <xs:import namespace="http://schemas.ladok.se" schemaLocation="schemas.ladok.se.xsd"/>
 
+  <xs:element name="AviseringEnumDummy" type="av:AviseringEnumDummy"/>
+
   <xs:element name="Leveranspreferens" type="av:Leveranspreferens"/>
+
+  <xs:element name="Leveranspreferenser" type="av:Leveranspreferenser"/>
 
   <xs:complexType name="Leveranspreferens">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element minOccurs="0" name="Aviseringskategori" type="av:Aviseringskategori"/>
-          <xs:element minOccurs="0" name="Leveransalternativ" type="av:Leveransalternativ"/>
+          <xs:element minOccurs="0" name="Leveransalternativ" nillable="true" type="av:Leveransalternativ"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="Leveranspreferenser">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="av:Leveranspreferens"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="AviseringEnumDummy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Leveransalternativ" type="av:Leveransalternativ"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:simpleType name="Aviseringskategori">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="RESULTATINFORMATION"/>
       <xs:enumeration value="ATTESTERINGSINFORMATION"/>
+      <xs:enumeration value="RESULTATINFORMATION"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Leveransalternativ">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="INGEN"/>
       <xs:enumeration value="EPOST"/>
+      <xs:enumeration value="INGEN"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
