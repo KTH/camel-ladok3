@@ -28,7 +28,7 @@
   <parent>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
     <artifactId>ladok3</artifactId>
-    <version>0.0.18</version>
+    <version>0.0.19</version>
   </parent>
 
   <artifactId>ladok3-model</artifactId>
@@ -52,12 +52,13 @@
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
-        <version>2.3.7</version>
+        <version>3.3.0</version>
         <extensions>true</extensions>
         <configuration>
           <instructions>
             <Bundle-SymbolicName>se.kth.infosys.ladok3-model</Bundle-SymbolicName>
             <Export-Package>se.ladok.schemas</Export-Package>
+            <Import-Package>*</Import-Package>
           </instructions>
         </configuration>
         <executions> 
@@ -74,7 +75,7 @@
       <plugin>
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>0.13.1</version>
+        <version>0.13.2</version>
         <executions>
           <execution>
             <goals>
@@ -83,6 +84,8 @@
           </execution>
         </executions>
         <configuration>
+<!--           <forceRegenerate>true</forceRegenerate> -->
+          <noFileHeader>true</noFileHeader>
           <schemaDirectory>src/main/resources/schemas</schemaDirectory>
           <extension>true</extension>
           <strict>true</strict>
