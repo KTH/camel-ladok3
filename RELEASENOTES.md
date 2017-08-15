@@ -1,9 +1,11 @@
 # Release notes
 
-## 0.0.18
+## 0.0.19
 
-Update camel to 2.19.1.
-Update Ladok3 model to version 0.82.0.
+* Update camel to 2.19.1.
+* Update Ladok3 model to version 0.82.0.
+
+## 0.0.18 - broken release
 
 ## 0.0.17
 
