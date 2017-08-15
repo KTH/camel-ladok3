@@ -57,7 +57,7 @@
         <configuration>
           <instructions>
             <Bundle-SymbolicName>se.kth.infosys.ladok3-model</Bundle-SymbolicName>
-            <Export-Package>se.ladok.schemas;se.ladok.schemas.*</Export-Package>
+            <Export-Package>se.ladok.schemas</Export-Package>
             <Import-Package>*</Import-Package>
           </instructions>
         </configuration>
