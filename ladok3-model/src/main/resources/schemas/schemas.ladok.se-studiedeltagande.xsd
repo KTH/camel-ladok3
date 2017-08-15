@@ -1424,7 +1424,7 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="AvserBoxUID" type="xs:string"/>
           <xs:element minOccurs="0" name="Boxtyp" type="sd:Boxtyp"/>
-          <xs:element minOccurs="0" name="Valperiod" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="Valperiod" nillable="true" type="base:Datumperiod"/>
           <xs:element minOccurs="0" name="Tillstand" type="sd:ValtTillstand"/>
         </xs:sequence>
       </xs:extension>
