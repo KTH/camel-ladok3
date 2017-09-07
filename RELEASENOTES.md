@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.20
+
+* Use ISO 8601 like dates, code stolen from ATI/Uppsala.
+
 ## 0.0.19
 
 * Update camel to 2.19.1.

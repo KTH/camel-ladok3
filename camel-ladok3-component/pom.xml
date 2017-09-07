@@ -29,7 +29,7 @@
   <parent>
     <artifactId>ladok3</artifactId>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
-    <version>0.0.19</version>
+    <version>0.0.20</version>
   </parent>
 
   <artifactId>camel-ladok3-component</artifactId>
@@ -64,7 +64,7 @@
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-transports-http-jetty</artifactId>
-      <version>3.1.10</version>
+      <version>3.1.12</version>
       <type>bundle</type>
       <scope>runtime</scope>
     </dependency>
@@ -100,6 +100,16 @@
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-test-blueprint</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-jackson</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-jaxb</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

@@ -34,12 +34,18 @@
 
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
     <route id="read-atom-feed">
-      <from uri="ladok3://{{ladok3.host}}?greedy=true&amp;delay=2000&amp;backoffErrorThreshold=1&amp;backoffMultiplier=15&amp;cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}&amp;events=NationellBevistypEvent,StudentEvent" />
-      <to uri="log:se.kth.infosys.smx.ladok3?level=INFO&amp;showAll=true" />
+<!--       <from uri="ladok3://{{ladok3.host}}?greedy=true&amp;delay=2000&amp;backoffErrorThreshold=1&amp;backoffMultiplier=15&amp;cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}&amp;events=NationellBevistypEvent,StudentEvent" /> -->
+      <from uri="ladok3://{{ladok3.host}}?greedy=true&amp;delay=2000&amp;backoffErrorThreshold=1&amp;backoffMultiplier=15&amp;cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}" />
+      <to uri="log:se.kth.infosys.smx.ladok3?level=INFO&amp;showHeaders=true" />
       <marshal>
-        <jacksonxml />
+        <jacksonxml include="NON_NULL"/>
       </marshal>
-      <to uri="log:se.kth.infosys.smx.ladok3?level=INFO&amp;showAll=true" />
+<!--
+      <marshal>
+        <json library="Jackson" include="NON_NULL"/>
+      </marshal>
+ -->
+      <to uri="log:se.kth.infosys.smx.ladok3.json?level=INFO&amp;showHeaders=true" />
       <to uri="mock:result" />
     </route>
   </camelContext>
