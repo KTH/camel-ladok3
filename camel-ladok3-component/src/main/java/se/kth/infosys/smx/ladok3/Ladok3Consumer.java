@@ -27,8 +27,10 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -57,9 +59,9 @@ import se.ladok.schemas.events.BaseEvent;
 
 /**
  * The ladok3 consumer. Will read Ladok3 events from the ATOM feed and create
- * exchanges with the event in the body in a Java POJO representation based 
+ * exchanges with the event in the body in a Java POJO representation based
  * on the XSD:s published by Ladok. The exchange includes some headers with
- * event type, feed and event ids. The consumer has options to control where 
+ * event type, feed and event ids. The consumer has options to control where
  * in the feed archive to start reading events and the headers can be used to
  * persist information about the position in the feed to handle restarts.
  */
@@ -68,6 +70,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     private static final String SCHEMA_BASE_URL = "http://schemas.ladok.se/";
     private static final String FIRST_FEED_FORMAT = "https://%s/handelser/feed/first";
     private static final String LAST_FEED_FORMAT = "https://%s/handelser/feed/recent";
+    private static final SimpleDateFormat DATETIME_IN_HEADER_FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     private final Ladok3Endpoint endpoint;
     private final Unmarshaller unmarshaller;
@@ -101,7 +104,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         List<SyndEntry> unreadEntries = feed.unreadEntries();
 
         if (unreadEntries.isEmpty()) {
-            if (! feed.isLast()) {
+            if (!feed.isLast()) {
                 endpoint.setNextURL(feed.getLink(Ladok3Feed.NEXT));
             }
             return 0;
@@ -121,7 +124,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                     JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
                     BaseEvent event = (BaseEvent) root.getValue();
 
-                    doExchangeForEvent(event, entry.getUri(), feed);
+                    doExchangeForEvent(event, entry.getUri(), feed, entry.getUpdatedDate());
                     messageCount++;
                 }
             }
@@ -148,9 +151,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
      */
     private String ladokEventClass(final Node rootElement) {
         return String.format("%s.%s.%s",
-            SCHEMAS_BASE_PACKAGE,
-            rootElement.getNamespaceURI().substring(SCHEMA_BASE_URL.length()).replace("/", "."),
-            rootElement.getLocalName());
+                SCHEMAS_BASE_PACKAGE,
+                rootElement.getNamespaceURI().substring(SCHEMA_BASE_URL.length()).replace("/", "."),
+                rootElement.getLocalName());
     }
 
     /*
@@ -182,13 +185,14 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     /*
      * Generate exchange for Ladok3 event and dispatch to next processor.
      */
-    private void doExchangeForEvent(BaseEvent event, String entryId, Ladok3Feed feed) throws Exception {
+    private void doExchangeForEvent(BaseEvent event, String entryId, Ladok3Feed feed, Date entryUpdated) throws Exception {
         Exchange exchange = endpoint.createExchange();
 
         Message message = exchange.getIn();
         message.setHeader(Ladok3Message.Header.SequenceNumber, sequenceNumber++);
         message.setHeader(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Event);
         message.setHeader(Ladok3Message.Header.EntryId, entryId);
+        message.setHeader(Ladok3Message.Header.EntryUpdated, DATETIME_IN_HEADER_FORMATTER.format(entryUpdated));
         message.setHeader(Ladok3Message.Header.Feed, feed.getURL().toString());
         message.setHeader(Ladok3Message.Header.IsLastFeed, feed.isLast());
         message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
@@ -215,7 +219,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
             // No info about where to begin, start from beginning.
             return new Ladok3Feed(new URL(String.format(FIRST_FEED_FORMAT, endpoint.getHost())));
         }
-        if (! "".equals(endpoint.getLastFeed())) {
+        if (!"".equals(endpoint.getLastFeed())) {
             // We have a previous feed, return it.
             return new Ladok3Feed(endpoint.getNextURL());
         }
@@ -224,7 +228,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         // starting at the end working towards beginning.
         Ladok3Feed feed = new Ladok3Feed(new URL(String.format(LAST_FEED_FORMAT, endpoint.getHost())));
 
-        for (;;) {
+        for (; ; ) {
             if (feed.containsEntry(endpoint.getLastEntry())) {
                 return feed;
             }
@@ -309,7 +313,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
             Collections.reverse(entries);
 
-            while (! entries.isEmpty()) {
+            while (!entries.isEmpty()) {
                 SyndEntry entry = entries.remove(0);
                 if (entry.getUri().equals(endpoint.getLastEntry())) {
                     return entries;

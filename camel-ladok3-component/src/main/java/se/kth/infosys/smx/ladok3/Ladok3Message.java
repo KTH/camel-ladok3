@@ -26,6 +26,7 @@ package se.kth.infosys.smx.ladok3;
 public class Ladok3Message {
     public final class Header {
         public static final String EntryId = "ladok3AtomEntryId";
+        public static final String EntryUpdated = "ladok3EventUpdated";
         public static final String Feed = "ladok3AtomFeed";
         public static final String EventType = "ladok3EventType";
         public static final String EventId = "ladok3EventId";
@@ -37,6 +38,7 @@ public class Ladok3Message {
         public static final String MessageType = "ladok3MessageType";
         public static final String SequenceNumber = "ladok3MessageSequenceNumber";
     }
+
     public final class MessageType {
         public static final String Start = "ladok3FeedStart";
         public static final String Event = "ladok3Event";
