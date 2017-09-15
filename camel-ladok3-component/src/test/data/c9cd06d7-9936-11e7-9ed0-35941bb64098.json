@@ -1,0 +1,41 @@
+{
+    "Benamningar": {
+        "Benamning": [
+            {
+                "Sprakkod": "en",
+                "Text": "test"
+            },
+            {
+                "Sprakkod": "sv",
+                "Text": "test"
+            }
+        ]
+    },
+    "EnhetID": 2,
+    "EventContext": {
+        "Anvandarnamn": "sst@kth.se",
+        "LarosateID": 29
+    },
+    "HandelseUID": "ad11adae-9936-11e7-881d-dc9de7404be3",
+    "Kursattribut": {
+        "NivaInomStudieordningID": 1
+    },
+    "Kurskod": "NN1997",
+    "Omfattningsvarde": "10.0",
+    "OrganisationUID": "23f0e4ac-4c25-11e7-ab9d-2eb18a344dfd",
+    "Status": 2,
+    "StudieordningID": 1,
+    "UtbildningUID": "a6d1f26b-9936-11e7-881d-dc9de7404be3",
+    "UtbildningsformID": 1,
+    "UtbildningsinstansUID": "a6d1f26a-9936-11e7-881d-dc9de7404be3",
+    "Utbildningskod": "NN1997",
+    "UtbildningstypID": 22,
+    "Versionsinformation": {
+        "ArSenasteVersion": true,
+        "GiltigFranPeriodID": {
+            "value": 113076
+        },
+        "Uid": "a6d1f26c-9936-11e7-881d-dc9de7404be3",
+        "Versionsnummer": 1
+    }
+}

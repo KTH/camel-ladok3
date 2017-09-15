@@ -1,0 +1,15 @@
+{
+    "Benamningar": {},
+    "EventContext": {
+        "Anvandarnamn": "jontelar@kth.se",
+        "LarosateID": 29
+    },
+    "Giltighetsperiod": {
+        "Slutdatum": "9999-12-31",
+        "Startdatum": "0001-01-03"
+    },
+    "HandelseUID": "a9c8c8d0-9954-11e7-bc3d-56245935462a",
+    "OrganisationUID": "a9c8539f-9954-11e7-bc3d-56245935462a",
+    "OrganisationsenhetstypID": 1,
+    "Organisationskod": "TEST2"
+}
