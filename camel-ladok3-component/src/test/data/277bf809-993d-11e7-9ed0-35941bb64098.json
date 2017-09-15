@@ -1,0 +1,87 @@
+{
+    "Attributvarde": [
+        {
+            "Grupp": 0,
+            "Namn": "utbildning.attribut.betygsskala",
+            "Varde": "113185"
+        },
+        {
+            "Grupp": 0,
+            "Namn": "utbildning.attribut.amnesgrupp",
+            "Varde": "1"
+        },
+        {
+            "Grupp": 0,
+            "Namn": "utbildning.attribut.huvudomrade",
+            "Varde": "1530"
+        },
+        {
+            "Grupp": 0,
+            "Namn": "utbildning.attribut.successiv.fordjupning",
+            "Varde": "1"
+        },
+        {
+            "Grupp": 0,
+            "Namn": "utbildning.attribut.utbildningsomrade",
+            "Varde": "2"
+        },
+        {
+            "Grupp": 0,
+            "Namn": "utbildning.attribut.utbildningsomrade.procent",
+            "Varde": "100"
+        }
+    ],
+    "Benamningar": {
+        "Benamning": [
+            {
+                "Sprakkod": "en",
+                "Text": "test"
+            },
+            {
+                "Sprakkod": "sv",
+                "Text": "test"
+            }
+        ]
+    },
+    "EnhetID": 2,
+    "EventContext": {
+        "Anvandarnamn": "sst@kth.se",
+        "LarosateID": 29
+    },
+    "HandelseUID": "2556a6e5-993d-11e7-881d-dc9de7404be3",
+    "Kursattribut": {
+        "BetygsskalaID": 113185,
+        "HuvudomradeMedSuccessivFordjupning": [
+            {
+                "HuvudomradeID": 1530,
+                "SuccessivFordjupningID": 1
+            }
+        ],
+        "NivaInomStudieordningID": 1,
+        "UtbildningsomradeFordelning": [
+            {
+                "OrganisationUID": "23f0e4ac-4c25-11e7-ab9d-2eb18a344dfd",
+                "Procent": 100,
+                "UtbildningsomradeID": 2
+            }
+        ]
+    },
+    "Kurskod": "NN1996",
+    "Omfattningsvarde": "10.0",
+    "OrganisationUID": "23f0e4ac-4c25-11e7-ab9d-2eb18a344dfd",
+    "Status": 2,
+    "StudieordningID": 1,
+    "UtbildningUID": "1243afca-993d-11e7-881d-dc9de7404be3",
+    "UtbildningsformID": 1,
+    "UtbildningsinstansUID": "124388b9-993d-11e7-881d-dc9de7404be3",
+    "Utbildningskod": "NN1996",
+    "UtbildningstypID": 22,
+    "Versionsinformation": {
+        "ArSenasteVersion": true,
+        "GiltigFranPeriodID": {
+            "value": 113076
+        },
+        "Uid": "1243afcb-993d-11e7-881d-dc9de7404be3",
+        "Versionsnummer": 1
+    }
+}
