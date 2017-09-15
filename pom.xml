@@ -26,7 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.kth.infosys.smx.ladok3</groupId>
   <artifactId>ladok3</artifactId>
-  <version>0.0.22-SNAPSHOT</version>
+  <version>0.0.23</version>
   <packaging>pom</packaging>
 
   <name>KTH Ladok3 Integration</name>
@@ -105,10 +105,10 @@
 
   <profiles>
     <profile>
-      <id>deploy</id>
+      <id>release</id>
 
       <build>
-        <defaultGoal>deploy</defaultGoal>
+        <defaultGoal>clean deploy</defaultGoal>
         <plugins>
           <!-- Sonatype release plugin -->
           <plugin>
@@ -144,7 +144,8 @@
   </profiles>
 
   <build>
-    <defaultGoal>clean package</defaultGoal>
+    <defaultGoal>install</defaultGoal>
+
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
