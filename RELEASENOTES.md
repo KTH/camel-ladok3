@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.0.22
+
+* This is just a test release to try new release cycle.
+  No functional changes.
+
 ## 0.0.21
 
 * Add date header.
