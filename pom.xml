@@ -105,8 +105,10 @@
 
   <profiles>
     <profile>
-      <id>release</id>
+      <id>deploy</id>
+
       <build>
+        <defaultGoal>deploy</defaultGoal>
         <plugins>
           <!-- Sonatype release plugin -->
           <plugin>
@@ -117,7 +119,7 @@
             <configuration>
                <serverId>ossrh</serverId>
                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-               <autoReleaseAfterClose>false</autoReleaseAfterClose>
+               <autoReleaseAfterClose>true</autoReleaseAfterClose>
             </configuration>
           </plugin>
 
@@ -142,6 +144,7 @@
   </profiles>
 
   <build>
+    <defaultGoal>clean package</defaultGoal>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
