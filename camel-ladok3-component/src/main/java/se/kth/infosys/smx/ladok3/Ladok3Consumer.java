@@ -228,7 +228,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         // starting at the end working towards beginning.
         Ladok3Feed feed = new Ladok3Feed(new URL(String.format(LAST_FEED_FORMAT, endpoint.getHost())));
 
-        for (; ; ) {
+        for (;;) {
             if (feed.containsEntry(endpoint.getLastEntry())) {
                 return feed;
             }
