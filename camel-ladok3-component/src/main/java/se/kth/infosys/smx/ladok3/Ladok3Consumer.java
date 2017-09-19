@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -55,6 +54,7 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
+import se.kth.infosys.smx.ladok3.utils.LocalDateTimeFormatter;
 import se.ladok.schemas.events.BaseEvent;
 
 /**
@@ -70,7 +70,6 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     private static final String SCHEMA_BASE_URL = "http://schemas.ladok.se/";
     private static final String FIRST_FEED_FORMAT = "https://%s/handelser/feed/first";
     private static final String LAST_FEED_FORMAT = "https://%s/handelser/feed/recent";
-    private static final SimpleDateFormat DATETIME_IN_HEADER_FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     private final Ladok3Endpoint endpoint;
     private final Unmarshaller unmarshaller;
@@ -192,7 +191,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         message.setHeader(Ladok3Message.Header.SequenceNumber, sequenceNumber++);
         message.setHeader(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Event);
         message.setHeader(Ladok3Message.Header.EntryId, entryId);
-        message.setHeader(Ladok3Message.Header.EntryUpdated, DATETIME_IN_HEADER_FORMATTER.format(entryUpdated));
+        message.setHeader(Ladok3Message.Header.EntryUpdated, LocalDateTimeFormatter.formatAsStockolmLocalDateTime(entryUpdated));
         message.setHeader(Ladok3Message.Header.Feed, feed.getURL().toString());
         message.setHeader(Ladok3Message.Header.IsLastFeed, feed.isLast());
         message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
