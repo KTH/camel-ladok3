@@ -10,7 +10,7 @@ import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
 
-public class LocalDateTimeFormatterTest {
+public class StocholmLocalDateTimeFormatterTest {
 
     private static final String PARSER_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
 
@@ -24,7 +24,7 @@ public class LocalDateTimeFormatterTest {
             Date parsedDate = dateFormat.parse("2017-09-18T06:22:44.299Z");
             String expectedDateTimeString = "2017-09-18T08:22:44.299"; // Stockholm is 2 hours before UTC at this date
 
-            String actualDateTimeString = LocalDateTimeFormatter.formatAsStockolmLocalDateTime(parsedDate, defaultZone);
+            String actualDateTimeString = StocholmLocalDateTimeFormatter.formatAsStockolmLocalDateTime(parsedDate, defaultZone);
             assertEquals("Result for zone " + zoneId, expectedDateTimeString, actualDateTimeString);
         }
     }
@@ -37,7 +37,7 @@ public class LocalDateTimeFormatterTest {
 
         Date parsedDate = dateFormat.parse("2017-09-17T23:22:44.299Z");
         String expectedDateTimeString = "2017-09-18T01:22:44.299"; // Stockholm is 2 hours before UTC at this date
-        String actualDateTimeString = LocalDateTimeFormatter.formatAsStockolmLocalDateTime(parsedDate, defaultZone);
+        String actualDateTimeString = StocholmLocalDateTimeFormatter.formatAsStockolmLocalDateTime(parsedDate, defaultZone);
 
         assertEquals(expectedDateTimeString, actualDateTimeString);
     }
@@ -50,7 +50,7 @@ public class LocalDateTimeFormatterTest {
 
         Date parsedDate = dateFormat.parse("2017-01-17T12:22:44.299Z");
         String expectedDateTimeString = "2017-01-17T13:22:44.299"; // Stockholm is 1 hour before UTC at this date
-        String actualDateTimeString = LocalDateTimeFormatter.formatAsStockolmLocalDateTime(parsedDate, defaultZone);
+        String actualDateTimeString = StocholmLocalDateTimeFormatter.formatAsStockolmLocalDateTime(parsedDate, defaultZone);
 
         assertEquals(expectedDateTimeString, actualDateTimeString);
     }
