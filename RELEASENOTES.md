@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.24
+
+* Format date in header as in Europe/Stockholm TZ.
+
 ## 0.0.23
 
 * This is just a test release to try new release cycle.
