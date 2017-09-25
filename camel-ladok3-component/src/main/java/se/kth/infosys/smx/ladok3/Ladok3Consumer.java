@@ -119,7 +119,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                 Document document = builder.parse(new InputSource(new StringReader(content.getValue())));
                 Node rootElement = document.getFirstChild();
 
-                if (endpoint.getEvents().isEmpty() || endpoint.getEvents().contains(rootElement.getLocalName())) {
+                if (shouldHandleEvent(rootElement)) {
                     JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
                     BaseEvent event = (BaseEvent) root.getValue();
 
@@ -142,6 +142,11 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         }
 
         return messageCount;
+    }
+
+    private boolean shouldHandleEvent(Node rootElement) {
+        return (endpoint.getIncludeEvents().isEmpty() || endpoint.getIncludeEvents().contains(rootElement.getLocalName()))
+                && !endpoint.getExcludeEvents().contains(rootElement.getLocalName());
     }
 
     /*

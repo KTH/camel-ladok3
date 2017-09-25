@@ -28,7 +28,8 @@ options, see http://camel.apache.org/polling-consumer.html
 | key       | Password for the certificate file |
 | lastEntry | The last event ID, an opaque string recieved from Ladok3 |
 | lastFeed  | The last feed ID, an opaque string recieved from Ladok3 |
-| events    | A comma separated list of event types in the feed to generate messages for |
+| includeEvents    | A comma separated list of event types in the feed to generate messages for |
+| excludeEvents    | A comma separated list of event types in the feed NOT to generate messages for |
 
 Assuming a property place holder in Karaf an example of a configuration could be:
 
