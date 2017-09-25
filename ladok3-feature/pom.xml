@@ -29,7 +29,7 @@
   <parent>
     <artifactId>ladok3</artifactId>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
-    <version>0.0.24</version>
+    <version>0.0.25</version>
   </parent>
 
   <artifactId>ladok3-feature</artifactId>
