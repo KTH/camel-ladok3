@@ -34,8 +34,8 @@
 
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
     <route id="read-atom-feed">
-      <from uri="ladok3://{{ladok3.host}}?greedy=true&amp;delay=2000&amp;backoffErrorThreshold=1&amp;backoffMultiplier=15&amp;cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}&amp;includeEvents=NationellBevistypEvent,StudentEvent" />
-<!--       <from uri="ladok3://{{ladok3.host}}?greedy=true&amp;delay=2000&amp;backoffErrorThreshold=1&amp;backoffMultiplier=15&amp;cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}" /> -->
+<!--      <from uri="ladok3://{{ladok3.host}}?greedy=true&amp;delay=2000&amp;backoffErrorThreshold=1&amp;backoffMultiplier=15&amp;cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}&amp;includeEvents=NationellBevistypEvent,StudentEvent" />-->
+      <from uri="ladok3://{{ladok3.host}}?greedy=true&amp;delay=2000&amp;backoffErrorThreshold=1&amp;backoffMultiplier=15&amp;cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}" />
       <to uri="log:se.kth.infosys.smx.ladok3?level=INFO&amp;showHeaders=true" />
       <marshal>
         <jacksonxml include="NON_NULL"/>
