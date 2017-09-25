@@ -64,8 +64,11 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
     @UriParam(label = "consumer", name = "lastFeed", defaultValue = "", description = "Feed to start consuming from")
     private String lastFeed = "";
 
-    @UriParam(label = "consumer", name = "events", description = "List of event names to generate messages for.")
-    private HashSet<String> events = new HashSet<String>();
+    @UriParam(label = "consumer", name = "includeEvents", description = "List of event names to generate messages for.")
+    private HashSet<String> includeEvents = new HashSet<String>();
+
+    @UriParam(label = "consumer", name = "excludeEvents", description = "List of event names NOT to generate messages for.")
+    private HashSet<String> excludeEvents = new HashSet<String>();
 
     @UriPath(label = "producer", description = "Ladok3 REST API path")
     private String api;
@@ -178,19 +181,36 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
         this.context = context;
     }
 
-    public HashSet<String> getEvents() {
-        return events;
+    public HashSet<String> getIncludeEvents() {
+        return includeEvents;
     }
 
-    public void setEvents(HashSet<String> events) {
-        this.events = events;
+    public void setIncludeEvents(HashSet<String> events) {
+        this.includeEvents = events;
     }
 
-    public void setEvents(String events) {
-        this.events = new HashSet<String>();
+    public void setIncludeEvents(String events) {
+        this.includeEvents = new HashSet<String>();
         for (String event : events.split(",")) {
             if (! event.isEmpty()) {
-                this.events.add(event);
+                this.includeEvents.add(event);
+            }
+        }
+    }
+
+    public HashSet<String> getExcludeEvents() {
+        return excludeEvents;
+    }
+
+    public void setExcludeEvents(HashSet<String> events) {
+        this.excludeEvents = events;
+    }
+
+    public void setExcludeEvents(String events) {
+        this.excludeEvents = new HashSet<String>();
+        for (String event : events.split(",")) {
+            if (! event.isEmpty()) {
+                this.excludeEvents.add(event);
             }
         }
     }
