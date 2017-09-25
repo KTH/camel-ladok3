@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.0.25
+
+* Change name of option "events" to "includeEvents".
+* Add support for "excludeEvents" option.
+
 ## 0.0.24
 
 * Format date in header as in Europe/Stockholm TZ.
