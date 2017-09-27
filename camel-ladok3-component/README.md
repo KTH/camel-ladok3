@@ -31,6 +31,8 @@ options, see http://camel.apache.org/polling-consumer.html
 | includeEvents    | A comma separated list of event types in the feed to generate messages for |
 | excludeEvents    | A comma separated list of event types in the feed NOT to generate messages for |
 
+Note, exclude is stronger than include. If an event is both included and excluded it will be excluded.
+
 Assuming a property place holder in Karaf an example of a configuration could be:
 
 ```
