@@ -1,6 +1,10 @@
 package se.kth.infosys.smx.ladok3.internal;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,9 +43,27 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         case "kontaktinformation":
             handleStudentKontaktinformationRequest(exchange, service);
             break;
+        case "filtrera":
+            handleStudentFiltreraRequest(exchange, service);
+            break;
         default: // uid request
             handleStudentUidRequest(exchange, service);
         }
+    }
+
+    private void handleStudentFiltreraRequest(Exchange exchange, StudentinformationService service2) {
+        List<Student> fromLadok = new LinkedList<Student>();
+
+        @SuppressWarnings("unchecked")
+        HashMap<String, Object> params = exchange.getIn().getHeader(
+                Ladok3Message.Header.Params, new HashMap<String, Object>(), HashMap.class);
+
+        log.debug("Getting Ladok data for student filtrera request with params: {}", params);
+        Iterator<Student> studentIterator = service.studentFiltreraStudentIterator(params);
+        while (studentIterator.hasNext()) {
+            fromLadok.add(studentIterator.next());
+        }
+        exchange.getOut().setBody(fromLadok);
     }
 
     private void handleStudentPersonnummerRequest(final Exchange exchange, final StudentinformationService service) throws Exception {

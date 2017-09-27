@@ -34,6 +34,7 @@ public class Ladok3Message {
         public static final String KeyValue = "ladok3KeyValue";
         public static final String Service = "ladok3Service";
         public static final String Operation = "ladok3ServiceOperation";
+        public static final String Params = "ladok3Params";
         public static final String IsLastFeed = "ladok3IsLastFeed";
         public static final String MessageType = "ladok3MessageType";
         public static final String SequenceNumber = "ladok3MessageSequenceNumber";
