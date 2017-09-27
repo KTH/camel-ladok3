@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.26
+
+* Add support for filtrera to list students in component.
+
 ## 0.0.25
 
 * Change name of option "events" to "includeEvents".
