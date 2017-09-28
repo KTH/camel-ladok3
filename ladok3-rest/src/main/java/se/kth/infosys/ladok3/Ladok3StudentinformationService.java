@@ -37,6 +37,7 @@ import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
+import se.ladok.schemas.studentinformation.Studenthistorikposter;
 
 /**
  * Real implementation of the Ladok studentinformation service. It is using JAX RS 
@@ -134,5 +135,16 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
      */
     public Iterator<Student> studentFiltreraStudentIterator(final Map<String, Object> params) {
         return new Ladok3StudentFiltreraStudentIterator(this, params);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Studenthistorikposter studentHistorik(String uid) {
+        return target.path("/student/{uid}/historik")
+                .resolveTemplate("uid", uid)
+                .request()
+                .accept(SERVICE_TYPE)
+                .get(Studenthistorikposter.class);
     }
 }

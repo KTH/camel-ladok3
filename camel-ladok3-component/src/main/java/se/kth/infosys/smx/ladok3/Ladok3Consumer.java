@@ -54,6 +54,7 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
+import se.kth.infosys.smx.ladok3.internal.Ladok3JaxbUnmarshallerFactory;
 import se.kth.infosys.smx.ladok3.utils.StocholmLocalDateTimeFormatter;
 import se.ladok.schemas.events.BaseEvent;
 
@@ -72,7 +73,6 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     private static final String LAST_FEED_FORMAT = "https://%s/handelser/feed/recent";
 
     private final Ladok3Endpoint endpoint;
-    private final Unmarshaller unmarshaller;
     private final DocumentBuilder builder;
     private long sequenceNumber = 0;
 
@@ -83,8 +83,6 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         builderFactory.setNamespaceAware(true);
         builder = builderFactory.newDocumentBuilder();
-
-        unmarshaller = JAXBContext.newInstance(SCHEMAS_BASE_PACKAGE).createUnmarshaller();
     }
 
     /*
@@ -120,7 +118,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                 Node rootElement = document.getFirstChild();
 
                 if (shouldHandleEvent(rootElement)) {
-                    JAXBElement<?> root = unmarshaller.unmarshal(rootElement, Class.forName(ladokEventClass(rootElement)));
+                    Class<?> eventClass = Class.forName(ladokEventClass(rootElement));
+                    Unmarshaller unmarshaller = Ladok3JaxbUnmarshallerFactory.unmarshaller(eventClass.getPackage().getName());
+                    JAXBElement<?> root = unmarshaller.unmarshal(rootElement, eventClass);
                     BaseEvent event = (BaseEvent) root.getValue();
 
                     doExchangeForEvent(event, entry.getUri(), feed, entry.getUpdatedDate());

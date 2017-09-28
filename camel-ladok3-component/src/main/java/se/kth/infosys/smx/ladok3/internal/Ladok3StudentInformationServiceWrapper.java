@@ -21,6 +21,7 @@ import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
+import se.ladok.schemas.studentinformation.Studenthistorikposter;
 
 public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrapper {
     private static final Logger log = LoggerFactory.getLogger(Ladok3StudentInformationServiceWrapper.class);
@@ -39,20 +40,35 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
     public void doExchange(Exchange exchange) throws Exception {
         switch (currentOperation(exchange)) {
         case "personnummer":
-            handleStudentPersonnummerRequest(exchange, service);
+            handleStudentPersonnummerRequest(exchange);
             break;
         case "kontaktinformation":
-            handleStudentKontaktinformationRequest(exchange, service);
+            handleStudentKontaktinformationRequest(exchange);
             break;
         case "filtrera":
-            handleStudentFiltreraRequest(exchange, service);
+            handleStudentFiltreraRequest(exchange);
+            break;
+        case "historik":
+            handleStudentHistorikRequest(exchange);
             break;
         default: // uid request
-            handleStudentUidRequest(exchange, service);
+            handleStudentUidRequest(exchange);
         }
     }
 
-    private void handleStudentFiltreraRequest(Exchange exchange, StudentinformationService service2) {
+    private void handleStudentHistorikRequest(Exchange exchange) throws Exception {
+        String uid = exchange.getIn().getHeader(Ladok3Message.Header.KeyValue, String.class);
+        if (uid == null || uid.isEmpty()) {
+            Student student = exchange.getIn().getMandatoryBody(Student.class);
+            uid = student.getUid();
+        }
+
+        log.debug("Getting history for student with uid: {}", uid);
+        Studenthistorikposter fromLadok = service.studentHistorik(uid);
+        exchange.getOut().setBody(fromLadok);
+    }
+
+    private void handleStudentFiltreraRequest(Exchange exchange) {
         List<StudentISokresultat> fromLadok = new LinkedList<StudentISokresultat>();
 
         @SuppressWarnings("unchecked")
@@ -67,7 +83,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         exchange.getOut().setBody(fromLadok);
     }
 
-    private void handleStudentPersonnummerRequest(final Exchange exchange, final StudentinformationService service) throws Exception {
+    private void handleStudentPersonnummerRequest(final Exchange exchange) throws Exception {
         String personnummer = exchange.getIn().getHeader(Ladok3Message.Header.KeyValue, String.class);
         if (personnummer == null || personnummer.isEmpty()) {
             Student student = exchange.getIn().getMandatoryBody(Student.class);
@@ -79,7 +95,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         exchange.getOut().setBody(fromLadok);
     }
 
-    private void handleStudentKontaktinformationRequest(final Exchange exchange, final StudentinformationService service) throws Exception {
+    private void handleStudentKontaktinformationRequest(final Exchange exchange) throws Exception {
         String uid = exchange.getIn().getHeader(Ladok3Message.Header.KeyValue, String.class);
         if (uid == null || uid.isEmpty()) {
             Student student = exchange.getIn().getMandatoryBody(Student.class);
@@ -91,7 +107,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         exchange.getOut().setBody(fromLadok);
     }
 
-    private void handleStudentUidRequest(final Exchange exchange, final StudentinformationService service) throws Exception {
+    private void handleStudentUidRequest(final Exchange exchange) throws Exception {
         String uid = exchange.getIn().getHeader(Ladok3Message.Header.KeyValue, String.class);
         if (uid == null || uid.isEmpty()) {
             Student student = exchange.getIn().getMandatoryBody(Student.class);

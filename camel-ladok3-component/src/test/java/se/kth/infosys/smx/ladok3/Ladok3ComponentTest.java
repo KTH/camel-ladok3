@@ -39,7 +39,7 @@ public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
     @Override
     protected String[] loadConfigAdminConfigurationFile() {
         // which .cfg file to use, and the name of the persistence-id
-        return new String[]{"src/test/resources/test.properties", "se.kth.infosys.smx.ladok3"};
+        return new String[]{"test.properties", "se.kth.infosys.smx.ladok3"};
     }
 
     @Override

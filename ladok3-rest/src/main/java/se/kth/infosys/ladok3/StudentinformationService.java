@@ -30,6 +30,7 @@ import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
+import se.ladok.schemas.studentinformation.Studenthistorikposter;
 
 /**
  * Interface representing the Ladok studentinformation service.
@@ -55,6 +56,13 @@ public interface StudentinformationService extends Service {
      * @return The contact information matching the UID
      */
     public Kontaktuppgifter studentKontaktuppgifter(final String uid);
+
+    /**
+     * Retrieve history information for a student given its UID.
+     * @param uid The unique identifier for the student.
+     * @return The history information matching the UID
+     */
+    public Studenthistorikposter studentHistorik(final String uid);
 
     /**
      * Calls /student/filtrera with query parameters as specified in the params Map. 

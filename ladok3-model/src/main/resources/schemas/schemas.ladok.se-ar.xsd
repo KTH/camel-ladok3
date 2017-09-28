@@ -50,6 +50,27 @@
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="Referens">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Referens" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Handlaggare">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType final="extension restriction" name="Arende">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
@@ -68,27 +89,6 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Handlaggare">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Referens">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Referens" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="Arendetyp">
     <xs:complexContent>
       <xs:extension base="dap:Base">
@@ -100,16 +100,11 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType final="extension restriction" name="Arendeparametrar">
+  <xs:complexType name="Underlag">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Fritext" type="xs:string"/>
-          <xs:element minOccurs="0" ref="ar:Handlaggare"/>
-          <xs:element minOccurs="0" name="Inkommet" type="xs:date"/>
-          <xs:element minOccurs="0" ref="ar:Referens"/>
-          <xs:element minOccurs="0" name="Student" type="base:Student"/>
-          <xs:element minOccurs="0" ref="ar:Arendetyp"/>
+          <xs:element minOccurs="0" name="ArendeUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -135,11 +130,16 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Underlag">
+  <xs:complexType final="extension restriction" name="Arendeparametrar">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="ArendeUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Fritext" type="xs:string"/>
+          <xs:element minOccurs="0" ref="ar:Handlaggare"/>
+          <xs:element minOccurs="0" name="Inkommet" type="xs:date"/>
+          <xs:element minOccurs="0" ref="ar:Referens"/>
+          <xs:element minOccurs="0" name="Student" type="base:Student"/>
+          <xs:element minOccurs="0" ref="ar:Arendetyp"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
