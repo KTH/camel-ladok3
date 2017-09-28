@@ -84,7 +84,7 @@
         <configuration>
           <instructions>
             <Bundle-SymbolicName>se.kth.infosys.ladok3-rest</Bundle-SymbolicName>
-            <Export-Package>se.kth.infosys.ladok3</Export-Package>
+            <Export-Package>se.kth.infosys.ladok3;-split-package:=merge-first</Export-Package>
           </instructions>
         </configuration>
         <executions> 
