@@ -20,6 +20,7 @@ import se.kth.infosys.ladok3.StudentinformationService;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.Student;
+import se.ladok.schemas.studentinformation.StudentISokresultat;
 
 public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrapper {
     private static final Logger log = LoggerFactory.getLogger(Ladok3StudentInformationServiceWrapper.class);
@@ -52,14 +53,14 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
     }
 
     private void handleStudentFiltreraRequest(Exchange exchange, StudentinformationService service2) {
-        List<Student> fromLadok = new LinkedList<Student>();
+        List<StudentISokresultat> fromLadok = new LinkedList<StudentISokresultat>();
 
         @SuppressWarnings("unchecked")
         HashMap<String, Object> params = exchange.getIn().getHeader(
                 Ladok3Message.Header.Params, new HashMap<String, Object>(), HashMap.class);
 
         log.debug("Getting Ladok data for student filtrera request with params: {}", params);
-        Iterator<Student> studentIterator = service.studentFiltreraStudentIterator(params);
+        Iterator<StudentISokresultat> studentIterator = service.studentFiltreraIterator(params);
         while (studentIterator.hasNext()) {
             fromLadok.add(studentIterator.next());
         }
