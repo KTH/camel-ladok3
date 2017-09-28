@@ -1,5 +1,12 @@
 # Release notes
 
+## 0.0.27
+
+* Add support for call to student/{uid}/historik needed when importing uids to UG.
+* Update to model from ladok 0.88.1. MIT integration will be upgraded to 0.86 as far
+  as I know, not quite sure if there will be issues. Changes made in order to handle
+  the new model should make it easy to swap to 0.86 though.
+
 ## 0.0.26
 
 * Add support for filtrera to list students in component.
