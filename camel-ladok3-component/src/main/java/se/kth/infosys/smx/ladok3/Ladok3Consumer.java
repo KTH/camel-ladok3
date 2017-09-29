@@ -54,7 +54,7 @@ import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
-import se.kth.infosys.smx.ladok3.internal.Ladok3JaxbUnmarshallerFactory;
+import se.kth.infosys.smx.ladok3.internal.Ladok3UnmarshallerFactory;
 import se.kth.infosys.smx.ladok3.utils.StocholmLocalDateTimeFormatter;
 import se.ladok.schemas.events.BaseEvent;
 
@@ -119,7 +119,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
                 if (shouldHandleEvent(rootElement)) {
                     Class<?> eventClass = Class.forName(ladokEventClass(rootElement));
-                    Unmarshaller unmarshaller = Ladok3JaxbUnmarshallerFactory.unmarshaller(eventClass.getPackage().getName());
+                    Unmarshaller unmarshaller = Ladok3UnmarshallerFactory.unmarshaller(eventClass.getPackage().getName());
                     JAXBElement<?> root = unmarshaller.unmarshal(rootElement, eventClass);
                     BaseEvent event = (BaseEvent) root.getValue();
 
