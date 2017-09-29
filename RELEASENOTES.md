@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.29
+
+* Interface change in order to support streaming mode in camel properly.
+
 ## 0.0.28
 
 * Add support for call to student/{uid}/historik needed when importing uids to UG.
