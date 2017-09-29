@@ -28,12 +28,12 @@ import java.util.Map;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 
 class StudentFiltreraResult implements Iterable<StudentISokresultat> {
-    private final FiltreraIterator iterator;
+    private final StudentFiltreraIterator iterator;
 
     public StudentFiltreraResult(
             final StudentinformationServiceImpl ladok3StudentInformationService,
             final Map<String, Object> params) {
-        this.iterator = new FiltreraIterator(ladok3StudentInformationService, params);
+        this.iterator = new StudentFiltreraIterator(ladok3StudentInformationService, params);
     }
 
     @Override

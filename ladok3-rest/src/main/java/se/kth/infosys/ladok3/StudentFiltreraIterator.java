@@ -6,7 +6,7 @@ import java.util.Map;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 
-class FiltreraIterator implements Iterator<StudentISokresultat> {
+class StudentFiltreraIterator implements Iterator<StudentISokresultat> {
     protected StudentinformationServiceImpl service;
     protected SokresultatStudentinformationRepresentation result;
     protected Iterator<StudentISokresultat> iterator;
@@ -15,7 +15,7 @@ class FiltreraIterator implements Iterator<StudentISokresultat> {
     private int page = 0;
     private int limit = 400;
 
-    public FiltreraIterator(
+    public StudentFiltreraIterator(
             final StudentinformationServiceImpl ladok3StudentInformationService,
             final Map<String, Object> params) {
         this.service = ladok3StudentInformationService;
