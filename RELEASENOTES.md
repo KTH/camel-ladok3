@@ -1,5 +1,11 @@
 # Release notes
 
+## 0.0.30
+
+* Refactorization.
+  Only expose classes that should be exposed.
+  Adjust naming to common conventions.
+
 ## 0.0.29
 
 * Interface change in order to support streaming mode in camel properly.
