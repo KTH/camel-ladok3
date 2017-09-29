@@ -1,6 +1,6 @@
 # Release notes
 
-## 0.0.27
+## 0.0.28
 
 * Add support for call to student/{uid}/historik needed when importing uids to UG.
 * Update to model from ladok 0.88.1. MIT integration will be upgraded to 0.86 as far
