@@ -69,17 +69,12 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
     }
 
     private void handleStudentFiltreraRequest(Exchange exchange) {
-        List<StudentISokresultat> fromLadok = new LinkedList<StudentISokresultat>();
-
         @SuppressWarnings("unchecked")
         HashMap<String, Object> params = exchange.getIn().getHeader(
                 Ladok3Message.Header.Params, new HashMap<String, Object>(), HashMap.class);
 
         log.debug("Getting Ladok data for student filtrera request with params: {}", params);
-        Iterator<StudentISokresultat> studentIterator = service.studentFiltreraIterator(params);
-        while (studentIterator.hasNext()) {
-            fromLadok.add(studentIterator.next());
-        }
+        Iterator<StudentISokresultat> fromLadok = service.studentFiltreraIterable(params).iterator();
         exchange.getOut().setBody(fromLadok);
     }
 

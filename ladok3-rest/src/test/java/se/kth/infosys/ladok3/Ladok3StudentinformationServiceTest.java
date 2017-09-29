@@ -118,7 +118,7 @@ public class Ladok3StudentinformationServiceTest {
         params.put("efternamn", "*");
         params.put("limit", 5);
 
-        Iterator<StudentISokresultat> iterator = studentInformationService.studentFiltreraIterator(params);
+        Iterator<StudentISokresultat> iterator = studentInformationService.studentFiltreraIterable(params).iterator();
         assertNotNull(iterator);
         assertTrue(iterator.hasNext());
 
@@ -133,7 +133,7 @@ public class Ladok3StudentinformationServiceTest {
         params.put("efternamn", "*");
         params.put("limit", 5);
 
-        Iterator<Student> iterator = studentInformationService.studentFiltreraStudentIterator(params);
+        Iterator<Student> iterator = studentInformationService.studentFiltreraStudentIterable(params).iterator();
         assertNotNull(iterator);
         assertTrue(iterator.hasNext());
 
@@ -147,7 +147,7 @@ public class Ladok3StudentinformationServiceTest {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("limit", 5);
 
-        Iterator<Student> iterator = studentInformationService.studentFiltreraStudentIterator(params);
+        Iterator<Student> iterator = studentInformationService.studentFiltreraStudentIterable(params).iterator();
         assertNotNull(iterator);
         assertTrue(iterator.hasNext());
 
