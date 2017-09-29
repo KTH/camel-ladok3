@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This is a client request filter that is set up to trace calls in {@link AbstractService}
+ * This is a client request filter that is set up to trace calls in {@link AbstractLadok3Service}
  * using SLF4J logging. To trace calls in your application, setup SLF4J logging
  * appropriately and crank up the log level for se.kth.infosys.ladok3 to trace level.
  */

@@ -39,7 +39,7 @@ import se.ladok.schemas.kataloginformation.Anvandarinformation;
  * which means that errors will be thrown as unchecked runtime exceptions. See 
  * JAX RS client documentation.
  */
-public class KataloginformationServiceImpl extends AbstractService implements KataloginformationService {
+public class KataloginformationServiceImpl extends AbstractLadok3Service implements KataloginformationService {
     private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-kataloginformation+xml");
     private static final String SERVICE = "kataloginformation";
 
