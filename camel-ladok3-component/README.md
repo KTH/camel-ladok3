@@ -104,9 +104,9 @@ down stream [re-sequencing](http://camel.apache.org/resequencer.html), e.g.
 
 ## The producer
 
-Unlike the consumer, the producer is not feature complete and more of a proof of concept. The goal
-is to provide enough relevant funtionality for message enrichment of the Atom feed data where
-necesseary and not to cover all of the Ladok3 REST API.
+Unlike the consumer, the producer is not feature complete. The goal is to provide enough relevant functionality
+for message enrichment of the Atom feed data and data retrieval necessary for our integration purposes on 
+a requirement driven basis, and not to cover all of the Ladok3 REST API.
 
 The producer uses a URI of the form: `ladok3://host.ladok.se[/<service>][/<operation>]?cert=path-to-cert&key=cert-passphrase`
 
@@ -117,7 +117,7 @@ The `service` and `operation` parameters can be left out and replaced with messa
 `ladok3Operation` which are mandatory unless the information is provided in the URL path. Information provided
 in the URL path has precedence over message headers.
 
-The body of the resulting message is the information returned by Ladok3, in the form of an POJO object
+The body of the resulting message is generally the information returned by Ladok3, in the form of an POJO object
 of the `se.ladok.schemas` object tree.
 
 ### Use case
@@ -150,6 +150,18 @@ A *very* fictional use case, but you get the idea:
   </camelContext>
 ```
 
+### student/filtrera
+
+One of the methods implemented is the possibility to list students in Ladok3. A Map<String, Object> params can
+be provided for filtering. No filter will retrieve all students in chunks of 400.
+
+The result is an Iterable<StudentISokresultat> which takes care of any pagination of results behind the scenes.
+Hence, it works well with streaming mode in the Camel splitter and similar situations and results are fetched
+when required.
+
+The ladok3-rest api also supports returning an Iterable<Student> which additionally will fetch the Student object
+corresponding to a search result, but it is unclear if this is really required in the Camel producer (it can be
+done by other means).
 
 ### Expanding the producer
 
