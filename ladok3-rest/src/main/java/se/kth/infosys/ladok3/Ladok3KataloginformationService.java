@@ -30,7 +30,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import se.kth.infosys.ladok3.internal.Ladok3Service;
 import se.ladok.schemas.kataloginformation.Anvandare;
 import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;

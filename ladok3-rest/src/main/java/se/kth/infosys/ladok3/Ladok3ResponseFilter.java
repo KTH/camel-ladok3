@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package se.kth.infosys.ladok3.internal;
+package se.kth.infosys.ladok3;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * bypassed with the stream loaded into memory in full, logged, and a new stream generated
  * out of memory to the receiving application, depending on your payload.
  */
-public class Ladok3ResponseFilter implements ClientResponseFilter {
+class Ladok3ResponseFilter implements ClientResponseFilter {
     private static final Logger LOG = LoggerFactory.getLogger(Ladok3ResponseFilter.class);
 
     /**

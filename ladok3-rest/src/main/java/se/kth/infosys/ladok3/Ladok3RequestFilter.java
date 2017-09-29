@@ -1,4 +1,3 @@
-package se.kth.infosys.ladok3.internal;
 /*
  * MIT License
  *
@@ -22,23 +21,36 @@ package se.kth.infosys.ladok3.internal;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import java.util.Iterator;
-import java.util.Map;
+package se.kth.infosys.ladok3;
 
-import se.kth.infosys.ladok3.Ladok3StudentinformationService;
-import se.ladok.schemas.studentinformation.StudentISokresultat;
+import java.io.IOException;
 
-public class Ladok3StudentFiltreraResult implements Iterable<StudentISokresultat> {
-    private final Ladok3StudentFiltreraIterator iterator;
+import javax.ws.rs.client.ClientRequestContext;
+import javax.ws.rs.client.ClientRequestFilter;
 
-    public Ladok3StudentFiltreraResult(
-            final Ladok3StudentinformationService ladok3StudentInformationService,
-            final Map<String, Object> params) {
-        this.iterator = new Ladok3StudentFiltreraIterator(ladok3StudentInformationService, params);
-    }
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * This is a client request filter that is set up to trace calls in {@link Ladok3Service}
+ * using SLF4J logging. To trace calls in your application, setup SLF4J logging
+ * appropriately and crank up the log level for se.kth.infosys.ladok3 to trace level.
+ */
+class Ladok3RequestFilter implements ClientRequestFilter {
+    private static final Logger LOG = LoggerFactory.getLogger(Ladok3RequestFilter.class);
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Iterator<StudentISokresultat> iterator() {
-        return iterator;
+    public void filter(ClientRequestContext requestContext) throws IOException {
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Target: {}", requestContext.getUri().toString());
+            LOG.trace("Method: {}", requestContext.getMethod());
+            LOG.trace("Headers: {}", requestContext.getStringHeaders());
+            if (requestContext.getEntity() != null) {
+                LOG.trace(requestContext.getEntity().toString());
+            }
+        }
     }
 }

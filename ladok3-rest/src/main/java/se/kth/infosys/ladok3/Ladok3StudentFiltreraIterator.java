@@ -1,13 +1,12 @@
-package se.kth.infosys.ladok3.internal;
+package se.kth.infosys.ladok3;
 
 import java.util.Iterator;
 import java.util.Map;
 
-import se.kth.infosys.ladok3.Ladok3StudentinformationService;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 
-public class Ladok3StudentFiltreraIterator implements Iterator<StudentISokresultat> {
+class Ladok3StudentFiltreraIterator implements Iterator<StudentISokresultat> {
     protected Ladok3StudentinformationService service;
     protected SokresultatStudentinformationRepresentation result;
     protected Iterator<StudentISokresultat> iterator;

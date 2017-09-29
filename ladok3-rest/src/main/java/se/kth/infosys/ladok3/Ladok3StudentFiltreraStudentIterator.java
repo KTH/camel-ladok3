@@ -1,4 +1,4 @@
-package se.kth.infosys.ladok3.internal;
+package se.kth.infosys.ladok3;
 /*
  * MIT License
  *
@@ -25,11 +25,10 @@ package se.kth.infosys.ladok3.internal;
 import java.util.Iterator;
 import java.util.Map;
 
-import se.kth.infosys.ladok3.Ladok3StudentinformationService;
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 
-public class Ladok3StudentFiltreraStudentIterator implements Iterator<Student> {
+class Ladok3StudentFiltreraStudentIterator implements Iterator<Student> {
     private Ladok3StudentinformationService service;
     private Iterator<StudentISokresultat> iterator;
 

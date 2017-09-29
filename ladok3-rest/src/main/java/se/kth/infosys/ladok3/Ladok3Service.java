@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package se.kth.infosys.ladok3.internal;
+package se.kth.infosys.ladok3;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,13 +36,12 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import se.kth.infosys.ladok3.Service;
 import se.ladok.schemas.dap.ServiceIndex;
 
 /**
  * Abstract base class for Ladok REST services.
  */
-public abstract class Ladok3Service implements Service {
+abstract class Ladok3Service implements Service {
     private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok+xml");
 
     /** The constructed web target to use in sub classes. */

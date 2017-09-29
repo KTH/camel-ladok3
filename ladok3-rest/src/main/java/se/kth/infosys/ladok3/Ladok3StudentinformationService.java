@@ -29,9 +29,6 @@ import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import se.kth.infosys.ladok3.internal.Ladok3Service;
-import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraResult;
-import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraStudentResult;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
