@@ -36,7 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This is a client response filter that is set up to trace responses in {@link Ladok3Service}
+ * This is a client response filter that is set up to trace responses in {@link AbstractService}
  * using SLF4J logging. To trace responses in your application, setup SLF4J logging
  * appropriately and crank up the log level for se.kth.infosys.ladok3 to trace level.
  *

@@ -59,7 +59,7 @@ public class Ladok3KataloginformationServiceTest {
         String certFile = properties.getProperty("ladok3.cert.file");
         String key = properties.getProperty("ladok3.cert.key");
 
-        katalogInformationService = new Ladok3KataloginformationService(host, certFile, key);
+        katalogInformationService = new KataloginformationServiceImpl(host, certFile, key);
     }
 
     @Test

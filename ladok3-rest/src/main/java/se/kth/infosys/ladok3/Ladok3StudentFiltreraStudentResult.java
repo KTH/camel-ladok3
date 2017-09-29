@@ -31,7 +31,7 @@ class Ladok3StudentFiltreraStudentResult implements Iterable<Student> {
     private Ladok3StudentFiltreraStudentIterator iterator;
 
     public Ladok3StudentFiltreraStudentResult(
-            final Ladok3StudentinformationService ladok3StudentInformationService,
+            final StudentinformationServiceImpl ladok3StudentInformationService,
             final Map<String, Object> params) {
         this.iterator = new Ladok3StudentFiltreraStudentIterator(ladok3StudentInformationService, params);
     }

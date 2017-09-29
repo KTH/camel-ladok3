@@ -39,7 +39,7 @@ import se.ladok.schemas.kataloginformation.Anvandarinformation;
  * which means that errors will be thrown as unchecked runtime exceptions. See 
  * JAX RS client documentation.
  */
-public class Ladok3KataloginformationService extends Ladok3Service implements KataloginformationService {
+public class KataloginformationServiceImpl extends AbstractService implements KataloginformationService {
     private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-kataloginformation+xml");
     private static final String SERVICE = "kataloginformation";
 
@@ -51,7 +51,7 @@ public class Ladok3KataloginformationService extends Ladok3Service implements Ka
      * @param key The key to certificate.
      * @throws Exception on errors.
      */
-    public Ladok3KataloginformationService(final String host, final String certFile, final String key) throws Exception {
+    public KataloginformationServiceImpl(final String host, final String certFile, final String key) throws Exception {
         super(host, certFile, key, SERVICE);
     }
 
@@ -62,7 +62,7 @@ public class Ladok3KataloginformationService extends Ladok3Service implements Ka
      * @param context the SSLContext containing necessary information. 
      * @throws Exception on errors.
      */
-    public Ladok3KataloginformationService(final String host, final SSLContext context) throws Exception {
+    public KataloginformationServiceImpl(final String host, final SSLContext context) throws Exception {
         super(host, context, SERVICE);
     }
 

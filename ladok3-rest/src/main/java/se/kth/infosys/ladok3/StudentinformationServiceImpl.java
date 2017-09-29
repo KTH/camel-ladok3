@@ -40,7 +40,7 @@ import se.ladok.schemas.studentinformation.Studenthistorikposter;
  * which means that errors will be thrown as unchecked runtime exceptions. See 
  * JAX RS client documentation.
  */
-public class Ladok3StudentinformationService extends Ladok3Service implements StudentinformationService {
+public class StudentinformationServiceImpl extends AbstractService implements StudentinformationService {
     private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-studentinformation+xml");
     private static final String SERVICE = "studentinformation";
 
@@ -52,7 +52,7 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
      * @param key The key to certificate.
      * @throws Exception on errors.
      */
-    public Ladok3StudentinformationService(final String host, final String certFile, final String key) throws Exception {
+    public StudentinformationServiceImpl(final String host, final String certFile, final String key) throws Exception {
         super(host, certFile, key, SERVICE);
     }
 
@@ -63,7 +63,7 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
      * @param context the SSLContext containing necessary information. 
      * @throws Exception on errors.
      */
-    public Ladok3StudentinformationService(final String host, final SSLContext context) throws Exception {
+    public StudentinformationServiceImpl(final String host, final SSLContext context) throws Exception {
         super(host, context, SERVICE);
     }
 

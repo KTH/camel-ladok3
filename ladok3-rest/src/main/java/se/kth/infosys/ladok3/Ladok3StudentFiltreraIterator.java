@@ -7,7 +7,7 @@ import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresen
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 
 class Ladok3StudentFiltreraIterator implements Iterator<StudentISokresultat> {
-    protected Ladok3StudentinformationService service;
+    protected StudentinformationServiceImpl service;
     protected SokresultatStudentinformationRepresentation result;
     protected Iterator<StudentISokresultat> iterator;
 
@@ -16,7 +16,7 @@ class Ladok3StudentFiltreraIterator implements Iterator<StudentISokresultat> {
     private int limit = 400;
 
     public Ladok3StudentFiltreraIterator(
-            final Ladok3StudentinformationService ladok3StudentInformationService,
+            final StudentinformationServiceImpl ladok3StudentInformationService,
             final Map<String, Object> params) {
         this.service = ladok3StudentInformationService;
         this.params = params;

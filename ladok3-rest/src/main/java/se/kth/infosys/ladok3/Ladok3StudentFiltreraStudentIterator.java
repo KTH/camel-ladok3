@@ -29,11 +29,11 @@ import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 
 class Ladok3StudentFiltreraStudentIterator implements Iterator<Student> {
-    private Ladok3StudentinformationService service;
+    private StudentinformationServiceImpl service;
     private Iterator<StudentISokresultat> iterator;
 
     public Ladok3StudentFiltreraStudentIterator(
-            final Ladok3StudentinformationService ladok3StudentInformationService,
+            final StudentinformationServiceImpl ladok3StudentInformationService,
             final Map<String, Object> params) {
         this.service = ladok3StudentInformationService;
         this.iterator = service.studentFiltreraIterable(params).iterator();
