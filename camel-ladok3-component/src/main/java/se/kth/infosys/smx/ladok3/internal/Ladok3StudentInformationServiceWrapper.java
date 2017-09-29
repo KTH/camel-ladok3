@@ -15,7 +15,7 @@ import org.apache.camel.util.ExchangeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.kth.infosys.ladok3.Ladok3StudentinformationService;
+import se.kth.infosys.ladok3.StudentinformationServiceImpl;
 import se.kth.infosys.ladok3.StudentinformationService;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
@@ -30,7 +30,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
     private String pathOperation;
 
     public Ladok3StudentInformationServiceWrapper(URI uri, SSLContext context) throws Exception {
-        this.service = new Ladok3StudentinformationService(uri.getHost(), context);
+        this.service = new StudentinformationServiceImpl(uri.getHost(), context);
         Matcher matcher = URL_PATTERN.matcher(uri.getPath());
         if (matcher.matches()) {
             pathOperation = matcher.group("operation").toLowerCase();

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package se.kth.infosys.ladok3.internal;
+package se.kth.infosys.ladok3;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -36,7 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This is a client response filter that is set up to trace responses in {@link Ladok3Service}
+ * This is a client response filter that is set up to trace responses in {@link AbstractLadok3Service}
  * using SLF4J logging. To trace responses in your application, setup SLF4J logging
  * appropriately and crank up the log level for se.kth.infosys.ladok3 to trace level.
  *
@@ -44,8 +44,8 @@ import org.slf4j.LoggerFactory;
  * bypassed with the stream loaded into memory in full, logged, and a new stream generated
  * out of memory to the receiving application, depending on your payload.
  */
-public class Ladok3ResponseFilter implements ClientResponseFilter {
-    private static final Logger LOG = LoggerFactory.getLogger(Ladok3ResponseFilter.class);
+class ResponseFilter implements ClientResponseFilter {
+    private static final Logger LOG = LoggerFactory.getLogger(ResponseFilter.class);
 
     /**
      * {@inheritDoc}

@@ -11,7 +11,7 @@ import java.util.Date;
  * from UTC strings such as 2017-09-18T06:22:44.299Z. This utility accounts for the default timezone to produce a
  * formatted string in the time zone of Stockholm.
  */
-public final class StocholmLocalDateTimeFormatter {
+public final class StockholmLocalDateTimeFormatter {
 
     private static final ZoneId STOCKHOLM_ZONE = ZoneId.of("Europe/Stockholm");
 

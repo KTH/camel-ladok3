@@ -55,7 +55,7 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
 import se.kth.infosys.smx.ladok3.internal.Ladok3UnmarshallerFactory;
-import se.kth.infosys.smx.ladok3.utils.StocholmLocalDateTimeFormatter;
+import se.kth.infosys.smx.ladok3.utils.StockholmLocalDateTimeFormatter;
 import se.ladok.schemas.events.BaseEvent;
 
 /**
@@ -196,7 +196,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         message.setHeader(Ladok3Message.Header.SequenceNumber, sequenceNumber++);
         message.setHeader(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Event);
         message.setHeader(Ladok3Message.Header.EntryId, entryId);
-        message.setHeader(Ladok3Message.Header.EntryUpdated, StocholmLocalDateTimeFormatter.formatAsStockolmLocalDateTime(entryUpdated));
+        message.setHeader(Ladok3Message.Header.EntryUpdated, StockholmLocalDateTimeFormatter.formatAsStockolmLocalDateTime(entryUpdated));
         message.setHeader(Ladok3Message.Header.Feed, feed.getURL().toString());
         message.setHeader(Ladok3Message.Header.IsLastFeed, feed.isLast());
         message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());

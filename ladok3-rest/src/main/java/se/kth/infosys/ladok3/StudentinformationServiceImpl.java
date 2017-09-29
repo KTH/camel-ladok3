@@ -29,9 +29,6 @@ import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import se.kth.infosys.ladok3.internal.Ladok3Service;
-import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraResult;
-import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraStudentResult;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
@@ -43,7 +40,7 @@ import se.ladok.schemas.studentinformation.Studenthistorikposter;
  * which means that errors will be thrown as unchecked runtime exceptions. See 
  * JAX RS client documentation.
  */
-public class Ladok3StudentinformationService extends Ladok3Service implements StudentinformationService {
+public class StudentinformationServiceImpl extends AbstractLadok3Service implements StudentinformationService {
     private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-studentinformation+xml");
     private static final String SERVICE = "studentinformation";
 
@@ -55,7 +52,7 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
      * @param key The key to certificate.
      * @throws Exception on errors.
      */
-    public Ladok3StudentinformationService(final String host, final String certFile, final String key) throws Exception {
+    public StudentinformationServiceImpl(final String host, final String certFile, final String key) throws Exception {
         super(host, certFile, key, SERVICE);
     }
 
@@ -66,7 +63,7 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
      * @param context the SSLContext containing necessary information. 
      * @throws Exception on errors.
      */
-    public Ladok3StudentinformationService(final String host, final SSLContext context) throws Exception {
+    public StudentinformationServiceImpl(final String host, final SSLContext context) throws Exception {
         super(host, context, SERVICE);
     }
 
@@ -126,14 +123,14 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
      * {@inheritDoc}
      */
     public Iterable<StudentISokresultat> studentFiltreraIterable(final Map<String, Object> params) {
-        return new Ladok3StudentFiltreraResult(this, params);
+        return new StudentFiltreraResult(this, params);
     }
 
     /**
      * {@inheritDoc}
      */
     public Iterable<Student> studentFiltreraStudentIterable(final Map<String, Object> params) {
-        return new Ladok3StudentFiltreraStudentResult(this, params);
+        return new StudentFiltreraStudentResult(this, params);
     }
 
     /**

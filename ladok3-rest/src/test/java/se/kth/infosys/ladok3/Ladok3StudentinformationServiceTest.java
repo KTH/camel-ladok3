@@ -55,7 +55,7 @@ public class Ladok3StudentinformationServiceTest {
         String certFile = properties.getProperty("ladok3.cert.file");
         String key = properties.getProperty("ladok3.cert.key");
 
-        studentInformationService = new Ladok3StudentinformationService(host, certFile, key);
+        studentInformationService = new StudentinformationServiceImpl(host, certFile, key);
     }
 
     @Test
