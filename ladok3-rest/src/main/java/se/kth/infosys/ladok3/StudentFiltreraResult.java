@@ -25,19 +25,19 @@ package se.kth.infosys.ladok3;
 import java.util.Iterator;
 import java.util.Map;
 
-import se.ladok.schemas.studentinformation.Student;
+import se.ladok.schemas.studentinformation.StudentISokresultat;
 
-class Ladok3StudentFiltreraStudentResult implements Iterable<Student> {
-    private Ladok3StudentFiltreraStudentIterator iterator;
+class StudentFiltreraResult implements Iterable<StudentISokresultat> {
+    private final FiltreraIterator iterator;
 
-    public Ladok3StudentFiltreraStudentResult(
+    public StudentFiltreraResult(
             final StudentinformationServiceImpl ladok3StudentInformationService,
             final Map<String, Object> params) {
-        this.iterator = new Ladok3StudentFiltreraStudentIterator(ladok3StudentInformationService, params);
+        this.iterator = new FiltreraIterator(ladok3StudentInformationService, params);
     }
 
     @Override
-    public Iterator<Student> iterator() {
+    public Iterator<StudentISokresultat> iterator() {
         return iterator;
     }
 }

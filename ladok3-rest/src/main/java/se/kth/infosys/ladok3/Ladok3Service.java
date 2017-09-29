@@ -5,7 +5,7 @@ import se.ladok.schemas.dap.ServiceIndex;
 /**
  * Base interface defining common parts of other interfaces.
  */
-public interface Service {
+public interface Ladok3Service {
     /**
      * Get the service index for the service.
      * 

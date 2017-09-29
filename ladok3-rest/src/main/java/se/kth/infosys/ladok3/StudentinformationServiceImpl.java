@@ -123,14 +123,14 @@ public class StudentinformationServiceImpl extends AbstractService implements St
      * {@inheritDoc}
      */
     public Iterable<StudentISokresultat> studentFiltreraIterable(final Map<String, Object> params) {
-        return new Ladok3StudentFiltreraResult(this, params);
+        return new StudentFiltreraResult(this, params);
     }
 
     /**
      * {@inheritDoc}
      */
     public Iterable<Student> studentFiltreraStudentIterable(final Map<String, Object> params) {
-        return new Ladok3StudentFiltreraStudentResult(this, params);
+        return new StudentFiltreraStudentResult(this, params);
     }
 
     /**

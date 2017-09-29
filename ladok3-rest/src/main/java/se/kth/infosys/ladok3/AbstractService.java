@@ -41,7 +41,7 @@ import se.ladok.schemas.dap.ServiceIndex;
 /**
  * Abstract base class for Ladok REST services.
  */
-abstract class AbstractService implements Service {
+abstract class AbstractService implements Ladok3Service {
     private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok+xml");
 
     /** The constructed web target to use in sub classes. */
@@ -103,8 +103,8 @@ abstract class AbstractService implements Service {
     private static Client clientFactory(final SSLContext context) {
         return ClientBuilder.newBuilder().sslContext(context)
             .build()
-            .register(Ladok3RequestFilter.class)
-            .register(Ladok3ResponseFilter.class);
+            .register(RequestFilter.class)
+            .register(ResponseFilter.class);
     }
 
     /**

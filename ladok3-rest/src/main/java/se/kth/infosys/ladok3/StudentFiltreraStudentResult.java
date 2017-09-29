@@ -1,3 +1,4 @@
+package se.kth.infosys.ladok3;
 /*
  * MIT License
  *
@@ -21,36 +22,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package se.kth.infosys.ladok3;
+import java.util.Iterator;
+import java.util.Map;
 
-import java.io.IOException;
+import se.ladok.schemas.studentinformation.Student;
 
-import javax.ws.rs.client.ClientRequestContext;
-import javax.ws.rs.client.ClientRequestFilter;
+class StudentFiltreraStudentResult implements Iterable<Student> {
+    private StudentFiltreraStudentIterator iterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+    public StudentFiltreraStudentResult(
+            final StudentinformationServiceImpl ladok3StudentInformationService,
+            final Map<String, Object> params) {
+        this.iterator = new StudentFiltreraStudentIterator(ladok3StudentInformationService, params);
+    }
 
-/**
- * This is a client request filter that is set up to trace calls in {@link AbstractService}
- * using SLF4J logging. To trace calls in your application, setup SLF4J logging
- * appropriately and crank up the log level for se.kth.infosys.ladok3 to trace level.
- */
-class Ladok3RequestFilter implements ClientRequestFilter {
-    private static final Logger LOG = LoggerFactory.getLogger(Ladok3RequestFilter.class);
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void filter(ClientRequestContext requestContext) throws IOException {
-        if (LOG.isTraceEnabled()) {
-            LOG.trace("Target: {}", requestContext.getUri().toString());
-            LOG.trace("Method: {}", requestContext.getMethod());
-            LOG.trace("Headers: {}", requestContext.getStringHeaders());
-            if (requestContext.getEntity() != null) {
-                LOG.trace(requestContext.getEntity().toString());
-            }
-        }
+    public Iterator<Student> iterator() {
+        return iterator;
     }
 }

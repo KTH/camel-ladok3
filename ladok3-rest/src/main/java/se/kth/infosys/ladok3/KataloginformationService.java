@@ -32,7 +32,7 @@ import se.ladok.schemas.kataloginformation.Anvandarinformation;
 /**
  * Interface representing the Ladok kataloginformation service.
  */
-public interface KataloginformationService extends Service {
+public interface KataloginformationService extends Ladok3Service {
     /**
      * Retrieve a user (anvandare) given its UID.
      * @param uid The unique identifier for the user.

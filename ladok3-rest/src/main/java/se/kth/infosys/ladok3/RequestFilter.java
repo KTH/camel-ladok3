@@ -1,4 +1,3 @@
-package se.kth.infosys.ladok3;
 /*
  * MIT License
  *
@@ -22,33 +21,36 @@ package se.kth.infosys.ladok3;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import java.util.Iterator;
-import java.util.Map;
+package se.kth.infosys.ladok3;
 
-import se.ladok.schemas.studentinformation.Student;
-import se.ladok.schemas.studentinformation.StudentISokresultat;
+import java.io.IOException;
 
-class Ladok3StudentFiltreraStudentIterator implements Iterator<Student> {
-    private StudentinformationServiceImpl service;
-    private Iterator<StudentISokresultat> iterator;
+import javax.ws.rs.client.ClientRequestContext;
+import javax.ws.rs.client.ClientRequestFilter;
 
-    public Ladok3StudentFiltreraStudentIterator(
-            final StudentinformationServiceImpl ladok3StudentInformationService,
-            final Map<String, Object> params) {
-        this.service = ladok3StudentInformationService;
-        this.iterator = service.studentFiltreraIterable(params).iterator();
-    }
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * This is a client request filter that is set up to trace calls in {@link AbstractService}
+ * using SLF4J logging. To trace calls in your application, setup SLF4J logging
+ * appropriately and crank up the log level for se.kth.infosys.ladok3 to trace level.
+ */
+class RequestFilter implements ClientRequestFilter {
+    private static final Logger LOG = LoggerFactory.getLogger(RequestFilter.class);
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Student next() {
-        if (iterator.hasNext()) {
-            return service.student(iterator.next().getUid());
+    public void filter(ClientRequestContext requestContext) throws IOException {
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Target: {}", requestContext.getUri().toString());
+            LOG.trace("Method: {}", requestContext.getMethod());
+            LOG.trace("Headers: {}", requestContext.getStringHeaders());
+            if (requestContext.getEntity() != null) {
+                LOG.trace(requestContext.getEntity().toString());
+            }
         }
-        return null;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return iterator.hasNext();
     }
 }
