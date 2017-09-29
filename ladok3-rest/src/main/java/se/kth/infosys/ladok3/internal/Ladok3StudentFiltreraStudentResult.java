@@ -27,29 +27,18 @@ import java.util.Map;
 
 import se.kth.infosys.ladok3.Ladok3StudentinformationService;
 import se.ladok.schemas.studentinformation.Student;
-import se.ladok.schemas.studentinformation.StudentISokresultat;
 
-public class Ladok3StudentFiltreraStudentIterator implements Iterator<Student> {
-    private Ladok3StudentinformationService service;
-    private Iterator<StudentISokresultat> iterator;
+public class Ladok3StudentFiltreraStudentResult implements Iterable<Student> {
+    private Ladok3StudentFiltreraStudentIterator iterator;
 
-    public Ladok3StudentFiltreraStudentIterator(
+    public Ladok3StudentFiltreraStudentResult(
             final Ladok3StudentinformationService ladok3StudentInformationService,
             final Map<String, Object> params) {
-        this.service = ladok3StudentInformationService;
-        this.iterator = service.studentFiltreraIterable(params).iterator();
+        this.iterator = new Ladok3StudentFiltreraStudentIterator(ladok3StudentInformationService, params);
     }
 
     @Override
-    public Student next() {
-        if (iterator.hasNext()) {
-            return service.student(iterator.next().getUid());
-        }
-        return null;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return iterator.hasNext();
+    public Iterator<Student> iterator() {
+        return iterator;
     }
 }

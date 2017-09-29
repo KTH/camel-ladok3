@@ -23,16 +23,15 @@
  */
 package se.kth.infosys.ladok3;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraIterator;
-import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraStudentIterator;
 import se.kth.infosys.ladok3.internal.Ladok3Service;
+import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraResult;
+import se.kth.infosys.ladok3.internal.Ladok3StudentFiltreraStudentResult;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
@@ -126,15 +125,15 @@ public class Ladok3StudentinformationService extends Ladok3Service implements St
     /**
      * {@inheritDoc}
      */
-    public Iterator<StudentISokresultat> studentFiltreraIterator(final Map<String, Object> params) {
-        return new Ladok3StudentFiltreraIterator(this, params);
+    public Iterable<StudentISokresultat> studentFiltreraIterable(final Map<String, Object> params) {
+        return new Ladok3StudentFiltreraResult(this, params);
     }
 
     /**
      * {@inheritDoc}
      */
-    public Iterator<Student> studentFiltreraStudentIterator(final Map<String, Object> params) {
-        return new Ladok3StudentFiltreraStudentIterator(this, params);
+    public Iterable<Student> studentFiltreraStudentIterable(final Map<String, Object> params) {
+        return new Ladok3StudentFiltreraStudentResult(this, params);
     }
 
     /**

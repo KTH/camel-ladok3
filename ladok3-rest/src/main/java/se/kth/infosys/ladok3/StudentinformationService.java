@@ -23,7 +23,6 @@
  */
 package se.kth.infosys.ladok3;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
@@ -92,9 +91,9 @@ public interface StudentinformationService extends Service {
      * an iterator of StudentISokresultat hiding all paging related issues.
      * 
      * @param params A map between parameter strings and their object values.
-     * @return an iterator for all search results matching params.
+     * @return an iterable for all search results matching params.
      */
-    public Iterator<StudentISokresultat> studentFiltreraIterator(final Map<String, Object> params);
+    public Iterable<StudentISokresultat> studentFiltreraIterable(final Map<String, Object> params);
 
     /**
      * Higher abstraction of {@link #studentFiltrera} method which returns 
@@ -102,7 +101,7 @@ public interface StudentinformationService extends Service {
      * service issues.
      * 
      * @param params A map between parameter strings and their object values.
-     * @return an iterator for all search results matching params.
+     * @return an iterable for all search results matching params.
      */
-    public Iterator<Student> studentFiltreraStudentIterator(final Map<String, Object> params);
+    public Iterable<Student> studentFiltreraStudentIterable(final Map<String, Object> params);
 }
