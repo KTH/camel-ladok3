@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * using SLF4J logging. To trace calls in your application, setup SLF4J logging
  * appropriately and crank up the log level for se.kth.infosys.ladok3 to trace level.
  */
-class RequestFilter implements ClientRequestFilter {
+public class RequestFilter implements ClientRequestFilter {
     private static final Logger LOG = LoggerFactory.getLogger(RequestFilter.class);
 
     /**

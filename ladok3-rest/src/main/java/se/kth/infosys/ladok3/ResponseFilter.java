@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * bypassed with the stream loaded into memory in full, logged, and a new stream generated
  * out of memory to the receiving application, depending on your payload.
  */
-class ResponseFilter implements ClientResponseFilter {
+public class ResponseFilter implements ClientResponseFilter {
     private static final Logger LOG = LoggerFactory.getLogger(ResponseFilter.class);
 
     /**
