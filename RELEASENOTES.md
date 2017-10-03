@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.31
+
+* Request filters have to be public.
+
 ## 0.0.30
 
 * Refactorization.
