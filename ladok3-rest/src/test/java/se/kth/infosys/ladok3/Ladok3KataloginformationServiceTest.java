@@ -37,6 +37,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.ws.rs.ClientErrorException;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import se.ladok.schemas.dap.RelationLink;
@@ -99,6 +100,7 @@ public class Ladok3KataloginformationServiceTest {
     }
 
     @Test
+    @Ignore
     public void anvandarTest() {
         try {
             Anvandare anvandare = objectFactory.createAnvandare();
