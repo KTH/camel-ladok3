@@ -3,8 +3,6 @@ package se.kth.infosys.smx.ladok3.internal;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,8 +13,8 @@ import org.apache.camel.util.ExchangeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.kth.infosys.ladok3.StudentinformationServiceImpl;
 import se.kth.infosys.ladok3.StudentinformationService;
+import se.kth.infosys.ladok3.StudentinformationServiceImpl;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.Student;
