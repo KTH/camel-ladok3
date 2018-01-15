@@ -43,13 +43,6 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="DokumentmallParameter">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Nyckel" type="xs:string"/>
-      <xs:element minOccurs="0" name="Varde" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="DokumentkonfigurationEvent">
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -59,5 +52,12 @@
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DokumentmallParameter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Nyckel" type="xs:string"/>
+      <xs:element minOccurs="0" name="Varde" type="xs:string"/>
+    </xs:sequence>
   </xs:complexType>
 </xs:schema>

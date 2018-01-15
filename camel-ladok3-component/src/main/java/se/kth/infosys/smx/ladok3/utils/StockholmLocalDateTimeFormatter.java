@@ -12,11 +12,11 @@ import java.util.Date;
  * formatted string in the time zone of Stockholm.
  */
 public final class StockholmLocalDateTimeFormatter {
-
     private static final ZoneId STOCKHOLM_ZONE = ZoneId.of("Europe/Stockholm");
+    private static final ZoneId SYSTEM_ZONE = ZoneId.systemDefault();
 
     public static String formatAsStockolmLocalDateTime(Date date) {
-        return formatAsStockolmLocalDateTime(date, ZoneId.systemDefault());
+        return formatAsStockolmLocalDateTime(date, SYSTEM_ZONE);
     }
 
     static String formatAsStockolmLocalDateTime(Date date, ZoneId timezoneOfParser) {
