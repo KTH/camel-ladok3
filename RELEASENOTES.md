@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.0.33
+
+* Add atom index to headers.
+* Update to ladok3 model 0.92.2-20171107_190726.
+
 ## 0.0.31
 
 * Request filters have to be public.
