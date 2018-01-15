@@ -93,6 +93,8 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     @Override
     protected int poll() throws Exception {
         int messageCount = 0;
+        int atomItemIndex = 0;
+
         Ladok3Feed feed = getLastUnreadFeed();
 
         endpoint.setNextURL(feed.getURL());
@@ -122,8 +124,9 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
                     JAXBElement<?> root = unmarshaller.unmarshal(rootElement, eventClass);
                     BaseEvent event = (BaseEvent) root.getValue();
 
-                    doExchangeForEvent(event, entry.getUri(), feed, entry.getUpdatedDate());
+                    doExchangeForEvent(event, entry.getUri(), feed, entry.getUpdatedDate(), atomItemIndex);
                     messageCount++;
+                    atomItemIndex++;
                 }
             }
             endpoint.setLastEntry(entry.getUri());
@@ -188,7 +191,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     /*
      * Generate exchange for Ladok3 event and dispatch to next processor.
      */
-    private void doExchangeForEvent(BaseEvent event, String entryId, Ladok3Feed feed, Date entryUpdated) throws Exception {
+    private void doExchangeForEvent(BaseEvent event, String entryId, Ladok3Feed feed, Date entryUpdated, int atomItemIndex) throws Exception {
         Exchange exchange = endpoint.createExchange();
 
         Message message = exchange.getIn();
@@ -200,6 +203,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         message.setHeader(Ladok3Message.Header.IsLastFeed, feed.isLast());
         message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
         message.setHeader(Ladok3Message.Header.EventId, event.getHandelseUID());
+        message.setHeader(Ladok3Message.Header.EntryItemIndex,  atomItemIndex);
         message.setBody(event);
 
         try {
