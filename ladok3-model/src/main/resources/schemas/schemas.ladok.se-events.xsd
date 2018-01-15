@@ -5,13 +5,6 @@
 
   <xs:element name="EventContext" type="events:eventContext"/>
 
-  <xs:complexType abstract="true" name="BaseEvent">
-    <xs:sequence>
-      <xs:element ref="events:EventContext"/>
-      <xs:element name="HandelseUID" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="eventContext">
     <xs:sequence>
       <xs:element name="Anvandarnamn" type="xs:string"/>
@@ -32,6 +25,13 @@
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="BaseEvent">
+    <xs:sequence>
+      <xs:element ref="events:EventContext"/>
+      <xs:element name="HandelseUID" type="xs:string"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType abstract="true" name="BaseEventRepresentationMedHandelsetyp">
