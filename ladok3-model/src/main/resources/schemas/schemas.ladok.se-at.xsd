@@ -28,12 +28,18 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Attestering">
+  <xs:complexType name="Beslutsinformation">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="AttestobjektUIDSet" type="xs:string"/>
-          <xs:element minOccurs="0" ref="at:Beslut"/>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Anvandare" type="xs:string"/>
+          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:string"/>
+          <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
+          <xs:element minOccurs="0" name="BeslutsfattareVisningsnamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Idp" type="xs:string"/>
+          <xs:element minOccurs="0" name="ShibbolethSessionID" type="xs:string"/>
+          <xs:element minOccurs="0" name="AterautentiseringReturnURI" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -47,18 +53,12 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Beslutsinformation">
+  <xs:complexType name="Attestering">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Anvandare" type="xs:string"/>
-          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:string"/>
-          <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
-          <xs:element minOccurs="0" name="BeslutsfattareVisningsnamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="Idp" type="xs:string"/>
-          <xs:element minOccurs="0" name="ShibbolethSessionID" type="xs:string"/>
-          <xs:element minOccurs="0" name="AterautentiseringReturnURI" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AttestobjektUIDSet" type="xs:string"/>
+          <xs:element minOccurs="0" ref="at:Beslut"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
