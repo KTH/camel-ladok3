@@ -1,6 +1,6 @@
 # Release notes
 
-## 0.0.34
+## 0.0.35
 
 * Update to ladok3 model 0.97.2-20180203_153346.
 * Update camel.
