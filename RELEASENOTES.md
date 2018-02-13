@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.0.34
+
+* Update to ladok3 model 0.97.2-20180203_153346.
+* Update camel.
+
 ## 0.0.33
 
 * Add atom index to headers.
