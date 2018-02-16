@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.kth.infosys.smx.ladok3.internal.Ladok3ServiceWrapper;
 import se.kth.infosys.smx.ladok3.internal.Ladok3StudentInformationServiceWrapper;
+import se.kth.infosys.smx.ladok3.internal.Ladok3StudiedeltagandeServiceWrapper;
 
 /**
  * The ladok3 producer.
@@ -60,6 +61,7 @@ public class Ladok3Producer extends DefaultProducer {
         }
 
         services.put("student", new Ladok3StudentInformationServiceWrapper(uri, endpoint.getContext()));
+        services.put("studiedeltagande", new Ladok3StudiedeltagandeServiceWrapper(uri, endpoint.getContext()));
     }
 
 
