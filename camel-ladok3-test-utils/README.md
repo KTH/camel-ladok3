@@ -44,6 +44,28 @@ E.g.
 ]
 ```
 
+### Using with camel-spring
+
+```
+  <bean id="ladok3DataSet" class="se.kth.infosys.smx.ladok3.Ladok3JsonDataSet">
+    <property name="sourceFile" value="classpath:ladok3-data.json"/>
+  </bean>
+...
+    <route id="read-dataset">
+      <from uri="dataset:ladok3DataSet"/>
+...
+```
+
+### Using with camel-spring-boot
+
+```
+    @Bean(name = "ladok3DataSet")
+    public DataSet ladok3DataSet() throws Exception {
+        File ladok3Data = new File(this.getClass().getClassLoader().getResource("ladok3-data.json").toURI());
+        return new Ladok3JsonDataSet(ladok3Data);
+    }
+```
+
 ## Ladok3 XML Dataset
 
 Similar to above, but the body is assumed to be a string containing the XML representation of the event.
