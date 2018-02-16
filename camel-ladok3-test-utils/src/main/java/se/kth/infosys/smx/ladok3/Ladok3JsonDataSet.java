@@ -23,11 +23,17 @@ package se.kth.infosys.smx.ladok3;
  * SOFTWARE.
  */
 import java.io.File;
+import java.io.FileReader;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.component.dataset.ListDataSet;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  * A ListDataSet that reads JSON encoded Ladok3 payloads from a file.
@@ -47,25 +53,91 @@ import org.json.simple.JSONObject;
  * &lt;from uri="dataset:dataSet" /&gt;
  * </pre>
  */
-public class Ladok3JsonDataSet extends JsonDataSet {
+public class Ladok3JsonDataSet extends ListDataSet {
+    protected static final JSONParser parser = new JSONParser();
+
+    private JSONArray jsonObjects = new JSONArray();
+    private File sourceFile;
+    
+    /**
+     * Default constructor.
+     */
     public Ladok3JsonDataSet() {}
 
     /**
-     * Constructor taking the name of a source file.
-     * @param sourceFileName the name of the file.
-     * @throws Exception on file access and parse errors.
+     * Constructor using a file name string.
+     * 
+     * @param sourceFileName The file name.
+     * @throws Exception on file access and parse problems.
      */
     public Ladok3JsonDataSet(String sourceFileName) throws Exception {
-        super(sourceFileName);
+        this(new File(sourceFileName));
     }
 
     /**
-     * Constructor taking a File object.
-     * @param sourceFile the File object.
-     * @throws Exception on file access and parse errors.
+     * Constructor using a File object.
+     *
+     * @param sourceFile the File.
+     * @throws Exception on file access and parse problems.
      */
     public Ladok3JsonDataSet(File sourceFile) throws Exception {
-        super(sourceFile);
+        setSourceFile(sourceFile);
+    }
+
+    /**
+     * Get the source file object.
+     * 
+     * @return the source file.
+     */
+    public File getSourceFile() {
+        return sourceFile;
+    }
+
+    /**
+     * Set the source file object and intialize dataset from contents.
+     * 
+     * @param sourceFile the source file object.
+     * @throws Exception on file access and parse problems.
+     */
+    public void setSourceFile(File sourceFile) throws Exception {
+        this.sourceFile = sourceFile;
+        readSourceFile();
+    }
+
+    /**
+     * Gets the internal JSONArray of JSON objects.
+     * 
+     * @return the internal array of JSON objects.
+     */
+    public JSONArray getJsonObjects() {
+        return jsonObjects;
+    }
+
+    /**
+     * Sets the internal JSONArray of JSON objects.
+     * 
+     * @param jsonObjects an array of JSON objects.
+     */
+    public void setJsonObjects(JSONArray jsonObjects) {
+        this.jsonObjects = jsonObjects;
+    }
+
+    /**
+     * Read the source file and intializes the internal list of message bodies.
+     * Can be overridden by subclasses to tweak behaviour.
+     * 
+     * @throws Exception on file access and parse problems.
+     */
+    protected void readSourceFile() throws Exception {
+        List<Object> bodies = new LinkedList<Object>();
+        jsonObjects = (JSONArray) parser.parse(new FileReader(sourceFile));
+
+        for (int i = 0; i < jsonObjects.size(); i++) {
+            JSONObject jsonObject = (JSONObject) jsonObjects.get(i);
+            JSONObject body = (JSONObject) jsonObject.get("body");
+            bodies.add(body.toJSONString().getBytes());
+        }
+        setDefaultBodies(bodies);
     }
 
     /**
@@ -83,16 +155,6 @@ public class Ladok3JsonDataSet extends JsonDataSet {
         for (Object key : eventHeaders.keySet()) {
             headers.put((String) key, (String) eventHeaders.get(key));
         }
-
-/*
-        headers.put(Ladok3Message.Header.EntryId, entryId);
-        headers.put(Ladok3Message.Header.EntryUpdated, StockholmLocalDateTimeFormatter.formatAsStockolmLocalDateTime(entryUpdated));
-        headers.put(Ladok3Message.Header.Feed, feed.getURL().toString());
-        headers.put(Ladok3Message.Header.IsLastFeed, feed.isLast());
-        headers.put(Ladok3Message.Header.EventType, event.getClass().getName());
-        headers.put(Ladok3Message.Header.EventId, event.getHandelseUID());
-        headers.put(Ladok3Message.Header.EntryItemIndex,  atomItemIndex);
-*/
         exchange.getIn().setHeaders(headers);
     }
 }
