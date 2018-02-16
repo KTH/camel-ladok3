@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.camel.Exchange;
+import org.json.simple.JSONObject;
 
 /**
  * A ListDataSet that reads JSON encoded Ladok3 payloads from a file.
@@ -76,6 +77,13 @@ public class Ladok3JsonDataSet extends JsonDataSet {
         headers.put(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Event);
         headers.put(Ladok3Message.Header.SequenceNumber, messageIndex);
         headers.put(Ladok3Message.Header.IsLastFeed, true);
+
+        JSONObject jsonObject = (JSONObject) getJsonObjects().get((int) messageIndex);
+        JSONObject eventHeaders = (JSONObject) jsonObject.get("headers");
+        for (Object key : eventHeaders.keySet()) {
+            headers.put((String) key, (String) eventHeaders.get(key));
+        }
+
 /*
         headers.put(Ladok3Message.Header.EntryId, entryId);
         headers.put(Ladok3Message.Header.EntryUpdated, StockholmLocalDateTimeFormatter.formatAsStockolmLocalDateTime(entryUpdated));

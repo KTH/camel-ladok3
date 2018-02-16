@@ -130,7 +130,8 @@ public class JsonDataSet extends ListDataSet {
 
         for (int i = 0; i < jsonObjects.size(); i++) {
             JSONObject jsonObject = (JSONObject) jsonObjects.get(i);
-            bodies.add(jsonObject.toJSONString().getBytes());
+            JSONObject body = (JSONObject) jsonObject.get("body");
+            bodies.add(body.toJSONString().getBytes());
         }
         setDefaultBodies(bodies);
     }
