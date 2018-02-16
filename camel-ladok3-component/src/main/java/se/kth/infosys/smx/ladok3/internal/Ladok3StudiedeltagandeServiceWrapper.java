@@ -8,12 +8,14 @@ import javax.net.ssl.SSLContext;
 
 import org.apache.camel.CamelExchangeException;
 import org.apache.camel.Exchange;
+import org.apache.camel.InvalidPayloadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.kth.infosys.ladok3.StudiedeltagandeService;
 import se.kth.infosys.ladok3.StudiedeltagandeServiceImpl;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
+import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 
 public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrapper {
@@ -44,9 +46,11 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
         }
     }
 
-    private void handlePabarjadutbildningKurspaketeringStudent(Exchange exchange) {
+    private void handlePabarjadutbildningKurspaketeringStudent(Exchange exchange) throws Exception {
         String uid = exchange.getIn().getHeader(Ladok3Message.Header.KeyValue, String.class);
         if (uid == null || uid.isEmpty()) {
+            Student student = exchange.getIn().getMandatoryBody(Student.class);
+            uid = student.getUid();
         }
 
         log.debug("Getting tillfallesdeltagandelista for student with uid: {}", uid);
