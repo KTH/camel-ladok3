@@ -28,7 +28,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -69,11 +68,6 @@ public class Ladok3KataloginformationServiceTest {
         List<RelationLink> links = index.getLink();
 
         assert(links.size() > 0);
-        Iterator<RelationLink> iterator = links.iterator();
-        while (iterator.hasNext()) {
-            RelationLink link = iterator.next();
-            System.out.println(link.getRel() + " " + link.getUri());
-        }
     }
 
     @Test

@@ -31,9 +31,10 @@ import org.junit.Test;
 
 import se.ladok.schemas.dap.RelationLink;
 import se.ladok.schemas.dap.ServiceIndex;
+import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 
-public class Ladok3UtbildningsinformationServiceTest {
-    private UtbildningsinformationServiceImpl utbildningsinformationService;
+public class Ladok3StudiedeltagandeServiceTest {
+    private StudiedeltagandeServiceImpl studiedeltagandeService;
     private Properties properties = new Properties();
 
     @Before
@@ -44,14 +45,22 @@ public class Ladok3UtbildningsinformationServiceTest {
         String certFile = properties.getProperty("ladok3.cert.file");
         String key = properties.getProperty("ladok3.cert.key");
 
-        utbildningsinformationService = new UtbildningsinformationServiceImpl(host, certFile, key);
+        studiedeltagandeService = new StudiedeltagandeServiceImpl(host, certFile, key);
     }
 
     @Test
     public void testServiceIndex() {
-        ServiceIndex index = utbildningsinformationService.serviceIndex();
+        ServiceIndex index = studiedeltagandeService.serviceIndex();
         List<RelationLink> links = index.getLink();
 
         assert(links.size() > 0);
+    }
+
+    @Test
+    public void testPabarjadutbildningKurspaketeringStudent() {
+        String uid = properties.getProperty("ladok3.test.Ladok3StudiedeltagandeServiceTest.pabarjadutbildningKurspaketeringStudent.uid");
+
+        TillfallesdeltagandeLista tillfallen = studiedeltagandeService.pabarjadutbildningKurspaketeringStudent(uid);
+        assert(tillfallen.getTillfallesdeltaganden().getTillfallesdeltagande().size() > 0);
     }
 }

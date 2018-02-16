@@ -23,8 +23,17 @@
  */
 package se.kth.infosys.ladok3;
 
+import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
+
 /**
- * Interface representing the Ladok utbildningsinformation service.
+ * Interface representing the Ladok studiedeltagande service.
  */
-public interface UtbildningsinformationService extends Ladok3Service {
+public interface StudiedeltagandeService extends Ladok3Service {
+//    /studiedeltagande/paborjadutbilding/kurspaketering/student/{studentuid}
+    /**
+     * Retrieve a list of "påbörjade kurspaketeringar" for a student.
+     * @param uid The unique identifier for the student.
+     * @return The list of kurspaketeringar for the student.
+     */
+    public TillfallesdeltagandeLista pabarjadutbildningKurspaketeringStudent(final String uid);
 }
