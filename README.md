@@ -19,6 +19,9 @@ There are three parts in the project
    ladok3 endpoint to use in Camel routes. As a consumer it consumes events from Ladok3 
    atom-feeds (complete), and as a producer it uses the REST interface to query and 
    write to Ladok (proof of concept and incomplete).
+1. [camel-ladok3-test-utils](camel-ladok3-test-utils) is a collection of tools to use 
+   when testing camel routes using camel-ladok3-component. Currently only `DataSet`s 
+   to emulate the `Ladok3Consumer`.
 1. [ladok3-feature](ladok3-feature) is a Karaf Feature packaging of the camel-ladok3-component. It
    is currently not used by us and untested but included for completeness.
    
