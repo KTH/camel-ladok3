@@ -39,7 +39,7 @@ import org.json.simple.parser.JSONParser;
  * A ListDataSet that reads JSON encoded Ladok3 payloads from a file.
  * 
  * The file is assumed to contain a JSON array of objects representing Ladok3
- * ATOM events.
+ * JSON encoded ATOM events. See README.md for details.
  * 
  * Relevant headers will be added to messages produced by this dataset.
  * 
@@ -56,9 +56,9 @@ import org.json.simple.parser.JSONParser;
 public class Ladok3JsonDataSet extends ListDataSet {
     protected static final JSONParser parser = new JSONParser();
 
-    private JSONArray jsonObjects = new JSONArray();
-    private File sourceFile;
-    
+    protected JSONArray jsonObjects = new JSONArray();
+    protected File sourceFile;
+
     /**
      * Default constructor.
      */
