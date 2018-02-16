@@ -1,6 +1,6 @@
 # Release notes
 
-## 0.0.35
+## 0.0.36
 
 * Added camel-ladok3-test-utils with a dataset for producing
   ladok3 json formatted events for testing.
