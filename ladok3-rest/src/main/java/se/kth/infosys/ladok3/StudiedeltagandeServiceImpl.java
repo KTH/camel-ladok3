@@ -26,6 +26,7 @@ package se.kth.infosys.ladok3;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.core.MediaType;
 
+import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 
 /**
@@ -69,5 +70,16 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
                 .request()
                 .accept(SERVICE_TYPE)
                 .get(TillfallesdeltagandeLista.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IngaendeKurspaketeringstillfalleLista studiestrukturStudent(String uid) {
+        return target.path("/studiestruktur/student/{studentuid}")
+                .resolveTemplate("studentuid", uid)
+                .request()
+                .accept(SERVICE_TYPE)
+                .get(IngaendeKurspaketeringstillfalleLista.class);
     }
 }

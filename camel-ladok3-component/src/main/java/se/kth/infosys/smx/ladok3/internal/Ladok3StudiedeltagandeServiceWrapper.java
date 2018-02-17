@@ -16,13 +16,15 @@ import se.kth.infosys.ladok3.StudiedeltagandeService;
 import se.kth.infosys.ladok3.StudiedeltagandeServiceImpl;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.studentinformation.Student;
+import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 
 public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrapper {
     private static final Logger log = LoggerFactory.getLogger(Ladok3StudiedeltagandeServiceWrapper.class);
     private static final Pattern URL_PATTERN = Pattern.compile(
             "^/studiedeltagande(/(?<operation>"
-            + "pabarjadtbildning/kurspaketering/student"
+            + "pabarjadtbildning/kurspaketering/student|"
+            + "studiestruktur/student"
             + "))+.*");
     private StudiedeltagandeService service;
     private String pathOperation;
@@ -41,9 +43,24 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
         case "pabarjadtbildning/kurspaketering/student":
             handlePabarjadutbildningKurspaketeringStudent(exchange);
             break;
+        case "studiestruktur/student":
+            handleStudiestrukturStudent(exchange);
+            break;
         default:
             throw new CamelExchangeException("Unupported operation: %s" + operation, exchange);
         }
+    }
+
+    private void handleStudiestrukturStudent(Exchange exchange) throws Exception {
+        String uid = exchange.getIn().getHeader(Ladok3Message.Header.KeyValue, String.class);
+        if (uid == null || uid.isEmpty()) {
+            Student student = exchange.getIn().getMandatoryBody(Student.class);
+            uid = student.getUid();
+        }
+
+        log.debug("Getting studiestruktur for student with uid: {}", uid);
+        IngaendeKurspaketeringstillfalleLista fromLadok = service.studiestrukturStudent(uid);
+        exchange.getOut().setBody(fromLadok);
     }
 
     private void handlePabarjadutbildningKurspaketeringStudent(Exchange exchange) throws Exception {

@@ -31,6 +31,7 @@ import org.junit.Test;
 
 import se.ladok.schemas.dap.RelationLink;
 import se.ladok.schemas.dap.ServiceIndex;
+import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 
 public class Ladok3StudiedeltagandeServiceTest {
@@ -62,5 +63,13 @@ public class Ladok3StudiedeltagandeServiceTest {
 
         TillfallesdeltagandeLista tillfallen = studiedeltagandeService.pabarjadutbildningKurspaketeringStudent(uid);
         assert(tillfallen.getTillfallesdeltaganden().getTillfallesdeltagande().size() > 0);
+    }
+
+    @Test
+    public void testStudiestrukturStudent() {
+        String uid = properties.getProperty("ladok3.test.Ladok3StudiedeltagandeServiceTest.pabarjadutbildningKurspaketeringStudent.uid");
+
+        IngaendeKurspaketeringstillfalleLista tillfallen = studiedeltagandeService.studiestrukturStudent(uid);
+        assert(tillfallen.getStudiestrukturer().getStudiestruktur().size() > 0);
     }
 }
