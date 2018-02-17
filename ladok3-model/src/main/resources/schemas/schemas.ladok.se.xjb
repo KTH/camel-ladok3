@@ -36,7 +36,7 @@
     <ci:code>
       public String getText(final String sprakkod) {
           for(Benamning b: getBenamning()) {
-	      if (b.getSprakkod().equalsIgnoreCase(sprakkod)) {
+	      if (sprakkod.equalsIgnoreCase(b.getSprakkod())) {
 	          return b.getText();
               }
           }
