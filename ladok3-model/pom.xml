@@ -90,7 +90,8 @@
           <extension>true</extension>
           <strict>true</strict>
           <args>
-              <arg>-Xannotate</arg>
+            <arg>-Xannotate</arg>
+	    <arg>-Xinject-code</arg>
           </args>
           <plugins>
               <plugin>
