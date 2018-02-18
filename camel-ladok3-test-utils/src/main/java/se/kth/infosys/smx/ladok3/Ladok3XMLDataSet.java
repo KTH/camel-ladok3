@@ -24,22 +24,17 @@ package se.kth.infosys.smx.ladok3;
  */
 import java.io.File;
 import java.io.FileReader;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.component.dataset.ListDataSet;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 /**
  * A ListDataSet that reads JSON encoded Ladok3 payloads from a file.
  * 
  * The file is assumed to contain a JSON array of objects representing Ladok3
- * JSON encoded ATOM events. See README.md for details.
+ * ATOM events encoded as XML. See README.md for details.
  * 
  * Relevant headers will be added to messages produced by this dataset.
  * 
@@ -53,16 +48,11 @@ import org.json.simple.parser.JSONParser;
  * &lt;from uri="dataset:dataSet" /&gt;
  * </pre>
  */
-public class Ladok3JsonDataSet extends ListDataSet {
-    protected static final JSONParser parser = new JSONParser();
-
-    protected JSONArray jsonObjects = new JSONArray();
-    protected File sourceFile;
-
+public class Ladok3XMLDataSet extends Ladok3JsonDataSet {
     /**
      * Default constructor.
      */
-    public Ladok3JsonDataSet() {}
+    public Ladok3XMLDataSet() {}
 
     /**
      * Constructor using a file name string.
@@ -70,8 +60,8 @@ public class Ladok3JsonDataSet extends ListDataSet {
      * @param sourceFileName The file name.
      * @throws Exception on file access and parse problems.
      */
-    public Ladok3JsonDataSet(String sourceFileName) throws Exception {
-        this(new File(sourceFileName));
+    public Ladok3XMLDataSet(String sourceFileName) throws Exception {
+        super(sourceFileName);
     }
 
     /**
@@ -80,46 +70,8 @@ public class Ladok3JsonDataSet extends ListDataSet {
      * @param sourceFile the File.
      * @throws Exception on file access and parse problems.
      */
-    public Ladok3JsonDataSet(File sourceFile) throws Exception {
-        setSourceFile(sourceFile);
-    }
-
-    /**
-     * Get the source file object.
-     * 
-     * @return the source file.
-     */
-    public File getSourceFile() {
-        return sourceFile;
-    }
-
-    /**
-     * Set the source file object and intialize dataset from contents.
-     * 
-     * @param sourceFile the source file object.
-     * @throws Exception on file access and parse problems.
-     */
-    public void setSourceFile(File sourceFile) throws Exception {
-        this.sourceFile = sourceFile;
-        readSourceFile();
-    }
-
-    /**
-     * Gets the internal JSONArray of JSON objects.
-     * 
-     * @return the internal array of JSON objects.
-     */
-    public JSONArray getJsonObjects() {
-        return jsonObjects;
-    }
-
-    /**
-     * Sets the internal JSONArray of JSON objects.
-     * 
-     * @param jsonObjects an array of JSON objects.
-     */
-    public void setJsonObjects(JSONArray jsonObjects) {
-        this.jsonObjects = jsonObjects;
+    public Ladok3XMLDataSet(File sourceFile) throws Exception {
+        super(sourceFile);
     }
 
     /**
@@ -134,27 +86,9 @@ public class Ladok3JsonDataSet extends ListDataSet {
 
         for (int i = 0; i < jsonObjects.size(); i++) {
             JSONObject jsonObject = (JSONObject) jsonObjects.get(i);
-            JSONObject body = (JSONObject) jsonObject.get("body");
-            bodies.add(body.toJSONString().getBytes());
+            String body = (String) jsonObject.get("body");
+            bodies.add(body.getBytes());
         }
         setDefaultBodies(bodies);
-    }
-
-    /**
-     * {@inheritDoc} 
-     */
-    @Override
-    protected void applyHeaders(Exchange exchange, long messageIndex) {
-        Map<String, Object> headers = new HashMap<String, Object>();
-        headers.put(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Event);
-        headers.put(Ladok3Message.Header.SequenceNumber, messageIndex);
-        headers.put(Ladok3Message.Header.IsLastFeed, true);
-
-        JSONObject jsonObject = (JSONObject) getJsonObjects().get((int) messageIndex);
-        JSONObject eventHeaders = (JSONObject) jsonObject.get("headers");
-        for (Object key : eventHeaders.keySet()) {
-            headers.put((String) key, (String) eventHeaders.get(key));
-        }
-        exchange.getIn().setHeaders(headers);
     }
 }

@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 import javax.net.ssl.SSLContext;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.util.ExchangeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,6 +115,12 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
         if (pathOperation != null && ! pathOperation.isEmpty()) {
             return pathOperation;
         }
-        return ExchangeHelper.getMandatoryHeader(exchange, Ladok3Message.Header.Operation, String.class);
+
+        String headerOperation = exchange.getIn().getHeader(Ladok3Message.Header.Operation, String.class);
+        if (headerOperation != null && ! headerOperation.isEmpty()) {
+            return headerOperation;
+        }
+
+        return "uid";
     }
 }
