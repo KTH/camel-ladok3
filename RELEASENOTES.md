@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.37
+
+* Added methods to support integral-ths-integration.
+
 ## 0.0.36
 
 * Added camel-ladok3-test-utils with a dataset for producing
