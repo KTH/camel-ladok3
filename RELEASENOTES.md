@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.38
+
+* Minor fix.
+
 ## 0.0.37
 
 * Added methods to support integral-ths-integration.
