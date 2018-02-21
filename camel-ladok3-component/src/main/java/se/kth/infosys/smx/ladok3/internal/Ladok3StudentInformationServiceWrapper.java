@@ -62,7 +62,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
 
         log.debug("Getting history for student with uid: {}", uid);
         Studenthistorikposter fromLadok = service.studentHistorik(uid);
-        exchange.getOut().setBody(fromLadok);
+        exchange.getIn().setBody(fromLadok);
     }
 
     private void handleStudentFiltreraRequest(Exchange exchange) {
@@ -72,7 +72,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
 
         log.debug("Getting Ladok data for student filtrera request with params: {}", params);
         Iterator<StudentISokresultat> fromLadok = service.studentFiltreraIterable(params).iterator();
-        exchange.getOut().setBody(fromLadok);
+        exchange.getIn().setBody(fromLadok);
     }
 
     private void handleStudentPersonnummerRequest(final Exchange exchange) throws Exception {
@@ -82,9 +82,9 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
             personnummer = student.getPersonnummer();
         }
 
-        log.debug("Getting Ladok data for student with pnr: {}", personnummer);
+        log.debug("Getting data for student with pnr: {}", personnummer);
         Student fromLadok = service.studentPersonnummer(personnummer);
-        exchange.getOut().setBody(fromLadok);
+        exchange.getIn().setBody(fromLadok);
     }
 
     private void handleStudentKontaktinformationRequest(final Exchange exchange) throws Exception {
@@ -94,9 +94,9 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
             uid = student.getUid();
         }
 
-        log.debug("Getting kontaktinformation for student with uid: {}", uid);
+        log.debug(String.format("Getting kontaktinformation for student with uid: %s", uid));
         Kontaktuppgifter fromLadok = service.studentKontaktuppgifter(uid);
-        exchange.getOut().setBody(fromLadok);
+        exchange.getIn().setBody(fromLadok);
     }
 
     private void handleStudentUidRequest(final Exchange exchange) throws Exception {
@@ -106,9 +106,9 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
             uid = student.getPersonnummer();
         }
 
-        log.debug("Getting Ladok data for student with uid: {}", uid);
+        log.debug(String.format("Getting data for student with uid: %s", uid));
         Student fromLadok = service.student(uid);
-        exchange.getOut().setBody(fromLadok);
+        exchange.getIn().setBody(fromLadok);
     }
 
     private String currentOperation(final Exchange exchange) throws Exception {

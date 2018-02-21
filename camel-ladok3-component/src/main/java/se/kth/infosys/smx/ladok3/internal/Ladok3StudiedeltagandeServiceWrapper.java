@@ -8,7 +8,6 @@ import javax.net.ssl.SSLContext;
 
 import org.apache.camel.CamelExchangeException;
 import org.apache.camel.Exchange;
-import org.apache.camel.InvalidPayloadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +59,7 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
 
         log.debug("Getting studiestruktur for student with uid: {}", uid);
         IngaendeKurspaketeringstillfalleLista fromLadok = service.studiestrukturStudent(uid);
-        exchange.getOut().setBody(fromLadok);
+        exchange.getIn().setBody(fromLadok);
     }
 
     private void handlePabarjadutbildningKurspaketeringStudent(Exchange exchange) throws Exception {
@@ -72,7 +71,7 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
 
         log.debug("Getting tillfallesdeltagandelista for student with uid: {}", uid);
         TillfallesdeltagandeLista fromLadok = service.pabarjadutbildningKurspaketeringStudent(uid);
-        exchange.getOut().setBody(fromLadok);
+        exchange.getIn().setBody(fromLadok);
     }
 
     private String currentOperation(final Exchange exchange) throws Exception {
