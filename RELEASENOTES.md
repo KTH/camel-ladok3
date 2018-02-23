@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.0.39
+
+* Update XSD to Ladok3 0.98.2-20180216_094730
+
 ## 0.0.38
 
 * Minor fix.
