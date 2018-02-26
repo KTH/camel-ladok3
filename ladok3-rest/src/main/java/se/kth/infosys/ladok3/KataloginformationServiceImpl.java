@@ -171,7 +171,7 @@ public class KataloginformationServiceImpl extends AbstractLadok3Service impleme
     /**
      * {@inheritDoc}
      */
-    public Identiteter anvandarebehorighetAnvandareAnvandarbehorigheterBytstatus(
+    public Identiteter anvandarbehorigheterBytstatus(
             final Anvandare anvandare,
             final Anvandarbehorighetsstatus nystatus) {
 

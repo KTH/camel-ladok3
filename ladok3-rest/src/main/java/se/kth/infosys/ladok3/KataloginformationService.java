@@ -134,7 +134,7 @@ public interface KataloginformationService extends Ladok3Service {
      * @param anvandare the Ladok3 user
      * @param nystatus the new status for the access grants.
      */
-    public Identiteter anvandarebehorighetAnvandareAnvandarbehorigheterBytstatus(
+    public Identiteter anvandarbehorigheterBytstatus(
             final Anvandare anvandare,
             final Anvandarbehorighetsstatus nystatus);
 }

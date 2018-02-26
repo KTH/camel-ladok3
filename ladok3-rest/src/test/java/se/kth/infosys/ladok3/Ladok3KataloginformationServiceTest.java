@@ -153,14 +153,12 @@ public class Ladok3KataloginformationServiceTest {
         assertEquals(1, search.getAnvandare().size());
 
         Anvandare anvandare = katalogInformationService.anvandare(search.getAnvandare().get(0).getUid());
-        Identiteter identititer = 
-                katalogInformationService.anvandarebehorighetAnvandareAnvandarbehorigheterBytstatus(
-                        anvandare, Anvandarbehorighetsstatus.INAKTIV);
+        Identiteter identititer = katalogInformationService.anvandarbehorigheterBytstatus(
+                anvandare, Anvandarbehorighetsstatus.INAKTIV);
         assertNotNull(identititer);
         assertFalse(identititer.getIdentitet().isEmpty());
-        identititer = 
-                katalogInformationService.anvandarebehorighetAnvandareAnvandarbehorigheterBytstatus(
-                        anvandare, Anvandarbehorighetsstatus.AKTIV);
+        identititer = katalogInformationService.anvandarbehorigheterBytstatus(
+                anvandare, Anvandarbehorighetsstatus.AKTIV);
         assertNotNull(identititer);
         assertFalse(identititer.getIdentitet().isEmpty());
     }
