@@ -23,13 +23,18 @@
  */
 package se.kth.infosys.ladok3;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import se.ladok.schemas.Identiteter;
+import se.ladok.schemas.kataloginformation.Anvandarbehorighet;
+import se.ladok.schemas.kataloginformation.Anvandarbehorighetsstatus;
 import se.ladok.schemas.kataloginformation.Anvandare;
 import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
@@ -161,5 +166,28 @@ public class KataloginformationServiceImpl extends AbstractLadok3Service impleme
                 .request()
                 .accept(SERVICE_TYPE)
                 .get(AnvandareLista.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Identiteter anvandarebehorighetAnvandareAnvandarbehorigheterBytstatus(
+            final Anvandare anvandare,
+            final Anvandarbehorighetsstatus nystatus) {
+
+        final Identiteter identiteter = new Identiteter();
+
+        final Iterator<Anvandarbehorighet> behorigheter = anvandare.getAnvandarbehorighet().iterator();
+        while (behorigheter.hasNext()) {
+            final Anvandarbehorighet behorighet = behorigheter.next();
+            identiteter.getIdentitet().add(behorighet.getUid());
+        }
+
+        return target.path("/anvandarbehorighet/anvandare/{anvandareuid}/anvandarbehorigheter/bytstatus/{nystatus}")
+            .resolveTemplate("anvandareuid", anvandare.getUid())
+            .resolveTemplate("nystatus", nystatus)
+            .request()
+            .accept(SERVICE_TYPE)
+            .put(Entity.entity(identiteter, SERVICE_TYPE), Identiteter.class);
     }
 }

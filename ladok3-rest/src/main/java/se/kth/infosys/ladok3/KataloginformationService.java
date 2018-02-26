@@ -25,6 +25,8 @@ package se.kth.infosys.ladok3;
 
 import java.util.Map;
 
+import se.ladok.schemas.Identiteter;
+import se.ladok.schemas.kataloginformation.Anvandarbehorighetsstatus;
 import se.ladok.schemas.kataloginformation.Anvandare;
 import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
@@ -84,6 +86,9 @@ public interface KataloginformationService extends Ladok3Service {
      * Calls /anvandare with query parameters as specified in the params Map. 
      * See Ladok REST documentation for more information about parameters.
      * 
+     * NOTE: the list of Anvandare does not contain all information, to retrieve
+     * all information about Anvandare, use anvandare(final String uid)
+     * 
      * <pre>
      * {@code
      * Map<String, Object> params = new HashMap<String, Object>();
@@ -121,4 +126,15 @@ public interface KataloginformationService extends Ladok3Service {
      * @return The search result.
      */
     public AnvandareLista anvandareFiltrerade(final Map<String, Object> params);
+
+    /**
+     * Calls /anvandarbehorighet/anvandare/{anvandareuid}/anvandarbehorigheter/bytstatus/{nystatus}
+     * to set status of all access grants of a user to given status.
+     * 
+     * @param anvandare the Ladok3 user
+     * @param nystatus the new status for the access grants.
+     */
+    public Identiteter anvandarebehorighetAnvandareAnvandarbehorigheterBytstatus(
+            final Anvandare anvandare,
+            final Anvandarbehorighetsstatus nystatus);
 }

@@ -19,7 +19,7 @@
 		   printMethod="se.kth.infosys.ladok3.DateAdapter.printDateTime" />
     <xjc:serializable uid="-1" />
   </jaxb:globalBindings>
-<!--
+
   <jaxb:bindings schemaLocation="schemas.ladok.se-kataloginformation.xsd" node="/xs:schema">
     <jaxb:bindings node='xs:complexType[@name="Anvandarinformation"]'>
       <annox:annotateClass>@javax.xml.bind.annotation.XmlRootElement(name="Anvandarinformation")
@@ -30,7 +30,14 @@
       </annox:annotateClass>
     </jaxb:bindings>
   </jaxb:bindings>
--->
+
+  <jaxb:bindings schemaLocation="schemas.ladok.se.xsd" node="/xs:schema">
+    <jaxb:bindings node='xs:complexType[@name="Identiteter"]'>
+      <annox:annotateClass>@javax.xml.bind.annotation.XmlRootElement(name="Identiteter")
+      </annox:annotateClass>
+    </jaxb:bindings>
+  </jaxb:bindings>
+
   <jaxb:bindings schemaLocation="schemas.ladok.se.xsd" node="/xs:schema/xs:complexType[@name='Benamningar']">
     <!-- Convenience method for getting the text representation of Benamning through a map, with language code as key -->
     <ci:code>
