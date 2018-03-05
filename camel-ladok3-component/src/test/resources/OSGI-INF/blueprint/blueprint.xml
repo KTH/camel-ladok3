@@ -40,11 +40,6 @@
       <marshal>
         <jacksonxml include="NON_NULL"/>
       </marshal>
-<!--
-      <marshal>
-        <json library="Jackson" include="NON_NULL"/>
-      </marshal>
- -->
       <to uri="log:se.kth.infosys.smx.ladok3.json?level=INFO&amp;showHeaders=true" />
       <to uri="mock:result" />
     </route>

@@ -255,21 +255,26 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     private final class Ladok3Feed {
         private final SyndFeed feed;
         private final URL url;
+        private final boolean last;
 
         private static final String NEXT = "next-archive";
         private static final String PREV = "prev-archive";
+        private static final String VIA = "via";
+        private static final String SELF = "self";
 
         /*
          * Create the feed from the URL.
          */
         public Ladok3Feed(final URL url) throws IOException, IllegalArgumentException, FeedException {
-            this.url = url;
-
             log.debug("fetching feed: {}", url);
             XmlReader reader = new XmlReader(endpoint.get(url));
             SyndFeedInput input = new SyndFeedInput();
-            feed = input.build(reader);
+
+            this.feed = input.build(reader);
             reader.close();
+
+            this.url = getRealURL();
+            this.last = (getLink(NEXT) == null);
         }
 
         /*
@@ -288,11 +293,26 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
          * True if feed is currently the last available.
          */
         private boolean isLast() throws MalformedURLException {
-            return getLink(NEXT) == null;
+            return last;
         }
 
         /*
-         * Return the URL for this feed.
+         * Find the exact URL of this feed, if possible.
+         */
+        private URL getRealURL() throws MalformedURLException {
+            final URL via = getLink(VIA);
+            if (via != null) {
+                return via;
+            }
+            final URL self = getLink(SELF);
+            if (self != null) {
+                return self;
+            }
+            return url;
+        }
+
+        /*
+         * Return the URL for this feed, preferring the real URL as found in via link.
          */
         public URL getURL() {
             return url;
