@@ -253,14 +253,15 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
      * Inner class to wrap the SyndFeed with it's corresponding URL and convenience methods.
      */
     private final class Ladok3Feed {
-        private final SyndFeed feed;
-        private final URL url;
-        private final boolean last;
-
         private static final String NEXT = "next-archive";
         private static final String PREV = "prev-archive";
         private static final String VIA = "via";
         private static final String SELF = "self";
+
+        private final SyndFeed feed;
+        private final URL url;
+        private final boolean last;
+        private final String[] SELF_LINKS = new String[]{VIA, SELF};
 
         /*
          * Create the feed from the URL.
@@ -297,17 +298,17 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         }
 
         /*
-         * Find the exact URL of this feed, if possible.
+         * Find the exact URL of this feed using links in content, if possible.
          */
         private URL getRealURL() throws MalformedURLException {
-            final URL via = getLink(VIA);
-            if (via != null) {
-                return via;
+            for (String link : SELF_LINKS) {
+
+                final URL realURL = getLink(link);
+                if (realURL != null) {
+                    return realURL;
+                }
             }
-            final URL self = getLink(SELF);
-            if (self != null) {
-                return self;
-            }
+
             return url;
         }
 
