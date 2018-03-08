@@ -13,9 +13,31 @@ REST API, but could also be used for other request/response purposes.
 It is, like the ladok3-rest library it is built on, so far more a proof of
 concept than really useful so far, implementing just a few API calls.
 
+## Configuration of the component
+
+The component now follows more common patterns for configuration in camel where 
+the basic configuration has to be made on the component bean. An example camel-spring or
+osgi in xml:
+
+```
+  <bean id="ladok3" class="se.kth.infosys.smx.ladok3.Ladok3Component">
+    <property name="cert" value="${ladok3.cert.file}"/>
+    <property name="key" value="${ladok3.cert.key}"/>
+    <property name="host" value="${ladok3.host}"/>
+  </bean>
+```
+
+Where the options are:
+
+| Property | Description |
+|----------|-------------|
+| cert     | Path to a file containing a certificate in PKCS12 format |
+| key      | Password for the certificate file |
+| host     | The ladok3 host environment, e.g., mit-integration.ladok.se. |
+
 ## The consumer
 
-The consumer uses a URI of the form: `ladok3://host.ladok.se?cert=path-to-cert&key=cert-passphrase[&lastEntry=x][&lastFeed=y][&events=u,v,x]`
+The consumer uses a URI of the form: `ladok3://?[lastEntry=x][&lastFeed=y][&events=u,v,x]`
 
 It is based on the Camel polling consumer and supports its standard configuration
 options, see http://camel.apache.org/polling-consumer.html
@@ -24,8 +46,6 @@ options, see http://camel.apache.org/polling-consumer.html
 
 | Parameter | Description |
 |-----------|-------------|
-| cert      | Path to a file containing a certificate in PKCS12 format |
-| key       | Password for the certificate file |
 | lastEntry | The last event ID, an opaque string recieved from Ladok3 |
 | lastFeed  | The last feed ID, an opaque string recieved from Ladok3 |
 | includeEvents    | A comma separated list of event types in the feed to generate messages for |
@@ -40,7 +60,7 @@ Assuming a property place holder in Karaf an example of a configuration could be
 
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
     <route id="read-atom-feed">
-      <from uri="ladok3://{{host}}?cert={{cert}}&amp;key={{key}}&amp;lastEntry={{last_id}}&amp;lastFeed={{last_feed}}" />
+      <from uri="ladok3://?lastEntry={{last_id}}&amp;lastFeed={{last_feed}}" />
       <marshal>
         <jacksonxml />
       </marshal>
@@ -60,7 +80,7 @@ Note that this file would take quite a bit of I/O if you are concerned with perf
     <propertyPlaceholder id="ladok_version" location="file:/tmp/ladok3.version" />
 
     <route id="ladok3-atom-feed-to-service-bus-route">
-      <from uri="ladok3://{{host}}?cert={{cert}}&amp;key={{key}}&amp;lastEntry={{last_id}}&amp;lastFeed={{last_feed}}" />
+      <from uri="ladok3://?lastEntry={{last_id}}&amp;lastFeed={{last_feed}}" />
       ...
       <setBody>
         <simple>
@@ -108,7 +128,7 @@ Unlike the consumer, the producer is not feature complete. The goal is to provid
 for message enrichment of the Atom feed data and data retrieval necessary for our integration purposes on 
 a requirement driven basis, and not to cover all of the Ladok3 REST API.
 
-The producer uses a URI of the form: `ladok3://host.ladok.se[/<service>][/<operation>]?cert=path-to-cert&key=cert-passphrase`
+The producer uses a URI of the form: `ladok3:[/<service>][/<operation>]`
 
 The `service` parameter corresponds to the service URL for the corresponding Ladok3 service. Currently "student" is
 the only service implemented, and even then only a few calls of it.
@@ -128,7 +148,7 @@ A *very* fictional use case, but you get the idea:
   <camelContext>
     <route>
       <!-- Reading from Atom feed -->
-      <from uri="ladok3://{{ladok3.host}}?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}" />
+      <from uri="ladok3:" />
       <!-- Filter out student events. -->
       <filter>
         <simple>${in.body.class} == "StudentEvent"</simple>
@@ -138,11 +158,11 @@ A *very* fictional use case, but you get the idea:
         </setHeader>
         <!-- Retrieve student information -->
         <enrich strategyRef="aggregationStrategy">
-          <constant>ladok3://{{ladok3.host}}/student?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}</constant>
+          <constant>ladok3:/student</constant>
         </enrich>
         <!-- Retrieve student kontaktinformation -->
         <enrich strategyRef="aggregationStrategy">
-          <constant>ladok3://{{ladok3.host}}/student/kontaktinformation?cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}</constant>
+          <constant>ladok3:/student/kontaktinformation</constant>
         </enrich>
         <to uri="log:ladok3-log" />
       </filter>
@@ -150,7 +170,7 @@ A *very* fictional use case, but you get the idea:
   </camelContext>
 ```
 
-### student/filtrera
+### /student/filtrera
 
 One of the methods implemented is the possibility to list students in Ladok3. A Map<String, Object> params can
 be provided for filtering. No filter will retrieve all students in chunks of 400.
