@@ -23,9 +23,6 @@
  */
 package se.kth.infosys.smx.ladok3;
 
-import java.util.List;
-
-import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
@@ -48,15 +45,14 @@ public class Ladok3ComponentTest extends CamelBlueprintTestSupport {
     @Test
     public void testladok3() throws Exception {
         MockEndpoint mock = getMockEndpoint("mock:result");
-//        mock.expectedMinimumMessageCount(20);
         mock.setExpectedMessageCount(20);
         mock.expectedHeaderValuesReceivedInAnyOrder(Ladok3Message.Header.SequenceNumber, 0, 1);
+
         assertMockEndpointsSatisfied();
 
-        final List<Exchange> exchanges = mock.getExchanges();
-
-        message = exchanges.get(0).getIn();
-        assertEquals("ladok3FeedStart", message.getHeader("ladok3MessageType", String.class));
-        assertFalse(message.getHeader("ladok3IsLastFeed", Boolean.class));
+        message = mock.getExchanges().get(0).getIn();
+        assertTrue(message.getHeader("ladok3MessageType", String.class).equals("ladok3FeedStart"));
+        assertTrue(message.getHeader("ladok3IsLastFeed", Boolean.class).equals(false));
+        assertTrue(message.getHeader(Ladok3Message.Header.Feed).equals("https://api.mit-integration.ladok.se:443/uppfoljning/feed/1"));
     }
 }

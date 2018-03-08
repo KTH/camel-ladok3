@@ -1,6 +1,5 @@
 package se.kth.infosys.smx.ladok3.internal;
 
-import java.net.URI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,9 +27,9 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
     private StudiedeltagandeService service;
     private String pathOperation;
 
-    public Ladok3StudiedeltagandeServiceWrapper(URI uri, SSLContext context) throws Exception {
-        this.service = new StudiedeltagandeServiceImpl(uri.getHost(), context);
-        Matcher matcher = URL_PATTERN.matcher(uri.getPath());
+    public Ladok3StudiedeltagandeServiceWrapper(String host, String path, SSLContext context) throws Exception {
+        this.service = new StudiedeltagandeServiceImpl(host, context);
+        Matcher matcher = URL_PATTERN.matcher(path);
         if (matcher.matches()) {
             pathOperation = matcher.group("operation").toLowerCase();
         }

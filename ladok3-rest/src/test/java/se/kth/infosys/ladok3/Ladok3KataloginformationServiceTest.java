@@ -36,17 +36,19 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.ws.rs.ClientErrorException;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
+import se.ladok.schemas.Identiteter;
 import se.ladok.schemas.dap.RelationLink;
 import se.ladok.schemas.dap.ServiceIndex;
+import se.ladok.schemas.kataloginformation.Anvandarbehorighetsstatus;
 import se.ladok.schemas.kataloginformation.Anvandare;
 import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
 import se.ladok.schemas.kataloginformation.ObjectFactory;
 
 public class Ladok3KataloginformationServiceTest {
+    private static final String TEST_ANVANDARE_KTH_SE = "ladok3-rest-test@kth.se";
     private KataloginformationService katalogInformationService;
     private Properties properties = new Properties();
     private static final ObjectFactory objectFactory = new ObjectFactory();
@@ -94,11 +96,10 @@ public class Ladok3KataloginformationServiceTest {
     }
 
     @Test
-    @Ignore
     public void anvandarTest() {
         try {
             Anvandare anvandare = objectFactory.createAnvandare();
-            anvandare.setAnvandarnamn("test-anvandare@kth.se");
+            anvandare.setAnvandarnamn(TEST_ANVANDARE_KTH_SE);
             anvandare.setFornamn("Fornamn");
             anvandare.setEfternamn("Efternamn");
             Anvandare created = katalogInformationService.createAnvandare(anvandare);
@@ -109,11 +110,11 @@ public class Ladok3KataloginformationServiceTest {
         }
 
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("anvandarnamn", "test-anvandare@kth.se");
+        params.put("anvandarnamn", TEST_ANVANDARE_KTH_SE);
         AnvandareLista search = katalogInformationService.anvandare(params);
         assertEquals(1, search.getAnvandare().size());
 
-        Anvandare update = search.getAnvandare().get(0);
+        Anvandare update = katalogInformationService.anvandare(search.getAnvandare().get(0).getUid());
         update.setFornamn("NyttFornamn");
         Anvandare updated = katalogInformationService.updateAnvandare(update);
         assertEquals("NyttFornamn", updated.getFornamn());
@@ -126,7 +127,7 @@ public class Ladok3KataloginformationServiceTest {
         try {
             Anvandarinformation information = objectFactory.createAnvandarinformation();
             information.setAnvandareUID(updated.getUid());
-            information.setEpost("test-anvandare@kth.se");
+            information.setEpost(TEST_ANVANDARE_KTH_SE);
             information.setSms("123 123 123");
             Anvandarinformation createdInformation = katalogInformationService.createAnvandarinformation(information);
             assertNotNull(createdInformation);
@@ -142,5 +143,23 @@ public class Ladok3KataloginformationServiceTest {
         assertNotNull(updatedInformation);
         assertEquals(information.getUid(), updatedInformation.getUid());
         assertEquals(sms, updatedInformation.getSms());
+    }
+
+    @Test
+    public void behorigheterTest() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("anvandarnamn", TEST_ANVANDARE_KTH_SE);
+        AnvandareLista search = katalogInformationService.anvandare(params);
+        assertEquals(1, search.getAnvandare().size());
+
+        Anvandare anvandare = katalogInformationService.anvandare(search.getAnvandare().get(0).getUid());
+        Identiteter identititer = katalogInformationService.anvandarbehorigheterBytstatus(
+                anvandare, Anvandarbehorighetsstatus.INAKTIV);
+        assertNotNull(identititer);
+        assertFalse(identititer.getIdentitet().isEmpty());
+        identititer = katalogInformationService.anvandarbehorigheterBytstatus(
+                anvandare, Anvandarbehorighetsstatus.AKTIV);
+        assertNotNull(identititer);
+        assertFalse(identititer.getIdentitet().isEmpty());
     }
 }

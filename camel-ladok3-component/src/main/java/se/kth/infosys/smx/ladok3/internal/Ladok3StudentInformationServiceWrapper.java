@@ -1,6 +1,5 @@
 package se.kth.infosys.smx.ladok3.internal;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -26,9 +25,9 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
     private StudentinformationService service;
     private String pathOperation;
 
-    public Ladok3StudentInformationServiceWrapper(URI uri, SSLContext context) throws Exception {
-        this.service = new StudentinformationServiceImpl(uri.getHost(), context);
-        Matcher matcher = URL_PATTERN.matcher(uri.getPath());
+    public Ladok3StudentInformationServiceWrapper(String host, String path, SSLContext context) throws Exception {
+        this.service = new StudentinformationServiceImpl(host, context);
+        Matcher matcher = URL_PATTERN.matcher(path);
         if (matcher.matches()) {
             pathOperation = matcher.group("operation").toLowerCase();
         }

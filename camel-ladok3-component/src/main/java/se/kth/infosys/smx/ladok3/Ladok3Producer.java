@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.kth.infosys.smx.ladok3.Ladok3Message;
+import se.kth.infosys.smx.ladok3.internal.Ladok3KataloginformationServiceWrapper;
 import se.kth.infosys.smx.ladok3.internal.Ladok3ServiceWrapper;
 import se.kth.infosys.smx.ladok3.internal.Ladok3StudentInformationServiceWrapper;
 import se.kth.infosys.smx.ladok3.internal.Ladok3StudiedeltagandeServiceWrapper;
@@ -53,15 +54,19 @@ public class Ladok3Producer extends DefaultProducer {
 
     public Ladok3Producer(Ladok3Endpoint endpoint) throws Exception {
         super(endpoint);
-        URI uri = new URI(endpoint.getEndpointUri());
+        String path = new URI(endpoint.getEndpointUri()).getPath();
 
-        Matcher matcher = API_PATTERN.matcher(uri.getPath());
+        Matcher matcher = API_PATTERN.matcher(path);
         if (matcher.matches()) {
             endpoint.setApi(matcher.group("api").toLowerCase());
         }
 
-        services.put("student", new Ladok3StudentInformationServiceWrapper(uri, endpoint.getContext()));
-        services.put("studiedeltagande", new Ladok3StudiedeltagandeServiceWrapper(uri, endpoint.getContext()));
+        services.put("student",
+                new Ladok3StudentInformationServiceWrapper(endpoint.getHost(), path, endpoint.getContext()));
+        services.put("studiedeltagande",
+                new Ladok3StudiedeltagandeServiceWrapper(endpoint.getHost(), path, endpoint.getContext()));
+        services.put("kataloginformation",
+                new Ladok3KataloginformationServiceWrapper(endpoint.getHost(), path, endpoint.getContext()));
     }
 
 

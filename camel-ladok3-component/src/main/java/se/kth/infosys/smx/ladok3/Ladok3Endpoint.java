@@ -36,7 +36,6 @@ import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.impl.DefaultPollingEndpoint;
-import org.apache.camel.spi.Metadata;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
 import org.apache.camel.spi.UriPath;
@@ -44,20 +43,8 @@ import org.apache.camel.spi.UriPath;
 /**
  * Represents a ladok3 endpoint.
  */
-@UriEndpoint(scheme = "ladok3", title = "ladok3", syntax="ladok3://host?cert=file&key=password", consumerClass = Ladok3Consumer.class, label = "ladok3")
+@UriEndpoint(scheme = "ladok3", title = "ladok3", syntax="ladok3://", consumerClass = Ladok3Consumer.class, label = "ladok3")
 public class Ladok3Endpoint extends DefaultPollingEndpoint {
-    @UriPath
-    @Metadata(required = "true")
-    private String host;
-
-    @UriParam(name = "cert", description = "Path to file containing certificate in PKCS12 format")
-    @Metadata(required = "true")
-    private String cert;
-
-    @UriParam(name = "key", description = "Private key for certificate")
-    @Metadata(required = "true")
-    private String key;
-
     @UriParam(label = "consumer", name = "lastEntry", defaultValue = "", description = "Entry id to start consuming from")
     private String lastEntry = "";
 
@@ -73,10 +60,13 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
     @UriPath(label = "producer", description = "Ladok3 REST API path")
     private String api;
 
-    private SSLContext context;
+    private final String host;
+    private final SSLContext context;
 
-    public Ladok3Endpoint(String uri, Ladok3Component component) throws Exception {
+    public Ladok3Endpoint(String uri, Ladok3Component component, String host, SSLContext context) throws Exception {
         super(uri, component);
+        this.host = host;
+        this.context = context;
     }
 
     public Producer createProducer() throws Exception {
@@ -88,9 +78,9 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
         configureConsumer(consumer);
         return consumer;
     }
-    
+
     public boolean isSingleton() {
-        return false;
+        return true;
     }
 
     public InputStream get(final URL url) throws IOException {
@@ -99,54 +89,6 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
         connection.setConnectTimeout(10000);
         connection.setSSLSocketFactory(context.getSocketFactory());
         return connection.getInputStream();
-    }
-
-    /**
-     * Path to certificate file.
-     * @return the path
-     */
-    public String getCert() {
-        return cert;
-    }
-
-    /**
-     * Path to certificate file
-     * @param cert the path to the certificate file.
-     */
-    public void setCert(String cert) {
-        this.cert = cert;
-    }
-
-    /**
-     * Private key for the certificate file.
-     * @return the key
-     */
-    public String getKey() {
-        return key;
-    }
-
-    /**
-     * Private key for the certificate file.
-     * @param key the key
-     */
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    /**
-     * The Ladok3 host environment, api.mit-ik.ladok.se etc.
-     * @return the host name
-     */
-    public String getHost() {
-        return host;
-    }
-
-    /**
-     * The ladok3 host environment, api.mit-ik.ladok.se etc.
-     * @param host the fully qualified host name.
-     */
-    public void setHost(String host) {
-        this.host = host;
     }
 
     public String getLastEntry() {
@@ -175,10 +117,6 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
 
     public SSLContext getContext() {
         return context;
-    }
-
-    public void setContext(SSLContext context) {
-        this.context = context;
     }
 
     public HashSet<String> getIncludeEvents() {
@@ -221,5 +159,13 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
 
     public void setApi(String api) {
         this.api = api;
+    }
+
+    /**
+     * The Ladok3 host environment, api.mit-ik.ladok.se etc.
+     * @return the host name
+     */
+    public String getHost() {
+        return host;
     }
 }
