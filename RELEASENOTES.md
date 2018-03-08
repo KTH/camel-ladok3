@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.1.0
+
+* Change how configuration is done and make singleton.
+
 ## 0.0.39
 
 * Update XSD to Ladok3 0.98.2-20180216_094730
