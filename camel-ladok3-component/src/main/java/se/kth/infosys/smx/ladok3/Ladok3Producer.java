@@ -53,15 +53,15 @@ public class Ladok3Producer extends DefaultProducer {
 
     public Ladok3Producer(Ladok3Endpoint endpoint) throws Exception {
         super(endpoint);
-        URI uri = new URI(endpoint.getEndpointUri());
+        String path = new URI(endpoint.getEndpointUri()).getPath();
 
-        Matcher matcher = API_PATTERN.matcher(uri.getPath());
+        Matcher matcher = API_PATTERN.matcher(path);
         if (matcher.matches()) {
             endpoint.setApi(matcher.group("api").toLowerCase());
         }
 
-        services.put("student", new Ladok3StudentInformationServiceWrapper(uri, endpoint.getContext()));
-        services.put("studiedeltagande", new Ladok3StudiedeltagandeServiceWrapper(uri, endpoint.getContext()));
+        services.put("student", new Ladok3StudentInformationServiceWrapper(endpoint.getHost(), path, endpoint.getContext()));
+        services.put("studiedeltagande", new Ladok3StudiedeltagandeServiceWrapper(endpoint.getHost(), path, endpoint.getContext()));
     }
 
 

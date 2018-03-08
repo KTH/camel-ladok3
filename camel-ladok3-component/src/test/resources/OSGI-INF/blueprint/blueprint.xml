@@ -32,10 +32,16 @@
 
   <cm:property-placeholder persistent-id="se.kth.infosys.smx.ladok3" update-strategy="reload" />
 
+  <bean id="ladok3" class="se.kth.infosys.smx.ladok3.Ladok3Component">
+    <property name="cert" value="${ladok3.cert.file}"/>
+    <property name="key" value="${ladok3.cert.key}"/>
+    <property name="host" value="${ladok3.host}"/>
+  </bean>
+
   <camelContext xmlns="http://camel.apache.org/schema/blueprint">
     <route id="read-atom-feed">
 <!--      <from uri="ladok3://{{ladok3.host}}?greedy=true&amp;delay=2000&amp;backoffErrorThreshold=1&amp;backoffMultiplier=15&amp;cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}&amp;includeEvents=NationellBevistypEvent,StudentEvent" />-->
-      <from uri="ladok3://{{ladok3.host}}?greedy=true&amp;delay=2000&amp;backoffErrorThreshold=1&amp;backoffMultiplier=15&amp;cert={{ladok3.cert.file}}&amp;key={{ladok3.cert.key}}&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}" />
+      <from uri="ladok3:?greedy=true&amp;delay=2000&amp;backoffErrorThreshold=1&amp;backoffMultiplier=15&amp;lastEntry={{ladok3.feed.last_id}}&amp;lastFeed={{ladok3.feed.last}}" />
       <to uri="log:se.kth.infosys.smx.ladok3?level=INFO&amp;showHeaders=true" />
       <marshal>
         <jacksonxml include="NON_NULL"/>

@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.net.CookieHandler;
 import java.net.CookieManager;
-import java.net.URI;
 import java.security.KeyStore;
 import java.util.Map;
 
@@ -36,33 +35,87 @@ import javax.net.ssl.SSLContext;
 
 import org.apache.camel.Endpoint;
 import org.apache.camel.impl.DefaultComponent;
+import org.apache.camel.spi.Metadata;
 
 /**
  * Represents the component that manages {@link Ladok3Endpoint}.
  */
 public class Ladok3Component extends DefaultComponent {
-    protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-        Ladok3Endpoint endpoint = new Ladok3Endpoint(uri, this);
-        setProperties(endpoint, parameters);
+    @Metadata(required = "true")
+    private String cert;
 
+    @Metadata(required = "true")
+    private String key;
+
+    @Metadata(required = "true")
+    private String host;
+
+    protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
         if (CookieHandler.getDefault() == null) {
             CookieManager cookieManager = new CookieManager();
             CookieHandler.setDefault(cookieManager);
         }
 
-        URI formattedUri = new URI(uri);
-        endpoint.setHost(formattedUri.getHost());
-
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
-        keyStore.load(new FileInputStream(new File(endpoint.getCert())), endpoint.getKey().toCharArray());
+        keyStore.load(new FileInputStream(new File(cert)), key.toCharArray());
 
         KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        kmf.init(keyStore, endpoint.getKey().toCharArray());
+        kmf.init(keyStore, key.toCharArray());
 
         SSLContext context = SSLContext.getInstance("TLS");
         context.init(kmf.getKeyManagers(), null, null);
 
-        endpoint.setContext(context);
+        Ladok3Endpoint endpoint = new Ladok3Endpoint(uri, this, getHost(), context);
+        setProperties(endpoint, parameters);
+
         return endpoint;
+    }
+
+    /**
+     * Path to certificate file.
+     * @return the path
+     */
+    public String getCert() {
+        return cert;
+    }
+
+    /**
+     * Path to certificate file
+     * @param cert the path to the certificate file.
+     */
+    public void setCert(String cert) {
+        this.cert = cert;
+    }
+
+    /**
+     * Private key for the certificate file.
+     * @return the key
+     */
+    public String getKey() {
+        return key;
+    }
+
+    /**
+     * Private key for the certificate file.
+     * @param key the key
+     */
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    /**
+     * The Ladok3 host environment, api.mit-ik.ladok.se etc.
+     * @return the host name
+     */
+    public String getHost() {
+        return host;
+    }
+
+    /**
+     * Set Ladok3 host environment, api.mit-ik.ladok.se etc.
+     * @param host Ladok3 host environment.
+     */
+    public void setHost(String host) {
+        this.host = host;
     }
 }
