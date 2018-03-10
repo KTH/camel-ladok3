@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.2.0
+
+* Update to ladok3 version 0.99.3
+
 ## 0.1.0
 
 * Change how configuration is done and make singleton.
