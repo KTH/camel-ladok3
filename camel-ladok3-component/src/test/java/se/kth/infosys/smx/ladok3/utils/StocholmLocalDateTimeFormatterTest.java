@@ -54,4 +54,19 @@ public class StocholmLocalDateTimeFormatterTest {
 
         assertEquals(expectedDateTimeString, actualDateTimeString);
     }
+
+    @Test
+    public void parseSummerLocalDate() throws ParseException {
+        String dateStr = "2017-09-17T23:22:44.299";
+
+       assertEquals(dateStr, StockholmLocalDateTimeFormatter.formatAsStockolmLocalDateTime(
+               StockholmLocalDateTimeFormatter.parse(dateStr)));
+    }
+    @Test
+    public void parseWinterLocalDate() throws ParseException {
+        String dateStr = "2017-01-17T13:22:44.299";
+
+       assertEquals(dateStr, StockholmLocalDateTimeFormatter.formatAsStockolmLocalDateTime(
+               StockholmLocalDateTimeFormatter.parse(dateStr)));
+    }
 }

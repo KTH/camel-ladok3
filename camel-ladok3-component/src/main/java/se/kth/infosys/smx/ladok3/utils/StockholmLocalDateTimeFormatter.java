@@ -1,5 +1,6 @@
 package se.kth.infosys.smx.ladok3.utils;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,5 +25,14 @@ public final class StockholmLocalDateTimeFormatter {
                 .withZoneSameInstant(STOCKHOLM_ZONE)
                 .toLocalDateTime()
                 .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME); //ex: '2011-12-03T10:15:30'
+    }
+
+    /**
+     * Parse date string as formatted by formatAsStockolmLocalDateTime into Date.
+     * @param dateStr
+     * @return corresponding Date instance.
+     */
+    public static Date parse(String dateStr) {
+        return Date.from(LocalDateTime.parse(dateStr).atZone(STOCKHOLM_ZONE).toInstant());
     }
 }
