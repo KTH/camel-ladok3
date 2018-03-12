@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.3.0
+
+* Add utility method to parse localized dates as produced
+  by StockholmLocalDateTimeFormatter.
+
 ## 0.2.0
 
 * Update to ladok3 version 0.99.3
