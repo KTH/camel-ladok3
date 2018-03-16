@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.3.1
+
+* Add dependency check (CVE security).
+* Update dependencies.
+
 ## 0.3.0
 
 * Add utility method to parse localized dates as produced
