@@ -22,13 +22,16 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="FotnotLista">
-    <xs:sequence>
-      <xs:choice maxOccurs="unbounded" minOccurs="0">
-        <xs:element ref="dok:Fotnot"/>
-        <xs:any namespace="##other" processContents="lax"/>
-      </xs:choice>
-    </xs:sequence>
+  <xs:complexType name="DokumentmallEvent">
+    <xs:complexContent>
+      <xs:extension base="events:grunddataBaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Dokumenttyp" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Platshallare" type="xs:string"/>
+          <xs:element minOccurs="0" name="SokvagTillMall" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="DokumentkonfigurationEvent">
@@ -49,15 +52,12 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="DokumentmallEvent">
-    <xs:complexContent>
-      <xs:extension base="events:grunddataBaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Dokumenttyp" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Platshallare" type="xs:string"/>
-          <xs:element minOccurs="0" name="SokvagTillMall" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
+  <xs:complexType name="FotnotLista">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="dok:Fotnot"/>
+        <xs:any namespace="##other" processContents="lax"/>
+      </xs:choice>
+    </xs:sequence>
   </xs:complexType>
 </xs:schema>
