@@ -89,7 +89,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <camel-version>2.19.4</camel-version>
+    <camel-version>2.19.5</camel-version>
     <cxf-client-version>3.1.14</cxf-client-version>
   </properties>
 
