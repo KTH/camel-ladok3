@@ -1,5 +1,12 @@
 # Release notes
 
+## 0.4.0
+
+* Update to ladok3 version 1.1.0.
+* Update to camel 2.19.5.
+
+NOTE: untested due to mit-integration environment issues.
+
 ## 0.3.1
 
 * Add dependency check (CVE security).
