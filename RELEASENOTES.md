@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.5.0
+
+* Update to ladok3 version 1.1.0.
+* Update to cxf dependency.
+
 ## 0.4.0
 
 * Update to ladok3 version 1.1.0.
