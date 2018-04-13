@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.5.2
+
+* Revert cxf version due to incompatibility with spring version.
+
 ## 0.5.1
 
 * Use jar instead of bundle for cxf dependency.
