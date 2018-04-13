@@ -28,14 +28,6 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Attesteringsunderlag">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="Beslutsinformation">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
@@ -49,6 +41,14 @@
           <xs:element minOccurs="0" name="ShibbolethSessionID" type="xs:string"/>
           <xs:element minOccurs="0" name="AterautentiseringReturnURI" type="xs:string"/>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Attesteringsunderlag">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
