@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.5.1
+
+* Use jar instead of bundle for cxf dependency.
+
 ## 0.5.0
 
 * Update to ladok3 version 1.1.0.
