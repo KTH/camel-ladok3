@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.6.0
+
+* Update to ladok3 version 1.3.1.
+
 ## 0.5.2
 
 * Revert cxf version due to incompatibility with spring version.
