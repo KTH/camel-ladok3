@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import se.ladok.schemas.dap.RelationLink;
@@ -58,6 +59,7 @@ public class Ladok3StudiedeltagandeServiceTest {
     }
 
     @Test
+    @Ignore
     public void testPabarjadutbildningKurspaketeringStudent() {
         String uid = properties.getProperty("ladok3.test.Ladok3StudiedeltagandeServiceTest.pabarjadutbildningKurspaketeringStudent.uid");
 
@@ -66,6 +68,7 @@ public class Ladok3StudiedeltagandeServiceTest {
     }
 
     @Test
+    @Ignore
     public void testStudiestrukturStudent() {
         String uid = properties.getProperty("ladok3.test.Ladok3StudiedeltagandeServiceTest.pabarjadutbildningKurspaketeringStudent.uid");
 

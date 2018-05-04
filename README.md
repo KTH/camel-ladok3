@@ -64,6 +64,15 @@ which is built and pushed to docker hub continously by Jenkins.
 
 Set the version in all components with `mvn versions:set` from project root.
 
+
+### Update the model
+
+A common task is to update the model due to changes in the Ladok3 api.
+
+1. Download XSD files from https://www.mit-integration.ladok.se/restdoc/
+1. Copy them to ladok3-model/src/main/resources/schemas/
+1. Make a new release, see below.
+
 ### Building
 
 A complete local build of the image can be made with `mvn clean install`.
