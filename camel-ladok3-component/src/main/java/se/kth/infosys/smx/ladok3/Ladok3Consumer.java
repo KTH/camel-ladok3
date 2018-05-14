@@ -204,6 +204,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
         message.setHeader(Ladok3Message.Header.EventType, event.getClass().getName());
         message.setHeader(Ladok3Message.Header.EventId, event.getHandelseUID());
         message.setHeader(Ladok3Message.Header.EntryItemIndex,  atomItemIndex);
+        message.setHeader(Ladok3Message.Header.Username,  getHeaderUsername(event));
         message.setBody(event);
 
         try {
@@ -212,6 +213,14 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
             if (exchange.getException() != null) {
                 getExceptionHandler().handleException("Error processing exchange", exchange, exchange.getException());
             }
+        }
+    }
+
+    private String getHeaderUsername (BaseEvent event) {
+        if (event.getEventContext() != null && event.getEventContext().getAnvandarnamn() != null) {
+            return event.getEventContext().getAnvandarnamn();
+        } else {
+            return "";
         }
     }
 
