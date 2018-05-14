@@ -37,6 +37,7 @@ public class Ladok3Message {
         public static final String IsLastFeed = "ladok3IsLastFeed";
         public static final String MessageType = "ladok3MessageType";
         public static final String SequenceNumber = "ladok3MessageSequenceNumber";
+        public static final String Username = "ladok3Username";
     }
 
     public final class MessageType {
