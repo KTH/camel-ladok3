@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.7.0
+
+* Add header for ladok3 username to events. PR #4
+  https://github.com/KTH/camel-ladok3/pull/4
+
 ## 0.6.0
 
 * Update to ladok3 version 1.3.1.
