@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.8.0
+
+* Update to ladok3 version 1.4.1.
+
 ## 0.7.0
 
 * Add header for ladok3 username to events. PR #4

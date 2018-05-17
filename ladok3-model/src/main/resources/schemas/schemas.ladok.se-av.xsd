@@ -25,8 +25,8 @@
 
   <xs:simpleType name="Leveransalternativ">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="EPOST"/>
       <xs:enumeration value="INGEN"/>
+      <xs:enumeration value="EPOST"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
