@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ar="http://schemas.ladok.se/arendestod" xmlns:at="http://schemas.ladok.se/attestering" xmlns:base="http://schemas.ladok.se" xmlns:dap="http://schemas.ladok.se/dap" xmlns:events="http://schemas.ladok.se/events" xmlns:rr="http://schemas.ladok.se/resultat" elementFormDefault="qualified" targetNamespace="http://schemas.ladok.se/resultat" version="1.0">
 
-  <xs:import namespace="http://schemas.ladok.se/dap" schemaLocation="schemas.ladok.se-dap.xsd"/>
-
   <xs:import namespace="http://schemas.ladok.se" schemaLocation="schemas.ladok.se.xsd"/>
+
+  <xs:import namespace="http://schemas.ladok.se/dap" schemaLocation="schemas.ladok.se-dap.xsd"/>
 
   <xs:import namespace="http://schemas.ladok.se/events" schemaLocation="schemas.ladok.se-events.xsd"/>
 
@@ -131,6 +131,8 @@
 
   <xs:element name="KlarmarkeraTillgodoraknande" type="rr:KlarmarkeraTillgodoraknande"/>
 
+  <xs:element name="Kursrattighet" type="rr:Kursrattighet"/>
+
   <xs:element name="Kurstillfalle" type="rr:Kurstillfalle"/>
 
   <xs:element name="Kurstillfallen" type="rr:Kurstillfallen"/>
@@ -221,6 +223,12 @@
 
   <xs:element name="Resultatrapportorer" type="rr:Resultatrapportorer"/>
 
+  <xs:element name="Resultatrattighet" type="rr:Resultatrattighet"/>
+
+  <xs:element name="ResultatrattighetSokvarden" type="rr:ResultatrattighetSokvarden"/>
+
+  <xs:element name="Resultatrattigheter" type="rr:Resultatrattigheter"/>
+
   <xs:element name="Resultatsfordelning" type="rr:Resultatsfordelning"/>
 
   <xs:element name="Resultatsfordelningar" type="rr:Resultatsfordelningar"/>
@@ -234,6 +242,10 @@
   <xs:element name="ResultatuppfoljningStudent" type="rr:ResultatuppfoljningStudent"/>
 
   <xs:element name="SkapaFlera" type="rr:SkapaFlera"/>
+
+  <xs:element name="SkapaFleraKursrattigheter" type="rr:SkapaFleraKursrattigheter"/>
+
+  <xs:element name="SkapaKursrattighet" type="rr:SkapaKursrattighet"/>
 
   <xs:element name="SkapaNoteringsdefinition" type="rr:SkapaNoteringsdefinition"/>
 
@@ -256,6 +268,8 @@
   <xs:element name="SokresultatKurstillfalleResultat" type="rr:SokresultatKurstillfalleResultat"/>
 
   <xs:element name="SokresultatKurstillfallesdeltagare" type="rr:SokresultatKurstillfallesdeltagare"/>
+
+  <xs:element name="SokresultatResultatrattighet" type="rr:SokresultatResultatrattighet"/>
 
   <xs:element name="SokresultatResultatuppfoljning" type="rr:SokresultatResultatuppfoljning"/>
 
@@ -359,6 +373,8 @@
 
   <xs:element name="UppdateraFlera" type="rr:UppdateraFlera"/>
 
+  <xs:element name="UppdateraKursrattighet" type="rr:UppdateraKursrattighet"/>
+
   <xs:element name="UppdateraResultat" type="rr:UppdateraResultat"/>
 
   <xs:element name="Utbildning" type="rr:Utbildning"/>
@@ -376,280 +392,6 @@
   <xs:element name="UtlansktLarosate" type="rr:UtlansktLarosate"/>
 
   <xs:element name="Verifikat" type="rr:Verifikat"/>
-
-  <xs:complexType name="Tillgodoraknanden">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Tillgodoraknande"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Tillgodoraknande">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Grunder" type="rr:TillgodoraknandegrundBas"/>
-          <xs:element minOccurs="0" name="KoppladKurspaketeringUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="KopplatKurspaketeringstillfalleUID" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Mal" type="rr:TillgodoraknandemalBas"/>
-          <xs:element minOccurs="0" name="Arendenummer" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="TillgodoraknandegrundBas">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="TillgodoraknandemalBas">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Typ" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="TillgodoraknandegrundResultat">
-    <xs:complexContent>
-      <xs:extension base="rr:TillgodoraknandegrundBas">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Betygskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendeGrunder" type="rr:TillgodoraknandegrundResultat"/>
-          <xs:element minOccurs="0" name="Larosate" type="rr:Larosatesinformation"/>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Larosatesinformation">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="TillgodoraknandegrundExtern">
-    <xs:complexContent>
-      <xs:extension base="rr:TillgodoraknandegrundBas">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AltBenamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Benamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Betygsskala" type="xs:string"/>
-          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Resultat" type="xs:string"/>
-          <xs:element minOccurs="0" name="Ursprung" type="xs:string"/>
-          <xs:element minOccurs="0" ref="rr:Utbildningsform"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Utbildningsform">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="TillgodoraknandegrundAnnanMerit">
-    <xs:complexContent>
-      <xs:extension base="rr:TillgodoraknandegrundBas">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="rr:AnnanMerit"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AnnanMerit">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AlternativBenamning" type="xs:string"/>
-          <xs:element name="Attesterad" type="xs:boolean"/>
-          <xs:element name="Benamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Beskrivning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Betygsskala" type="xs:string"/>
-          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
-          <xs:element minOccurs="0" name="ExternPartID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Resultat" type="xs:string"/>
-          <xs:element minOccurs="0" name="ResultatAlternativBenamning" type="xs:string"/>
-          <xs:element name="TillatenIBevis" type="xs:boolean"/>
-          <xs:element name="TillatenIGemensamExamen" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="Ursprung" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="TillgodoraknandegrundAnnatResultat">
-    <xs:complexContent>
-      <xs:extension base="rr:TillgodoraknandegrundBas">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="rr:AnnatResultat"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AnnatResultat">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AlternativBenamning" type="xs:string"/>
-          <xs:element name="Attesterad" type="xs:boolean"/>
-          <xs:element name="Benamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Beskrivning" type="xs:string"/>
-          <xs:element minOccurs="0" name="BetygsgradID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Betygsgradbenamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Betygsgradkod" type="xs:string"/>
-          <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Betygsskalabenamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" ref="rr:Enhet"/>
-          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
-          <xs:element minOccurs="0" name="ExternPartID" type="xs:int"/>
-          <xs:element name="Omfattningsvarde" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
-          <xs:element name="UtbildningstypID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Enhet">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="TillgodoraknandemalDelAvKurs">
-    <xs:complexContent>
-      <xs:extension base="rr:TillgodoraknandemalBas">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendeMal" type="rr:TillgodoraknandemalDelAvKurs"/>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="TillgodoOmfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="TillgodoraknandemalHelKurs">
-    <xs:complexContent>
-      <xs:extension base="rr:TillgodoraknandemalBas">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="TillgodoOmfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="TillgodoraknandemalFritext">
-    <xs:complexContent>
-      <xs:extension base="rr:TillgodoraknandemalBas">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Beskrivningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="UtbildningstypID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Undervisningsformer">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Undervisningsform"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="Undervisningsform">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SummeringRedoForResultatPaHelKursLista">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:SummeringRedoForResultatPaHelKurs"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SummeringRedoForResultatPaHelKurs">
-    <xs:sequence>
-      <xs:element name="Antal" type="xs:int"/>
-      <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="ResultatHistorikpost">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Beskrivning" type="base:Benamningar"/>
-      <xs:element name="Detaljer" type="xs:string"/>
-      <xs:element name="Historiktyp" type="xs:string"/>
-      <xs:element name="Handelse" type="xs:string"/>
-      <xs:element name="Handelsetidpunkt" type="xs:dateTime"/>
-      <xs:element minOccurs="0" name="UtbildningNamn" type="xs:string"/>
-      <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-      <xs:element minOccurs="0" name="UtbildningstillfalleUID" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="SkapaFlera">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:SkapaResultat"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
 
   <xs:complexType name="SkapaResultat">
     <xs:complexContent>
@@ -700,20 +442,51 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="UtlandskaLarosaten">
+  <xs:complexType name="SummeringRedoForResultatPaHelKursLista">
     <xs:complexContent>
-      <xs:extension base="dap:Base">
+      <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="UtlandskaLarosaten" type="rr:UtlansktLarosate"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:SummeringRedoForResultatPaHelKurs"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="UtlansktLarosate">
+  <xs:complexType name="SummeringRedoForResultatPaHelKurs">
+    <xs:sequence>
+      <xs:element name="Antal" type="xs:int"/>
+      <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TaBortFleraKlarmarkeringar">
     <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence/>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:TaBortKlarmarkering"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TaBortKlarmarkering">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
+          <xs:element name="ResultatetsSenastSparad" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SokresultatAktivitetstillfallesmojlighetResultat">
+    <xs:complexContent>
+      <xs:extension base="base:Sokresultat">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Aktivitetstillfallesmojlighet"/>
+        </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -743,39 +516,43 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Tillfallen">
+  <xs:complexType name="UppdateraFlera">
     <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
+      <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" name="AntalForbereddaForBorttag" type="xs:int"/>
-          <xs:element minOccurs="0" name="AntalRedoForResultatPaKurs" type="xs:int"/>
-          <xs:element minOccurs="0" name="AntalRegistrerade" type="xs:int"/>
-          <xs:element minOccurs="0" name="KurstillfalleUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Tillfalle" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:UppdateraResultat"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="TillgodoraknandeBorttagetEvent">
+  <xs:complexType name="UppdateraResultat">
     <xs:complexContent>
-      <xs:extension base="rr:TillgodoraknandeEvent">
+      <xs:extension base="rr:BaseResultatattribut">
         <xs:sequence>
-          <xs:element minOccurs="0" name="KoppladKurspaketeringUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="KopplatKurspaketeringstillfalleUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="AktivitetstillfalleUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="SenasteResultatandring" type="xs:dateTime"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType abstract="true" name="TillgodoraknandeEvent">
+  <xs:complexType name="AttesteratResultatMakuleratEvent">
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
         <xs:sequence>
           <xs:element minOccurs="0" name="Beslut" type="rr:BeslutEventPart"/>
-          <xs:element minOccurs="0" name="MalLista" type="rr:MalLista"/>
+          <xs:element minOccurs="0" name="GiltigSomSlutbetyg" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="PrestationsPoang" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="ResultatFinns" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="SenasteExaminationsdatum" type="xs:date"/>
           <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="TillgodoraknandeUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningensOmfattning" type="xs:decimal"/>
+          <xs:element name="UtbildningsgrundtypID" type="xs:int"/>
+          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -791,121 +568,44 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="MalLista">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="MalLista" type="rr:MalPart"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="MalPart">
+  <xs:complexType name="AttesteringsbeslutForResultatUppdateratEvent">
     <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
+      <xs:extension base="events:BaseEvent">
         <xs:sequence>
-          <xs:element name="Typ" type="rr:MalTyp"/>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
+          <xs:element minOccurs="0" name="BeslutsfattareUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="DelAvKurs">
-    <xs:complexContent>
-      <xs:extension base="rr:MalPart">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="HeltTillgodoraknad" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="HeltTillgodoraknadInnanBorttag" type="xs:boolean"/>
-          <xs:element name="KursUID" type="xs:string"/>
-          <xs:element name="KursinstansUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string"/>
-          <xs:element minOccurs="0" name="TillgodoraknandeFinnsInomKurs" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="TotaltOmfattningsvarde" type="xs:string"/>
-          <xs:element minOccurs="0" name="TotaltOmfattningsvardeInnanBorttag" type="xs:string"/>
-          <xs:element name="UtbildningUID" type="xs:string"/>
-          <xs:element name="UtbildningsinstansUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="HelKurs">
-    <xs:complexContent>
-      <xs:extension base="rr:MalPart">
-        <xs:sequence>
-          <xs:element name="KursUID" type="xs:string"/>
-          <xs:element name="KursinstansUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Fritext">
-    <xs:complexContent>
-      <xs:extension base="rr:MalPart">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="EngelskBeskrivning" type="xs:string"/>
-          <xs:element minOccurs="0" name="EnhetID" type="xs:string"/>
-          <xs:element minOccurs="0" name="EnhetKod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string"/>
-          <xs:element minOccurs="0" name="SvenskBenamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="SvenskBeskrivning" type="xs:string"/>
-          <xs:element minOccurs="0" name="UtbildningstypID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SkapaVerifikat">
+  <xs:complexType name="Moment">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element name="BeslutsdatumInnan" type="xs:date"/>
-          <xs:element name="InkluderaBeslutOmKursbetyg" type="xs:boolean"/>
-          <xs:element name="InkluderaBeslutOmModulbetyg" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudieresultatForAttesteringsunderlagSokVarden">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element default="KLARMARKERADE" maxOccurs="unbounded" minOccurs="0" name="Filtrering" type="rr:StudieresultatTillstandVidAttesteringEnum"/>
-          <xs:element minOccurs="0" name="GruppUID" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" name="KurstillfallenUID" type="xs:string"/>
-          <xs:element default="25" minOccurs="0" name="Limit" type="xs:int"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="OrderBy" type="rr:StudieresultatOrderByEnum"/>
-          <xs:element default="1" minOccurs="0" name="Page" type="xs:int"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="StudenterUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Aktivitetstillfallen" type="rr:Aktivitetstillfalle"/>
+          <xs:element minOccurs="0" name="AntalRegistrerade" type="xs:int"/>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Enhet" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendeMoment" type="rr:Moment"/>
+          <xs:element minOccurs="0" name="IngaendeModuler" type="rr:Ingaendemoduler"/>
+          <xs:element name="KravPaProjekttitel" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Kurstillfalleskod" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Noteringsdefinitioner" type="rr:Noteringsdefinition"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
+          <xs:element name="ResultatrapporteringMojlig" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Slutdatum" type="xs:string"/>
+          <xs:element minOccurs="0" name="Startdatum" type="xs:string"/>
+          <xs:element minOccurs="0" name="Studietaktsbenamning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Takt" type="xs:int"/>
+          <xs:element minOccurs="0" name="Undervisningsformbenamning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
           <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="NivaerInomStudieordning">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:NivaInomStudieordning"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="NivaInomStudieordning">
-    <xs:complexContent>
-      <xs:extension base="base:BaseKatalogEntitet">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SokresultatAktivitetstillfalleResultat">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Aktivitetstillfalle"/>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Versionsnummer" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -1011,6 +711,110 @@
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="Ingaendemoduler">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="KursinstansUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ModulinstansUIDer" type="xs:string"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Noteringsdefinition">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="KurstillfalleRef" type="base:RESTRef"/>
+          <xs:element minOccurs="0" name="Noteringstyp" type="xs:int"/>
+          <xs:element name="Obligatorisk" type="xs:boolean"/>
+          <xs:element name="Publicera" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
+          <xs:element name="VisaForStudent" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AvanmalanPaAktivitetstillfalleEvent">
+    <xs:complexContent>
+      <xs:extension base="rr:AnmalanBasePaAktivitetstillfalleEvent">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="AnmalanBasePaAktivitetstillfalleEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="AktivitetstillfalleUID" type="xs:string"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Noteringstyper">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Noteringstyper" type="rr:Noteringstyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Noteringstyp">
+    <xs:complexContent>
+      <xs:extension base="base:BaseKatalogEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="I18nNyckel" type="xs:string"/>
+          <xs:element minOccurs="0" name="Namn" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Larosate">
+    <xs:complexContent>
+      <xs:extension base="base:BaseKatalogI18nEntitet">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AnnanMeritTillatenIBevisEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AnnanMeritUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TillgodoraknandegrundResultatFixEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Resultatgrunder" type="rr:Grunder"/>
+          <xs:element minOccurs="0" name="TillgodoraknandeUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Grunder">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Grunder" type="rr:GrundPart"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="GrundPart">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
@@ -1057,6 +861,281 @@
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="StudieresultatForAttesteringsunderlagSokVarden">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element default="KLARMARKERADE" maxOccurs="unbounded" minOccurs="0" name="Filtrering" type="rr:StudieresultatTillstandVidAttesteringEnum"/>
+          <xs:element minOccurs="0" name="GruppUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" name="KurstillfallenUID" type="xs:string"/>
+          <xs:element default="25" minOccurs="0" name="Limit" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="OrderBy" type="rr:StudieresultatOrderByEnum"/>
+          <xs:element default="1" minOccurs="0" name="Page" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="StudenterUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SokresultatResultatrattighet">
+    <xs:complexContent>
+      <xs:extension base="base:Sokresultat">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Resultatrattighet"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="Resultatrattighet">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element name="Anvandare" type="base:Anvandare"/>
+          <xs:element name="Medarbetartyp" type="rr:Resultatmedarbetaretyp"/>
+          <xs:element ref="base:Organisation"/>
+          <xs:element name="RattighetenAvser" type="rr:RattighetenAvser"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Kursrattighet">
+    <xs:complexContent>
+      <xs:extension base="rr:Resultatrattighet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Kursinstansavgransningar" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Kurstillfallesavgransningar" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Modulavgransningar" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TillgodoraknandegrundResultat">
+    <xs:complexContent>
+      <xs:extension base="rr:TillgodoraknandegrundBas">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Betygskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendeGrunder" type="rr:TillgodoraknandegrundResultat"/>
+          <xs:element minOccurs="0" name="Larosate" type="rr:Larosatesinformation"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="TillgodoraknandegrundBas">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Larosatesinformation">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Studentresultat">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
+          <xs:element minOccurs="0" name="Betygsgradskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="ExamineradOmfattning" type="xs:decimal"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="StudentresultatNoteringar" type="rr:StudentresultatNotering"/>
+          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:decimal"/>
+          <xs:element minOccurs="0" ref="rr:Projekttitel"/>
+          <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="TidigareAttesteradeResultat" type="rr:Studentresultat"/>
+          <xs:element minOccurs="0" ref="rr:Tillgodoinformation"/>
+          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudentresultatNotering">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="NoteringsdefinitionUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Noteringstyp" type="xs:int"/>
+          <xs:element name="visaForStudent" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Varde" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Tillgodoinformation">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:decimal"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SkapaNoteringsdefinition">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element name="Benamningar" type="base:Benamningar"/>
+          <xs:element name="Noteringstyp" type="xs:int"/>
+          <xs:element name="Obligatorisk" type="xs:boolean"/>
+          <xs:element name="Publicera" type="xs:boolean"/>
+          <xs:element name="VisaForStudent" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="HistorikpostLista">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Historikposter">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Historikpost"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Historikpost">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AltBenamning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="AltEnhet" type="xs:string"/>
+          <xs:element minOccurs="0" name="AltKod" type="xs:string"/>
+          <xs:element minOccurs="0" name="AltOmfattning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Attestant" type="base:Anvandare"/>
+          <xs:element minOccurs="0" name="AvserOmfattning" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
+          <xs:element name="Beslutsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Beslutsfattare" type="base:Anvandare"/>
+          <xs:element minOccurs="0" name="BetyggradID" type="xs:int"/>
+          <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Enhet" type="xs:string"/>
+          <xs:element name="Examinationsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="ExterntBeslut" type="xs:boolean"/>
+          <xs:element name="Historiktyp" type="xs:string"/>
+          <xs:element name="Handelse" type="xs:string"/>
+          <xs:element name="Handelsetid" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="KlarmarkeradAvAnvandare" type="base:Anvandare"/>
+          <xs:element minOccurs="0" name="Klarmarkeringsdatum" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="Kod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Sammanfattning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Arendenummer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Utbildningsform">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AndraMeriter">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:AnnanMerit"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AnnanMerit">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AlternativBenamning" type="xs:string"/>
+          <xs:element name="Attesterad" type="xs:boolean"/>
+          <xs:element name="Benamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Beskrivning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Betygsskala" type="xs:string"/>
+          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
+          <xs:element minOccurs="0" name="ExternPartID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Resultat" type="xs:string"/>
+          <xs:element minOccurs="0" name="ResultatAlternativBenamning" type="xs:string"/>
+          <xs:element name="TillatenIBevis" type="xs:boolean"/>
+          <xs:element name="TillatenIGemensamExamen" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Ursprung" type="xs:string"/>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="BeslutsfattareLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Beslutsfattare"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Beslutsfattare">
+    <xs:complexContent>
+      <xs:extension base="rr:Medarbetarekoppling">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="Medarbetarekoppling">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element name="Anvandare" type="base:Anvandare"/>
+          <xs:element name="Kopplingsniva" type="rr:Medarbetarekopplingsniva"/>
+          <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="KurstillfalleUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="Aktivitetstillfallestyper">
     <xs:complexContent>
       <xs:extension base="base:Grunddatavardelista">
@@ -1075,216 +1154,174 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Period">
+  <xs:complexType name="Praktik">
     <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
+      <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element name="PeriodtypID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Slutdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Startdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Datumperiod" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="Erkand" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="ExternPartID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Genomford" type="xs:boolean"/>
+          <xs:element name="PraktiktypID" type="xs:int"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Tidsomfattning" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="MojligaTillgodoraknandemal">
+  <xs:complexType name="Resultatrapportorer">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="MojligaMal" type="rr:MojligtTillgodoraknandemal"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Resultatrapportor"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="MojligtTillgodoraknandemal">
+  <xs:complexType name="Resultatrapportor">
+    <xs:complexContent>
+      <xs:extension base="rr:Medarbetarekoppling">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UtlansktLarosate">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ExternPart">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AktivitetstillfalleEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Aktiviteter" type="rr:AktivitetstillfallesreferensEventPart"/>
+          <xs:element name="AktivitetstillfalleUID" type="xs:string"/>
+          <xs:element name="AktivitetstillfallestypID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Anmalan" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Anmalningsperiod" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="Anonymt" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Antaldeltaganden" type="xs:int"/>
+          <xs:element minOccurs="0" name="AvserKurs" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Borttagen" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="DatumPeriod" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="Engelskbenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Installd" type="xs:boolean"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="KurstillfalleUIDer" type="xs:string"/>
+          <xs:element minOccurs="0" name="Lank" type="xs:string"/>
+          <xs:element minOccurs="0" name="Lopnummer" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Ort" type="xs:string"/>
+          <xs:element minOccurs="0" name="Plats" type="xs:string"/>
+          <xs:element minOccurs="0" name="Prefix" type="xs:string"/>
+          <xs:element minOccurs="0" name="Sluttid" type="xs:time"/>
+          <xs:element minOccurs="0" name="Starttid" type="xs:time"/>
+          <xs:element minOccurs="0" name="Svenskbenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="TillatAnmalanForStudentMedGodkantResultat" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="VisaEndastAnonymkodForStudentNarAktivitetstillfalletPasserat" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="OvrigInformation" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AktivitetstillfallesreferensEventPart">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="KursinstansUID" type="xs:string"/>
+      <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="NivaInomStudieordning">
+    <xs:complexContent>
+      <xs:extension base="base:BaseKatalogEntitet">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MojligTillgodoraknandegrund">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Betygskod" type="xs:string"/>
           <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendeMal" type="rr:MojligtTillgodoraknandemal"/>
+          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendeGrunder" type="rr:MojligTillgodoraknandegrund"/>
+          <xs:element minOccurs="0" name="Larosate" type="rr:Larosatesinformation"/>
           <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="TillgodoOmfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
           <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="AnnanMeritTillatenIBevisEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AnnanMeritUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SokresultatKurstillfallesdeltagare">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Kurstillfallesdeltagare"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Kurstillfallesdeltagare">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="KurstillfalleUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Student" type="base:Student"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SkapaTillgodoraknandemalFritext">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element name="EngelskBenamning" type="xs:string"/>
-          <xs:element name="EnhetID" type="xs:int"/>
-          <xs:element minOccurs="0" name="FritextEngelska" type="xs:string"/>
-          <xs:element minOccurs="0" name="FritextSvenska" type="xs:string"/>
-          <xs:element name="Omfattningsvarde" type="xs:decimal"/>
-          <xs:element name="SvenskBenamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="UtbildningstypID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Ingaendemoduler">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="KursinstansUID" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="ModulinstansUIDer" type="xs:string"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Noteringsdefinition">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="KurstillfalleRef" type="base:RESTRef"/>
-          <xs:element minOccurs="0" name="Noteringstyp" type="xs:int"/>
-          <xs:element name="Obligatorisk" type="xs:boolean"/>
-          <xs:element name="Publicera" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-          <xs:element name="VisaForStudent" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SokresultatKurstillfalleResultat">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Kurstillfalle"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AktivitetstillfalleForStudentLista">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:AktivitetstillfalleForStudent"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AktivitetstillfalleForStudent">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element ref="rr:Aktivitetstillfalle"/>
-          <xs:element minOccurs="0" ref="rr:Aktivitetstillfallesmojlighet"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SokresultatStudieresultatResultat">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Studieresultat"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Studieresultat">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AktuellKursinstans" type="xs:string"/>
-          <xs:element minOccurs="0" name="AktuelltKurstillfalle" type="xs:string"/>
-          <xs:element minOccurs="0" name="Anonymiseringskod" type="xs:string"/>
-          <xs:element minOccurs="0" ref="rr:Avbrott"/>
-          <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
-          <xs:element minOccurs="0" ref="rr:Rapporteringskontext"/>
-          <xs:element minOccurs="0" name="ResultatPaUtbildningar">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:ResultatPaUtbildning"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-          <xs:element minOccurs="0" name="SenastRegistrerad" type="xs:date"/>
-          <xs:element minOccurs="0" name="Student" type="base:Student"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Avbrott">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Avbrottsdatum" type="xs:date"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Rapporteringskontext">
+  <xs:complexType name="ResultatHistorikpostLista">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Anonymiseringskod" type="xs:string"/>
-      <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
-      <xs:element name="KravPaProjekttitel" type="xs:boolean"/>
-      <xs:element name="UtbildningUID" type="xs:string"/>
-      <xs:element name="UtbildningsinstansUID" type="xs:string"/>
+      <xs:element minOccurs="0" name="Historikposter">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Historikpost" type="rr:ResultatHistorikpost"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="ResultatPaUtbildning">
+  <xs:complexType name="ResultatHistorikpost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Beskrivning" type="base:Benamningar"/>
+      <xs:element name="Detaljer" type="xs:string"/>
+      <xs:element name="Historiktyp" type="xs:string"/>
+      <xs:element name="Handelse" type="xs:string"/>
+      <xs:element name="Handelsetidpunkt" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="UtbildningNamn" type="xs:string"/>
+      <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
+      <xs:element minOccurs="0" name="UtbildningstillfalleUID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SokresultatAktivitetstillfalleResultat">
+    <xs:complexContent>
+      <xs:extension base="base:Sokresultat">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Aktivitetstillfalle"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UtlandskaLarosaten">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Arbetsunderlag" type="rr:Resultat"/>
-          <xs:element minOccurs="0" name="HeltTillgodoraknad" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="KanExkluderas" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="SenastAttesteradeResultat" type="rr:Resultat"/>
-          <xs:element minOccurs="0" name="TotalTillgodoraknadOmfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="UtlandskaLarosaten" type="rr:UtlansktLarosate"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ResultatLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Resultat"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -1339,110 +1376,55 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="MojligTillgodoraknandegrund">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Betygskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendeGrunder" type="rr:MojligTillgodoraknandegrund"/>
-          <xs:element minOccurs="0" name="Larosate" type="rr:Larosatesinformation"/>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Aktivitetstillfallen">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Aktivitetstillfalle"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AndraResultat">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="AndraResultat" type="rr:AnnatResultat"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AttesteratResultatMakuleratEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Beslut" type="rr:BeslutEventPart"/>
-          <xs:element minOccurs="0" name="GiltigSomSlutbetyg" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="PrestationsPoang" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="ResultatFinns" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="SenasteExaminationsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="UtbildningensOmfattning" type="xs:decimal"/>
-          <xs:element name="UtbildningsgrundtypID" type="xs:int"/>
-          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AktivitetstillfallesreferensEventPart">
+  <xs:complexType name="Rapporteringskontext">
     <xs:sequence>
-      <xs:element minOccurs="0" name="KursinstansUID" type="xs:string"/>
-      <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
+      <xs:element minOccurs="0" name="Anonymiseringskod" type="xs:string"/>
+      <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
+      <xs:element name="KravPaProjekttitel" type="xs:boolean"/>
+      <xs:element name="UtbildningUID" type="xs:string"/>
+      <xs:element name="UtbildningsinstansUID" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="AnmalanPaAktivitetstillfalleEvent">
+  <xs:complexType name="Status">
     <xs:complexContent>
-      <xs:extension base="rr:AnmalanBasePaAktivitetstillfalleEvent">
+      <xs:extension base="rr:BaseResultatattribut">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Anonymiseringskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Meddelande" type="xs:string"/>
-          <xs:element minOccurs="0" name="Tidpunkt" type="xs:dateTime"/>
+          <xs:element minOccurs="0" ref="at:Beslut"/>
+          <xs:element minOccurs="0" name="Betygsgradsobjekt" type="rr:Betygsgrad"/>
+          <xs:element minOccurs="0" name="Klarmarkering" type="rr:Klarmarkera"/>
+          <xs:element minOccurs="0" name="Kurstillfalleskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="ProcessStatus" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType abstract="true" name="AnmalanBasePaAktivitetstillfalleEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element name="AktivitetstillfalleUID" type="xs:string"/>
-          <xs:element name="StudentUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SokresultatUtbildningsinstansResultat">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Utbildningsinstans"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Utbildning">
+  <xs:complexType name="Kurstillfallesdeltagare">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="KurstillfalleUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Student" type="base:Student"/>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Praktiktyper">
+    <xs:complexContent>
+      <xs:extension base="base:Grunddatavardelista">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Praktiktyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Praktiktyp">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -1464,75 +1446,183 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="FlaggaForBorttagFlera">
+  <xs:complexType name="Betygsskala">
     <xs:complexContent>
-      <xs:extension base="dap:Base">
+      <xs:extension base="base:EnkeltGrunddatavarde">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="ResultatUIDer" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Betygsgrad"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="AndraResultatStudent">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="AndraResultatStudent" type="rr:AnnatResultatStudent"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AnnatResultatStudent">
+  <xs:complexType name="Tillfallen">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="AlternativBenamning" type="xs:string"/>
-          <xs:element name="Attesterad" type="xs:boolean"/>
-          <xs:element name="Benamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Beskrivning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Betygsgradbenamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Betygsgradkod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Betygskala" type="xs:string"/>
-          <xs:element minOccurs="0" name="Betygsskalabenamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" ref="rr:Enhet"/>
-          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
-          <xs:element minOccurs="0" name="ExternPart" type="xs:string"/>
-          <xs:element name="Omfattningsvarde" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="Utbildningsgrundtyp" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningstyp" type="xs:string"/>
+          <xs:element minOccurs="0" name="AntalForbereddaForBorttag" type="xs:int"/>
+          <xs:element minOccurs="0" name="AntalRedoForResultatPaKurs" type="xs:int"/>
+          <xs:element minOccurs="0" name="AntalRegistrerade" type="xs:int"/>
+          <xs:element minOccurs="0" name="KurstillfalleUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Tillfalle" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType abstract="true" name="EnumDummy">
+  <xs:complexType name="Tillfallesdeltagande">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Kurstillfalle" type="xs:string"/>
+          <xs:element minOccurs="0" name="Registreringsdatum" type="xs:date"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="KlarmarkeraTillgodoraknande">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element name="AttestantUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Undervisningsformer">
     <xs:sequence>
-      <xs:element minOccurs="0" name="ResultatuppfoljningOrderByEnum" type="rr:ResultatuppfoljningOrderByEnum"/>
-      <xs:element minOccurs="0" name="StudieresultatAnmaldaEnum" type="rr:StudieresultatAnmaldaEnum"/>
-      <xs:element minOccurs="0" name="StudieresultatOrderByEnum" type="rr:StudieresultatOrderByEnum"/>
-      <xs:element minOccurs="0" name="StudieresultatTillstandVidAttesteringEnum" type="rr:StudieresultatTillstandVidAttesteringEnum"/>
-      <xs:element minOccurs="0" name="StudieresultatTillstandVidRapporteringEnum" type="rr:StudieresultatTillstandVidRapporteringEnum"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Undervisningsform"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="TillgodoraknandegrundForFritext">
+  <xs:complexType name="Undervisningsform">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ResultatuppfoljningStudent">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="KurstillfalleUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Resultatuppfoljning"/>
+          <xs:element minOccurs="0" name="Student" type="base:Student"/>
+          <xs:element minOccurs="0" name="Tillstand" type="rr:TillstandEnum"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Resultatuppfoljning">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Betygsgradskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SokresultatKurstillfallesdeltagare">
+    <xs:complexContent>
+      <xs:extension base="base:Sokresultat">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Kurstillfallesdeltagare"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="TillgodoraknandeEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Beslut" type="rr:BeslutEventPart"/>
+          <xs:element minOccurs="0" name="MalLista" type="rr:MalLista"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="TillgodoraknandeUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MalLista">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MalLista" type="rr:MalPart"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MalPart">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element name="Typ" type="rr:MalTyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DelAvKurs">
+    <xs:complexContent>
+      <xs:extension base="rr:MalPart">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="HeltTillgodoraknad" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="HeltTillgodoraknadInnanBorttag" type="xs:boolean"/>
+          <xs:element name="KursUID" type="xs:string"/>
+          <xs:element name="KursinstansUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string"/>
+          <xs:element minOccurs="0" name="TillgodoraknandeFinnsInomKurs" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="TotaltOmfattningsvarde" type="xs:string"/>
+          <xs:element minOccurs="0" name="TotaltOmfattningsvardeInnanBorttag" type="xs:string"/>
+          <xs:element name="UtbildningUID" type="xs:string"/>
+          <xs:element name="UtbildningsinstansUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="HelKurs">
+    <xs:complexContent>
+      <xs:extension base="rr:MalPart">
+        <xs:sequence>
+          <xs:element name="KursUID" type="xs:string"/>
+          <xs:element name="KursinstansUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Fritext">
+    <xs:complexContent>
+      <xs:extension base="rr:MalPart">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="EngelskBeskrivning" type="xs:string"/>
+          <xs:element minOccurs="0" name="EnhetID" type="xs:string"/>
+          <xs:element minOccurs="0" name="EnhetKod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string"/>
+          <xs:element minOccurs="0" name="SvenskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="SvenskBeskrivning" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningstypID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TillgodoraknandegrundForUtbildning">
     <xs:complexContent>
       <xs:extension base="rr:SkapaTillgodoraknandegrundBas">
         <xs:sequence>
-          <xs:element minOccurs="0" name="AltBenamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Benamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Betygsskala" type="xs:string"/>
-          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Resultat" type="xs:string"/>
-          <xs:element minOccurs="0" name="Ursprung" type="xs:string"/>
-          <xs:element minOccurs="0" name="UtbildningsformID" type="xs:int"/>
+          <xs:element name="kursinstansUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="modulinstansUIDer" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -1548,12 +1638,19 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="TillgodoraknandegrundForUtbildning">
+  <xs:complexType name="TillgodoraknandegrundForFritext">
     <xs:complexContent>
       <xs:extension base="rr:SkapaTillgodoraknandegrundBas">
         <xs:sequence>
-          <xs:element name="kursinstansUID" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="modulinstansUIDer" type="xs:string"/>
+          <xs:element minOccurs="0" name="AltBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Benamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Betygsskala" type="xs:string"/>
+          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Resultat" type="xs:string"/>
+          <xs:element minOccurs="0" name="Ursprung" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningsformID" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -1593,6 +1690,412 @@
           <xs:element minOccurs="0" name="Resultat" type="xs:string"/>
           <xs:element minOccurs="0" name="Ursprung" type="xs:string"/>
           <xs:element minOccurs="0" name="UtbildningsformID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Tillgodoraknanden">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Tillgodoraknande"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Tillgodoraknande">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Grunder" type="rr:TillgodoraknandegrundBas"/>
+          <xs:element minOccurs="0" name="KoppladKurspaketeringUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="KopplatKurspaketeringstillfalleUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Mal" type="rr:TillgodoraknandemalBas"/>
+          <xs:element minOccurs="0" name="Arendenummer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="TillgodoraknandemalBas">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Typ" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TillgodoraknandegrundExtern">
+    <xs:complexContent>
+      <xs:extension base="rr:TillgodoraknandegrundBas">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AltBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Benamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Betygsskala" type="xs:string"/>
+          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Resultat" type="xs:string"/>
+          <xs:element minOccurs="0" name="Ursprung" type="xs:string"/>
+          <xs:element minOccurs="0" ref="rr:Utbildningsform"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TillgodoraknandegrundAnnanMerit">
+    <xs:complexContent>
+      <xs:extension base="rr:TillgodoraknandegrundBas">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="rr:AnnanMerit"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TillgodoraknandegrundAnnatResultat">
+    <xs:complexContent>
+      <xs:extension base="rr:TillgodoraknandegrundBas">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="rr:AnnatResultat"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AnnatResultat">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AlternativBenamning" type="xs:string"/>
+          <xs:element name="Attesterad" type="xs:boolean"/>
+          <xs:element name="Benamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Beskrivning" type="xs:string"/>
+          <xs:element minOccurs="0" name="BetygsgradID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Betygsgradbenamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Betygsgradkod" type="xs:string"/>
+          <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Betygsskalabenamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" ref="rr:Enhet"/>
+          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
+          <xs:element minOccurs="0" name="ExternPartID" type="xs:int"/>
+          <xs:element name="Omfattningsvarde" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+          <xs:element name="UtbildningstypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Enhet">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TillgodoraknandemalDelAvKurs">
+    <xs:complexContent>
+      <xs:extension base="rr:TillgodoraknandemalBas">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendeMal" type="rr:TillgodoraknandemalDelAvKurs"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="TillgodoOmfattning" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TillgodoraknandemalHelKurs">
+    <xs:complexContent>
+      <xs:extension base="rr:TillgodoraknandemalBas">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="TillgodoOmfattning" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TillgodoraknandemalFritext">
+    <xs:complexContent>
+      <xs:extension base="rr:TillgodoraknandemalBas">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Beskrivningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="UtbildningstypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PraktikEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Datumperiod" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="Erkand" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="ExternPartID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Genomford" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="PraktikUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="PraktiktypID" type="xs:string"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Tidsomfattning" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Avbrott">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Avbrottsdatum" type="xs:date"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AktivitetstillfalleForStudentLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:AktivitetstillfalleForStudent"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AktivitetstillfalleForStudent">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element ref="rr:Aktivitetstillfalle"/>
+          <xs:element minOccurs="0" ref="rr:Aktivitetstillfallesmojlighet"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MojligaTillgodoraknandemal">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="MojligaMal" type="rr:MojligtTillgodoraknandemal"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MojligtTillgodoraknandemal">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendeMal" type="rr:MojligtTillgodoraknandemal"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="TillgodoOmfattning" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudieresultatForRapporteringPaAktivitetstillfalleSokVarden">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AktivitetstillfalleUID" type="xs:string"/>
+          <xs:element default="ALLA" minOccurs="0" name="Anmaldafiltrering" type="rr:StudieresultatAnmaldaEnum"/>
+          <xs:element default="OBEHANDLADE_UTKAST" maxOccurs="unbounded" minOccurs="0" name="Filtrering" type="rr:StudieresultatTillstandVidRapporteringEnum"/>
+          <xs:element minOccurs="0" name="GruppUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" name="KurstillfallenUID" type="xs:string"/>
+          <xs:element default="25" minOccurs="0" name="Limit" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="OrderBy" type="rr:StudieresultatOrderByEnum"/>
+          <xs:element default="1" minOccurs="0" name="Page" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="StudenterUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="EnumDummy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ResultatuppfoljningOrderByEnum" type="rr:ResultatuppfoljningOrderByEnum"/>
+      <xs:element minOccurs="0" name="StudieresultatAnmaldaEnum" type="rr:StudieresultatAnmaldaEnum"/>
+      <xs:element minOccurs="0" name="StudieresultatOrderByEnum" type="rr:StudieresultatOrderByEnum"/>
+      <xs:element minOccurs="0" name="StudieresultatTillstandVidAttesteringEnum" type="rr:StudieresultatTillstandVidAttesteringEnum"/>
+      <xs:element minOccurs="0" name="StudieresultatTillstandVidRapporteringEnum" type="rr:StudieresultatTillstandVidRapporteringEnum"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="StatusLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Status"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SokresultatVerifikatResultat">
+    <xs:complexContent>
+      <xs:extension base="base:Sokresultat">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Verifikat"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Verifikat">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="antalbetygsbeslut" type="xs:int"/>
+          <xs:element minOccurs="0" name="beslutsdatuminnan" type="xs:date"/>
+          <xs:element minOccurs="0" name="innehallerkursbetygbeslut" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="innehallermodulbetygbeslut" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RapporteringsfilterLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AnvandareUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Rapporteringsfilter"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Rapporteringsfilter">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Tillfallen"/>
+          <xs:element minOccurs="0" name="Utbildningsbenamning" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SkapaVerifikat">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element name="BeslutsdatumInnan" type="xs:date"/>
+          <xs:element name="InkluderaBeslutOmKursbetyg" type="xs:boolean"/>
+          <xs:element name="InkluderaBeslutOmModulbetyg" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SkapaFleraKursrattigheter">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:SkapaKursrattighet"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SkapaKursrattighet">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element name="AnvandareUID" type="xs:string"/>
+          <xs:element name="KursUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Kursinstansavgransningar" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Kurstillfallesavgransningar" type="xs:string"/>
+          <xs:element name="Medarbetartyp" type="rr:Resultatmedarbetaretyp"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Modulavgransningar" type="xs:string"/>
+          <xs:element name="OrganisationUID" type="xs:string"/>
+          <xs:element name="RattighetenAvser" type="rr:RattighetenAvser"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Kurstillfallen">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Utbildningstillfalle" type="rr:Kurstillfalle"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Resultatsfordelning">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AktivitetstillfalleUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="AntalFlaggadeForBorttag" type="xs:int"/>
+          <xs:element minOccurs="0" name="AntalResultatIStatus1" type="xs:int"/>
+          <xs:element minOccurs="0" name="AntalResultatIStatus2" type="xs:int"/>
+          <xs:element minOccurs="0" name="AntalResultatIStatus3" type="xs:int"/>
+          <xs:element minOccurs="0" name="AntalResultatIStatus4" type="xs:int"/>
+          <xs:element name="FinnsForbereddaForBorttag" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SkapaFlera">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:SkapaResultat"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Studietakter">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Studietakt"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Studietakt">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence>
+          <xs:element name="Takt" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -1645,193 +2148,125 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="PraktikEvent">
+  <xs:complexType name="AnnatResultatAttesteratEvent">
     <xs:complexContent>
-      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
+      <xs:extension base="events:BaseEvent">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Datumperiod" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="Erkand" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="ExternPartID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Genomford" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="PraktikUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="PraktiktypID" type="xs:string"/>
+          <xs:element minOccurs="0" name="AnnatResultatUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Beskrivning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Beslut" type="rr:BeslutEventPart"/>
+          <xs:element minOccurs="0" name="BetygsgradID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Betygsgradbenamning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Betygsgradkod" type="xs:string"/>
+          <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Betygsskalabenamning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Betygsskalakod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
+          <xs:element minOccurs="0" name="ExternpartID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:decimal"/>
           <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Tidsomfattning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningstypID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Resultatsfordelningar">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AntalRedoForBetygPaHelKurs" type="xs:int"/>
+          <xs:element minOccurs="0" name="AntalRegistreringar" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Resultatsfordelning"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ResultatPaUtbildning">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Arbetsunderlag" type="rr:Resultat"/>
+          <xs:element minOccurs="0" name="HeltTillgodoraknad" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="KanExkluderas" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="SenastAttesteradeResultat" type="rr:Resultat"/>
+          <xs:element minOccurs="0" name="TotalTillgodoraknadOmfattning" type="xs:decimal"/>
           <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Larosate">
-    <xs:complexContent>
-      <xs:extension base="base:BaseKatalogI18nEntitet">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Noteringsdefinitioner">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Noteringsdefinition"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="TaBortKlarmarkering">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
-          <xs:element name="ResultatetsSenastSparad" type="xs:dateTime"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SokresultatAktivitetstillfallesmojlighetResultat">
+  <xs:complexType name="SokresultatResultatuppfoljning">
     <xs:complexContent>
       <xs:extension base="base:Sokresultat">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Aktivitetstillfallesmojlighet"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:ResultatuppfoljningStudent"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Utbildningsinstanser">
+  <xs:complexType name="AnmalanPaAktivitetstillfalleEvent">
+    <xs:complexContent>
+      <xs:extension base="rr:AnmalanBasePaAktivitetstillfalleEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anonymiseringskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Meddelande" type="xs:string"/>
+          <xs:element minOccurs="0" name="Tidpunkt" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AndraResultatStudent">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Utbildningsinstans"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AndraResultatStudent" type="rr:AnnatResultatStudent"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="PraktikLista">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Praktik"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Praktik">
+  <xs:complexType name="AnnatResultatStudent">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Datumperiod" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="Erkand" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="ExternPartID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Genomford" type="xs:boolean"/>
-          <xs:element name="PraktiktypID" type="xs:int"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Tidsomfattning" type="xs:string"/>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Tillgodoinformation">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:decimal"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="MojligaTillgodoraknandegrunder">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="MojligGrund" type="rr:MojligTillgodoraknandegrund"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudentresultatNotering">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="NoteringsdefinitionUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Noteringstyp" type="xs:int"/>
-          <xs:element name="visaForStudent" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="Varde" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Resultatrapportorer">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Resultatrapportor"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Resultatrapportor">
-    <xs:complexContent>
-      <xs:extension base="rr:Medarbetarekoppling">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="Medarbetarekoppling">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element name="Anvandare" type="base:Anvandare"/>
-          <xs:element name="Kopplingsniva" type="rr:Medarbetarekopplingsniva"/>
-          <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="KurstillfalleUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Resultatuppfoljning">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Betygsgradskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="AlternativBenamning" type="xs:string"/>
+          <xs:element name="Attesterad" type="xs:boolean"/>
+          <xs:element name="Benamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Beskrivning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Betygsgradbenamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Betygsgradkod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Betygskala" type="xs:string"/>
+          <xs:element minOccurs="0" name="Betygsskalabenamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" ref="rr:Enhet"/>
           <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
+          <xs:element minOccurs="0" name="ExternPart" type="xs:string"/>
+          <xs:element name="Omfattningsvarde" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="Utbildningsgrundtyp" type="xs:string"/>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Utbildningstyp" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="ResultatHistorikpostLista">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Historikposter">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="Historikpost" type="rr:ResultatHistorikpost"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
+  <xs:complexType name="Larosaten">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Larosaten" type="rr:Larosate"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="Studielokaliseringar">
@@ -1848,71 +2283,34 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="SokresultatResultatuppfoljning">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:ResultatuppfoljningStudent"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="ResultatuppfoljningStudent">
+  <xs:complexType name="Aktivitetstillfallesmojligheter">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" name="KurstillfalleUID" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Resultatuppfoljning"/>
-          <xs:element minOccurs="0" name="Student" type="base:Student"/>
-          <xs:element minOccurs="0" name="Tillstand" type="rr:TillstandEnum"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Aktivitetstillfallesmojlighet"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Enheter">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Enhet"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="AndraMeriter">
+  <xs:complexType name="Resultatssattestering">
     <xs:complexContent>
-      <xs:extension base="dap:Base">
+      <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:AnnanMerit"/>
+          <xs:element maxOccurs="unbounded" name="AttestobjektUIDSet" type="xs:string"/>
+          <xs:element ref="at:Beslut"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="AnnanMeritMakuleradEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AnnanMeritUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Beslut" type="rr:BeslutEventPart"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Periodtyp">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudieresultatForRapporteringPaAktivitetstillfalleSokVarden">
+  <xs:complexType name="StudieresultatForAttesteringPaAktivitetstillfalle">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
           <xs:element minOccurs="0" name="AktivitetstillfalleUID" type="xs:string"/>
           <xs:element default="ALLA" minOccurs="0" name="Anmaldafiltrering" type="rr:StudieresultatAnmaldaEnum"/>
-          <xs:element default="OBEHANDLADE_UTKAST" maxOccurs="unbounded" minOccurs="0" name="Filtrering" type="rr:StudieresultatTillstandVidRapporteringEnum"/>
+          <xs:element default="KLARMARKERADE" maxOccurs="unbounded" minOccurs="0" name="Filtrering" type="rr:StudieresultatTillstandVidAttesteringEnum"/>
           <xs:element minOccurs="0" name="GruppUID" type="xs:string"/>
           <xs:element maxOccurs="unbounded" name="KurstillfallenUID" type="xs:string"/>
           <xs:element default="25" minOccurs="0" name="Limit" type="xs:int"/>
@@ -1924,20 +2322,253 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="BeslutsfattareLista">
+  <xs:complexType name="SkapaTillgodoraknandemalHelkurs">
     <xs:complexContent>
-      <xs:extension base="dap:Base">
+      <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Beslutsfattare"/>
+          <xs:element name="kursinstansUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Beslutsfattare">
+  <xs:complexType name="SokresultatUtbildningsinstansResultat">
     <xs:complexContent>
-      <xs:extension base="rr:Medarbetarekoppling">
+      <xs:extension base="base:Sokresultat">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Utbildningsinstans"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Periodtyper">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Periodtyp"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Periodtyp">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
         <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Noteringsdefinitioner">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Noteringsdefinition"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudentresultatPerKurs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Studentresultat"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="UtbildningarUtanKravPaResultat" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Tillgodoraknandeunderlag">
+    <xs:complexContent>
+      <xs:extension base="ar:Underlag">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="KoppladKurspaketeringsinstansUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="KopplatKurspaketeringstillfalleUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Malutbildningar" type="rr:TillgodoraknandemalBas"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Tillgodoraknandegrunder" type="rr:TillgodoraknandegrundBas"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Studenter">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Student" type="base:Student"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Studieresultat">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AktuellKursinstans" type="xs:string"/>
+          <xs:element minOccurs="0" name="AktuelltKurstillfalle" type="xs:string"/>
+          <xs:element minOccurs="0" name="Anonymiseringskod" type="xs:string"/>
+          <xs:element minOccurs="0" ref="rr:Avbrott"/>
+          <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
+          <xs:element minOccurs="0" ref="rr:Rapporteringskontext"/>
+          <xs:element minOccurs="0" name="ResultatPaUtbildningar">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:ResultatPaUtbildning"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="SenastRegistrerad" type="xs:date"/>
+          <xs:element minOccurs="0" name="Student" type="base:Student"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Betygsskalor">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Betygsskala"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AndraResultat">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AndraResultat" type="rr:AnnatResultat"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="NivaerInomStudieordning">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:NivaInomStudieordning"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Period">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence>
+          <xs:element name="PeriodtypID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Slutdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Startdatum" type="xs:date"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Enheter">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Enhet"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SkapaTillgodoraknandemal">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element name="kursinstansUID" type="xs:string"/>
+          <xs:element name="modulinstansUID" type="xs:string"/>
+          <xs:element name="Omfattning" type="xs:decimal"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AnnanMeritTillatenIGemensamExamenEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AnnanMeritUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudentresultatLista">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:StudentresultatPerKurs"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TillgodoraknandeBeslutsdatumUppdateradFixEvent">
+    <xs:complexContent>
+      <xs:extension base="rr:TillgodoraknandeEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:date"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Aktivitetstillfallen">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Aktivitetstillfalle"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AktivitetstillfalleInstalltEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="AktivitetstillfalleUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudieresultatLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Studieresultat"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SokresultatStudieresultatResultat">
+    <xs:complexContent>
+      <xs:extension base="base:Sokresultat">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Studieresultat"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SokresultatKurstillfalleResultat">
+    <xs:complexContent>
+      <xs:extension base="base:Sokresultat">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Kurstillfalle"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SkapaTillgodoraknandemalFritext">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element name="EngelskBenamning" type="xs:string"/>
+          <xs:element name="EnhetID" type="xs:int"/>
+          <xs:element minOccurs="0" name="FritextEngelska" type="xs:string"/>
+          <xs:element minOccurs="0" name="FritextSvenska" type="xs:string"/>
+          <xs:element name="Omfattningsvarde" type="xs:decimal"/>
+          <xs:element name="SvenskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningstypID" type="xs:int"/>
+        </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -1967,28 +2598,17 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Praktiktyp">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Beslutadebetyg">
+  <xs:complexType name="ResultatrattighetSokvarden">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Beslutatbetyg"/>
+          <xs:element minOccurs="0" name="AnvandareUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
+          <xs:element default="25" minOccurs="0" name="Limit" type="xs:int"/>
+          <xs:element name="Medarbetartyp" type="rr:Resultatmedarbetaretyp"/>
+          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
+          <xs:element default="1" minOccurs="0" name="Page" type="xs:int"/>
         </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="ResultatPaModulAttesteratEvent">
-    <xs:complexContent>
-      <xs:extension base="rr:ResultatPaModulTillStatusEvent">
-        <xs:sequence/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -2001,10 +2621,90 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Perioder">
+  <xs:complexType name="FlaggaForBorttagFlera">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ResultatUIDer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AnnanMeritExaminationsdatumUppdateratFixEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AnnanMeritUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Utbildning">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Tillgodogrund">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Period"/>
+      <xs:element minOccurs="0" name="Benamning" type="xs:string"/>
+      <xs:element minOccurs="0" name="Betygsskala" type="xs:string"/>
+      <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
+      <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+      <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
+      <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
+      <xs:element minOccurs="0" name="Resultat" type="xs:string"/>
+      <xs:element minOccurs="0" name="Ursprung" type="xs:string"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AnnatResultatMakuleradEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AnnatResultatUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Beslut" type="rr:BeslutEventPart"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PraktikLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Praktik"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TillgodoraknandeBorttagetEvent">
+    <xs:complexContent>
+      <xs:extension base="rr:TillgodoraknandeEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="KoppladKurspaketeringUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="KopplatKurspaketeringstillfalleUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Resultatrattigheter">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Resultatrattighet"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="TillgodoraknandeAttesteratEvent">
@@ -2019,428 +2719,10 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Grunder">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="Grunder" type="rr:GrundPart"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="Resultatssattestering">
+  <xs:complexType name="ResultatPaModulAttesteratEvent">
     <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" name="AttestobjektUIDSet" type="xs:string"/>
-          <xs:element ref="at:Beslut"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AnnatResultatAttesteratEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AnnatResultatUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Beskrivning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Beslut" type="rr:BeslutEventPart"/>
-          <xs:element minOccurs="0" name="BetygsgradID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Betygsgradbenamning" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Betygsgradkod" type="xs:string"/>
-          <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Betygsskalabenamning" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Betygsskalakod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
-          <xs:element minOccurs="0" name="ExternpartID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="UtbildningstypID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="TaBortFleraKlarmarkeringar">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:TaBortKlarmarkering"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Resultatsfordelningar">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AntalRedoForBetygPaHelKurs" type="xs:int"/>
-          <xs:element minOccurs="0" name="AntalRegistreringar" type="xs:int"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Resultatsfordelning"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Resultatsfordelning">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AktivitetstillfalleUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="AntalFlaggadeForBorttag" type="xs:int"/>
-          <xs:element minOccurs="0" name="AntalResultatIStatus1" type="xs:int"/>
-          <xs:element minOccurs="0" name="AntalResultatIStatus2" type="xs:int"/>
-          <xs:element minOccurs="0" name="AntalResultatIStatus3" type="xs:int"/>
-          <xs:element minOccurs="0" name="AntalResultatIStatus4" type="xs:int"/>
-          <xs:element name="FinnsForbereddaForBorttag" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AktivitetstillfalleAktiveratEvent">
-    <xs:complexContent>
-      <xs:extension base="rr:AktivitetstillfalleInstalltEvent">
+      <xs:extension base="rr:ResultatPaModulTillStatusEvent">
         <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AktivitetstillfalleInstalltEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element name="AktivitetstillfalleUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudentresultatPerKurs">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Studentresultat"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="UtbildningarUtanKravPaResultat" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="Studentresultat">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
-          <xs:element minOccurs="0" name="Betygsgradskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Enhetskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="ExamineradOmfattning" type="xs:decimal"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="StudentresultatNoteringar" type="rr:StudentresultatNotering"/>
-          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:decimal"/>
-          <xs:element minOccurs="0" ref="rr:Projekttitel"/>
-          <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="TidigareAttesteradeResultat" type="rr:Studentresultat"/>
-          <xs:element minOccurs="0" ref="rr:Tillgodoinformation"/>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StatusLista">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Status"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Status">
-    <xs:complexContent>
-      <xs:extension base="rr:BaseResultatattribut">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="at:Beslut"/>
-          <xs:element minOccurs="0" name="Betygsgradsobjekt" type="rr:Betygsgrad"/>
-          <xs:element minOccurs="0" name="Klarmarkering" type="rr:Klarmarkera"/>
-          <xs:element minOccurs="0" name="Kurstillfalleskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="ProcessStatus" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Historikpost">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AltBenamning" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="AltEnhet" type="xs:string"/>
-          <xs:element minOccurs="0" name="AltKod" type="xs:string"/>
-          <xs:element minOccurs="0" name="AltOmfattning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Attestant" type="base:Anvandare"/>
-          <xs:element minOccurs="0" name="AvserOmfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
-          <xs:element name="Beslutsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Beslutsfattare" type="base:Anvandare"/>
-          <xs:element minOccurs="0" name="BetyggradID" type="xs:int"/>
-          <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Enhet" type="xs:string"/>
-          <xs:element name="Examinationsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="ExterntBeslut" type="xs:boolean"/>
-          <xs:element name="Historiktyp" type="xs:string"/>
-          <xs:element name="Handelse" type="xs:string"/>
-          <xs:element name="Handelsetid" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="KlarmarkeradAvAnvandare" type="base:Anvandare"/>
-          <xs:element minOccurs="0" name="Klarmarkeringsdatum" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="Kod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Sammanfattning" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Arendenummer" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AktivitetstillfalleEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Aktiviteter" type="rr:AktivitetstillfallesreferensEventPart"/>
-          <xs:element name="AktivitetstillfalleUID" type="xs:string"/>
-          <xs:element name="AktivitetstillfallestypID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Anmalan" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="Anmalningsperiod" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="Anonymt" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="Antaldeltaganden" type="xs:int"/>
-          <xs:element minOccurs="0" name="AvserKurs" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="Borttagen" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="DatumPeriod" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="Engelskbenamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Installd" type="xs:boolean"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="KurstillfalleUIDer" type="xs:string"/>
-          <xs:element minOccurs="0" name="Lank" type="xs:string"/>
-          <xs:element minOccurs="0" name="Lopnummer" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="Ort" type="xs:string"/>
-          <xs:element minOccurs="0" name="Plats" type="xs:string"/>
-          <xs:element minOccurs="0" name="Prefix" type="xs:string"/>
-          <xs:element minOccurs="0" name="Sluttid" type="xs:time"/>
-          <xs:element minOccurs="0" name="Starttid" type="xs:time"/>
-          <xs:element minOccurs="0" name="Svenskbenamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="TillatAnmalanForStudentMedGodkantResultat" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="VisaEndastAnonymkodForStudentNarAktivitetstillfalletPasserat" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="OvrigInformation" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Larosaten">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Larosaten" type="rr:Larosate"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Studietakt">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence>
-          <xs:element name="Takt" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Studietakter">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Studietakt"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="SkapaTillgodoraknandemal">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element name="kursinstansUID" type="xs:string"/>
-          <xs:element name="modulinstansUID" type="xs:string"/>
-          <xs:element name="Omfattning" type="xs:decimal"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Moment">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Aktivitetstillfallen" type="rr:Aktivitetstillfalle"/>
-          <xs:element minOccurs="0" name="AntalRegistrerade" type="xs:int"/>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Enhet" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendeMoment" type="rr:Moment"/>
-          <xs:element minOccurs="0" name="IngaendeModuler" type="rr:Ingaendemoduler"/>
-          <xs:element name="KravPaProjekttitel" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="Kurstillfalleskod" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Noteringsdefinitioner" type="rr:Noteringsdefinition"/>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="Slutdatum" type="xs:string"/>
-          <xs:element minOccurs="0" name="Startdatum" type="xs:string"/>
-          <xs:element minOccurs="0" name="Studietaktsbenamning" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Takt" type="xs:int"/>
-          <xs:element minOccurs="0" name="Undervisningsformbenamning" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Versionsnummer" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UppdateraResultat">
-    <xs:complexContent>
-      <xs:extension base="rr:BaseResultatattribut">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AktivitetstillfalleUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="SenasteResultatandring" type="xs:dateTime"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudieresultatForAttesteringPaAktivitetstillfalle">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AktivitetstillfalleUID" type="xs:string"/>
-          <xs:element default="ALLA" minOccurs="0" name="Anmaldafiltrering" type="rr:StudieresultatAnmaldaEnum"/>
-          <xs:element default="KLARMARKERADE" maxOccurs="unbounded" minOccurs="0" name="Filtrering" type="rr:StudieresultatTillstandVidAttesteringEnum"/>
-          <xs:element minOccurs="0" name="GruppUID" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" name="KurstillfallenUID" type="xs:string"/>
-          <xs:element default="25" minOccurs="0" name="Limit" type="xs:int"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="OrderBy" type="rr:StudieresultatOrderByEnum"/>
-          <xs:element default="1" minOccurs="0" name="Page" type="xs:int"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="StudenterUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudieresultatLista">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Studieresultat"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Periodtyper">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Periodtyp"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="AnnanMeritExaminationsdatumUppdateratFixEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AnnanMeritUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="HistorikpostLista">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Historikposter">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Historikpost"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Betygsskala">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Betygsgrad"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="KlarmarkeraTillgodoraknande">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element name="AttestantUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Betygsskalor">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Betygsskala"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Tillgodoraknandeunderlag">
-    <xs:complexContent>
-      <xs:extension base="ar:Underlag">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="KoppladKurspaketeringsinstansUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="KopplatKurspaketeringstillfalleUID" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Malutbildningar" type="rr:TillgodoraknandemalBas"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Tillgodoraknandegrunder" type="rr:TillgodoraknandegrundBas"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Kurstillfallen">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Utbildningstillfalle" type="rr:Kurstillfalle"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Tillfallesdeltagande">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Kurstillfalle" type="xs:string"/>
-          <xs:element minOccurs="0" name="Registreringsdatum" type="xs:date"/>
-        </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -2456,10 +2738,36 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="AvanmalanPaAktivitetstillfalleEvent">
+  <xs:complexType name="Perioder">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Period"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AktivitetstillfalleAktiveratEvent">
     <xs:complexContent>
-      <xs:extension base="rr:AnmalanBasePaAktivitetstillfalleEvent">
+      <xs:extension base="rr:AktivitetstillfalleInstalltEvent">
         <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Utbildningsinstanser">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Utbildningsinstans"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Beslutadebetyg">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Beslutatbetyg"/>
+        </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -2488,52 +2796,22 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="TillgodoraknandeBeslutsdatumUppdateradFixEvent">
+  <xs:complexType name="AnnanMeritMakuleradEvent">
     <xs:complexContent>
-      <xs:extension base="rr:TillgodoraknandeEvent">
+      <xs:extension base="events:BaseEvent">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="AnnanMeritUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Beslut" type="rr:BeslutEventPart"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="StudentresultatLista">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:StudentresultatPerKurs"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="Rapporteringsfilter">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Tillfallen"/>
-          <xs:element minOccurs="0" name="Utbildningsbenamning" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Tillgodogrund">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Benamning" type="xs:string"/>
-      <xs:element minOccurs="0" name="Betygsskala" type="xs:string"/>
-      <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
-      <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
-      <xs:element minOccurs="0" name="Examinator" type="xs:string"/>
-      <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
-      <xs:element minOccurs="0" name="Resultat" type="xs:string"/>
-      <xs:element minOccurs="0" name="Ursprung" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="RapporteringsfilterLista">
+  <xs:complexType name="MojligaTillgodoraknandegrunder">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" name="AnvandareUID" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Rapporteringsfilter"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="MojligGrund" type="rr:MojligTillgodoraknandegrund"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2552,112 +2830,14 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="AnnatResultatMakuleradEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AnnatResultatUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Beslut" type="rr:BeslutEventPart"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Praktiktyper">
-    <xs:complexContent>
-      <xs:extension base="base:Grunddatavardelista">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Praktiktyp"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SokresultatVerifikatResultat">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:Verifikat"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Verifikat">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="antalbetygsbeslut" type="xs:int"/>
-          <xs:element minOccurs="0" name="beslutsdatuminnan" type="xs:date"/>
-          <xs:element minOccurs="0" name="innehallerkursbetygbeslut" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="innehallermodulbetygbeslut" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AttesteringsbeslutForResultatUppdateratEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
-          <xs:element minOccurs="0" name="BeslutsfattareUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="ExternPart">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Noteringstyp">
-    <xs:complexContent>
-      <xs:extension base="base:BaseKatalogEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="I18nNyckel" type="xs:string"/>
-          <xs:element minOccurs="0" name="Namn" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SkapaNoteringsdefinition">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element name="Benamningar" type="base:Benamningar"/>
-          <xs:element name="Noteringstyp" type="xs:int"/>
-          <xs:element name="Obligatorisk" type="xs:boolean"/>
-          <xs:element name="Publicera" type="xs:boolean"/>
-          <xs:element name="VisaForStudent" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="ResultatLista">
+  <xs:complexType name="UppdateraKursrattighet">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Resultat"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AnnanMeritTillatenIGemensamExamenEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AnnanMeritUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Kursinstansavgransningar" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Kurstillfallesavgransningar" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Modulavgransningar" type="xs:string"/>
+          <xs:element name="RattighetenAvser" type="rr:RattighetenAvser"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2673,162 +2853,76 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Studenter">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Student" type="base:Student"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UppdateraFlera">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="rr:UppdateraResultat"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SkapaTillgodoraknandemalHelkurs">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element name="kursinstansUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="TillgodoraknandegrundResultatFixEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Resultatgrunder" type="rr:Grunder"/>
-          <xs:element minOccurs="0" name="TillgodoraknandeUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Aktivitetstillfallesmojligheter">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Aktivitetstillfallesmojlighet"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Noteringstyper">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Noteringstyper" type="rr:Noteringstyp"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:simpleType name="MalTyp">
+  <xs:simpleType name="GrundTyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="FRITEXT"/>
-      <xs:enumeration value="HEL_KURS"/>
-      <xs:enumeration value="DEL_AV_KURS"/>
+      <xs:enumeration value="ANNAN_MERIT"/>
+      <xs:enumeration value="ANNAT_RESULTAT"/>
+      <xs:enumeration value="RESULTAT"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="StudieresultatTillstandVidAttesteringEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="KLARMARKERADE_OCH_ATTESTERADE"/>
-      <xs:enumeration value="FORBEREDD_FOR_BORTTAG"/>
       <xs:enumeration value="KLARMARKERADE"/>
+      <xs:enumeration value="FORBEREDD_FOR_BORTTAG"/>
+      <xs:enumeration value="KLARMARKERADE_OCH_ATTESTERADE"/>
       <xs:enumeration value="ATTESTERADE"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="StudieresultatOrderByEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="PERSONNUMMER_ASC"/>
-      <xs:enumeration value="STATUS_DESC"/>
-      <xs:enumeration value="EXAMINATIONSDATUM_DESC"/>
-      <xs:enumeration value="FORNAMN_ASC"/>
-      <xs:enumeration value="BETYGSGRAD_ASC"/>
-      <xs:enumeration value="PERSONNUMMER_DESC"/>
+      <xs:enumeration value="EXAMINATIONSDATUM_ASC"/>
       <xs:enumeration value="ANONYMKOD_ASC"/>
-      <xs:enumeration value="FORNAMN_DESC"/>
       <xs:enumeration value="STATUS_ASC"/>
-      <xs:enumeration value="EFTERNAMN_DESC"/>
-      <xs:enumeration value="EXAMINATIONSDATUM_ASC"/>
-      <xs:enumeration value="ANONYMKOD_DESC"/>
-      <xs:enumeration value="EFTERNAMN_ASC"/>
-      <xs:enumeration value="BETYGSGRAD_DESC"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="GrundTyp">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="ANNAT_RESULTAT"/>
-      <xs:enumeration value="RESULTAT"/>
-      <xs:enumeration value="ANNAN_MERIT"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="StudieresultatTillstandVidRapporteringEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="FORBEREDD_FOR_BORTTAG"/>
-      <xs:enumeration value="OBEHANDLADE"/>
-      <xs:enumeration value="KLARMARKERADE"/>
-      <xs:enumeration value="OBEHANDLADE_UTKAST"/>
-      <xs:enumeration value="UTKAST"/>
-      <xs:enumeration value="OBEHANDLADE_UTKAST_KLARMARKERADE"/>
-      <xs:enumeration value="OBEHANDLADE_UTKAST_KLARMARKERADE_ATTESTERADE"/>
-      <xs:enumeration value="ATTESTERADE"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="ResultatuppfoljningOrderByEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="BETYGSGRAD_DESC"/>
-      <xs:enumeration value="BETYGSGRAD_ASC"/>
-      <xs:enumeration value="PERSONNUMMER_ASC"/>
-      <xs:enumeration value="EXAMINATIONSDATUM_DESC"/>
-      <xs:enumeration value="EXAMINATIONSDATUM_ASC"/>
-      <xs:enumeration value="FORNAMN_ASC"/>
       <xs:enumeration value="PERSONNUMMER_DESC"/>
-      <xs:enumeration value="FORNAMN_DESC"/>
       <xs:enumeration value="EFTERNAMN_ASC"/>
+      <xs:enumeration value="EXAMINATIONSDATUM_DESC"/>
+      <xs:enumeration value="STATUS_DESC"/>
+      <xs:enumeration value="FORNAMN_ASC"/>
+      <xs:enumeration value="ANONYMKOD_DESC"/>
+      <xs:enumeration value="BETYGSGRAD_ASC"/>
+      <xs:enumeration value="BETYGSGRAD_DESC"/>
+      <xs:enumeration value="FORNAMN_DESC"/>
+      <xs:enumeration value="PERSONNUMMER_ASC"/>
       <xs:enumeration value="EFTERNAMN_DESC"/>
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="StudieresultatAnmaldaEnum">
+  <xs:simpleType name="Resultatmedarbetaretyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="ANMALDA"/>
-      <xs:enumeration value="ALLA"/>
-      <xs:enumeration value="EJ_ANMALDA"/>
+      <xs:enumeration value="ATTESTANT"/>
+      <xs:enumeration value="RAPPORTOR"/>
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="Tillgodoraknandegrundtyp">
+  <xs:simpleType name="RattighetenAvser">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="EXTERN"/>
-      <xs:enumeration value="ANNAN_MERIT"/>
-      <xs:enumeration value="INTERN"/>
-      <xs:enumeration value="ANNAT_RESULTAT"/>
+      <xs:enumeration value="MODUL_RESULTAT"/>
+      <xs:enumeration value="HEL_KURS_OCH_MODUL_RESULTAT"/>
+      <xs:enumeration value="HEL_KURS_RESULTAT"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Medarbetarekopplingsniva">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="resultat.kopplingsniva.kurstillfalle"/>
       <xs:enumeration value="resultat.kopplingsniva.organisation"/>
       <xs:enumeration value="resultat.kopplingsniva.kurs"/>
       <xs:enumeration value="resultat.kopplingsniva.modul"/>
+      <xs:enumeration value="resultat.kopplingsniva.kurstillfalle"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="StudieresultatTillstandVidRapporteringEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OBEHANDLADE_UTKAST_KLARMARKERADE"/>
+      <xs:enumeration value="OBEHANDLADE_UTKAST_KLARMARKERADE_ATTESTERADE"/>
+      <xs:enumeration value="ATTESTERADE"/>
+      <xs:enumeration value="FORBEREDD_FOR_BORTTAG"/>
+      <xs:enumeration value="KLARMARKERADE"/>
+      <xs:enumeration value="OBEHANDLADE_UTKAST"/>
+      <xs:enumeration value="OBEHANDLADE"/>
+      <xs:enumeration value="UTKAST"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -2837,6 +2931,46 @@
       <xs:enumeration value="REGISTRERAD"/>
       <xs:enumeration value="AVBROTT"/>
       <xs:enumeration value="AVKLARAD"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="MalTyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DEL_AV_KURS"/>
+      <xs:enumeration value="FRITEXT"/>
+      <xs:enumeration value="HEL_KURS"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Tillgodoraknandegrundtyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="INTERN"/>
+      <xs:enumeration value="ANNAT_RESULTAT"/>
+      <xs:enumeration value="EXTERN"/>
+      <xs:enumeration value="ANNAN_MERIT"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="StudieresultatAnmaldaEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ALLA"/>
+      <xs:enumeration value="ANMALDA"/>
+      <xs:enumeration value="EJ_ANMALDA"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ResultatuppfoljningOrderByEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EXAMINATIONSDATUM_ASC"/>
+      <xs:enumeration value="EFTERNAMN_DESC"/>
+      <xs:enumeration value="EXAMINATIONSDATUM_DESC"/>
+      <xs:enumeration value="PERSONNUMMER_DESC"/>
+      <xs:enumeration value="FORNAMN_ASC"/>
+      <xs:enumeration value="BETYGSGRAD_DESC"/>
+      <xs:enumeration value="BETYGSGRAD_ASC"/>
+      <xs:enumeration value="FORNAMN_DESC"/>
+      <xs:enumeration value="EFTERNAMN_ASC"/>
+      <xs:enumeration value="PERSONNUMMER_ASC"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
