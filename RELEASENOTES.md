@@ -1,5 +1,11 @@
 # Release notes
 
+## 1.0.0
+
+Let's go final initial.
+
+* Update to ladok3 version 1.6.2.
+
 ## 0.9.0
 
 * Update to ladok3 version 1.5.1.
