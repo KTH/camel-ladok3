@@ -80,7 +80,7 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
     }
 
     public boolean isSingleton() {
-        return true;
+        return false;
     }
 
     public InputStream get(final URL url) throws IOException {
