@@ -1,5 +1,9 @@
 # Release notes
 
+## 1.0.1
+
+* Fix: Camel component cannot be singleton.
+
 ## 1.0.0
 
 Let's go final initial.
