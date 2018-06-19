@@ -26,7 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.kth.infosys.smx.ladok3</groupId>
   <artifactId>ladok3</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <packaging>pom</packaging>
 
   <name>KTH Ladok3 Integration</name>
@@ -90,7 +90,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <camel-version>2.19.5</camel-version>
-    <cxf-client-version>3.1.15</cxf-client-version>
+    <cxf-client-version>3.1.14</cxf-client-version>
   </properties>
 
   <dependencyManagement>

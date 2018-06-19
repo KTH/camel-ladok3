@@ -1,5 +1,9 @@
 # Release notes
 
+## 1.1.1
+
+* Fix dependency issue.
+
 ## 1.1.0
 
 * New endpoints implemented for ladok-rest and camel producer.
