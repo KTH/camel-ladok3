@@ -90,7 +90,7 @@ public class Ladok3StudiedeltagandeServiceTest {
         params.put("datumperiod", "2018-01-16_2018-06-04");
         params.put("limit", 5);
 
-        Iterator<StudieaktivitetUtdata> iterator = studiedeltagandeService.utdataStudieaktivitetOchFinansieringIterator(params).iterator();
+        Iterator<StudieaktivitetUtdata> iterator = studiedeltagandeService.utdataStudieaktivitetOchFinansieringIteraterable(params).iterator();
         assertNotNull(iterator);
         assertTrue(iterator.hasNext());
 

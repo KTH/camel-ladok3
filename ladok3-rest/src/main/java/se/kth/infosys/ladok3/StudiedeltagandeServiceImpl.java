@@ -110,7 +110,7 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
     /**
      * {@inheritDoc}
      */
-    public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIterator(Map<String, Object> params) {
+    public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIteraterable(Map<String, Object> params) {
         return new StudieaktivitetUtdataResultat(this, params);
     }
 

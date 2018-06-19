@@ -1,5 +1,7 @@
 package se.kth.infosys.smx.ladok3.internal;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,13 +16,17 @@ import se.kth.infosys.ladok3.StudiedeltagandeService;
 import se.kth.infosys.ladok3.StudiedeltagandeServiceImpl;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.studentinformation.Student;
+import se.ladok.schemas.studentinformation.StudentISokresultat;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
+import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 
 public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrapper {
     private static final Logger log = LoggerFactory.getLogger(Ladok3StudiedeltagandeServiceWrapper.class);
     private static final Pattern URL_PATTERN = Pattern.compile(
             "^/studiedeltagande(/(?<operation>"
+            + "tillfallesdeltagande/kurstillfallesdeltagande/student|"
+            + "utdata/studieaktivitetochfinansiering|"
             + "pabarjadtbildning/kurspaketering/student|"
             + "studiestruktur/student"
             + "))+.*");
@@ -38,6 +44,12 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
     public void doExchange(Exchange exchange) throws Exception {
         final String operation = currentOperation(exchange);
         switch (operation) {
+        case "tillfallesdeltagande/kurstillfallesdeltagande/student":
+            handleKurstillfallesdeltagandeStudent(exchange);
+            break;
+        case "utdata/studieaktivitetochfinansiering":
+            handleStudieaktivitetOchFinansiering(exchange);
+            break;
         case "pabarjadtbildning/kurspaketering/student":
             handlePabarjadutbildningKurspaketeringStudent(exchange);
             break;
@@ -47,6 +59,30 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
         default:
             throw new CamelExchangeException("Unupported operation: %s" + operation, exchange);
         }
+    }
+
+    private void handleKurstillfallesdeltagandeStudent(Exchange exchange) throws Exception {
+        String uid = exchange.getIn().getHeader(Ladok3Message.Header.KeyValue, String.class);
+        if (uid == null || uid.isEmpty()) {
+            Student student = exchange.getIn().getMandatoryBody(Student.class);
+            uid = student.getUid();
+        }
+
+        log.debug("Getting kurstillfallesdeltaganden for student with uid: {}", uid);
+        TillfallesdeltagandeLista fromLadok = service.kurstillfallesdeltagandeStudent(uid);
+        exchange.getIn().setBody(fromLadok);
+    }
+
+    private void handleStudieaktivitetOchFinansiering(Exchange exchange) {
+        @SuppressWarnings("unchecked")
+        HashMap<String, Object> params = exchange.getIn().getHeader(
+                Ladok3Message.Header.Params, new HashMap<String, Object>(), HashMap.class);
+
+        log.debug("Getting Ladok data for studieaktivetet och finansiering request with params: {}",
+                params);
+        Iterator<StudieaktivitetUtdata> fromLadok =
+                service.utdataStudieaktivitetOchFinansieringIteraterable(params).iterator();
+        exchange.getIn().setBody(fromLadok);
     }
 
     private void handleStudiestrukturStudent(Exchange exchange) throws Exception {

@@ -70,12 +70,12 @@ public interface StudiedeltagandeService extends Ladok3Service {
 
     /**
      * Higher abstraction of {@link #utdataStudieaktivitetOchFinansiering} method which returns 
-     * an iterator of StudieaktivitetUtdata hiding all paging related issues.
+     * an iterable of StudieaktivitetUtdata hiding all paging related issues.
      * 
      * @param params A map between parameter strings and their object values.
      * @return an iterable for all search results matching params.
      */
-    public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIterator(final Map<String, Object> params);
+    public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIteraterable(final Map<String, Object> params);
 
     /**
      * Hämta alla kurstillfällesdeltaganden för en student.
