@@ -18,15 +18,15 @@
 
   <xs:simpleType name="Aviseringskategori">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="RESULTATINFORMATION"/>
       <xs:enumeration value="ATTESTERINGSINFORMATION"/>
+      <xs:enumeration value="RESULTATINFORMATION"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Leveransalternativ">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="INGEN"/>
       <xs:enumeration value="EPOST"/>
+      <xs:enumeration value="INGEN"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
