@@ -23,7 +23,11 @@
  */
 package se.kth.infosys.ladok3;
 
+import java.util.Map;
+
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
+import se.ladok.schemas.studiedeltagande.SokresultatStudieAktivitetOchFinansiering;
+import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 
 /**
@@ -43,4 +47,33 @@ public interface StudiedeltagandeService extends Ladok3Service {
      * @return studiestrukturer för student.
      */
     public IngaendeKurspaketeringstillfalleLista studiestrukturStudent(final String uid);
+
+    /**
+     * Sök studieaktivitet och finansiering.
+     * 
+     * Anropar /studiedeltagande/utdata/studieaktivitetochfinansiering med frågeparametrar
+     * enligt params. Se Ladok REST-dokumentation för mer information om parametrar.
+     *
+     * <pre>
+     * {@code
+     * Map<String, Object> params = new HashMap<String, Object>();
+     * params.put("datumperiod", "2018-01-14_2018-06-04");
+     * SokresultatStudieAktivitetOchFinansiering res =
+     *     studiedeltagandeService.utdataStudieaktivitetOchFinansiering(params);
+     * }
+     * </pre>
+     * 
+     * @param params A map between parameter strings and their object values.
+     * @return The search result.
+     */
+    public SokresultatStudieAktivitetOchFinansiering utdataStudieaktivitetOchFinansiering(final Map<String, Object> params);
+
+    /**
+     * Higher abstraction of {@link #utdataStudieaktivitetOchFinansiering} method which returns 
+     * an iterator of StudieaktivitetUtdata hiding all paging related issues.
+     * 
+     * @param params A map between parameter strings and their object values.
+     * @return an iterable for all search results matching params.
+     */
+    public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIterator(final Map<String, Object> params);
 }

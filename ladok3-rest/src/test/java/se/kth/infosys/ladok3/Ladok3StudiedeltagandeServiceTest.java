@@ -23,7 +23,13 @@
  */
 package se.kth.infosys.ladok3;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Before;
@@ -32,7 +38,9 @@ import org.junit.Test;
 
 import se.ladok.schemas.dap.RelationLink;
 import se.ladok.schemas.dap.ServiceIndex;
+import se.ladok.schemas.studentinformation.StudentISokresultat;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
+import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 
 public class Ladok3StudiedeltagandeServiceTest {
@@ -74,5 +82,20 @@ public class Ladok3StudiedeltagandeServiceTest {
 
         IngaendeKurspaketeringstillfalleLista tillfallen = studiedeltagandeService.studiestrukturStudent(uid);
         assert(tillfallen.getStudiestrukturer().getStudiestruktur().size() > 0);
+    }
+
+    @Test
+    public void testUtdataStudieaktivitetOchFinansieringIterator() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("datumperiod", "2018-01-16_2018-06-04");
+        params.put("limit", 5);
+
+        Iterator<StudieaktivitetUtdata> iterator = studiedeltagandeService.utdataStudieaktivitetOchFinansieringIterator(params).iterator();
+        assertNotNull(iterator);
+        assertTrue(iterator.hasNext());
+
+        for (int i = 0; i < 7; i++) {
+            assertNotNull(iterator.next());
+        }
     }
 }

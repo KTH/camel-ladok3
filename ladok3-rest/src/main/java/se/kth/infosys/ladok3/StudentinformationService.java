@@ -30,6 +30,7 @@ import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresen
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 import se.ladok.schemas.studentinformation.Studenthistorikposter;
+import se.ladok.schemas.studiedeltagande.SokresultatStudieAktivitetOchFinansiering;
 
 /**
  * Interface representing the Ladok studentinformation service.
