@@ -113,4 +113,15 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
     public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIterator(Map<String, Object> params) {
         return new StudieaktivitetUtdataResultat(this, params);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public TillfallesdeltagandeLista kurstillfallesdeltagandeStudent(String uid) {
+        return target.path("/tillfallesdeltagande/kurstillfallesdeltagande/student/{studentuid}")
+                .resolveTemplate("studentuid", uid)
+                .request()
+                .accept(SERVICE_TYPE)
+                .get(TillfallesdeltagandeLista.class);
+    }
 }

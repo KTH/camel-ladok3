@@ -76,4 +76,12 @@ public interface StudiedeltagandeService extends Ladok3Service {
      * @return an iterable for all search results matching params.
      */
     public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIterator(final Map<String, Object> params);
+
+    /**
+     * Hämta alla kurstillfällesdeltaganden för en student.
+     *
+     * @param uid student UID
+     * @return kurstillfällesdeltagande för student.
+     */
+    public TillfallesdeltagandeLista kurstillfallesdeltagandeStudent(String uid);
 }

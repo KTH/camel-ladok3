@@ -23,6 +23,7 @@
  */
 package se.kth.infosys.ladok3;
 
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -38,7 +39,6 @@ import org.junit.Test;
 
 import se.ladok.schemas.dap.RelationLink;
 import se.ladok.schemas.dap.ServiceIndex;
-import se.ladok.schemas.studentinformation.StudentISokresultat;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
@@ -97,5 +97,15 @@ public class Ladok3StudiedeltagandeServiceTest {
         for (int i = 0; i < 7; i++) {
             assertNotNull(iterator.next());
         }
+    }
+
+    @Test
+     public void testKurstillfallesdeltagandeStudent() {
+        String uid = properties.getProperty("ladok3.test.Ladok3StudiedeltagandeServiceTest.kurstillfallesdeltagandeStudent.uid");
+
+        TillfallesdeltagandeLista pabarjadUtbildning = studiedeltagandeService.pabarjadutbildningKurspaketeringStudent(uid);
+        assertNotNull(pabarjadUtbildning.getTillfallesdeltaganden());
+        assertNotNull(pabarjadUtbildning.getTillfallesdeltaganden().getTillfallesdeltagande());
+        assertNotEquals(0, pabarjadUtbildning.getTillfallesdeltaganden().getTillfallesdeltagande().size());
     }
 }
