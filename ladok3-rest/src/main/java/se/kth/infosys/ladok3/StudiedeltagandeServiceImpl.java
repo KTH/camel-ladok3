@@ -29,7 +29,6 @@ import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.SokresultatStudieAktivitetOchFinansiering;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
