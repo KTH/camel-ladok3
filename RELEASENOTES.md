@@ -1,5 +1,9 @@
 # Release notes
 
+## 1.1.2
+
+* Update to ladok3 1.7.0.
+
 ## 1.1.1
 
 * Fix dependency issue.
