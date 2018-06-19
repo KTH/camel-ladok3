@@ -30,6 +30,7 @@ import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresen
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 import se.ladok.schemas.studentinformation.Studenthistorikposter;
+import se.ladok.schemas.studiedeltagande.SokresultatStudieAktivitetOchFinansiering;
 
 /**
  * Interface representing the Ladok studentinformation service.
@@ -88,7 +89,7 @@ public interface StudentinformationService extends Ladok3Service {
 
     /**
      * Higher abstraction of {@link #studentFiltrera} method which returns 
-     * an iterator of StudentISokresultat hiding all paging related issues.
+     * an iterable of StudentISokresultat hiding all paging related issues.
      * 
      * @param params A map between parameter strings and their object values.
      * @return an iterable for all search results matching params.
@@ -97,7 +98,7 @@ public interface StudentinformationService extends Ladok3Service {
 
     /**
      * Higher abstraction of {@link #studentFiltrera} method which returns 
-     * an iterator of Student hiding all paging related and call to student information
+     * an iterable of Student hiding all paging related and call to student information
      * service issues.
      * 
      * @param params A map between parameter strings and their object values.

@@ -1,5 +1,11 @@
 # Release notes
 
+## 1.1.0
+
+* New endpoints implemented for ladok-rest and camel producer.
+  /tillfallesdeltagande/kurstillfallesdeltagande/student/
+  /studieresultat/utdata/studieaktivitetochfinansiering
+
 ## 1.0.1
 
 * Fix: Camel component cannot be singleton.

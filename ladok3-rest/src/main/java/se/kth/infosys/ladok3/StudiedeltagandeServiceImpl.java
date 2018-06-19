@@ -23,10 +23,15 @@
  */
 package se.kth.infosys.ladok3;
 
+import java.util.Map;
+
 import javax.net.ssl.SSLContext;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
+import se.ladok.schemas.studiedeltagande.SokresultatStudieAktivitetOchFinansiering;
+import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 
 /**
@@ -81,5 +86,42 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
                 .request()
                 .accept(SERVICE_TYPE)
                 .get(IngaendeKurspaketeringstillfalleLista.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public SokresultatStudieAktivitetOchFinansiering utdataStudieaktivitetOchFinansiering(Map<String, Object> params) {
+        WebTarget request = target.path("/utdata/studieaktivitetochfinansiering");
+
+        params.putIfAbsent("limit", 400);
+        params.putIfAbsent("page", 1);
+
+        for (String param : params.keySet()) {
+            request = request.queryParam(param, params.get(param));
+        }
+
+        return request
+                .request()
+                .accept(SERVICE_TYPE)
+                .get(SokresultatStudieAktivitetOchFinansiering.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIteraterable(Map<String, Object> params) {
+        return new StudieaktivitetUtdataResultat(this, params);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public TillfallesdeltagandeLista kurstillfallesdeltagandeStudent(String uid) {
+        return target.path("/tillfallesdeltagande/kurstillfallesdeltagande/student/{studentuid}")
+                .resolveTemplate("studentuid", uid)
+                .request()
+                .accept(SERVICE_TYPE)
+                .get(TillfallesdeltagandeLista.class);
     }
 }
