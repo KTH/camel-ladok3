@@ -16,7 +16,6 @@ import se.kth.infosys.ladok3.StudiedeltagandeService;
 import se.kth.infosys.ladok3.StudiedeltagandeServiceImpl;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.studentinformation.Student;
-import se.ladok.schemas.studentinformation.StudentISokresultat;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
@@ -27,13 +26,14 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
             "^/studiedeltagande(/(?<operation>"
             + "tillfallesdeltagande/kurstillfallesdeltagande/student|"
             + "utdata/studieaktivitetochfinansiering|"
-            + "pabarjadtbildning/kurspaketering/student|"
+            + "pabarjadutbildning/kurspaketering/student|"
             + "studiestruktur/student"
             + "))+.*");
     private StudiedeltagandeService service;
     private String pathOperation;
 
-    public Ladok3StudiedeltagandeServiceWrapper(String host, String path, SSLContext context) throws Exception {
+    public Ladok3StudiedeltagandeServiceWrapper(String host, String path, SSLContext context)
+            throws Exception {
         this.service = new StudiedeltagandeServiceImpl(host, context);
         Matcher matcher = URL_PATTERN.matcher(path);
         if (matcher.matches()) {
@@ -50,7 +50,7 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
         case "utdata/studieaktivitetochfinansiering":
             handleStudieaktivitetOchFinansiering(exchange);
             break;
-        case "pabarjadtbildning/kurspaketering/student":
+        case "pabarjadutbildning/kurspaketering/student":
             handlePabarjadutbildningKurspaketeringStudent(exchange);
             break;
         case "studiestruktur/student":
