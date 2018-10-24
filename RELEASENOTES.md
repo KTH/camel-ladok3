@@ -1,8 +1,12 @@
 # Release notes
 
+## 1.14.1
+
+* Update to ladok3 1.14.1.
+
 ## 1.1.4
 
-* Update to ladok3 1.1.10.
+* Update to ladok3 1.10.0
 
 ## 1.1.2
 
