@@ -21,17 +21,6 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Attestering">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="AttestobjektUIDSet" type="xs:string"/>
-          <xs:element minOccurs="0" ref="at:Beslut"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="Beslut">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
@@ -42,6 +31,17 @@
           <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
           <xs:element minOccurs="0" name="SenasteSenastSparad" type="xs:string"/>
           <xs:element minOccurs="0" name="AterautentiseringReturnURI" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Attestering">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AttestobjektUIDSet" type="xs:string"/>
+          <xs:element minOccurs="0" ref="at:Beslut"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
