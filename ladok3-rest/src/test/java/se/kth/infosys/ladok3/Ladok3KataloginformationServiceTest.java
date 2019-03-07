@@ -36,6 +36,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.ws.rs.ClientErrorException;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import se.ladok.schemas.Identiteter;
@@ -47,6 +48,7 @@ import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
 import se.ladok.schemas.kataloginformation.ObjectFactory;
 
+@Ignore("Does not work without connection to Ladok")
 public class Ladok3KataloginformationServiceTest {
     private static final String TEST_ANVANDARE_KTH_SE = "ladok3-rest-test@kth.se";
     private KataloginformationService katalogInformationService;
