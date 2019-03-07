@@ -25,8 +25,10 @@ package se.kth.infosys.smx.ladok3;
 
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore("Does not work without connection to Ladok")
 public class Ladok3ProducerTest extends CamelBlueprintTestSupport {
     @Override
     protected String[] loadConfigAdminConfigurationFile() {
