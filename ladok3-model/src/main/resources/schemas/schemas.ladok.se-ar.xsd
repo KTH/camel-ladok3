@@ -7,6 +7,10 @@
 
   <xs:import namespace="http://schemas.ladok.se/events" schemaLocation="schemas.ladok.se-events.xsd"/>
 
+  <xs:element name="Ansokan" type="ar:Ansokan"/>
+
+  <xs:element name="Ansokanstatus" type="ar:Ansokanstatus"/>
+
   <xs:element name="Arende" type="ar:Arende"/>
 
   <xs:element name="ArendekorgEvent" type="ar:ArendekorgEvent"/>
@@ -14,6 +18,8 @@
   <xs:element name="ArendekorgFordelningsfilterEvent" type="ar:ArendekorgFordelningsfilterEvent"/>
 
   <xs:element name="ArendekorgFordelningsregelEvent" type="ar:ArendekorgFordelningsregelEvent"/>
+
+  <xs:element name="Arenden" type="ar:Arenden"/>
 
   <xs:element name="Arendeparametrar" type="ar:Arendeparametrar"/>
 
@@ -24,6 +30,8 @@
   <xs:element name="Arendetyper" type="ar:Arendetyper"/>
 
   <xs:element name="Bilaga" type="ar:Bilaga"/>
+
+  <xs:element name="BilagaDatareferens" type="ar:BilagaDatareferens"/>
 
   <xs:element name="BilagaLista" type="ar:BilagaLista"/>
 
@@ -47,25 +55,23 @@
 
   <xs:element name="Underlag" type="ar:Underlag"/>
 
-  <xs:complexType name="Notering">
+  <xs:complexType final="extension restriction" name="Fordelningsregel">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Anvandarnamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="Datum" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="Handelse" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Notering" type="xs:string"/>
-          <xs:element minOccurs="0" name="Status" type="xs:string"/>
+          <xs:element ref="ar:Fordelningskategori"/>
+          <xs:element name="FordelningsfilterUID" type="xs:string"/>
+          <xs:element ref="ar:FordelningskategoriVarde"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType final="extension restriction" name="Bilaga">
+  <xs:complexType name="FordelningskategoriVarde">
     <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
+      <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element name="Bilagenamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Varde" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -82,37 +88,36 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Arendestatus">
+  <xs:complexType name="ArendekorgFordelningsregelEvent">
     <xs:complexContent>
-      <xs:extension base="dap:Base">
+      <xs:extension base="events:BaseEvent">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element name="Id" type="xs:int"/>
+          <xs:element minOccurs="0" ref="ar:Fordelningsregel"/>
+          <xs:element minOccurs="0" name="EventTyp" type="base:Handelsetyp"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="FordelningskategoriVarde">
+  <xs:complexType name="BilagaDatareferens">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Varde" type="xs:string"/>
+          <xs:element minOccurs="0" name="Filstatus" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType final="extension restriction" name="Arendeparametrar">
+  <xs:complexType name="Notering">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Fritext" type="xs:string"/>
-          <xs:element minOccurs="0" ref="ar:Handlaggare"/>
-          <xs:element minOccurs="0" name="Inkommet" type="xs:date"/>
-          <xs:element minOccurs="0" ref="ar:Referens"/>
-          <xs:element minOccurs="0" name="Student" type="base:Student"/>
-          <xs:element minOccurs="0" ref="ar:Arendetyp"/>
+          <xs:element minOccurs="0" name="Anvandarnamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Datum" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="Handelse" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Notering" type="xs:string"/>
+          <xs:element minOccurs="0" name="Status" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -123,37 +128,6 @@
       <xs:extension base="dap:Base">
         <xs:sequence>
           <xs:element minOccurs="0" name="Referens" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Arendetyp">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="I18n" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType final="extension restriction" name="BilagaLista">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Bilagor" type="ar:Bilaga"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Underlag">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="ArendeUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -180,23 +154,37 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType final="extension restriction" name="Fordelningsregel">
+  <xs:complexType final="extension restriction" name="Arendeparametrar">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element ref="ar:Fordelningskategori"/>
-          <xs:element name="FordelningsfilterUID" type="xs:string"/>
-          <xs:element ref="ar:FordelningskategoriVarde"/>
+          <xs:element minOccurs="0" name="Fritext" type="xs:string"/>
+          <xs:element minOccurs="0" ref="ar:Handlaggare"/>
+          <xs:element minOccurs="0" name="Inkommet" type="xs:date"/>
+          <xs:element minOccurs="0" ref="ar:Referens"/>
+          <xs:element minOccurs="0" name="Student" type="base:Student"/>
+          <xs:element minOccurs="0" ref="ar:Arendetyp"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Arendetyper">
+  <xs:complexType name="Arendetyp">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="ar:Arendetyp"/>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="I18n" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Arenden">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Arenden" type="ar:Arende"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -221,10 +209,13 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="ArendekorgEvent">
+  <xs:complexType name="Arendestatus">
     <xs:complexContent>
-      <xs:extension base="events:grunddataBaseEvent">
-        <xs:sequence/>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element name="Id" type="xs:int"/>
+        </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -234,6 +225,71 @@
       <xs:extension base="base:Sokresultat">
         <xs:sequence>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="ar:Arende"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType final="extension restriction" name="BilagaLista">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Bilagor" type="ar:Bilaga"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType final="extension restriction" name="Bilaga">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element name="Bilagenamn" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Underlag">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ArendeUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Arendetyper">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="ar:Arendetyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Ansokan">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Bilagor" type="xs:string"/>
+          <xs:element minOccurs="0" name="Inkommet" type="xs:date"/>
+          <xs:element minOccurs="0" name="Meddelande" type="xs:string"/>
+          <xs:element minOccurs="0" name="Status" type="ar:Ansokanstatus"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Ansokanstatus">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element name="Id" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -250,21 +306,18 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="ArendekorgFordelningsregelEvent">
+  <xs:complexType name="ArendekorgEvent">
     <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" ref="ar:Fordelningsregel"/>
-          <xs:element minOccurs="0" name="EventTyp" type="base:Handelsetyp"/>
-        </xs:sequence>
+      <xs:extension base="events:grunddataBaseEvent">
+        <xs:sequence/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
   <xs:simpleType name="Fordelningskategori">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="ARENDETYP"/>
       <xs:enumeration value="ORGANISATION"/>
+      <xs:enumeration value="ARENDETYP"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

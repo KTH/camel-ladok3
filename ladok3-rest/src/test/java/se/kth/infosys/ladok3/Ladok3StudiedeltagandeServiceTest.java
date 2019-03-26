@@ -43,6 +43,7 @@ import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 
+@Ignore("Does not work without connection to Ladok")
 public class Ladok3StudiedeltagandeServiceTest {
     private StudiedeltagandeServiceImpl studiedeltagandeService;
     private Properties properties = new Properties();
