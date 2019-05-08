@@ -1,5 +1,9 @@
 # Release notes
 
+## 1.27.0
+
+* Update to ladok3 schema version 1.27.0.
+
 ## 1.24.1
 
 * Update to ladok3 1.24.1.
