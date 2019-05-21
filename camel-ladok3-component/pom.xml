@@ -29,7 +29,7 @@
   <parent>
     <artifactId>ladok3</artifactId>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
-    <version>1.27.0</version>
+    <version>1.28.1</version>
   </parent>
 
   <artifactId>camel-ladok3-component</artifactId>
