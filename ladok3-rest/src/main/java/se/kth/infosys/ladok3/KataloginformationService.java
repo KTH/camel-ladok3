@@ -127,15 +127,4 @@ public interface KataloginformationService extends Ladok3Service {
      */
     public AnvandareLista anvandareFiltrerade(final Map<String, Object> params);
 
-    /**
-     * Calls /anvandarbehorighet/anvandare/{anvandareuid}/anvandarbehorigheter/bytstatus/{nystatus}
-     * to set status of all access grants of a user to given status.
-     * 
-     * @param anvandare the Ladok3 user
-     * @param nystatus the new status for the access grants.
-     * @return list of identities.
-     */
-    public Identiteter anvandarbehorigheterBytstatus(
-            final Anvandare anvandare,
-            final Anvandarbehorighetsstatus nystatus);
 }

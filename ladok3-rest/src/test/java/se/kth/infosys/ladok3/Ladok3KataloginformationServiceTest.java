@@ -23,30 +23,24 @@
  */
 package se.kth.infosys.ladok3;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import se.ladok.schemas.dap.RelationLink;
+import se.ladok.schemas.dap.ServiceIndex;
+import se.ladok.schemas.kataloginformation.Anvandare;
+import se.ladok.schemas.kataloginformation.AnvandareLista;
+import se.ladok.schemas.kataloginformation.Anvandarinformation;
+import se.ladok.schemas.kataloginformation.ObjectFactory;
 
+import javax.ws.rs.ClientErrorException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.ws.rs.ClientErrorException;
-
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import se.ladok.schemas.Identiteter;
-import se.ladok.schemas.dap.RelationLink;
-import se.ladok.schemas.dap.ServiceIndex;
-import se.ladok.schemas.kataloginformation.Anvandarbehorighetsstatus;
-import se.ladok.schemas.kataloginformation.Anvandare;
-import se.ladok.schemas.kataloginformation.AnvandareLista;
-import se.ladok.schemas.kataloginformation.Anvandarinformation;
-import se.ladok.schemas.kataloginformation.ObjectFactory;
+import static org.junit.Assert.*;
 
 @Ignore("Does not work without connection to Ladok")
 public class Ladok3KataloginformationServiceTest {
@@ -71,7 +65,7 @@ public class Ladok3KataloginformationServiceTest {
         ServiceIndex index = katalogInformationService.serviceIndex();
         List<RelationLink> links = index.getLink();
 
-        assert(links.size() > 0);
+        assert (links.size() > 0);
     }
 
     @Test
@@ -145,23 +139,5 @@ public class Ladok3KataloginformationServiceTest {
         assertNotNull(updatedInformation);
         assertEquals(information.getUid(), updatedInformation.getUid());
         assertEquals(sms, updatedInformation.getSms());
-    }
-
-    @Test
-    public void behorigheterTest() {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("anvandarnamn", TEST_ANVANDARE_KTH_SE);
-        AnvandareLista search = katalogInformationService.anvandare(params);
-        assertEquals(1, search.getAnvandare().size());
-
-        Anvandare anvandare = katalogInformationService.anvandare(search.getAnvandare().get(0).getUid());
-        Identiteter identititer = katalogInformationService.anvandarbehorigheterBytstatus(
-                anvandare, Anvandarbehorighetsstatus.INAKTIV);
-        assertNotNull(identititer);
-        assertFalse(identititer.getIdentitet().isEmpty());
-        identititer = katalogInformationService.anvandarbehorigheterBytstatus(
-                anvandare, Anvandarbehorighetsstatus.AKTIV);
-        assertNotNull(identititer);
-        assertFalse(identititer.getIdentitet().isEmpty());
     }
 }

@@ -23,25 +23,19 @@
  */
 package se.kth.infosys.ladok3;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.function.Consumer;
+import se.ladok.schemas.kataloginformation.Anvandare;
+import se.ladok.schemas.kataloginformation.AnvandareLista;
+import se.ladok.schemas.kataloginformation.Anvandarinformation;
 
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-
-import se.ladok.schemas.Identiteter;
-import se.ladok.schemas.kataloginformation.Anvandarbehorighet;
-import se.ladok.schemas.kataloginformation.Anvandarbehorighetsstatus;
-import se.ladok.schemas.kataloginformation.Anvandare;
-import se.ladok.schemas.kataloginformation.AnvandareLista;
-import se.ladok.schemas.kataloginformation.Anvandarinformation;
+import java.util.Map;
 
 /**
- * Real implementation of the Ladok kataloginformation service. It is using JAX RS 
- * which means that errors will be thrown as unchecked runtime exceptions. See 
+ * Real implementation of the Ladok kataloginformation service. It is using JAX RS
+ * which means that errors will be thrown as unchecked runtime exceptions. See
  * JAX RS client documentation.
  */
 public class KataloginformationServiceImpl extends AbstractLadok3Service implements KataloginformationService {
@@ -50,10 +44,10 @@ public class KataloginformationServiceImpl extends AbstractLadok3Service impleme
 
     /**
      * Constructor Web Service client end representing the Ladok kataloginformation endpoint.
-     * 
-     * @param host The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
+     *
+     * @param host     The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
      * @param certFile The path to the certificate to use for authentication.
-     * @param key The key to certificate.
+     * @param key      The key to certificate.
      * @throws Exception on errors.
      */
     public KataloginformationServiceImpl(final String host, final String certFile, final String key) throws Exception {
@@ -62,9 +56,9 @@ public class KataloginformationServiceImpl extends AbstractLadok3Service impleme
 
     /**
      * Constructor Web Service client end representing the Ladok studentinformation endpoint.
-     * 
-     * @param host The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
-     * @param context the SSLContext containing necessary information. 
+     *
+     * @param host    The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
+     * @param context the SSLContext containing necessary information.
      * @throws Exception on errors.
      */
     public KataloginformationServiceImpl(final String host, final SSLContext context) throws Exception {
@@ -168,26 +162,4 @@ public class KataloginformationServiceImpl extends AbstractLadok3Service impleme
                 .get(AnvandareLista.class);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public Identiteter anvandarbehorigheterBytstatus(
-            final Anvandare anvandare,
-            final Anvandarbehorighetsstatus nystatus) {
-
-        final Identiteter identiteter = new Identiteter();
-
-        final Iterator<Anvandarbehorighet> behorigheter = anvandare.getAnvandarbehorighet().iterator();
-        while (behorigheter.hasNext()) {
-            final Anvandarbehorighet behorighet = behorigheter.next();
-            identiteter.getIdentitet().add(behorighet.getUid());
-        }
-
-        return target.path("/anvandarbehorighet/anvandare/{anvandareuid}/anvandarbehorigheter/bytstatus/{nystatus}")
-            .resolveTemplate("anvandareuid", anvandare.getUid())
-            .resolveTemplate("nystatus", nystatus)
-            .request()
-            .accept(SERVICE_TYPE)
-            .put(Entity.entity(identiteter, SERVICE_TYPE), Identiteter.class);
-    }
 }
