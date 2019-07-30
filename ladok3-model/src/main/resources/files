@@ -1,16 +1,13 @@
-#
-# This is subject to change. The currently used files are not retrieved
-# this way but provided in a zip-file out of band, due to issues
-# with the currently published XSD:s.
-#
-
-https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se.xsd
-https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se-dap.xsd
-https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se-events.xsd
-https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se-service.xsd
-https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se-examen.xsd
-https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se-kataloginformation.xsd
-https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se-resultat.xsd
-https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se-studentinformation.xsd
-https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se-studiedeltagande.xsd
-https://www.mit.ladok.se/restdoc/eventschemas/schemas.ladok.se-utbildningsinformation.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-dap.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-events.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-ar.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-at.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-av.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-dokumenthantering.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-examen.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-kataloginformation.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-resultat.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-studentinformation.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-studiedeltagande.xsd
+https://www.test.ladok.se/restdoc/schemas/schemas.ladok.se-utbildningsinformation.xsd

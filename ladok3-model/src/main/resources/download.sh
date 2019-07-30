@@ -4,7 +4,10 @@ function fail() {
     echo $*
     echo
     echo "Usage:"
-    echo "$0: <name of session cookie> <value of session cookie>"
+    echo "$0: <name of session cookie> <value of session cookie> [destination]"
+    echo
+    echo "  destination: a destination directory, i.e. schemas, the current directory by default"
+    echo
 }
 
 if [ -z "$1" ]; then
