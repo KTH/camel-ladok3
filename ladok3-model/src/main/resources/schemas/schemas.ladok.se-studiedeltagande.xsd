@@ -3178,12 +3178,12 @@
 
   <xs:simpleType name="Studieavgiftsbetalningsvarde">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_aktuell"/>
-      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_betald"/>
-      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.betald"/>
-      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_provad"/>
       <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.aterbetald"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_betald"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_provad"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.betald"/>
       <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.undantag"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_aktuell"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -3211,20 +3211,20 @@
 
   <xs:simpleType name="Studiebehorighetkalla">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="studiedeltagande.domain.studiebehorighetkalla.ladok"/>
       <xs:enumeration value="studiedeltagande.domain.studiebehorighetkalla.nya"/>
       <xs:enumeration value="studiedeltagande.domain.studiebehorighetkalla.informationskonvertering"/>
+      <xs:enumeration value="studiedeltagande.domain.studiebehorighetkalla.ladok"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Atgardstyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="studiedeltagande.domain.atgardstyp.aterbud"/>
-      <xs:enumeration value="studiedeltagande.domain.atgardstyp.omregistrering"/>
-      <xs:enumeration value="studiedeltagande.domain.atgardstyp.andrad_placering_i_plan"/>
       <xs:enumeration value="studiedeltagande.domain.atgardstyp.registrering"/>
-      <xs:enumeration value="studiedeltagande.domain.atgardstyp.avbrott"/>
       <xs:enumeration value="studiedeltagande.domain.atgardstyp.avklarad"/>
+      <xs:enumeration value="studiedeltagande.domain.atgardstyp.avbrott"/>
+      <xs:enumeration value="studiedeltagande.domain.atgardstyp.omregistrering"/>
+      <xs:enumeration value="studiedeltagande.domain.atgardstyp.aterbud"/>
+      <xs:enumeration value="studiedeltagande.domain.atgardstyp.andrad_placering_i_plan"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -3244,10 +3244,10 @@
 
   <xs:simpleType name="ValtTillstand">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="studiedeltagande.domain.studieval.val.vald"/>
       <xs:enumeration value="studiedeltagande.domain.studieval.val.valbar"/>
-      <xs:enumeration value="studiedeltagande.domain.studieval.val.valbar_med_hinder"/>
       <xs:enumeration value="studiedeltagande.domain.studieval.val.ej_valbar"/>
+      <xs:enumeration value="studiedeltagande.domain.studieval.val.vald"/>
+      <xs:enumeration value="studiedeltagande.domain.studieval.val.valbar_med_hinder"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -3259,30 +3259,30 @@
 
   <xs:simpleType name="Kurspaketeringstillfallesdeltagandesummeringstyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="EJ_PABORJAD"/>
-      <xs:enumeration value="AVKLARAD"/>
       <xs:enumeration value="EJ_PAGAENDE_TILLFALLESBYTE"/>
       <xs:enumeration value="SENARE_DEL"/>
-      <xs:enumeration value="UPPEHALL"/>
-      <xs:enumeration value="ATERBUD"/>
-      <xs:enumeration value="PAGAENDE"/>
       <xs:enumeration value="PAGAENDE_MED_SPARR"/>
+      <xs:enumeration value="UPPEHALL"/>
+      <xs:enumeration value="AVKLARAD"/>
+      <xs:enumeration value="ATERBUD"/>
+      <xs:enumeration value="EJ_PABORJAD"/>
+      <xs:enumeration value="PAGAENDE"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Aktorsroll">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="studiedeltagande.domain.aktorsroll.ordinarie_handledare"/>
       <xs:enumeration value="studiedeltagande.domain.aktorsroll.bitradande_handledare"/>
+      <xs:enumeration value="studiedeltagande.domain.aktorsroll.ordinarie_handledare"/>
       <xs:enumeration value="studiedeltagande.domain.aktorsroll.koordinator"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="UtbytesdeltagandeTillstand">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="studiedeltagande.studenthantering.deltagare.tillstand.avbrott"/>
-      <xs:enumeration value="studiedeltagande.studenthantering.deltagare.tillstand.ej_paborjad"/>
       <xs:enumeration value="studiedeltagande.studenthantering.deltagare.tillstand.pagaende"/>
+      <xs:enumeration value="studiedeltagande.studenthantering.deltagare.tillstand.ej_paborjad"/>
+      <xs:enumeration value="studiedeltagande.studenthantering.deltagare.tillstand.avbrott"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -3295,26 +3295,26 @@
 
   <xs:simpleType name="DeltagaretillstandEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="PAGAENDE"/>
-      <xs:enumeration value="EJ_PABORJAD"/>
-      <xs:enumeration value="ATERBUD"/>
-      <xs:enumeration value="AVBROTT"/>
-      <xs:enumeration value="PAGAENDE_MED_SPARR"/>
-      <xs:enumeration value="EJ_PAGAENDE_TILLFALLESBYTE"/>
-      <xs:enumeration value="PABORJAD"/>
-      <xs:enumeration value="FORVANTAD_DELTAGARE"/>
-      <xs:enumeration value="AVKLARAD"/>
-      <xs:enumeration value="REGISTRERAD"/>
       <xs:enumeration value="UPPEHALL"/>
+      <xs:enumeration value="FORVANTAD_DELTAGARE"/>
+      <xs:enumeration value="REGISTRERAD"/>
+      <xs:enumeration value="EJ_PABORJAD"/>
+      <xs:enumeration value="AVKLARAD"/>
+      <xs:enumeration value="PAGAENDE"/>
+      <xs:enumeration value="PAGAENDE_MED_SPARR"/>
+      <xs:enumeration value="PABORJAD"/>
+      <xs:enumeration value="ATERBUD"/>
+      <xs:enumeration value="EJ_PAGAENDE_TILLFALLESBYTE"/>
+      <xs:enumeration value="AVBROTT"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Perioddeltagaretillstand">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.omregistrerad"/>
-      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.ej_paborjad"/>
-      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.tidigtavbrott"/>
       <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.registrerad"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.omregistrerad"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.tidigtavbrott"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.ej_paborjad"/>
       <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.deltar_ej"/>
     </xs:restriction>
   </xs:simpleType>
@@ -3322,39 +3322,39 @@
   <xs:simpleType name="DeltagareKurspaketeringstillfalleOrderByEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="PERIOD_I_ORDNING_ASC"/>
-      <xs:enumeration value="EFTERNAMN_DESC"/>
-      <xs:enumeration value="PERSONNUMMER_DESC"/>
-      <xs:enumeration value="PERIOD_I_ORDNING_DESC"/>
       <xs:enumeration value="KONTROLLERAD_KURS_ASC"/>
       <xs:enumeration value="SUMMERAD_GODKAND_OMFATTNING_DESC"/>
-      <xs:enumeration value="FORNAMN_DESC"/>
-      <xs:enumeration value="KONTROLLERAD_KURS_DESC"/>
+      <xs:enumeration value="EFTERNAMN_DESC"/>
       <xs:enumeration value="FORNAMN_ASC"/>
       <xs:enumeration value="EFTERNAMN_ASC"/>
+      <xs:enumeration value="PERSONNUMMER_DESC"/>
+      <xs:enumeration value="FORNAMN_DESC"/>
+      <xs:enumeration value="KONTROLLERAD_KURS_DESC"/>
       <xs:enumeration value="SUMMERAD_GODKAND_OMFATTNING_ASC"/>
+      <xs:enumeration value="PERIOD_I_ORDNING_DESC"/>
       <xs:enumeration value="PERSONNUMMER_ASC"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="DeltagareKurstillfalleOrderByEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="FORNAMN_ASC"/>
       <xs:enumeration value="FORNAMN_DESC"/>
-      <xs:enumeration value="EFTERNAMN_DESC"/>
-      <xs:enumeration value="PERSONNUMMER_ASC"/>
-      <xs:enumeration value="PERSONNUMMER_DESC"/>
       <xs:enumeration value="EFTERNAMN_ASC"/>
+      <xs:enumeration value="PERSONNUMMER_DESC"/>
+      <xs:enumeration value="PERSONNUMMER_ASC"/>
+      <xs:enumeration value="FORNAMN_ASC"/>
+      <xs:enumeration value="EFTERNAMN_DESC"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="UtbildningstillfalleOrderByEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="UTBILDNINGSTILLFALLESKOD_DESC"/>
-      <xs:enumeration value="UTBILDNINGSKOD_ASC"/>
-      <xs:enumeration value="UTBILDNINGSTILLFALLESKOD_ASC"/>
-      <xs:enumeration value="UTBILDNINGSKOD_DESC"/>
       <xs:enumeration value="STARTDATUM_ASC"/>
+      <xs:enumeration value="UTBILDNINGSTILLFALLESKOD_ASC"/>
+      <xs:enumeration value="UTBILDNINGSTILLFALLESKOD_DESC"/>
+      <xs:enumeration value="UTBILDNINGSKOD_DESC"/>
       <xs:enumeration value="STARTDATUM_DESC"/>
+      <xs:enumeration value="UTBILDNINGSKOD_ASC"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -3369,11 +3369,11 @@
   <xs:simpleType name="Deltagandesummeringstyp">
     <xs:restriction base="xs:string">
       <xs:enumeration value="EJ_PABORJAD"/>
-      <xs:enumeration value="EJ_PABORJAD_MED_VILLKOR"/>
-      <xs:enumeration value="ATERBUD"/>
       <xs:enumeration value="REGISTRERAD"/>
-      <xs:enumeration value="OMREGISTRERAD"/>
+      <xs:enumeration value="ATERBUD"/>
+      <xs:enumeration value="EJ_PABORJAD_MED_VILLKOR"/>
       <xs:enumeration value="AVKLARAD"/>
+      <xs:enumeration value="OMREGISTRERAD"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

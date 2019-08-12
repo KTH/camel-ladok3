@@ -2880,36 +2880,36 @@
 
   <xs:simpleType name="Rattighetsniva">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="rattighetsniva.las"/>
       <xs:enumeration value="rattighetsniva.nationell"/>
       <xs:enumeration value="rattighetsniva.lokal"/>
       <xs:enumeration value="rattighetsniva.student"/>
-      <xs:enumeration value="rattighetsniva.las"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="InloggningStatus">
     <xs:restriction base="xs:string">
       <xs:enumeration value="lyckades"/>
-      <xs:enumeration value="anvandare.saknas.och.har.skapats"/>
-      <xs:enumeration value="anvandare.far.inte.agera.student"/>
-      <xs:enumeration value="larosatet.inte.konfigurerat"/>
       <xs:enumeration value="anvandare.saknas"/>
+      <xs:enumeration value="larosatet.inte.konfigurerat"/>
+      <xs:enumeration value="anvandare.far.inte.agera.student"/>
+      <xs:enumeration value="anvandare.saknas.och.har.skapats"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Anvandarbehorighetsstatus">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="OBEHANDLAD"/>
       <xs:enumeration value="AKTIV"/>
       <xs:enumeration value="INAKTIV"/>
-      <xs:enumeration value="OBEHANDLAD"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="PeriodtypKategori">
     <xs:restriction base="xs:string">
       <xs:enumeration value="NationelltBaseradPeriod"/>
-      <xs:enumeration value="Lärosätesperiod"/>
       <xs:enumeration value="NationelltFastställdPeriod"/>
+      <xs:enumeration value="Lärosätesperiod"/>
     </xs:restriction>
   </xs:simpleType>
 

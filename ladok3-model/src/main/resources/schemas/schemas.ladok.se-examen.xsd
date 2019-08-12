@@ -1584,44 +1584,44 @@
 
   <xs:simpleType name="Bevisradstyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="RESULTAT"/>
-      <xs:enumeration value="PROJEKTTITEL"/>
       <xs:enumeration value="RUBRIK"/>
       <xs:enumeration value="TILLGODORAKNANDE"/>
+      <xs:enumeration value="PROJEKTTITEL"/>
+      <xs:enumeration value="RESULTAT"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="BevisradValtInnehallTillgodoraknande">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="GRUND"/>
       <xs:enumeration value="MAL"/>
+      <xs:enumeration value="GRUND"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="GiltigMeritForExamenTyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="TILLGODORAKNANDE"/>
+      <xs:enumeration value="RESULTAT_PA_UTBILDNING"/>
       <xs:enumeration value="ANNAT_RESULTAT"/>
       <xs:enumeration value="RESULTAT_PA_UTBILDNING_MODUL"/>
+      <xs:enumeration value="TILLGODORAKNANDE"/>
       <xs:enumeration value="ANNAN_MERIT"/>
-      <xs:enumeration value="RESULTAT_PA_UTBILDNING"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Markningstyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="nationellexamensgrupp"/>
-      <xs:enumeration value="nivainomstudieordning"/>
       <xs:enumeration value="beviskategori"/>
+      <xs:enumeration value="nivainomstudieordning"/>
+      <xs:enumeration value="nationellexamensgrupp"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Bevistextagartyp">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="BEVISKOMBINATION"/>
+      <xs:enumeration value="NATIONELL_BEVISTYP"/>
       <xs:enumeration value="BEVISUNDERLAG"/>
       <xs:enumeration value="BEVISBENAMNING"/>
-      <xs:enumeration value="NATIONELL_BEVISTYP"/>
-      <xs:enumeration value="BEVISKOMBINATION"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -1634,8 +1634,8 @@
   <xs:simpleType name="Preciseringsgrupperingstyp">
     <xs:restriction base="xs:string">
       <xs:enumeration value="huvudomradesgrupp"/>
-      <xs:enumeration value="nationelltundervisningsamne"/>
       <xs:enumeration value="nationelltforskningsamne"/>
+      <xs:enumeration value="nationelltundervisningsamne"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

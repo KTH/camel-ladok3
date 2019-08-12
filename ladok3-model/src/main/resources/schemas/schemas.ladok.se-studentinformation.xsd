@@ -732,11 +732,11 @@
 
   <xs:simpleType name="Ursprung">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="LADOK_MANUELLT"/>
       <xs:enumeration value="NYA_MASKINELLT"/>
+      <xs:enumeration value="NYA_MANUELLT"/>
       <xs:enumeration value="LADOK_MASKINELLT"/>
       <xs:enumeration value="FOLKBOKFORING"/>
-      <xs:enumeration value="LADOK_MANUELLT"/>
-      <xs:enumeration value="NYA_MANUELLT"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -749,8 +749,8 @@
 
   <xs:simpleType name="Avskiljandestatus">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="2"/>
       <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
     </xs:restriction>
   </xs:simpleType>
 

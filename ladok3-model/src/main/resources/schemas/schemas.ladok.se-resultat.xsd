@@ -4031,17 +4031,17 @@
 
   <xs:simpleType name="MalTyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="HEL_KURS"/>
-      <xs:enumeration value="DEL_AV_KURS"/>
       <xs:enumeration value="FRITEXT"/>
+      <xs:enumeration value="DEL_AV_KURS"/>
+      <xs:enumeration value="HEL_KURS"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="GrundTyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="ANNAN_MERIT"/>
-      <xs:enumeration value="RESULTAT"/>
       <xs:enumeration value="ANNAT_RESULTAT"/>
+      <xs:enumeration value="RESULTAT"/>
+      <xs:enumeration value="ANNAN_MERIT"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -4055,54 +4055,54 @@
 
   <xs:simpleType name="RattaTitelForResultatUnderlagStatus">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="UTKAST"/>
-      <xs:enumeration value="MAKULERAT"/>
       <xs:enumeration value="PAGAENDE"/>
       <xs:enumeration value="KLAR_FOR_ATTESTERING"/>
       <xs:enumeration value="ATTESTERAT"/>
+      <xs:enumeration value="MAKULERAT"/>
+      <xs:enumeration value="UTKAST"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Tillgodoraknandegrundtyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="ANNAT_RESULTAT"/>
-      <xs:enumeration value="ANNAN_MERIT"/>
       <xs:enumeration value="EXTERN"/>
       <xs:enumeration value="INTERN"/>
+      <xs:enumeration value="ANNAN_MERIT"/>
+      <xs:enumeration value="ANNAT_RESULTAT"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="InformationsbehorighetEnumRepresentation">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="INFORMATIONSBEHORIGHET_FORUTBILDNING"/>
-      <xs:enumeration value="INFORMATIONSBEHORIGHET_YH-UTBILDNING"/>
       <xs:enumeration value="INFORMATIONSBEHORIGHET_UPPDRAGSUTBILDNING"/>
       <xs:enumeration value="INFORMATIONSBEHORIGHET_GRUND_OCH_AVANCERAD"/>
+      <xs:enumeration value="INFORMATIONSBEHORIGHET_YH-UTBILDNING"/>
       <xs:enumeration value="INFORMATIONSBEHORIGHET_FORSKARUTBILDNING"/>
+      <xs:enumeration value="INFORMATIONSBEHORIGHET_FORUTBILDNING"/>
       <xs:enumeration value="INFORMATIONSBEHORIGHET_POLISUTBILDNING"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Resultatmedarbetaretyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="RAPPORTOR"/>
       <xs:enumeration value="ATTESTANT"/>
+      <xs:enumeration value="RAPPORTOR"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="RattighetenAvser">
     <xs:restriction base="xs:string">
       <xs:enumeration value="HEL_KURS_OCH_MODUL_RESULTAT"/>
-      <xs:enumeration value="HEL_KURS_RESULTAT"/>
       <xs:enumeration value="MODUL_RESULTAT"/>
+      <xs:enumeration value="HEL_KURS_RESULTAT"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="StudieresultatAnmaldaEnum">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="EJ_ANMALDA"/>
       <xs:enumeration value="ANMALDA"/>
       <xs:enumeration value="ALLA"/>
-      <xs:enumeration value="EJ_ANMALDA"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -4117,19 +4117,19 @@
 
   <xs:simpleType name="StudieresultatOrderByEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="PERSONNUMMER_ASC"/>
-      <xs:enumeration value="PERSONNUMMER_DESC"/>
-      <xs:enumeration value="ANONYMKOD_DESC"/>
-      <xs:enumeration value="EFTERNAMN_ASC"/>
-      <xs:enumeration value="EXAMINATIONSDATUM_ASC"/>
-      <xs:enumeration value="STATUS_DESC"/>
       <xs:enumeration value="FORNAMN_ASC"/>
-      <xs:enumeration value="BETYGSGRAD_DESC"/>
-      <xs:enumeration value="EXAMINATIONSDATUM_DESC"/>
-      <xs:enumeration value="BETYGSGRAD_ASC"/>
-      <xs:enumeration value="ANONYMKOD_ASC"/>
       <xs:enumeration value="FORNAMN_DESC"/>
+      <xs:enumeration value="EFTERNAMN_ASC"/>
+      <xs:enumeration value="BETYGSGRAD_DESC"/>
+      <xs:enumeration value="ANONYMKOD_DESC"/>
+      <xs:enumeration value="ANONYMKOD_ASC"/>
+      <xs:enumeration value="BETYGSGRAD_ASC"/>
+      <xs:enumeration value="STATUS_DESC"/>
+      <xs:enumeration value="PERSONNUMMER_ASC"/>
+      <xs:enumeration value="EXAMINATIONSDATUM_DESC"/>
       <xs:enumeration value="EFTERNAMN_DESC"/>
+      <xs:enumeration value="PERSONNUMMER_DESC"/>
+      <xs:enumeration value="EXAMINATIONSDATUM_ASC"/>
       <xs:enumeration value="STATUS_ASC"/>
     </xs:restriction>
   </xs:simpleType>
@@ -4137,37 +4137,37 @@
   <xs:simpleType name="Medarbetarekopplingsniva">
     <xs:restriction base="xs:string">
       <xs:enumeration value="resultat.kopplingsniva.kurs"/>
-      <xs:enumeration value="resultat.kopplingsniva.kurstillfalle"/>
-      <xs:enumeration value="resultat.kopplingsniva.modul"/>
       <xs:enumeration value="resultat.kopplingsniva.organisation"/>
+      <xs:enumeration value="resultat.kopplingsniva.modul"/>
+      <xs:enumeration value="resultat.kopplingsniva.kurstillfalle"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="ResultatuppfoljningOrderByEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="PERSONNUMMER_DESC"/>
       <xs:enumeration value="PERSONNUMMER_ASC"/>
+      <xs:enumeration value="PERSONNUMMER_DESC"/>
+      <xs:enumeration value="EXAMINATIONSDATUM_DESC"/>
       <xs:enumeration value="FORNAMN_DESC"/>
-      <xs:enumeration value="BETYGSGRAD_ASC"/>
+      <xs:enumeration value="EXAMINATIONSDATUM_ASC"/>
       <xs:enumeration value="BETYGSGRAD_DESC"/>
-      <xs:enumeration value="EFTERNAMN_ASC"/>
+      <xs:enumeration value="BETYGSGRAD_ASC"/>
       <xs:enumeration value="EFTERNAMN_DESC"/>
       <xs:enumeration value="FORNAMN_ASC"/>
-      <xs:enumeration value="EXAMINATIONSDATUM_DESC"/>
-      <xs:enumeration value="EXAMINATIONSDATUM_ASC"/>
+      <xs:enumeration value="EFTERNAMN_ASC"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="StudieresultatTillstandVidRapporteringEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="KLARMARKERADE"/>
-      <xs:enumeration value="FORBEREDD_FOR_BORTTAG"/>
-      <xs:enumeration value="UTKAST"/>
       <xs:enumeration value="OBEHANDLADE_UTKAST_KLARMARKERADE_ATTESTERADE"/>
+      <xs:enumeration value="KLARMARKERADE"/>
+      <xs:enumeration value="OBEHANDLADE_UTKAST"/>
+      <xs:enumeration value="UTKAST"/>
+      <xs:enumeration value="FORBEREDD_FOR_BORTTAG"/>
+      <xs:enumeration value="ATTESTERADE"/>
       <xs:enumeration value="OBEHANDLADE_UTKAST_KLARMARKERADE"/>
       <xs:enumeration value="OBEHANDLADE"/>
-      <xs:enumeration value="OBEHANDLADE_UTKAST"/>
-      <xs:enumeration value="ATTESTERADE"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -4192,23 +4192,23 @@
 
   <xs:simpleType name="AktivitetstillfalleOrderByEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="KURSKOD_DESC"/>
-      <xs:enumeration value="DATUM_DESC"/>
-      <xs:enumeration value="TYP_ASC"/>
+      <xs:enumeration value="TYP_DESC"/>
+      <xs:enumeration value="DATUM_ASC"/>
       <xs:enumeration value="BENAMNING_DESC"/>
       <xs:enumeration value="KURSKOD_ASC"/>
-      <xs:enumeration value="DATUM_ASC"/>
+      <xs:enumeration value="KURSKOD_DESC"/>
       <xs:enumeration value="BENAMNING_ASC"/>
-      <xs:enumeration value="TYP_DESC"/>
+      <xs:enumeration value="TYP_ASC"/>
+      <xs:enumeration value="DATUM_DESC"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="ResultatstatusEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="KLARMARKERAT"/>
-      <xs:enumeration value="ATTESTERAT"/>
       <xs:enumeration value="MAKULERAT"/>
       <xs:enumeration value="UTKAST"/>
+      <xs:enumeration value="KLARMARKERAT"/>
+      <xs:enumeration value="ATTESTERAT"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
