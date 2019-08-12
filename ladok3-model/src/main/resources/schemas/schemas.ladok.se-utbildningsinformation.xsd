@@ -2642,74 +2642,74 @@
 
   <xs:simpleType name="BoxtypEventPart">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="UTBILDNING"/>
       <xs:enumeration value="UTBILDNINGSTILLFALLE"/>
+      <xs:enumeration value="UTBILDNING"/>
       <xs:enumeration value="VAL"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Attributdatatyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="PROCENT"/>
-      <xs:enumeration value="MARKNINGSVARDE"/>
-      <xs:enumeration value="ANTAGNINGSOMGANG"/>
-      <xs:enumeration value="UNDERVISNINGSSPRAK"/>
-      <xs:enumeration value="HUVUDAMNE"/>
-      <xs:enumeration value="EXTERN_PART"/>
-      <xs:enumeration value="UNDERVISNINGSTID"/>
-      <xs:enumeration value="AMNESGRUPP"/>
-      <xs:enumeration value="FINANSIERINGSFORM"/>
-      <xs:enumeration value="NOT_APPLICABLE"/>
-      <xs:enumeration value="INTEGER"/>
-      <xs:enumeration value="HUVUDOMRADE"/>
-      <xs:enumeration value="FORDJUPNINGSNIVA"/>
-      <xs:enumeration value="OMFATTNING"/>
-      <xs:enumeration value="BOOLSKT_VAL"/>
-      <xs:enumeration value="BOOLEAN"/>
-      <xs:enumeration value="ATTRIBUTGRUPP"/>
-      <xs:enumeration value="BETYGSSKALA"/>
-      <xs:enumeration value="PERIOD"/>
-      <xs:enumeration value="KRAV_PA_TIDIGARE_STUDIER"/>
-      <xs:enumeration value="MARKNINGSNYCKEL"/>
-      <xs:enumeration value="FORKUNSKAPSNIVA"/>
-      <xs:enumeration value="OMRADESBEHORIGHET"/>
-      <xs:enumeration value="UTBILDNINGSSATSNING"/>
-      <xs:enumeration value="ORGANISATIONSENHET"/>
-      <xs:enumeration value="LANK"/>
-      <xs:enumeration value="UTBILDNINGSOMRADE"/>
-      <xs:enumeration value="ATTRIBUTGRUPP_MED_BEROENDE"/>
       <xs:enumeration value="STRING"/>
-      <xs:enumeration value="NATIONELLT_FORSKNINGSAMNE"/>
-      <xs:enumeration value="HTML"/>
-      <xs:enumeration value="SUCCESSIVFORDJUPNING"/>
-      <xs:enumeration value="TILLTRADESNIVA"/>
-      <xs:enumeration value="UTBYTESPROGRAM"/>
-      <xs:enumeration value="EXAMENSAMNE"/>
-      <xs:enumeration value="AMNESORD"/>
-      <xs:enumeration value="UNDERVISNINGSFORM"/>
+      <xs:enumeration value="NOT_APPLICABLE"/>
+      <xs:enumeration value="OMRADESBEHORIGHET"/>
       <xs:enumeration value="UTBILDNINGSSAMARBETE"/>
-      <xs:enumeration value="STUDIETAKT"/>
-      <xs:enumeration value="AMNESKLASS"/>
-      <xs:enumeration value="REFERENS_FOR_INDIVIDUELLT_TILLFALLE"/>
+      <xs:enumeration value="HTML"/>
+      <xs:enumeration value="UTBYTESPROGRAM"/>
+      <xs:enumeration value="HUVUDAMNE"/>
+      <xs:enumeration value="UTBILDNINGSOMRADE"/>
       <xs:enumeration value="STUDIELOKALISERING"/>
+      <xs:enumeration value="HUVUDOMRADE"/>
+      <xs:enumeration value="AMNESORD"/>
+      <xs:enumeration value="ORGANISATIONSENHET"/>
+      <xs:enumeration value="NATIONELLT_FORSKNINGSAMNE"/>
+      <xs:enumeration value="KRAV_PA_TIDIGARE_STUDIER"/>
+      <xs:enumeration value="MARKNINGSVARDE"/>
+      <xs:enumeration value="EXAMENSAMNE"/>
+      <xs:enumeration value="INTEGER"/>
+      <xs:enumeration value="PROCENT"/>
+      <xs:enumeration value="FORKUNSKAPSNIVA"/>
+      <xs:enumeration value="PERIOD"/>
+      <xs:enumeration value="AMNESGRUPP"/>
+      <xs:enumeration value="BOOLSKT_VAL"/>
+      <xs:enumeration value="TILLTRADESNIVA"/>
+      <xs:enumeration value="REFERENS_FOR_INDIVIDUELLT_TILLFALLE"/>
+      <xs:enumeration value="OMFATTNING"/>
+      <xs:enumeration value="ANTAGNINGSOMGANG"/>
+      <xs:enumeration value="ATTRIBUTGRUPP_MED_BEROENDE"/>
+      <xs:enumeration value="UNDERVISNINGSSPRAK"/>
       <xs:enumeration value="DATE"/>
+      <xs:enumeration value="LANK"/>
+      <xs:enumeration value="AMNESKLASS"/>
+      <xs:enumeration value="MARKNINGSNYCKEL"/>
+      <xs:enumeration value="UTBILDNINGSSATSNING"/>
+      <xs:enumeration value="BETYGSSKALA"/>
+      <xs:enumeration value="EXTERN_PART"/>
+      <xs:enumeration value="SUCCESSIVFORDJUPNING"/>
+      <xs:enumeration value="STUDIETAKT"/>
+      <xs:enumeration value="UNDERVISNINGSTID"/>
+      <xs:enumeration value="FORDJUPNINGSNIVA"/>
+      <xs:enumeration value="ATTRIBUTGRUPP"/>
+      <xs:enumeration value="BOOLEAN"/>
+      <xs:enumeration value="UNDERVISNINGSFORM"/>
+      <xs:enumeration value="FINANSIERINGSFORM"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Registervardsniva">
     <xs:restriction base="xs:string">
       <xs:enumeration value="INGEN"/>
-      <xs:enumeration value="AVANCERAD"/>
       <xs:enumeration value="NORMAL"/>
+      <xs:enumeration value="AVANCERAD"/>
       <xs:enumeration value="EJ_PRODUKTIONSKLAR"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Attributkategori">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="fast"/>
       <xs:enumeration value="obligatorisk"/>
       <xs:enumeration value="valbar"/>
+      <xs:enumeration value="fast"/>
       <xs:enumeration value="lokal"/>
     </xs:restriction>
   </xs:simpleType>
@@ -2723,10 +2723,10 @@
 
   <xs:simpleType name="Boxtyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="UTBILDNINGSINSTANS"/>
       <xs:enumeration value="FRITEXT"/>
-      <xs:enumeration value="UTBILDNINGSTILLFALLE"/>
       <xs:enumeration value="VAL"/>
+      <xs:enumeration value="UTBILDNINGSINSTANS"/>
+      <xs:enumeration value="UTBILDNINGSTILLFALLE"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

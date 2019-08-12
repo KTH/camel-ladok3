@@ -316,10 +316,10 @@
 
   <xs:simpleType name="Fordelningskategori">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="ORGANISATION"/>
       <xs:enumeration value="PRECISERING"/>
-      <xs:enumeration value="BEVISTYP"/>
+      <xs:enumeration value="ORGANISATION"/>
       <xs:enumeration value="ARENDETYP"/>
+      <xs:enumeration value="BEVISTYP"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

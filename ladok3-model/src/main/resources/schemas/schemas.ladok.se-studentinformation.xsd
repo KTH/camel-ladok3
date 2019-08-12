@@ -724,26 +724,26 @@
 
   <xs:simpleType name="Avgiftsskyldighetsvarde">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="1"/>
-      <xs:enumeration value="2"/>
       <xs:enumeration value="3"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="1"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Ursprung">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="LADOK_MANUELLT"/>
-      <xs:enumeration value="NYA_MASKINELLT"/>
-      <xs:enumeration value="NYA_MANUELLT"/>
-      <xs:enumeration value="LADOK_MASKINELLT"/>
       <xs:enumeration value="FOLKBOKFORING"/>
+      <xs:enumeration value="NYA_MANUELLT"/>
+      <xs:enumeration value="NYA_MASKINELLT"/>
+      <xs:enumeration value="LADOK_MANUELLT"/>
+      <xs:enumeration value="LADOK_MASKINELLT"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="PostadressTypRepresentation">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="POSTADRESS"/>
       <xs:enumeration value="FOLKBOKFORINGSADRESS"/>
+      <xs:enumeration value="POSTADRESS"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -756,8 +756,8 @@
 
   <xs:simpleType name="RestriktionstypEventPart">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="AVSTANGNING"/>
       <xs:enumeration value="AVSKILJANDE"/>
+      <xs:enumeration value="AVSTANGNING"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

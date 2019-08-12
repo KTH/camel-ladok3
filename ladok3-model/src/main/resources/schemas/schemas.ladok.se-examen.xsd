@@ -221,6 +221,8 @@
 
   <xs:element name="UtfardatBevisLista" type="ex:UtfardatBevisLista"/>
 
+  <xs:element name="UtfardatBevisNyNationellBevistypEvent" type="ex:UtfardatBevisNyNationellBevistypEvent"/>
+
   <xs:element name="UtfardatBevisRattatEvent" type="ex:UtfardatBevisRattatEvent"/>
 
   <xs:element name="UtfardatBevisUppdateradEvent" type="ex:UtfardatBevisUppdateradEvent"/>
@@ -396,6 +398,14 @@
           <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
           <xs:element minOccurs="0" name="SvenskBenamning" type="xs:string"/>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UtfardatBevisNyNationellBevistypEvent">
+    <xs:complexContent>
+      <xs:extension base="ex:UtfardatBevisEvent">
+        <xs:sequence/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -1109,6 +1119,7 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="BevisbenamningUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="EventuellTidigareNationellBevistypUID" type="xs:string"/>
           <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
           <xs:element minOccurs="0" name="Handelsetyp" type="xs:string"/>
           <xs:element minOccurs="0" name="Kod" type="xs:string"/>
@@ -1584,44 +1595,44 @@
 
   <xs:simpleType name="Bevisradstyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="RUBRIK"/>
       <xs:enumeration value="TILLGODORAKNANDE"/>
-      <xs:enumeration value="PROJEKTTITEL"/>
+      <xs:enumeration value="RUBRIK"/>
       <xs:enumeration value="RESULTAT"/>
+      <xs:enumeration value="PROJEKTTITEL"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="BevisradValtInnehallTillgodoraknande">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="MAL"/>
       <xs:enumeration value="GRUND"/>
+      <xs:enumeration value="MAL"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="GiltigMeritForExamenTyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="RESULTAT_PA_UTBILDNING"/>
-      <xs:enumeration value="ANNAT_RESULTAT"/>
-      <xs:enumeration value="RESULTAT_PA_UTBILDNING_MODUL"/>
-      <xs:enumeration value="TILLGODORAKNANDE"/>
       <xs:enumeration value="ANNAN_MERIT"/>
+      <xs:enumeration value="RESULTAT_PA_UTBILDNING_MODUL"/>
+      <xs:enumeration value="ANNAT_RESULTAT"/>
+      <xs:enumeration value="TILLGODORAKNANDE"/>
+      <xs:enumeration value="RESULTAT_PA_UTBILDNING"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Markningstyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="beviskategori"/>
       <xs:enumeration value="nivainomstudieordning"/>
+      <xs:enumeration value="beviskategori"/>
       <xs:enumeration value="nationellexamensgrupp"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Bevistextagartyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="BEVISKOMBINATION"/>
-      <xs:enumeration value="NATIONELL_BEVISTYP"/>
       <xs:enumeration value="BEVISUNDERLAG"/>
+      <xs:enumeration value="NATIONELL_BEVISTYP"/>
       <xs:enumeration value="BEVISBENAMNING"/>
+      <xs:enumeration value="BEVISKOMBINATION"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -1633,9 +1644,9 @@
 
   <xs:simpleType name="Preciseringsgrupperingstyp">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="nationelltundervisningsamne"/>
       <xs:enumeration value="huvudomradesgrupp"/>
       <xs:enumeration value="nationelltforskningsamne"/>
-      <xs:enumeration value="nationelltundervisningsamne"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

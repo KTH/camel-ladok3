@@ -621,9 +621,9 @@
 
   <xs:simpleType name="Felkategori">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="commons.domain.eventhandling.category.none"/>
       <xs:enumeration value="commons.domain.eventhandling.category.sw_error"/>
       <xs:enumeration value="commons.domain.eventhandling.category.business_rule"/>
+      <xs:enumeration value="commons.domain.eventhandling.category.none"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -636,62 +636,62 @@
 
   <xs:simpleType name="AntagningsforfarandeNyckel">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="UTANANMALAN"/>
       <xs:enumeration value="ANMALAN"/>
       <xs:enumeration value="EXTERNANSOKAN"/>
+      <xs:enumeration value="UTANANMALAN"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Datatyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="integer"/>
-      <xs:enumeration value="boolean"/>
-      <xs:enumeration value="gruppering"/>
-      <xs:enumeration value="kurstillfallen"/>
-      <xs:enumeration value="string"/>
-      <xs:enumeration value="date"/>
-      <xs:enumeration value="personnummer"/>
       <xs:enumeration value="period_i_ordning"/>
-      <xs:enumeration value="datumperiod"/>
+      <xs:enumeration value="personnummer"/>
       <xs:enumeration value="katalogdata"/>
+      <xs:enumeration value="integer"/>
+      <xs:enumeration value="string"/>
+      <xs:enumeration value="gruppering"/>
+      <xs:enumeration value="date"/>
+      <xs:enumeration value="datumperiod"/>
+      <xs:enumeration value="kurstillfallen"/>
+      <xs:enumeration value="boolean"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Utbildningsgrundtyp">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="MODUL"/>
       <xs:enumeration value="KURS"/>
       <xs:enumeration value="KURSPAKETERING"/>
-      <xs:enumeration value="MODUL"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Handelsetyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="UPPDATERAD"/>
-      <xs:enumeration value="SKAPAD"/>
       <xs:enumeration value="BORTTAGEN"/>
+      <xs:enumeration value="SKAPAD"/>
+      <xs:enumeration value="UPPDATERAD"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="SCBRapporttyp">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="AKTIVITET_FORSKARNIVA"/>
-      <xs:enumeration value="RESULTAT_GRUND_OCH_AVANCERAD_NIVA"/>
       <xs:enumeration value="EXAMEN_FORSKARNIVA"/>
       <xs:enumeration value="EXAMEN_GRUND_OCH_AVANCERAD_NIVA"/>
-      <xs:enumeration value="RESULTAT_FORSKARNIVA"/>
       <xs:enumeration value="REGISTRERING_GRUND_OCH_AVANCERAD_NIVA"/>
+      <xs:enumeration value="RESULTAT_GRUND_OCH_AVANCERAD_NIVA"/>
+      <xs:enumeration value="RESULTAT_FORSKARNIVA"/>
+      <xs:enumeration value="AKTIVITET_FORSKARNIVA"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="StudentOrderByEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="FORNAMN_DESC"/>
-      <xs:enumeration value="PERSONNUMMER_DESC"/>
-      <xs:enumeration value="FORNAMN_ASC"/>
-      <xs:enumeration value="EFTERNAMN_ASC"/>
       <xs:enumeration value="PERSONNUMMER_ASC"/>
+      <xs:enumeration value="PERSONNUMMER_DESC"/>
       <xs:enumeration value="EFTERNAMN_DESC"/>
+      <xs:enumeration value="EFTERNAMN_ASC"/>
+      <xs:enumeration value="FORNAMN_ASC"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
