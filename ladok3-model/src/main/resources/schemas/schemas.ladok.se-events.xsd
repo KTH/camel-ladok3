@@ -6,17 +6,31 @@
   <xs:element name="EventContext" type="events:eventContext"/>
 
   <xs:complexType abstract="true" name="BaseEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Bas för interna händelser i Ladok3. En händelse kan serialiseras till/från XML.]]></xs:documentation>
+</xs:annotation>
     <xs:sequence>
       <xs:element ref="events:EventContext"/>
-      <xs:element name="HandelseUID" type="xs:string"/>
+      <xs:element name="HandelseUID" type="xs:string">
+<xs:annotation>
+<xs:documentation><![CDATA[Avser själva händelserepresentationens UID (rent tekniskt UID alltså).]]></xs:documentation>
+</xs:annotation>
+</xs:element>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="eventContext">
+<xs:annotation>
+<xs:documentation><![CDATA[En "representation" av händelsecontext (metadata) i samband med atom feeds mellan tjänster.]]></xs:documentation>
+</xs:annotation>
     <xs:sequence>
       <xs:element minOccurs="0" name="AnvandareUID" type="xs:string"/>
       <xs:element name="Anvandarnamn" type="xs:string"/>
-      <xs:element name="LarosateID" type="xs:int"/>
+      <xs:element name="LarosateID" type="xs:int">
+<xs:annotation>
+<xs:documentation><![CDATA[Det lärosäte som äger datat för entiteten som händelsen avser.]]></xs:documentation>
+</xs:annotation>
+</xs:element>
       <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
