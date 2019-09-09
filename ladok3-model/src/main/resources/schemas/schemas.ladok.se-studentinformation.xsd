@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:at="http://schemas.ladok.se/attestering" xmlns:base="http://schemas.ladok.se" xmlns:dap="http://schemas.ladok.se/dap" xmlns:events="http://schemas.ladok.se/events" xmlns:si="http://schemas.ladok.se/studentinformation" elementFormDefault="qualified" targetNamespace="http://schemas.ladok.se/studentinformation" version="1.0">
 
-  <xs:import namespace="http://schemas.ladok.se" schemaLocation="schemas.ladok.se.xsd"/>
-
   <xs:import namespace="http://schemas.ladok.se/dap" schemaLocation="schemas.ladok.se-dap.xsd"/>
 
   <xs:import namespace="http://schemas.ladok.se/events" schemaLocation="schemas.ladok.se-events.xsd"/>
+
+  <xs:import namespace="http://schemas.ladok.se" schemaLocation="schemas.ladok.se.xsd"/>
 
   <xs:element name="Adresslista" type="si:Adresslista"/>
 
@@ -20,8 +20,6 @@
   <xs:element name="AvstangningEventPart" type="si:AvstangningEventPart"/>
 
   <xs:element name="Avstangningar" type="si:Avstangningar"/>
-
-  <xs:element name="BorttagenStudenthistorikpostEvent" type="si:BorttagenStudenthistorikpostEvent"/>
 
   <xs:element name="ExternStudent" type="si:ExternStudent"/>
 
@@ -48,8 +46,6 @@
   <xs:element name="Postadress" type="si:Postadress"/>
 
   <xs:element name="SkyddadePersonuppgifter" type="si:SkyddadePersonuppgifter"/>
-
-  <xs:element name="SkyddadePersonuppgifterEvent" type="si:SkyddadePersonuppgifterEvent"/>
 
   <xs:element name="Skyddsbeslut" type="si:Skyddsbeslut"/>
 
@@ -87,19 +83,13 @@
 
   <xs:element name="StudentrestriktionEventPart" type="si:StudentrestriktionEventPart"/>
 
-  <xs:element name="StudentursprungEvent" type="si:StudentursprungEvent"/>
-
   <xs:element name="Studieavgiftsskyldighet" type="si:Studieavgiftsskyldighet"/>
-
-  <xs:element name="StudieavgiftsskyldighetEvent" type="si:StudieavgiftsskyldighetEvent"/>
 
   <xs:element name="StudieavgiftsskyldighetEventPart" type="si:StudieavgiftsskyldighetEventPart"/>
 
   <xs:element name="StudieavgiftsskyldighetHistorik" type="si:StudieavgiftsskyldighetHistorik"/>
 
   <xs:element name="Studieavgiftsskyldigheter" type="si:Studieavgiftsskyldigheter"/>
-
-  <xs:element name="StudieavgiftsskyldigheterEvent" type="si:StudieavgiftsskyldigheterEvent"/>
 
   <xs:element name="StudieavgiftsskyldigheterHistorik" type="si:StudieavgiftsskyldigheterHistorik"/>
 
@@ -109,36 +99,336 @@
 
   <xs:element name="UnikaIdentifierare" type="si:UnikaIdentifierare"/>
 
-  <xs:complexType name="StudieavgiftsskyldighetHistorik">
+  <xs:complexType name="AvskiljningEventPart">
+<xs:annotation>
+<xs:documentation><![CDATA[Del av ett StudentrestriktionEvent avseende en students avskiljande]]></xs:documentation>
+</xs:annotation>
     <xs:complexContent>
-      <xs:extension base="si:Studieavgiftsskyldighet">
+      <xs:extension base="si:StudentrestriktionEventPart">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Handelsetyp" type="base:Handelsetyp"/>
-          <xs:element minOccurs="0" name="StudieavgiftsskyldighetUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="AvskiljningStatus" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Studieavgiftsskyldighet">
+  <xs:complexType name="StudentrestriktionEventPart">
+<xs:annotation>
+<xs:documentation><![CDATA[Basklass för alla typer av restriktioner]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AvstangningEventPart">
+<xs:annotation>
+<xs:documentation><![CDATA[Del av ett StudentrestriktionEvent avseende en students avstängning]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="si:StudentrestriktionEventPart">
+        <xs:sequence>
+          <xs:element name="OrsakID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="KontaktuppgifterEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelse som publiceras avseende ändringar i en students kontaktuppgifter.]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="si:KontaktuppgifterSysteminterntEvent">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="KontaktuppgifterSysteminterntEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Epostadress" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Postadresser" type="si:PostadressEventPart"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Telefonnummer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PostadressEventPart">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CareOf" type="xs:string"/>
+      <xs:element minOccurs="0" name="Land" type="xs:string"/>
+      <xs:element minOccurs="0" name="PostadressTyp" type="si:PostadressTypRepresentation"/>
+      <xs:element minOccurs="0" name="Postnummer" type="xs:string"/>
+      <xs:element minOccurs="0" name="Postort" type="xs:string"/>
+      <xs:element minOccurs="0" name="Utdelningsadress" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="StudentAvlidenmarkeringEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelse som publiceras när ändring sker på students avlidenstatus. Normalt sker detta när student registreras som avliden, men kan
+även avse en rättning av en felaktig avliden-markering.]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element name="avliden" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudentBortkoppladFranLarosateEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelse som publiceras när en student kopplas bort från ett lärosäte. Detta sker normalt sett enbart om en nationell administratör
+konstaterat att studenten fått en felaktig koppling till ett lärosäte utan att ha någon annan studierelaterad information kopplad
+till lärosätet.]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string">
+<xs:annotation>
+<xs:documentation><![CDATA[StudentUID, unik identifierare för student]]></xs:documentation>
+</xs:annotation>
+</xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="LokalStudentEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Event som publiceras för konsumtion utanför Ladok3, dvs. från externa system på respektive lärosäte. Eventet publiceras till varje
+lärosäte som en student har en koppling till.]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="si:StudentEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="TidigarePersonnummer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudentEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="ErsattAvStudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="ExterntStudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Fodelsedata" type="xs:string"/>
+          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="HanvisningNuGallandeStudentUID" type="xs:string"/>
+          <xs:element name="Kon" type="xs:int"/>
+          <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudentrestriktionEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelse som publiceras när det sker ändringar i en students studentrestriktioner, dvs. avskiljanden och avstängningar.]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="RestriktionEventPart" type="si:StudentrestriktionEventPart"/>
+          <xs:element minOccurs="0" name="Restriktionstyp" type="si:RestriktionstypEventPart"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="StudentrestriktionUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudieavgiftsskyldighetEventPart">
+<xs:annotation>
+<xs:documentation><![CDATA[Representation för en studieavgiftsskyldighetspost i ett event.]]></xs:documentation>
+</xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+      <xs:element minOccurs="0" name="Avgiftsskyldighetsvarde" type="si:Avgiftsskyldighetsvarde"/>
+      <xs:element minOccurs="0" name="Beslutsdatum" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="Beslutsordning" type="xs:int"/>
+      <xs:element minOccurs="0" name="Datumperiod" type="base:Datumperiod"/>
+      <xs:element minOccurs="0" name="Handelsetyp" type="base:Handelsetyp"/>
+      <xs:element minOccurs="0" name="OrsakEjAvgiftsskyldigID" type="xs:int"/>
+      <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+      <xs:element minOccurs="0" name="StudiesavgiftsskyldighetUID" type="xs:string"/>
+      <xs:element minOccurs="0" name="Ursprung" type="si:Ursprung"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="StudieavgiftsskyldigheterPaLarosateEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelse som publiceras vid ändringar i students studieavgiftsskyldigheter på ett givet lärosäte.]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Studieavgiftsskyldigheter" type="si:StudieavgiftsskyldighetEventPart"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Adresslista">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="StudentUIDer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ExternStudent">
+<xs:annotation>
+<xs:documentation><![CDATA[REST-representation av en extern student i sökresultat från gemensamma studenttjänsten.]]></xs:documentation>
+</xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExterntUID" type="xs:string"/>
+      <xs:element minOccurs="0" name="Fodelsedata" type="xs:string"/>
+      <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
+      <xs:element minOccurs="0" name="KonID" type="xs:int"/>
+      <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Kontaktuppgifter">
+<xs:annotation>
+<xs:documentation><![CDATA[Representerar kontaktuppgifter för en student. Innehåller bl.a. Epostadress, Telefonnummer och Postadress.]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Epostadress" type="xs:string"/>
+          <xs:element minOccurs="0" name="EpostadressSenastAndrad" type="xs:dateTime"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Postadresser" type="si:Postadress"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Telefonnummer" type="xs:string"/>
+          <xs:element minOccurs="0" name="TelefonnummerSenastAndrad" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Postadress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CareOf" type="xs:string"/>
+      <xs:element minOccurs="0" name="Land" type="xs:string"/>
+      <xs:element minOccurs="0" name="PostadressTyp" type="si:PostadressTypRepresentation"/>
+      <xs:element minOccurs="0" name="Postnummer" type="xs:string"/>
+      <xs:element minOccurs="0" name="Postort" type="xs:string"/>
+      <xs:element minOccurs="0" name="Utdelningsadress" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="SenastAndrad" type="xs:dateTime"/>
+  </xs:complexType>
+
+  <xs:complexType name="SkyddadePersonuppgifter">
+<xs:annotation>
+<xs:documentation><![CDATA[REST-representation av en students skyddade personuppgifter.]]></xs:documentation>
+</xs:annotation>
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Avgiftsskyldighetsvarde" type="si:Avgiftsskyldighetsvarde"/>
-          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="Beslutsordning" type="xs:int"/>
-          <xs:element name="Borttagen" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="OrsakEjAvgiftsskyldigID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Fodelsedata" type="xs:string"/>
+          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="KonID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:Skyddsbeslut"/>
+          <xs:element minOccurs="0" name="Skyddsstatus" type="xs:string"/>
           <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Ursprung" type="si:Ursprung"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Skyddsbeslut">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
+          <xs:element minOccurs="0" name="ExternReferens" type="xs:string"/>
+          <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="Notering" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudentISokresultat">
+<xs:annotation>
+<xs:documentation><![CDATA[En lättviktig representation för att minska ner databasslagningar vid sökningar.
+För att få en mer komplett bild av studenten kan klienten följa self-länken.]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element name="Avliden" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Studentkopplingar">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Studentkopplingar" type="si:Studentkoppling"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Studentkoppling">
+<xs:annotation>
+<xs:documentation><![CDATA[REST-representation av en studentkoppling till ett lärosäte.]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="studentUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Studenter">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:Student"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="Student">
+<xs:annotation>
+<xs:documentation><![CDATA[REST-representation av en student.]]></xs:documentation>
+</xs:annotation>
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
@@ -179,325 +469,23 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="AvstangningEventPart">
-    <xs:complexContent>
-      <xs:extension base="si:StudentrestriktionEventPart">
-        <xs:sequence>
-          <xs:element name="OrsakID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudentrestriktionEventPart">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AvskiljningEventPart">
-    <xs:complexContent>
-      <xs:extension base="si:StudentrestriktionEventPart">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AvskiljningStatus" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Kontaktuppgifter">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Epostadress" type="xs:string"/>
-          <xs:element minOccurs="0" name="EpostadressSenastAndrad" type="xs:dateTime"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Postadresser" type="si:Postadress"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Telefonnummer" type="xs:string"/>
-          <xs:element minOccurs="0" name="TelefonnummerSenastAndrad" type="xs:dateTime"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Postadress">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="CareOf" type="xs:string"/>
-      <xs:element minOccurs="0" name="Land" type="xs:string"/>
-      <xs:element minOccurs="0" name="PostadressTyp" type="si:PostadressTypRepresentation"/>
-      <xs:element minOccurs="0" name="Postnummer" type="xs:string"/>
-      <xs:element minOccurs="0" name="Postort" type="xs:string"/>
-      <xs:element minOccurs="0" name="Utdelningsadress" type="xs:string"/>
-    </xs:sequence>
-    <xs:attribute name="SenastAndrad" type="xs:dateTime"/>
-  </xs:complexType>
-
-  <xs:complexType name="Skyddsbeslut">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
-          <xs:element minOccurs="0" name="ExternReferens" type="xs:string"/>
-          <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="Notering" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Studenter">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:Student"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Avstangning">
-    <xs:complexContent>
-      <xs:extension base="si:Studentrestriktion">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="OrsakID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="Studentrestriktion">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="KontaktuppgifterEvent">
-    <xs:complexContent>
-      <xs:extension base="si:KontaktuppgifterSysteminterntEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="KontaktuppgifterSysteminterntEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Epostadress" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Postadresser" type="si:PostadressEventPart"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Telefonnummer" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="PostadressEventPart">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="CareOf" type="xs:string"/>
-      <xs:element minOccurs="0" name="Land" type="xs:string"/>
-      <xs:element minOccurs="0" name="PostadressTyp" type="si:PostadressTypRepresentation"/>
-      <xs:element minOccurs="0" name="Postnummer" type="xs:string"/>
-      <xs:element minOccurs="0" name="Postort" type="xs:string"/>
-      <xs:element minOccurs="0" name="Utdelningsadress" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="Studenthistorikpost">
+  <xs:complexType name="StudentMedAnteckning">
+<xs:annotation>
+<xs:documentation><![CDATA[Representation för att skicka med uppgifter vid registrering av ursprung i studenthistoriken.]]></xs:documentation>
+</xs:annotation>
     <xs:complexContent>
       <xs:extension base="si:Student">
         <xs:sequence>
           <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="HanvisningFranStudentUID" type="xs:string"/>
-          <xs:element name="SparlostByte" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="TypI18n" type="xs:string"/>
-          <xs:element minOccurs="0" name="UrsprungligtLarosateID" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="SkyddadePersonuppgifterEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="SkyddadePersonuppgifterUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="SkyddatEfternamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="SkyddatFornamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="SkyddatKon" type="xs:int"/>
-          <xs:element minOccurs="0" name="SkyddatPersonnummer" type="xs:string"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudieavgiftsskyldighetEventPart">
+  <xs:complexType name="StudentUIDLasRepresentation">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-      <xs:element minOccurs="0" name="Avgiftsskyldighetsvarde" type="si:Avgiftsskyldighetsvarde"/>
-      <xs:element minOccurs="0" name="Beslutsdatum" type="xs:dateTime"/>
-      <xs:element minOccurs="0" name="Beslutsordning" type="xs:int"/>
-      <xs:element minOccurs="0" name="Datumperiod" type="base:Datumperiod"/>
-      <xs:element minOccurs="0" name="Handelsetyp" type="base:Handelsetyp"/>
-      <xs:element minOccurs="0" name="OrsakEjAvgiftsskyldigID" type="xs:int"/>
-      <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-      <xs:element minOccurs="0" name="StudiesavgiftsskyldighetUID" type="xs:string"/>
-      <xs:element minOccurs="0" name="Ursprung" type="si:Ursprung"/>
+      <xs:element minOccurs="0" name="Uid" type="xs:string"/>
     </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="StudieavgiftsskyldigheterPaLarosateEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Studieavgiftsskyldigheter" type="si:StudieavgiftsskyldighetEventPart"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="ExternStudent">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
-      <xs:element minOccurs="0" name="ExterntUID" type="xs:string"/>
-      <xs:element minOccurs="0" name="Fodelsedata" type="xs:string"/>
-      <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
-      <xs:element minOccurs="0" name="KonID" type="xs:int"/>
-      <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="OrsakEjAvgiftsskyldig">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Adresslista">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="StudentUIDer" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudieavgiftsskyldigheterHistorik">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:StudieavgiftsskyldighetHistorik"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="Studentkopplingar">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Studentkopplingar" type="si:Studentkoppling"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Studentkoppling">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="studentUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Avskiljandebeslut">
-    <xs:complexContent>
-      <xs:extension base="si:Studentrestriktion">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Avskiljandestatus" type="si:Avskiljandestatus"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SokresultatStudentinformationRepresentation">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="si:StudentISokresultat"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudentISokresultat">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element name="Avliden" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="OrsakerAvstangning">
-    <xs:complexContent>
-      <xs:extension base="base:Grunddatavardelista">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:OrsakAvstangning"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="OrsakAvstangning">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="LokalStudentEvent">
-    <xs:complexContent>
-      <xs:extension base="si:StudentEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="TidigarePersonnummer" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudentEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="ErsattAvStudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="ExterntStudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Fodelsedata" type="xs:string"/>
-          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="HanvisningNuGallandeStudentUID" type="xs:string"/>
-          <xs:element name="Kon" type="xs:int"/>
-          <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="Studenthistorikposter">
@@ -512,6 +500,9 @@
   </xs:complexType>
 
   <xs:complexType name="StudenthistorikpostNy">
+<xs:annotation>
+<xs:documentation><![CDATA[Studenthistorikpostrepresentation]]></xs:documentation>
+</xs:annotation>
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
@@ -531,12 +522,63 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="StudentAvlidenmarkeringEvent">
+  <xs:complexType name="Studenthistorikpost">
+<xs:annotation>
+<xs:documentation><![CDATA[Studenthistorikpostrepresentation]]></xs:documentation>
+</xs:annotation>
     <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
+      <xs:extension base="si:Student">
         <xs:sequence>
-          <xs:element name="avliden" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="HanvisningFranStudentUID" type="xs:string"/>
+          <xs:element name="SparlostByte" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="TypI18n" type="xs:string"/>
+          <xs:element minOccurs="0" name="UrsprungligtLarosateID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudieavgiftsskyldigheterHistorik">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:StudieavgiftsskyldighetHistorik"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="StudieavgiftsskyldighetHistorik">
+    <xs:complexContent>
+      <xs:extension base="si:Studieavgiftsskyldighet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Handelsetyp" type="base:Handelsetyp"/>
+          <xs:element minOccurs="0" name="StudieavgiftsskyldighetUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Studieavgiftsskyldighet">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Avgiftsskyldighetsvarde" type="si:Avgiftsskyldighetsvarde"/>
+          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="Beslutsordning" type="xs:int"/>
+          <xs:element name="Borttagen" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="OrsakEjAvgiftsskyldigID" type="xs:int"/>
           <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Ursprung" type="si:Ursprung"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Studieavgiftsskyldigheter">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:Studieavgiftsskyldighet"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -552,64 +594,15 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="StudieavgiftsskyldigheterEvent">
+  <xs:complexType name="SokresultatStudentinformationRepresentation">
     <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
+      <xs:extension base="base:Sokresultat">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Studieavgiftsskyldigheter" type="si:StudieavgiftsskyldighetEventPart"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="BorttagenStudenthistorikpostEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="Fodelsedata" type="xs:string"/>
-          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudentBortkoppladFranLarosateEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SkyddadePersonuppgifter">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="Fodelsedata" type="xs:string"/>
-          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="KonID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:Skyddsbeslut"/>
-          <xs:element minOccurs="0" name="Skyddsstatus" type="xs:string"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudentursprungEvent">
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="si:StudentISokresultat">
+<xs:annotation>
+<xs:documentation><![CDATA[Lista med poster som kan vara en delmängd av det totala resultatet, givet paginering]]></xs:documentation>
+</xs:annotation>
+</xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -633,46 +626,62 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Studieavgiftsskyldigheter">
+  <xs:complexType name="OrsakerAvstangning">
     <xs:complexContent>
-      <xs:extension base="dap:Base">
+      <xs:extension base="base:Grunddatavardelista">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:Studieavgiftsskyldighet"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:OrsakAvstangning"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Avstangningar">
+  <xs:complexType name="OrsakAvstangning">
     <xs:complexContent>
-      <xs:extension base="dap:Base">
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="OrsakerEjAvgiftsskyldig">
+    <xs:complexContent>
+      <xs:extension base="base:Grunddatavardelista">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:Avstangning"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:OrsakEjAvgiftsskyldig"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="StudentrestriktionEvent">
+  <xs:complexType name="OrsakEjAvgiftsskyldig">
     <xs:complexContent>
-      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Avskiljandebeslut">
+    <xs:complexContent>
+      <xs:extension base="si:Studentrestriktion">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Avskiljandestatus" type="si:Avskiljandestatus"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="Studentrestriktion">
+<xs:annotation>
+<xs:documentation><![CDATA[Basklass för studentrestriktioners representationer]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
           <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="RestriktionEventPart" type="si:StudentrestriktionEventPart"/>
-          <xs:element minOccurs="0" name="Restriktionstyp" type="si:RestriktionstypEventPart"/>
           <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="StudentrestriktionUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StudentMedAnteckning">
-    <xs:complexContent>
-      <xs:extension base="si:Student">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -688,57 +697,25 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="OrsakerEjAvgiftsskyldig">
+  <xs:complexType name="Avstangningar">
     <xs:complexContent>
-      <xs:extension base="base:Grunddatavardelista">
+      <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:OrsakEjAvgiftsskyldig"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:Avstangning"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="StudieavgiftsskyldighetEvent">
+  <xs:complexType name="Avstangning">
     <xs:complexContent>
-      <xs:extension base="events:BaseEventRepresentationMedHandelsetyp">
+      <xs:extension base="si:Studentrestriktion">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element minOccurs="0" name="Avgiftsskyldighetsvarde" type="si:Avgiftsskyldighetsvarde"/>
-          <xs:element minOccurs="0" name="Beslutsdatum" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="Beslutsordning" type="xs:int"/>
-          <xs:element minOccurs="0" name="Datumperiod" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="OrsakEjAvgiftsskyldigID" type="xs:int"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="StudiesavgiftsskyldighetUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Ursprung" type="si:Ursprung"/>
+          <xs:element minOccurs="0" name="OrsakID" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-
-  <xs:complexType name="StudentUIDLasRepresentation">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Uid" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:simpleType name="Avgiftsskyldighetsvarde">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="3"/>
-      <xs:enumeration value="2"/>
-      <xs:enumeration value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="Ursprung">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="FOLKBOKFORING"/>
-      <xs:enumeration value="NYA_MANUELLT"/>
-      <xs:enumeration value="NYA_MASKINELLT"/>
-      <xs:enumeration value="LADOK_MANUELLT"/>
-      <xs:enumeration value="LADOK_MASKINELLT"/>
-    </xs:restriction>
-  </xs:simpleType>
 
   <xs:simpleType name="PostadressTypRepresentation">
     <xs:restriction base="xs:string">
@@ -747,17 +724,47 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="RestriktionstypEventPart">
+<xs:annotation>
+<xs:documentation><![CDATA[Särskiljer studentrestriktioner i kända varianter]]></xs:documentation>
+</xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AVSTANGNING"/>
+      <xs:enumeration value="AVSKILJANDE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Avgiftsskyldighetsvarde">
+<xs:annotation>
+<xs:documentation><![CDATA[Definierar möjliga värden rörande en students avgiftsskyldighet för studieavgifter. Möjliga värden är Avgiftsskyldig eller Ej
+Avgiftsskyldig.
+Avsaknad av dokumenterad avgiftsskyldighet innebär per automatik att studenten är Ej Prövad. Det explicita värdet EJ_PRÖVAD behövs
+alltså inte och kommer fasas ut.]]></xs:documentation>
+</xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Ursprung">
+<xs:annotation>
+<xs:documentation><![CDATA[Definierar möjliga värden rörande en students avgiftsskyldighets ursprung.]]></xs:documentation>
+</xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NYA_MASKINELLT"/>
+      <xs:enumeration value="NYA_MANUELLT"/>
+      <xs:enumeration value="LADOK_MASKINELLT"/>
+      <xs:enumeration value="LADOK_MANUELLT"/>
+      <xs:enumeration value="FOLKBOKFORING"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="Avskiljandestatus">
     <xs:restriction base="xs:string">
       <xs:enumeration value="1"/>
       <xs:enumeration value="2"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="RestriktionstypEventPart">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="AVSKILJANDE"/>
-      <xs:enumeration value="AVSTANGNING"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
