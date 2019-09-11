@@ -29,16 +29,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import se.ladok.schemas.dap.RelationLink;
-import se.ladok.schemas.dap.ServiceIndex;
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
@@ -58,14 +53,6 @@ public class Ladok3StudentinformationServiceTest {
         String key = properties.getProperty("ladok3.cert.key");
 
         studentInformationService = new StudentinformationServiceImpl(host, certFile, key);
-    }
-
-    @Test
-    public void testServiceIndex() {
-        ServiceIndex index = studentInformationService.serviceIndex();
-        List<RelationLink> links = index.getLink();
-
-        assert(links.size() > 0);
     }
 
     @Test

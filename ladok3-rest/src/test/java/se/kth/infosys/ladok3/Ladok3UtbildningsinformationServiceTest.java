@@ -23,15 +23,9 @@
  */
 package se.kth.infosys.ladok3;
 
-import java.util.List;
 import java.util.Properties;
-
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
-
-import se.ladok.schemas.dap.RelationLink;
-import se.ladok.schemas.dap.ServiceIndex;
 
 @Ignore("Does not work without connection to Ladok")
 public class Ladok3UtbildningsinformationServiceTest {
@@ -47,13 +41,5 @@ public class Ladok3UtbildningsinformationServiceTest {
         String key = properties.getProperty("ladok3.cert.key");
 
         utbildningsinformationService = new UtbildningsinformationServiceImpl(host, certFile, key);
-    }
-
-    @Test
-    public void testServiceIndex() {
-        ServiceIndex index = utbildningsinformationService.serviceIndex();
-        List<RelationLink> links = index.getLink();
-
-        assert(links.size() > 0);
     }
 }

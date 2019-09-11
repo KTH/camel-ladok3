@@ -23,24 +23,22 @@
  */
 package se.kth.infosys.ladok3;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.ThreadLocalRandom;
+import javax.ws.rs.ClientErrorException;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import se.ladok.schemas.dap.RelationLink;
-import se.ladok.schemas.dap.ServiceIndex;
 import se.ladok.schemas.kataloginformation.Anvandare;
 import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
 import se.ladok.schemas.kataloginformation.ObjectFactory;
-
-import javax.ws.rs.ClientErrorException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.ThreadLocalRandom;
-
-import static org.junit.Assert.*;
 
 @Ignore("Does not work without connection to Ladok")
 public class Ladok3KataloginformationServiceTest {
@@ -58,14 +56,6 @@ public class Ladok3KataloginformationServiceTest {
         String key = properties.getProperty("ladok3.cert.key");
 
         katalogInformationService = new KataloginformationServiceImpl(host, certFile, key);
-    }
-
-    @Test
-    public void testServiceIndex() {
-        ServiceIndex index = katalogInformationService.serviceIndex();
-        List<RelationLink> links = index.getLink();
-
-        assert (links.size() > 0);
     }
 
     @Test

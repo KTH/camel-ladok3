@@ -36,8 +36,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import se.ladok.schemas.dap.ServiceIndex;
-
 /**
  * Abstract base class for Ladok REST services.
  */
@@ -105,15 +103,5 @@ abstract class AbstractLadok3Service implements Ladok3Service {
             .build()
             .register(RequestFilter.class)
             .register(ResponseFilter.class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public ServiceIndex serviceIndex() {
-        return target.path("/service/index")
-                .request()
-                .accept(SERVICE_TYPE)
-                .get(ServiceIndex.class);
     }
 }
