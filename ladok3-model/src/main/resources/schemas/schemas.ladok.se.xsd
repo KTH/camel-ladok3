@@ -163,9 +163,9 @@ representation som har SpråktexterRepresentation. BenamningarElement definieras
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Uid" type="xs:string"/>
           <xs:element minOccurs="0" name="SenastSparad" type="xs:dateTime"/>
           <xs:element minOccurs="0" name="SenastAndradAv" type="xs:string"/>
-          <xs:element minOccurs="0" name="Uid" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

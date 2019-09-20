@@ -347,6 +347,8 @@
 
   <xs:element name="SokresultatOrganisationKataloginformation" type="ki:SokresultatOrganisationKataloginformation"/>
 
+  <xs:element name="Startsidakonfiguration" type="ki:Startsidakonfiguration"/>
+
   <xs:element name="Studiefinansiering" type="ki:Studiefinansiering"/>
 
   <xs:element name="StudiefinansieringEvent" type="ki:StudiefinansieringEvent"/>
@@ -1514,8 +1516,8 @@ minska footprint i bland annat events.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" name="I18nNyckel" type="xs:string"/>
           <xs:element minOccurs="0" name="Id" type="xs:int"/>
+          <xs:element minOccurs="0" name="I18nNyckel" type="xs:string"/>
           <xs:element name="KlarForProduktion" type="xs:boolean"/>
           <xs:element minOccurs="0" name="Rattighetsniva" type="ki:Rattighetsniva"/>
         </xs:sequence>
@@ -3135,6 +3137,19 @@ Endast för intern åtkomst.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="Startsidakonfiguration">
+<xs:annotation>
+<xs:documentation><![CDATA[Konfiguration för hur startsidan ska se ut, med gammal eller nytt (beta) utseende]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Varde" type="ki:Startsidakonfigurationvarde"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:simpleType name="Anvandarbehorighetsstatus">
 <xs:annotation>
 <xs:documentation><![CDATA[De möjliga tillstånd en användarbehörighet kan ha]]></xs:documentation>
@@ -3180,6 +3195,14 @@ Endast för intern åtkomst.]]></xs:documentation>
       <xs:enumeration value="Lärosätesperiod"/>
       <xs:enumeration value="NationelltFastställdPeriod"/>
       <xs:enumeration value="NationelltBaseradPeriod"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Startsidakonfigurationvarde">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="VISA_BADA"/>
+      <xs:enumeration value="VISA_BARA_ORGINALSIDA"/>
+      <xs:enumeration value="VISA_BARA_BETASTARTSIDA"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

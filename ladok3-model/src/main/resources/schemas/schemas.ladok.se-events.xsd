@@ -10,12 +10,12 @@
 <xs:documentation><![CDATA[Bas för interna händelser i Ladok3. En händelse kan serialiseras till/från XML.]]></xs:documentation>
 </xs:annotation>
     <xs:sequence>
-      <xs:element ref="events:EventContext"/>
       <xs:element name="HandelseUID" type="xs:string">
 <xs:annotation>
 <xs:documentation><![CDATA[Avser själva händelserepresentationens UID (rent tekniskt UID alltså).]]></xs:documentation>
 </xs:annotation>
 </xs:element>
+      <xs:element ref="events:EventContext"/>
     </xs:sequence>
   </xs:complexType>
 
