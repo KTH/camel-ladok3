@@ -79,6 +79,8 @@
 
   <xs:element name="AttGoraPaKurstillfalle" type="rr:AttGoraPaKurstillfalle"/>
 
+  <xs:element name="AttGoraUtanforAktuellVersion" type="rr:AttGoraUtanforAktuellVersion"/>
+
   <xs:element name="AttesteratResultatMakuleratEvent" type="rr:AttesteratResultatMakuleratEvent"/>
 
   <xs:element name="AttesteringsbeslutForResultatUppdateratEvent" type="rr:AttesteringsbeslutForResultatUppdateratEvent"/>
@@ -3663,6 +3665,16 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="AttGoraUtanforAktuellVersion">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Student" type="base:Student"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="Kursstruktur">
     <xs:sequence>
       <xs:element minOccurs="0" name="AktuellKursversion" type="xs:int"/>
@@ -3675,6 +3687,7 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AttGoraUtanforVersion" type="rr:AttGoraUtanforAktuellVersion"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:AttGoraPaKurstillfalle"/>
           <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="Enhet" type="xs:string"/>
@@ -3848,8 +3861,8 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="KursversionMedOvergivnaModulresultat" type="rr:StudentensKurserKursversion"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Kursversioner" type="rr:StudentensKurserKursversion"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ResultatUtanKopplingTillKursversion" type="rr:StudentensKurserUtbildningsinstans"/>
           <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
           <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
         </xs:sequence>

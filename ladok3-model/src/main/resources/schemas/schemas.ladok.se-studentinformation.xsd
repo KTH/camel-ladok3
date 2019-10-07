@@ -441,7 +441,6 @@ För att få en mer komplett bild av studenten kan klienten följa self-länken.
           <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
           <xs:element minOccurs="0" name="KonID" type="xs:int"/>
           <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
-          <xs:element minOccurs="0" name="Skyddsstatus" type="xs:string"/>
           <xs:element minOccurs="0" ref="si:UnikaIdentifierare"/>
         </xs:sequence>
       </xs:extension>

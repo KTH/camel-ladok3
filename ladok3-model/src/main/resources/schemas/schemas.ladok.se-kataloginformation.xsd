@@ -3012,8 +3012,8 @@ Endast för intern åtkomst.]]></xs:documentation>
 
   <xs:complexType name="AnvandareListaIERepresentation">
 <xs:annotation>
-<xs:documentation><![CDATA[Förenklad representation av användare i systemet för Exporg/Import funktionalitet. Implementerad som en tabell med
-lärosätesId som nyckel till en lista av användare.
+<xs:documentation><![CDATA[Förenklad representation av användare i systemet för Exporg/Import funktionalitet. Implementerad som en tabell med lärosätesId som
+nyckel till en lista av användare.
 Endast för intern åtkomst.]]></xs:documentation>
 </xs:annotation>
     <xs:sequence>
@@ -3163,6 +3163,7 @@ Endast för intern åtkomst.]]></xs:documentation>
 
   <xs:simpleType name="Rattighetsniva">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="rattighetsniva.support"/>
       <xs:enumeration value="rattighetsniva.nationell"/>
       <xs:enumeration value="rattighetsniva.lokal"/>
       <xs:enumeration value="rattighetsniva.las"/>
