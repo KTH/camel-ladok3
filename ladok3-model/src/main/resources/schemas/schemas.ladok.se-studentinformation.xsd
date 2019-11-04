@@ -523,7 +523,9 @@ För att få en mer komplett bild av studenten kan klienten följa self-länken.
 
   <xs:complexType name="Studenthistorikpost">
 <xs:annotation>
-<xs:documentation><![CDATA[Studenthistorikpostrepresentation]]></xs:documentation>
+<xs:documentation><![CDATA[Studenthistorikpostrepresentation
+
+(deprecated): Använd StudenthistorikpostRepresentation istället]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="si:Student">

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:av="http://schemas.ladok.se/avisering" xmlns:base="http://schemas.ladok.se" xmlns:dap="http://schemas.ladok.se/dap" xmlns:events="http://schemas.ladok.se/events" xmlns:ki="http://schemas.ladok.se/kataloginformation" elementFormDefault="qualified" targetNamespace="http://schemas.ladok.se/kataloginformation" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:av="http://schemas.ladok.se/avisering" xmlns:base="http://schemas.ladok.se" xmlns:dap="http://schemas.ladok.se/dap" xmlns:events="http://schemas.ladok.se/events" xmlns:ki="http://schemas.ladok.se/kataloginformation" elementFormDefault="qualified" targetNamespace="http://schemas.ladok.se/kataloginformation" version="1.0">
 
   <xs:import namespace="http://schemas.ladok.se/events" schemaLocation="schemas.ladok.se-events.xsd"/>
 
   <xs:import namespace="http://schemas.ladok.se" schemaLocation="schemas.ladok.se.xsd"/>
+
+  <xs:import namespace="http://www.w3.org/2005/Atom" schemaLocation="schemas.ladok.se-atom.xsd"/>
 
   <xs:import namespace="http://schemas.ladok.se/dap" schemaLocation="schemas.ladok.se-dap.xsd"/>
 
@@ -13,7 +15,13 @@
 
   <xs:element name="AktivitetSomKraverAterautentiseringEvent" type="ki:AktivitetSomKraverAterautentiseringEvent"/>
 
+  <xs:element name="AktivitetSomKraverAutentisering" type="ki:AktivitetSomKraverAutentisering"/>
+
+  <xs:element name="AktivitetSomKraverAutentiseringEvent" type="ki:AktivitetSomKraverAutentiseringEvent"/>
+
   <xs:element name="AktiviteterSomKraverAterautentisering" type="ki:AktiviteterSomKraverAterautentisering"/>
+
+  <xs:element name="AktiviteterSomKraverAutentisering" type="ki:AktiviteterSomKraverAutentisering"/>
 
   <xs:element name="Aktivitetstillfallestyp" type="ki:Aktivitetstillfallestyp"/>
 
@@ -82,6 +90,8 @@
   <xs:element name="ArendekorgKoppladeAnvandare" type="ki:ArendekorgKoppladeAnvandare"/>
 
   <xs:element name="Arendekorgar" type="ki:Arendekorgar"/>
+
+  <xs:element name="Autentiseringsunderlag" type="ki:Autentiseringsunderlag"/>
 
   <xs:element name="Behorighetsprofil" type="ki:Behorighetsprofil"/>
 
@@ -179,7 +189,11 @@
 
   <xs:element name="KonfigurationAvAterautentiseringEvent" type="ki:KonfigurationAvAterautentiseringEvent"/>
 
+  <xs:element name="KonfigurationAvAutentisering" type="ki:KonfigurationAvAutentisering"/>
+
   <xs:element name="KonfigurationerAvAterautentisering" type="ki:KonfigurationerAvAterautentisering"/>
+
+  <xs:element name="KonfigurationerAvAutentisering" type="ki:KonfigurationerAvAutentisering"/>
 
   <xs:element name="Konfigurationsobjekt" type="ki:Konfigurationsobjekt"/>
 
@@ -216,8 +230,6 @@
   <xs:element name="LokalText" type="ki:LokalText"/>
 
   <xs:element name="LokalaTexter" type="ki:LokalaTexter"/>
-
-  <xs:element name="MFAOTP" type="ki:MFAOTP"/>
 
   <xs:element name="Markningsnyckel" type="ki:Markningsnyckel"/>
 
@@ -258,8 +270,6 @@
   <xs:element name="NivaerInomStudieordning" type="ki:NivaerInomStudieordning"/>
 
   <xs:element name="NyLinjeorganisationsenhet" type="ki:NyLinjeorganisationsenhet"/>
-
-  <xs:element name="OathTokenInit" type="ki:OathTokenInit"/>
 
   <xs:element name="Omradesbehorighet" type="ki:Omradesbehorighet"/>
 
@@ -309,8 +319,6 @@
 
   <xs:element name="OrsakerEjAvgiftsskyldig" type="ki:OrsakerEjAvgiftsskyldig"/>
 
-  <xs:element name="OuthTokenStatus" type="ki:OuthTokenStatus"/>
-
   <xs:element name="Period" type="ki:Period"/>
 
   <xs:element name="PeriodEvent" type="ki:PeriodEvent"/>
@@ -339,7 +347,13 @@
 
   <xs:element name="SakerhetsnivaForAterautentiseringEvent" type="ki:SakerhetsnivaForAterautentiseringEvent"/>
 
+  <xs:element name="SakerhetsnivaForAutentisering" type="ki:SakerhetsnivaForAutentisering"/>
+
+  <xs:element name="SakerhetsnivaForAutentiseringEvent" type="ki:SakerhetsnivaForAutentiseringEvent"/>
+
   <xs:element name="SakerhetsnivaerForAterautentisering" type="ki:SakerhetsnivaerForAterautentisering"/>
+
+  <xs:element name="SakerhetsnivaerForAutentisering" type="ki:SakerhetsnivaerForAutentisering"/>
 
   <xs:element name="SokresultatAnvBehorighetKataloginformation" type="ki:SokresultatAnvBehorighetKataloginformation"/>
 
@@ -474,6 +488,25 @@
   <xs:element name="UtlandskaOrter" type="ki:UtlandskaOrter"/>
 
   <xs:element name="XsltMallar" type="ki:XsltMallar"/>
+
+  <xs:complexType name="AktivitetSomKraverAutentiseringEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Event för ett skapat eller uppdaterat AktivitetSomKräverAutentisering]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="events:grunddataBaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="KompatiblaSakerhetsnivaer">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="SakerhetsnivaID" type="xs:int"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 
   <xs:complexType name="AktivitetSomKraverAterautentiseringEvent">
 <xs:annotation>
@@ -840,20 +873,7 @@
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
         <xs:sequence>
-          <xs:element name="Benamningar">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
-                  <xs:complexType>
-                    <xs:sequence>
-                      <xs:element minOccurs="0" name="key" type="xs:string"/>
-                      <xs:element minOccurs="0" name="value" type="xs:string"/>
-                    </xs:sequence>
-                  </xs:complexType>
-                </xs:element>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
+          <xs:element minOccurs="0" name="Benamningar" type="atom:benamningar"/>
           <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
           <xs:element minOccurs="0" name="Namn" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
@@ -1076,6 +1096,17 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="KommunID" type="xs:string"/>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SakerhetsnivaForAutentiseringEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelse som publiceras när en säkerhetsnivå för autentisering skapas eller ändras]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="events:grunddataBaseEvent">
+        <xs:sequence/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -1484,6 +1515,20 @@ minska footprint i bland annat events.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="Autentiseringsunderlag">
+<xs:annotation>
+<xs:documentation><![CDATA[Representation som innehåller ett svar som kan innebära att anroparen (GUI:t) bör följa en länk till IdP:n för att göra en ny
+autentisering]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Aktivitetskod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="BehorighetsprofilLista">
 <xs:annotation>
 <xs:documentation><![CDATA[En lista av behörighetsprofiler]]></xs:documentation>
@@ -1605,47 +1650,6 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="MFAOTP">
-<xs:annotation>
-<xs:documentation><![CDATA[MFA-OTP som används för att multifaktorautentisera användare.]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element name="OTP" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="OathTokenInit">
-<xs:annotation>
-<xs:documentation><![CDATA[Information som behövs för att koppla ett OATH-id mot ett OPT-token.]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="QrPngBase64" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="OuthTokenStatus">
-<xs:annotation>
-<xs:documentation><![CDATA[Status för användares koppling mot MFS-token.]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="anvandareUid" type="xs:string"/>
-          <xs:element name="initierad" type="xs:boolean"/>
-          <xs:element name="kopplad" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="SystemaktivitetLista">
     <xs:complexContent>
       <xs:extension base="dap:Base">
@@ -1741,6 +1745,32 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element maxOccurs="unbounded" minOccurs="0" ref="ki:Konfigurationsobjekt"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AktiviteterSomKraverAutentisering">
+    <xs:complexContent>
+      <xs:extension base="base:Grunddatavardelista">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AktivitetSomKraverAterautentisering" type="ki:AktivitetSomKraverAutentisering"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AktivitetSomKraverAutentisering">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="KompatiblaSakerhetsnivaer">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="SakerhetsnivaID" type="xs:int"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2094,11 +2124,32 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="KonfigurationerAvAutentisering">
+    <xs:complexContent>
+      <xs:extension base="base:Grunddatavardelista">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="ki:KonfigurationAvAutentisering"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="KonfigurationAvAutentisering">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence>
+          <xs:element name="AktivitetSomKraverAutentiseringID" type="xs:int"/>
+          <xs:element name="SakerhetsnivaForAutentiseringID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="KonfigurationerAvAterautentisering">
     <xs:complexContent>
       <xs:extension base="base:Grunddatavardelista">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="ki:KonfigurationAvAterautentisering"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="KonfigurationAvAterautentisering" type="ki:KonfigurationAvAutentisering"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2603,6 +2654,24 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
         <xs:sequence>
           <xs:element name="KommunID" type="xs:string"/>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SakerhetsnivaerForAutentisering">
+    <xs:complexContent>
+      <xs:extension base="base:Grunddatavardelista">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="SakerhetsnivaForAterautentisering" type="ki:SakerhetsnivaForAutentisering"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SakerhetsnivaForAutentisering">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
