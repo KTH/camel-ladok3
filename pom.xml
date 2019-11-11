@@ -33,38 +33,6 @@
   <description>Project for components making up the ladok3 integration.</description>
   <url>https://www.kth.se</url>
 
-  <organization>
-    <name>Kungliga Tekniska högskolan</name>
-    <url>https://www.kth.se</url>
-  </organization>
-
-  <licenses>
-    <license>
-      <name>The MIT License (MIT)</name>
-      <url>https://opensource.org/licenses/MIT</url>
-    </license>
-  </licenses>
-  
-  <scm>
-    <url>https://github.com/kth/camel-ladok3</url>
-    <developerConnection>fjo@kth.se</developerConnection>
-    <connection>https://github.com/kth/camel-ladok3</connection>
-  </scm>
-
-  <issueManagement>
-    <system>GitHub</system>
-    <url>https://github.com/kth/camel-ladok3/issues</url>
-  </issueManagement>
-
-  <developers>
-    <developer>
-      <name>Fredrik Jönsson</name>
-      <email>fjo@kth.se</email>
-      <organization>KTH</organization>
-      <organizationUrl>http://www.kth.se/profile/fjo</organizationUrl>
-    </developer>
-  </developers>
-
   <distributionManagement>
     <repository>
       <id>dev-azure-com-kth-integration-integration</id>
@@ -89,14 +57,13 @@
     <module>ladok3-model</module>
     <module>ladok3-rest</module>
     <module>camel-ladok3-component</module>
-<!--    <module>ladok3-feature</module> -->
     <module>camel-ladok3-test-utils</module>
   </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <camel-version>2.19.5</camel-version>
-    <cxf-client-version>3.1.14</cxf-client-version>
+    <camel-version>2.24.2</camel-version>
+    <cxf-client-version>3.1.17</cxf-client-version>
   </properties>
 
   <dependencyManagement>
@@ -143,7 +110,7 @@
           </suppressionFiles>
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
@@ -191,4 +158,37 @@
       </plugin>
     </plugins>
   </build>
+
+  <organization>
+    <name>Kungliga Tekniska högskolan</name>
+    <url>https://www.kth.se</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>The MIT License (MIT)</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/kth/camel-ladok3</url>
+    <developerConnection>fjo@kth.se</developerConnection>
+    <connection>https://github.com/kth/camel-ladok3</connection>
+  </scm>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/kth/camel-ladok3/issues</url>
+  </issueManagement>
+
+  <developers>
+    <developer>
+      <name>Fredrik Jönsson</name>
+      <email>fjo@kth.se</email>
+      <organization>KTH</organization>
+      <organizationUrl>http://www.kth.se/profile/fjo</organizationUrl>
+    </developer>
+  </developers>
+
 </project>
