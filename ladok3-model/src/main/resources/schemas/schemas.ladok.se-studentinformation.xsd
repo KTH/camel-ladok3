@@ -21,7 +21,11 @@
 
   <xs:element name="Avstangningar" type="si:Avstangningar"/>
 
+  <xs:element name="BerettUnderlagForEtableringAvStudent" type="si:BerettUnderlagForEtableringAvStudent"/>
+
   <xs:element name="ExternStudent" type="si:ExternStudent"/>
+
+  <xs:element name="Identitetsuppgifter" type="si:Identitetsuppgifter"/>
 
   <xs:element name="Kontaktuppgifter" type="si:Kontaktuppgifter"/>
 
@@ -44,6 +48,8 @@
   <xs:element name="OrsakerEjAvgiftsskyldig" type="si:OrsakerEjAvgiftsskyldig"/>
 
   <xs:element name="Postadress" type="si:Postadress"/>
+
+  <xs:element name="Regelresultat" type="si:Regelresultat"/>
 
   <xs:element name="SkyddadePersonuppgifter" type="si:SkyddadePersonuppgifter"/>
 
@@ -291,6 +297,50 @@ lärosäte som en student har en koppling till.]]></xs:documentation>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="StudentUIDer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="BerettUnderlagForEtableringAvStudent">
+    <xs:sequence>
+      <xs:element ref="si:Identitetsuppgifter"/>
+      <xs:element ref="si:Regelresultat"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Identitetsuppgifter">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element name="Efternamn" type="xs:string"/>
+          <xs:element name="Fodelsedatum" type="xs:string"/>
+          <xs:element name="Fornamn" type="xs:string"/>
+          <xs:element name="KonID" type="xs:int"/>
+          <xs:element name="Personnummer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Regelresultat">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Hinder">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Hinder" type="base:Hinder"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="Varningar">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Varning" type="base:Hinder"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

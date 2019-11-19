@@ -2139,6 +2139,7 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
       <xs:extension base="base:EnkeltGrunddatavarde">
         <xs:sequence>
           <xs:element name="AktivitetSomKraverAutentiseringID" type="xs:int"/>
+          <xs:element minOccurs="0" name="MaxSekunderSedanAutentisering" type="xs:int"/>
           <xs:element name="SakerhetsnivaForAutentiseringID" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
