@@ -77,9 +77,13 @@
 
   <xs:element name="AnnatResultatStudent" type="rr:AnnatResultatStudent"/>
 
+  <xs:element name="AttAttestera" type="rr:AttAttestera"/>
+
   <xs:element name="AttGoraPaKurstillfalle" type="rr:AttGoraPaKurstillfalle"/>
 
   <xs:element name="AttGoraUtanforAktuellVersion" type="rr:AttGoraUtanforAktuellVersion"/>
+
+  <xs:element name="AttesteraAndraMeriter" type="rr:AttesteraAndraMeriter"/>
 
   <xs:element name="AttesteratResultatMakuleratEvent" type="rr:AttesteratResultatMakuleratEvent"/>
 
@@ -159,11 +163,19 @@
 
   <xs:element name="KlarmarkeraTillgodoraknande" type="rr:KlarmarkeraTillgodoraknande"/>
 
+  <xs:element name="Klarmarkering" type="rr:Klarmarkering"/>
+
+  <xs:element name="KlarmarkeringKurstillfalle" type="rr:KlarmarkeringKurstillfalle"/>
+
   <xs:element name="Klarmarkeringsinformation" type="rr:Klarmarkeringsinformation"/>
 
   <xs:element name="KontrollAvResultatrattighetPaOrganisation" type="rr:KontrollAvResultatrattighetPaOrganisation"/>
 
   <xs:element name="KontrollAvResultatrattighetPaUtbildning" type="rr:KontrollAvResultatrattighetPaUtbildning"/>
+
+  <xs:element name="KontrolleraRapporteringsrattighet" type="rr:KontrolleraRapporteringsrattighet"/>
+
+  <xs:element name="KontrolleraRapporteringsrattighetLista" type="rr:KontrolleraRapporteringsrattighetLista"/>
 
   <xs:element name="KopieraStudieresultatskandidat" type="rr:KopieraStudieresultatskandidat"/>
 
@@ -1864,6 +1876,7 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
           <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
           <xs:element minOccurs="0" name="Enhet" type="xs:string"/>
           <xs:element name="GallerUtbildningUtanAngivenOmfattning" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="IndividuellReferens" type="base:Student"/>
           <xs:element minOccurs="0" name="KravPaHanvisningTillBeslutshandling" type="xs:boolean"/>
           <xs:element minOccurs="0" name="KravPaProjekttitel" type="xs:boolean"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Moduler" type="rr:Utbildningsinstans"/>
@@ -2202,6 +2215,17 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
           <xs:element minOccurs="0" name="Ursprung" type="xs:string"/>
           <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
           <xs:element minOccurs="0" name="AterautentiseringReturnURI" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AttesteraAndraMeriter">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="AndraMeriterUIDer" type="xs:string"/>
+          <xs:element name="Beslut" type="at:Beslut"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2681,6 +2705,37 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
           <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
           <xs:element name="Status" type="rr:RattaTitelForResultatUnderlagStatus"/>
           <xs:element minOccurs="0" name="Titel" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AttAttestera">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Klarmarkeringar" type="rr:Klarmarkering"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="Klarmarkering">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Kontext" type="rr:Klarmarkeringskontext"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="KlarmarkeringKurstillfalle">
+    <xs:complexContent>
+      <xs:extension base="rr:Klarmarkering">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Kurs" type="xs:string"/>
+          <xs:element minOccurs="0" name="Modul" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -3583,6 +3638,30 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="KontrolleraRapporteringsrattighetLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AnvandareUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Anvandarnamn" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="KontrolleraRapporteringsrattighetlista" type="rr:KontrolleraRapporteringsrattighet"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="KontrolleraRapporteringsrattighet">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element name="HarRattighet" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="StudieresultatUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningsinstansAttRapporteraPaUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="Kursrattighet">
     <xs:complexContent>
       <xs:extension base="rr:Resultatrattighet">
@@ -3604,6 +3683,7 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
         <xs:sequence>
           <xs:element name="Anvandare" type="base:Anvandare"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Gruppavgransningar" type="xs:string"/>
+          <xs:element minOccurs="0" name="IndividuellReferens" type="base:Student"/>
           <xs:element name="Medarbetartyp" type="rr:Resultatmedarbetaretyp"/>
           <xs:element name="Organisation" type="base:Organisation"/>
           <xs:element name="RattighetenAvser" type="rr:RattighetenAvser"/>
@@ -4473,6 +4553,14 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
       <xs:enumeration value="KLAR_FOR_ATTESTERING"/>
       <xs:enumeration value="ATTESTERAT"/>
       <xs:enumeration value="MAKULERAT"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Klarmarkeringskontext">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="KURSTILLFALLE"/>
+      <xs:enumeration value="AKTIVITETSTILLFALLE"/>
+      <xs:enumeration value="STUDENT"/>
     </xs:restriction>
   </xs:simpleType>
 

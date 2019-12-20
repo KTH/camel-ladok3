@@ -752,6 +752,7 @@ BORTTAGEN.]]></xs:documentation>
         <xs:sequence>
           <xs:element name="ExterntBeslut" type="xs:boolean"/>
           <xs:element name="NationellBevistypUID" type="xs:string"/>
+          <xs:element name="ProjekttitelSkrivsUtIBevis" type="xs:boolean"/>
           <xs:element name="TillatModulerIUtfardatBevis" type="xs:boolean"/>
         </xs:sequence>
       </xs:extension>
@@ -763,6 +764,7 @@ BORTTAGEN.]]></xs:documentation>
       <xs:extension base="dap:Base">
         <xs:sequence>
           <xs:element minOccurs="0" name="ExterntBeslut" type="xs:boolean"/>
+          <xs:element name="ProjekttitelSkrivsUtIBevis" type="xs:boolean"/>
           <xs:element name="TillatModulerIUtfardatBevis" type="xs:boolean"/>
         </xs:sequence>
       </xs:extension>
@@ -1286,6 +1288,7 @@ det huvudområdet.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
+          <xs:element name="AnnatResultat" type="xs:boolean"/>
           <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
           <xs:element minOccurs="0" ref="ex:Utbildningsinstans"/>
         </xs:sequence>

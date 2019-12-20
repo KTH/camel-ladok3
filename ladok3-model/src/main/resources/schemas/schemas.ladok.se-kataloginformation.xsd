@@ -91,6 +91,8 @@
 
   <xs:element name="Arendekorgar" type="ki:Arendekorgar"/>
 
+  <xs:element name="Autentiseringstyp" type="ki:Autentiseringstyp"/>
+
   <xs:element name="Autentiseringsunderlag" type="ki:Autentiseringsunderlag"/>
 
   <xs:element name="Behorighetsprofil" type="ki:Behorighetsprofil"/>
@@ -1524,6 +1526,7 @@ autentisering]]></xs:documentation>
       <xs:extension base="dap:Base">
         <xs:sequence>
           <xs:element minOccurs="0" name="Aktivitetskod" type="xs:string"/>
+          <xs:element name="SakerhetsnivaID" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2139,6 +2142,7 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
       <xs:extension base="base:EnkeltGrunddatavarde">
         <xs:sequence>
           <xs:element name="AktivitetSomKraverAutentiseringID" type="xs:int"/>
+          <xs:element minOccurs="0" ref="ki:Autentiseringstyp"/>
           <xs:element minOccurs="0" name="MaxSekunderSedanAutentisering" type="xs:int"/>
           <xs:element name="SakerhetsnivaForAutentiseringID" type="xs:int"/>
         </xs:sequence>
@@ -3255,6 +3259,14 @@ Endast för intern åtkomst.]]></xs:documentation>
       <xs:enumeration value="anvandare.saknas"/>
       <xs:enumeration value="larosatet.inte.konfigurerat"/>
       <xs:enumeration value="anvandare.far.inte.agera.student"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Autentiseringstyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AUTENTISERING_UTAN_TIMEOUT"/>
+      <xs:enumeration value="ATERAUTENTISERING_MED_TIMEOUT"/>
+      <xs:enumeration value="ENGANGSATERAUTENTISERING_MED_TIMEOUT"/>
     </xs:restriction>
   </xs:simpleType>
 

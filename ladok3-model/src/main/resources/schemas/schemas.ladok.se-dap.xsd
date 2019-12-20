@@ -30,9 +30,9 @@ diff av de utdumpade json-filerna som innehåller grunddata.
 
   <xs:complexType abstract="true" name="Link">
     <xs:sequence/>
-    <xs:attribute name="uri" type="xs:string"/>
     <xs:attribute name="mediaType" type="xs:string"/>
     <xs:attribute name="method" type="xs:string"/>
+    <xs:attribute name="uri" type="xs:string"/>
   </xs:complexType>
 
   <xs:complexType name="ServiceIndex">

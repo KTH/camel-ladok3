@@ -25,6 +25,10 @@
 
   <xs:element name="ExternStudent" type="si:ExternStudent"/>
 
+  <xs:element name="Felkalla" type="si:Felkalla"/>
+
+  <xs:element name="Hinder" type="base:Hinder"/>
+
   <xs:element name="Identitetsuppgifter" type="si:Identitetsuppgifter"/>
 
   <xs:element name="Kontaktuppgifter" type="si:Kontaktuppgifter"/>
@@ -327,10 +331,10 @@ lärosäte som en student har en koppling till.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Hinder">
+          <xs:element minOccurs="0" name="HinderLista">
             <xs:complexType>
               <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="Hinder" type="base:Hinder"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="si:Hinder"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -345,6 +349,7 @@ lärosäte som en student har en koppling till.]]></xs:documentation>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+
 
   <xs:complexType name="ExternStudent">
 <xs:annotation>
@@ -542,7 +547,6 @@ För att få en mer komplett bild av studenten kan klienten följa self-länken.
       <xs:extension base="dap:Base">
         <xs:sequence>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Studenthistorikpost" type="si:StudenthistorikpostNy"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Student" type="si:Studenthistorikpost"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -809,6 +813,19 @@ alltså inte och kommer fasas ut.]]></xs:documentation>
       <xs:enumeration value="LADOK_MASKINELLT"/>
       <xs:enumeration value="LADOK_MANUELLT"/>
       <xs:enumeration value="FOLKBOKFORING"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Felkalla">
+<xs:annotation>
+<xs:documentation><![CDATA[Representerar den felkälla som ett hinder eller en varning kan ha.]]></xs:documentation>
+</xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PERSONNUMMER"/>
+      <xs:enumeration value="EFTERNAMN"/>
+      <xs:enumeration value="FORNAMN"/>
+      <xs:enumeration value="FODELSEDATUM"/>
+      <xs:enumeration value="KON"/>
     </xs:restriction>
   </xs:simpleType>
 
