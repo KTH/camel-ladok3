@@ -3646,6 +3646,8 @@ representationer.]]></xs:documentation>
       <xs:enumeration value="EFTERNAMN_DESC"/>
       <xs:enumeration value="PERSONNUMMER_ASC"/>
       <xs:enumeration value="PERSONNUMMER_DESC"/>
+      <xs:enumeration value="UTBILDNINGSKOD_ASC"/>
+      <xs:enumeration value="UTBILDNINGSKOD_DESC"/>
     </xs:restriction>
   </xs:simpleType>
 

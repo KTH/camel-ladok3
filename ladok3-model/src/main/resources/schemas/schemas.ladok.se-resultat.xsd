@@ -77,6 +77,8 @@
 
   <xs:element name="AnnatResultatStudent" type="rr:AnnatResultatStudent"/>
 
+  <xs:element name="AnvandareSomKlarmarkerat" type="rr:AnvandareSomKlarmarkerat"/>
+
   <xs:element name="AttAttestera" type="rr:AttAttestera"/>
 
   <xs:element name="AttGoraPaKurstillfalle" type="rr:AttGoraPaKurstillfalle"/>
@@ -165,7 +167,11 @@
 
   <xs:element name="Klarmarkering" type="rr:Klarmarkering"/>
 
+  <xs:element name="KlarmarkeringAktivitetstillfalle" type="rr:KlarmarkeringAktivitetstillfalle"/>
+
   <xs:element name="KlarmarkeringKurstillfalle" type="rr:KlarmarkeringKurstillfalle"/>
+
+  <xs:element name="KlarmarkeringStudent" type="rr:KlarmarkeringStudent"/>
 
   <xs:element name="Klarmarkeringsinformation" type="rr:Klarmarkeringsinformation"/>
 
@@ -181,8 +187,6 @@
 
   <xs:element name="KopieraStudieresultatskandidatLista" type="rr:KopieraStudieresultatskandidatLista"/>
 
-  <xs:element name="Koppladekurstillfallen" type="rr:Koppladekurstillfallen"/>
-
   <xs:element name="Kursinstansavisering" type="rr:Kursinstansavisering"/>
 
   <xs:element name="Kursinstansaviseringar" type="rr:Kursinstansaviseringar"/>
@@ -192,6 +196,8 @@
   <xs:element name="Kursstruktur" type="rr:Kursstruktur"/>
 
   <xs:element name="Kurstillfalle" type="rr:Kurstillfalle"/>
+
+  <xs:element name="KurstillfalleSomKanKopplasBort" type="rr:KurstillfalleSomKanKopplasBort"/>
 
   <xs:element name="Kurstillfallen" type="rr:Kurstillfallen"/>
 
@@ -1396,10 +1402,14 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Koppladekurstillfallen">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="KurstillfalleRefs" type="base:RESTRef"/>
-    </xs:sequence>
+  <xs:complexType name="KurstillfalleSomKanKopplasBort">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="KurstillfalleUID" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="Noteringsdefinitioner">
@@ -1419,6 +1429,7 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
           <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="KurstillfalleIdentiteter" type="xs:string"/>
           <xs:element minOccurs="0" name="KurstillfalleRef" type="base:RESTRef"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="KurstillfallenSomKanKopplasBort" type="rr:KurstillfalleSomKanKopplasBort"/>
           <xs:element minOccurs="0" name="Noteringstyp" type="xs:int"/>
           <xs:element name="Obligatorisk" type="xs:boolean"/>
           <xs:element name="Publicera" type="xs:boolean"/>
@@ -2724,18 +2735,65 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AnvandareSomKlarmarkeratIKlarmarkering" type="rr:AnvandareSomKlarmarkerat"/>
+          <xs:element minOccurs="0" name="DatumForForstaKlarmarkering" type="xs:string"/>
           <xs:element minOccurs="0" name="Kontext" type="rr:Klarmarkeringskontext"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="AnvandareSomKlarmarkerat">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AnvandareUID" type="xs:string"/>
+      <xs:element minOccurs="0" name="DatumForKlarmarkering" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="KlarmarkeringKurstillfalle">
     <xs:complexContent>
       <xs:extension base="rr:Klarmarkering">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Kurs" type="xs:string"/>
-          <xs:element minOccurs="0" name="Modul" type="xs:string"/>
+          <xs:element minOccurs="0" name="Kurs" type="rr:UtbildningsinstansMinimal"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="KurstillfallenUIDs" type="xs:string"/>
+          <xs:element minOccurs="0" name="Modul" type="rr:UtbildningsinstansMinimal"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UtbildningsinstansMinimal">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="UtbildningsinstansIdentitet" type="xs:string"/>
+          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="KlarmarkeringAktivitetstillfalle">
+    <xs:complexContent>
+      <xs:extension base="rr:Klarmarkering">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AktivitetstillfalleNamn" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="AktivitetstillfalleUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="KurstillfallenUIDs" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="KlarmarkeringStudent">
+    <xs:complexContent>
+      <xs:extension base="rr:Klarmarkering">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Kurs" type="rr:UtbildningsinstansMinimal"/>
+          <xs:element name="Kursversion" type="xs:int"/>
+          <xs:element minOccurs="0" name="Modul" type="rr:UtbildningsinstansMinimal"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -4244,18 +4302,6 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Utbildningsinstanser" type="rr:UtbildningsinstansMinimal"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningsinstansMinimal">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="UtbildningsinstansIdentitet" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
