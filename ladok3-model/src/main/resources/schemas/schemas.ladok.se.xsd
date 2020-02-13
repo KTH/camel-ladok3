@@ -99,45 +99,6 @@
 
   <xs:element name="Valregler" type="base:Valregler"/>
 
-  <xs:complexType name="Benamningar">
-<xs:annotation>
-<xs:documentation><![CDATA[Representation av flera benämningar på olika språk BenamningarElement finns för att inte krocka med en deklaration i den
-representation som har SpråktexterRepresentation. BenamningarElement definieras också i schemas.ladok.se.xsd]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:Benamning"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Benamning">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Sprakkod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Text" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Datumperiod">
-<xs:annotation>
-<xs:documentation><![CDATA[Enkel representation som innehåller två datum - från och till.]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Startdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Slutdatum" type="xs:date"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="AnvandareLista">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="Anvandare" type="base:Anvandare"/>
@@ -202,6 +163,20 @@ representationerna.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="Datumperiod">
+<xs:annotation>
+<xs:documentation><![CDATA[Enkel representation som innehåller två datum - från och till.]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Startdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Slutdatum" type="xs:date"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType abstract="true" name="EnumDummy">
 <xs:annotation>
 <xs:documentation><![CDATA[Representation som samlar upp enum-representationer bara för att det skall komma med vid XML-schema genreringen. Detta då
@@ -242,6 +217,31 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
       <xs:element minOccurs="0" name="Stoppande" type="xs:boolean"/>
       <xs:element minOccurs="0" name="Text" type="base:Benamningar"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Benamningar">
+<xs:annotation>
+<xs:documentation><![CDATA[Representation av flera benämningar på olika språk BenamningarElement finns för att inte krocka med en deklaration i den
+representation som har SpråktexterRepresentation. BenamningarElement definieras också i schemas.ladok.se.xsd]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="base:Benamning"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Benamning">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Sprakkod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Text" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="Hinderlista">
@@ -732,20 +732,6 @@ enumen, dvs. "acceptans krävs" och i18n-nyckeln.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:simpleType name="Handelsetyp">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelser som är generella i sin natur kan förses med en händelsetyp för att undvika en massa onödig duplicering av händelseklasser.
-Tanken är att är konsumenten som lyssnar på händelserna är intresserad oavsett om objektet som händelsen avser har skapats,
-uppdaterats eller tagits bort. I det fall där semantiken avsevärt skiljer sig, dvs. där man inte kan säga att mottagaren alltid är
-intresserad oavsett händelsetyp så bör man istället överväga att använda explicita händelsetyper.]]></xs:documentation>
-</xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="SKAPAD"/>
-      <xs:enumeration value="UPPDATERAD"/>
-      <xs:enumeration value="BORTTAGEN"/>
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:simpleType name="Datatyp">
 <xs:annotation>
 <xs:documentation><![CDATA[Representerar de datatyper som ett attribut i domänen kan avse, t.ex. ett attribut för fritextsökning, datum, heltal, flyttal,
@@ -775,6 +761,20 @@ flera domäner.]]></xs:documentation>
       <xs:enumeration value="KURS"/>
       <xs:enumeration value="KURSPAKETERING"/>
       <xs:enumeration value="MODUL"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Handelsetyp">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelser som är generella i sin natur kan förses med en händelsetyp för att undvika en massa onödig duplicering av händelseklasser.
+Tanken är att är konsumenten som lyssnar på händelserna är intresserad oavsett om objektet som händelsen avser har skapats,
+uppdaterats eller tagits bort. I det fall där semantiken avsevärt skiljer sig, dvs. där man inte kan säga att mottagaren alltid är
+intresserad oavsett händelsetyp så bör man istället överväga att använda explicita händelsetyper.]]></xs:documentation>
+</xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SKAPAD"/>
+      <xs:enumeration value="UPPDATERAD"/>
+      <xs:enumeration value="BORTTAGEN"/>
     </xs:restriction>
   </xs:simpleType>
 

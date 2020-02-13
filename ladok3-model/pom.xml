@@ -61,21 +61,21 @@
             <Import-Package>*</Import-Package>
           </instructions>
         </configuration>
-        <executions> 
-          <execution> 
-            <id>bundle-manifest</id> 
-            <phase>process-classes</phase> 
-            <goals> 
-              <goal>manifest</goal> 
-            </goals> 
-          </execution> 
-        </executions> 
+        <executions>
+          <execution>
+            <id>bundle-manifest</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>manifest</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>0.13.2</version>
+        <version>0.14.0</version>
         <executions>
           <execution>
             <goals>
