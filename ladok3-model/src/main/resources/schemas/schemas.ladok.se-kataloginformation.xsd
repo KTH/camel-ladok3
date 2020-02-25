@@ -59,6 +59,8 @@
 
   <xs:element name="AnvandarbehorighetLista" type="ki:AnvandarbehorighetLista"/>
 
+  <xs:element name="AnvandarbehorigheterEvent" type="ki:AnvandarbehorigheterEvent"/>
+
   <xs:element name="AnvandarbehorighetsstatusI18n" type="ki:AnvandarbehorighetsstatusI18n"/>
 
   <xs:element name="AnvandarbehorighetsstatusLista" type="ki:AnvandarbehorighetsstatusLista"/>
@@ -92,6 +94,8 @@
   <xs:element name="Autentiseringsunderlag" type="ki:Autentiseringsunderlag"/>
 
   <xs:element name="Behorighetsprofil" type="ki:Behorighetsprofil"/>
+
+  <xs:element name="BehorighetsprofilEvent" type="ki:BehorighetsprofilEvent"/>
 
   <xs:element name="BehorighetsprofilLista" type="ki:BehorighetsprofilLista"/>
 
@@ -187,11 +191,15 @@
 
   <xs:element name="KonfigurationAvAutentisering" type="ki:KonfigurationAvAutentisering"/>
 
+  <xs:element name="KonfigurationAvAutentiseringEvent" type="ki:KonfigurationAvAutentiseringEvent"/>
+
   <xs:element name="KonfigurationerAvAterautentisering" type="ki:KonfigurationerAvAterautentisering"/>
 
   <xs:element name="KonfigurationerAvAutentisering" type="ki:KonfigurationerAvAutentisering"/>
 
   <xs:element name="Konfigurationsobjekt" type="ki:Konfigurationsobjekt"/>
+
+  <xs:element name="KonfigurationsobjektEvent" type="ki:KonfigurationsobjektEvent"/>
 
   <xs:element name="KravPaTidigareStudier" type="ki:KravPaTidigareStudier"/>
 
@@ -482,7 +490,16 @@
   <xs:complexType name="AktivitetSomKraverAutentiseringEvent">
 <xs:annotation>
 <xs:documentation><![CDATA[(deprecated): Aviseras och tas bort i sprint 143 eller senare
-            Event för ett skapat eller uppdaterat AktivitetSomKräverAutentisering]]></xs:documentation>
+            Händelsen publiceras när:
+            - Ett grunddatavärde i kategorin "Aktivitet som kräver autentisering" skapas eller uppdateras
+            Innehåller information om:
+            - Grunddatavärdet
+            Innehåller referenser till:
+            - Kompatibla säkerhetsnivåer
+            Konsekvenser för verksamheten:
+            - ...
+            Övrigt:
+            - ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -501,7 +518,14 @@
 
   <xs:complexType name="AktivitetstillfallestypEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event för ett skapat eller uppdaterat Aktivitetstillfällestyp]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Aktivitetstillfällestyp skapas eller uppdateras
+Innehåller information om:
+- Den redigerade aktivitetstillfällestypen
+Konsekvenser för verksamheten:
+- Skapad aktivitetstillfällestyp blir möjlig att välja
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -512,7 +536,15 @@
 
   <xs:complexType name="AntagningsomgangEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event för en skapad eller uppdaterad antagningsomgang]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En antagningsomgång skapas eller uppdateras
+Innehåller information om:
+- Den redigerade antagningsomgången
+Konsekvenser för verksamheten:
+- Skapad antagningsomgång blir möjligt att välja
+Övrigt:
+- Grunddatakategorin innehåller enbart lärosätesspecifika/lokala värden
+- Antagningsomgångar kan skapas i NyA och automatiskt överföras till Ladok.]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -520,6 +552,41 @@
           <xs:element minOccurs="0" name="SistaAnmalningsdag" type="xs:date"/>
           <xs:element minOccurs="0" name="SistaAnnonseringsdag" type="xs:date"/>
           <xs:element name="Studieavgiftsbelagd" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AnvandarbehorigheterEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anvandarbehorigheter">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Anvandarbehorighet" type="ki:AnvandarbehorighetEnkel"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="AnvandareUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Handelsetyp" type="base:Handelsetyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AnvandarbehorighetEnkel">
+<xs:annotation>
+<xs:documentation><![CDATA[Enkel representation av en användarbehörighet utan annat än det mest nödvändiga. Syftet med en lättviktig representation är att
+minska footprint i bland annat events.]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AnvandareUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="BehorighetsprofilUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Status" type="ki:Anvandarbehorighetsstatus"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -542,7 +609,12 @@
 
   <xs:complexType name="AnvandareSkapadEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en användare skapas]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En användare skapas
+Innehåller information om:
+- Den skapade användaren
+Konsekvenser för verksamheten:
+- Användaren kan väljas och tilldelas behörigheter]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ki:AnvandareBaseEvent">
@@ -553,7 +625,15 @@
 
   <xs:complexType name="AnvandareAndradEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en användare ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelse som publiceras när en användare ändras
+Händelsen publiceras när:
+- En användare redigeras
+Innehåller information om:
+- Den redigerade användaren
+Konsekvenser för verksamheten:
+- Information om användaren, t.ex. kontaktuppgifter som SMS och epost kan ändras.
+Övrigt:
+- Eftersom användarnamnet kan ändras (undantagsfall) bör konsumenter av händelsen hantera även denna möjlighet]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ki:AnvandareBaseEvent">
@@ -562,7 +642,31 @@
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="BehorighetsprofilEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BehorigetsprofilUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="EventTyp" type="xs:string"/>
+          <xs:element minOccurs="0" name="Rattighetsniva" type="ki:Rattighetsniva"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Systemaktiviteter" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="BetygsgradEventPart">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En betygsgrad skapas eller uppdateras
+Innehåller information om:
+- Den redigerade betygsgraden
+Konsekvenser för verksamheten:
+- Ny betygsgrad blir möjlig att koppla till betygsskalor
+- Befintliga betygsskalor kan påverkas av ändringar i ingående betygsgrader.
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
+</xs:annotation>
     <xs:sequence>
       <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
       <xs:element minOccurs="0" name="Betygskod" type="xs:string"/>
@@ -573,6 +677,17 @@
   </xs:complexType>
 
   <xs:complexType name="BetygsradBetygsgradsklassningRattatFixEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Som en del av en rättning av ett nu rättat fel (LTRE-37148). Nya händelser av denna typ publiceras inte längre, men händelsen kan
+förekomma på feeden.
+Innehåller information om:
+- Korrigerar värdet för "giltig som slutbetyg" för betygskoden 2 i LIU-lokal betygskala
+Innehåller referenser till:
+- Betygsskala och betygsgrad
+Konsekvenser för verksamheten:
+- Rättar tidigare publicerad men felaktigt information]]></xs:documentation>
+</xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
         <xs:sequence>
@@ -586,7 +701,15 @@
 
   <xs:complexType name="BetygsskalaEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en betygsskala skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En betygsskala skapas eller ändras
+Innehåller information om:
+- Betygsskalan
+Innehåller referenser till:
+- Betygsgrader
+Konsekvenser för verksamheten:
+- Skapade betygsskalor blir möjliga att välja för t.ex. utbildningar
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -599,7 +722,14 @@
 
   <xs:complexType name="BeviskategoriEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en beviskategori skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- När en beviskategori skapas eller ändras
+Innehåller information om:
+- Den redigerade beviskategorin
+Konsekvenser för verksamheten:
+- Ny beviskategori blir möjlig att välja från t.ex. bevis/examen
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -610,7 +740,15 @@
 
   <xs:complexType name="EnhetEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en enhet skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En enhet skapas eller ändras
+Innehåller information om:
+- Den redigerade enheten
+Konsekvenser för verksamheten:
+- Ny enhet blir möjlig att koppla till t.ex. en studieordning
+Övrigt:
+- Helårsvärdet anger hur många poäng av denna enhet som motsvarar ett helt års heltidsstudier
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -623,7 +761,17 @@
 
   <xs:complexType name="ExternPartEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event för en skapad eller uppdaterad utländsk högskola]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En extern part (t.ex. utländsk högskola) skapas eller ändras
+Innehåller information om:
+- Den redigerade externa parten
+Innehåller referenser till:
+- Typ av extern part
+- Land
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -637,7 +785,14 @@
 
   <xs:complexType name="FinansieringsformEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en finansieringsform skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En finansieringsform skapas eller ändras
+Innehåller information om:
+- Den redigerade finansieringsformen
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -648,7 +803,16 @@
 
   <xs:complexType name="FinansieringsformsgruppEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en finansieringsformsgrupp skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En finansieringsformsgrupp skapas eller ändras
+Innehåller information om:
+- Finansieringsformsgruppen
+Innehåller referenser till:
+- Ingående finansieringsformer
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -661,7 +825,14 @@
 
   <xs:complexType name="FordjupningsnivaEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en fördjupningsnivå skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En fördjupningsnivå skapas eller ändras
+Innehåller information om:
+- Den redigerade fördjupningsnivån
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -672,7 +843,14 @@
 
   <xs:complexType name="ForkunskapsnivaEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en förkunskapsnivå skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En förkunskapsnivå skapas eller ändras
+Innehåller information om:
+- Den redigerade förkunskapsnivån
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -683,7 +861,14 @@
 
   <xs:complexType name="HuvudomradesgruppEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en huvudområdesgrupp skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En huvudområdesgrupp skapas eller ändras
+Innehåller information om:
+- Den redigerade huvudområdesgruppen
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -694,7 +879,16 @@
 
   <xs:complexType name="KommunEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en kommun skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En kommun skapas eller ändras
+Innehåller information om:
+- Den redigerade kommunen
+Innehåller referenser till:
+- Län
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -705,9 +899,40 @@
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="KonfigurationAvAutentiseringEvent">
+    <xs:complexContent>
+      <xs:extension base="events:grunddataBaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AktivitetSomKraverAutentiseringID" type="xs:int"/>
+          <xs:element name="AutentiseringstypID" type="xs:int"/>
+          <xs:element minOccurs="0" name="MaxSekunderSedanAutentisering" type="xs:int"/>
+          <xs:element minOccurs="0" name="SakerhetsnivaForAutentiseringID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="KonfigurationsobjektEvent">
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Kategori" type="xs:string"/>
+          <xs:element minOccurs="0" name="Varde" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="KravPaTidigareStudierEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när krav på tidigare studier skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Krav på tidigare studier skapas eller ändras
+Innehåller information om:
+- Redigerat krav inklusive emilvärde
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -720,7 +945,14 @@
 
   <xs:complexType name="LandEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett land skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Land skapas eller ändras
+Innehåller information om:
+- Redigerat land
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -731,7 +963,14 @@
 
   <xs:complexType name="LanEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett län skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett län skapas eller ändras
+Innehåller information om:
+- Redigerat län
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -742,7 +981,17 @@
 
   <xs:complexType name="LarosatesinformationEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en lärosätesinformation skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Lärosätesinformation skapas eller ändras
+Innehåller information om:
+- Redigerad lärosätesinformation
+Innehåller referenser till:
+- Lärosäte
+- Ort
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -756,7 +1005,16 @@
 
   <xs:complexType name="MarkningsnyckelEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en märkningsnyckel skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Märkningsnyckel skapas eller ändras
+Innehåller information om:
+- Den redigerade märkningsnyckeln
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -767,7 +1025,16 @@
 
   <xs:complexType name="MarkningsvardeEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett märkningsvärde skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Märkningsvärde skapas eller ändras
+Innehåller information om:
+- Det redigerade märkningsvärdet
+Innehåller referenser till:
+- Märkningsnyckel
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -780,7 +1047,16 @@
 
   <xs:complexType name="NationellExamensgruppEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en nationell examensgrupp skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Nationell examensgrupp skapas eller ändras
+Innehåller information om:
+- Den redigerade examensgruppen
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -791,7 +1067,16 @@
 
   <xs:complexType name="NationelltForskningsamneEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett nationellt forskningsämne skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Nationellt forskningsämne skapas eller ändras
+Innehåller information om:
+- Det redigerade nationella forskningsämnet
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -802,7 +1087,16 @@
 
   <xs:complexType name="NationelltUndervisningsamneEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett nationellt undervisningsämne skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett nationellt undervisningsämne skapas eller ändras
+Innehåller information om:
+- Det redigerade nationella undervisningsämnet
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -813,7 +1107,16 @@
 
   <xs:complexType name="NivaInomStudieordningEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en nivå inom studieordning skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En nivå inom studieordning skapas eller ändras
+Innehåller information om:
+- Den redigerade nivån inom studieordning
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+- Skapad nivå blir möjlig att koppla till studieordningar
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -824,7 +1127,16 @@
 
   <xs:complexType name="OmradesbehorighetEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en områdesbehörighet skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En områdesbehörighet skapas eller ändras
+Innehåller information om:
+- Redigerad områdesbehörighet, inkl EMIL-värde.
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -836,6 +1148,9 @@
   </xs:complexType>
 
   <xs:complexType abstract="true" name="OrganisationEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Gemensam information för OrganisationSkapadEvent och OrganisationUppdateradEvent]]></xs:documentation>
+</xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
         <xs:sequence>
@@ -852,7 +1167,17 @@
 
   <xs:complexType name="OrganisationSkapadEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en organisation skapas]]></xs:documentation>
+<xs:documentation><![CDATA[Händelse som publiceras när en organisation skapas
+Händelsen publiceras när:
+- Organisation skapas eller ändras
+Innehåller information om:
+- Skapad organisation, inkl typ av organisation (t.ex. institution, fakultet etc)
+Innehåller referenser till:
+- Organisationsenhetstyp
+Konsekvenser för verksamheten:
+- Skapad organisation kan kopplas till exempelvis utbildningar och utbildningstillfällen, användarbehörigheter etc.
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ki:OrganisationEvent">
@@ -863,7 +1188,16 @@
 
   <xs:complexType name="OrganisationUppdateradEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en organisation ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En organisation ändras
+Innehåller information om:
+- Redigerad organisation
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ki:OrganisationEvent">
@@ -874,7 +1208,16 @@
 
   <xs:complexType name="OrganisationsenhetstypEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en organisationsenhetstyp skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Organisationsenhetstyp skapas eller ändras
+Innehåller information om:
+- Redigerad organisationsenhetstyp
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -885,7 +1228,22 @@
 
   <xs:complexType name="OrganisationskopplingEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en organisationskoppling skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelse som publiceras när en organisationskoppling skapas eller ändras
+Händelsen publiceras när:
+- Organisationskoppling skapas eller ändras
+Innehåller information om:
+- Överliggande och underliggande organisation, dvs. vilken organisation som ingår (underliggande) i en annan organisation
+(överliggande). T.ex. är en fakultet en överliggande organisationsenhet till en underliggande institution.
+Innehåller referenser till:
+- Överliggande organisationsenhet - Underliggande organisationsenhet
+Konsekvenser för verksamheten:
+- Organisationsenhetskopplingar skapar ett förhållande mellan organisationsenheter vilka tillsammans utgör en organisationshierarki.
+En organisationsenhet kan bara vara underliggande till en annan organisationsenhet (trädstruktur).
+- Organisationskopplingar har betydelse för behörigheter. I vissa fall ger en användarbehörighet på en överliggande nivå även
+behörighet till data på underliggande nivåer i organisationshierarkin. Man ska alltså känna till att ändringar i
+organisationskopplingar kan leda till att användare förlorar eller erhåller nya behörigheter till data.
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -901,7 +1259,16 @@
 
   <xs:complexType name="OrganisationskopplingSkapadEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en organisationskoppling skapas]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Organisationskoppling skapas
+Innehåller information om:
+- Se basklasss
+Innehåller referenser till:
+- Se basklass
+Konsekvenser för verksamheten:
+- Se basklass
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ki:OrganisationskopplingEvent">
@@ -912,7 +1279,16 @@
 
   <xs:complexType name="OrganisationskopplingUppdateradEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en organisationskoppling ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Organisationskoppling ändras
+Innehåller information om:
+- Se basklasss
+Innehåller referenser till:
+- Se basklass
+Konsekvenser för verksamheten:
+- Se basklass
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ki:OrganisationskopplingEvent">
@@ -923,7 +1299,18 @@
 
   <xs:complexType name="OrganisationskopplingstypEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en organisationskopplingstyp skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelse som publiceras när en organisationskopplingstyp skapas eller ändras
+Händelsen publiceras när:
+- En organisationskoppingstyp skapas eller ändras
+Innehåller information om:
+- Redigerad organisationskopplingstyp
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+- Skapad organisationskopplingstyp kan innebära att händelser som avser organisationskopplingar kan behöva tolkas på ett nytt sätt.
+Övrigt:
+- Normalt sett sker ändringar av organisationskopplingstyper mycket sällan och efter att först ha aviserats i kommande releaser.
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -934,7 +1321,16 @@
 
   <xs:complexType name="OrsakAvstangningEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en orsak för avstängning skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En orsak för avstängning skapas eller ändras
+Innehåller information om:
+- Orsak till en avstängning (grunddata)
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+- Redigerat värde blir valbart vid registrering av avstängningar
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -945,7 +1341,17 @@
 
   <xs:complexType name="OrsakEjAvgiftsskyldigEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en orsak för ej avgiftsskyldig skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelse som publiceras när en orsak för ej avgiftsskyldig skapas eller ändras
+Händelsen publiceras när:
+- En orsak till att en student ej är avgiftsskyldig skapas eller ändras
+Innehåller information om:
+- Redigerad orsak (grunddata)
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+- Redigerat värde kan väljas för att specificera befrielse från avgiftsskyldighet
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -956,7 +1362,19 @@
 
   <xs:complexType name="PeriodEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en period skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En period skapas eller ändras
+Innehåller information om:
+- Redigerad period
+Innehåller referenser till:
+- Periodtyp
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Periodens start- och slutdatum definieras av motsvarande attribut i basklassen (giltighetsperiod). I andra grunddatakategorier
+avser dessa datum normalt när grunddatavärdet är giltigt, men för period är det själva definitionen av periodens start och slut som
+avses.
+- Grunddatakategorin innehåller enbart lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -969,7 +1387,16 @@
 
   <xs:complexType name="PeriodtypEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en periodtyp skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En periodtyp skapas eller ändras
+Innehåller information om:
+- Redigerad periodtyp
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+- Redigerad periodtyp kan väljas vid administration av perioder
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -980,7 +1407,16 @@
 
   <xs:complexType name="PraktiktypEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en praktiktyp skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En praktiktyp skapas eller ändras
+Innehåller information om:
+- Redigerad praktiktyp
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -991,7 +1427,16 @@
 
   <xs:complexType name="StudiefinansieringEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en studiefinansiering skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En studiefinansiering skapas eller ändras
+Innehåller information om:
+- Redigerad studiefinansiering
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1002,7 +1447,19 @@
 
   <xs:complexType name="StudielokaliseringEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en studielokalisering skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Studielokalisering skapas eller ändras
+Innehåller information om:
+- Redigerad studielokalisering
+Innehåller referenser till:
+- Svensk ort
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Studielokalisering är en plats där undervisnings kan bedrivas, ett mer generellt begrepp än studieort, t.ex. kan flera olika
+studielokaliseringar finnas på samma ort, t.ex. två olika campus. Rent hypotetiskt skulle en studielokalisering även kunna
+representeras av en virtuell plats, t.ex. en lärplattform eller motsvarande.
+- Grunddatakategorin innehåller enbart lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1015,7 +1472,18 @@
 
   <xs:complexType name="StudieordningEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en studieordning skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En studieordning skapas eller ändras
+Innehåller information om:
+- Redigerad studieordning
+Innehåller referenser till:
+- Utbildningsform
+- Enhet (t.ex. högskolepoäng)
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Studieordningar ändras väldigt sällan och ändringar sker alltid efter avisering.
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1029,7 +1497,17 @@
 
   <xs:complexType name="StudietaktEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse för studietakt. Takt kan vara -1 (fri takt) eller mellan 1 och 100. 0 betyder ingen studietakt.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Studietakt skapas eller ändras.
+Innehåller information om:
+- Redigerad studietakt.
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Takt kan vara -1 (fri takt) eller mellan 1 och 100. 0 betyder ingen studietakt.
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1042,7 +1520,16 @@
 
   <xs:complexType name="SuccessivFordjupningEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en successiv fördjupning skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Värde för successiv fördjupning skapas eller ändras.
+Innehåller information om:
+- Redigerad successiv fördjupning
+Innehåller referenser till:
+- Nivå inom studieordning (grunddata)
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1055,7 +1542,16 @@
 
   <xs:complexType name="SvenskOrtEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en svensk ort skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett värde för svensk ort skapas eller ändras
+Innehåller information om:
+- Redigerad svensk ort
+Innehåller referenser till:
+- Kommun (grunddata)
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1069,7 +1565,7 @@
   <xs:complexType name="SakerhetsnivaForAutentiseringEvent">
 <xs:annotation>
 <xs:documentation><![CDATA[(deprecated): Aviseras och tas bort i sprint 143 eller senare
-            Händelse som publiceras när en säkerhetsnivå för autentisering skapas eller ändras]]></xs:documentation>
+            - Händelse som publiceras när en säkerhetsnivå för autentisering skapas eller ändras]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1080,7 +1576,16 @@
 
   <xs:complexType name="TilltradesnivaEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en tillträdesnivå skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett värde för tillträdesnivå skapas eller ändras
+Innehåller information om:
+- Redigerad tillträdesnivå
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1091,7 +1596,16 @@
 
   <xs:complexType name="TypAvExternPartEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en typ av extern part skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett värde för Typ av extern part skapas eller ändras
+Innehåller information om:
+- Redigerad typ av extern part
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+- Redigerat värde kan användas för att specifidera extern part (grunddata)
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1102,7 +1616,16 @@
 
   <xs:complexType name="UndervisningsformEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en undervisningsform skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En undervisningsform skapas eller ändras
+Innehåller information om:
+- Redigderad undervisningsform
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1113,7 +1636,16 @@
 
   <xs:complexType name="UndervisningssprakEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en undervisningsspråk skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett undervisningsspråk skapas eller ändras
+Innehåller information om:
+- Redigerat undervisningsspråk
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1124,7 +1656,17 @@
 
   <xs:complexType name="UndervisningstidEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en undervisningstid skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelse som publiceras när en undervisningstid skapas eller ändras
+Händelsen publiceras när:
+- Ett värde för undervisningstid skapas eller ändras
+Innehåller information om:
+- Regigerad undervisningstid
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1135,7 +1677,17 @@
 
   <xs:complexType name="UtbildningsformEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en utbildningsform skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En utbildningsform skapas eller ändras
+Innehåller information om:
+- Redigerad utbildningsform
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Utbildningsformer ändras sällan och alltid efter att ha aviserats i god tid.
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1146,7 +1698,16 @@
 
   <xs:complexType name="UtbildningsomradeEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en utbildningsområde skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett utbildningsområde skapas eller ändras
+Innehåller information om:
+- Resdigerat utbildningsområde
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1157,7 +1718,17 @@
 
   <xs:complexType name="UtbildningssatsningEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en utbildningssatsning skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelse som publiceras när en utbildningssatsning skapas eller ändras
+Händelsen publiceras när:
+- En utbildningssatsning skapas eller ändras
+Innehåller information om:
+- ...
+Innehåller referenser till:
+- ...
+Konsekvenser för verksamheten:
+- ...
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1168,7 +1739,21 @@
 
   <xs:complexType name="UtbildningstypEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en utbildningstyp skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelse som publiceras när en utbildningstyp skapas eller ändras
+Händelsen publiceras när:
+- En utbildningstyp skapas eller ändras
+Innehåller information om:
+- Redigerad utbildningstyp, inklusive grunddtyp som kan vara antingen KURSPAKETERING, KURS eller MODUL
+- Om utbildningstypen avser tillfällen eller utbildningar (true/false)
+- Regelverk för utbildningstypen (regler som styr funktionalitet i andra verksamhetstjänster)
+Innehåller referenser till:
+- Studieordning
+- Nivå inom studieordning
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå. Utbildningstyper tillkommer sällan och det sker alltid
+efter avisering. Lärosäten aktiverar olika utbildningstyper genom att skapa lokala mallar för dem.]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1210,7 +1795,19 @@
 
   <xs:complexType name="UtbildningstypRelationerEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när relationer för en utbildningstyp skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En relation för en utbildningstyp skapas eller ändras. Med relation avses utbildningstypens kopplingar till andra utbildningstyper.
+Innehåller information om:
+- En utbildningstyps kopplingar till andra utbildningstyper
+Innehåller referenser till:
+- Redigerad Utbildningstyp (via fältet Id)
+- Utbildningstyper inom vilken denna utbildningstyp kan vara ett utbildningstillfälle
+- Utbildningstyper som kan ingå inom denna utbildningstyp (i utbildningens struktur)
+Konsekvenser för verksamheten:
+- Informationen i detta event styr i första hand regelverket i andra delar av Ladok, t.ex. i tjänsterna Utbildningsinformation och
+Studiedeltagande, t.ex. genom att reglera vilka utbildningstyper som kan ingå i en utbildnings struktur.
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1224,7 +1821,17 @@
 
   <xs:complexType name="UtbytesprogramEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett utbytesprogram skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelse som publiceras när ett utbytesprogram skapas eller ändras
+Händelsen publiceras när:
+- Ett utbytesprogram skapas eller ändras
+Innehåller information om:
+- Redigerat utbytesprogram
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1235,7 +1842,16 @@
 
   <xs:complexType name="UtlandskOrtEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en utländsk ort skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En utländsk ort skapas eller ändras
+Innehåller information om:
+- Redigerad ort
+Innehåller referenser till:
+- Land (grunddata)
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1247,6 +1863,18 @@
   </xs:complexType>
 
   <xs:complexType name="IngaendePartEventPart">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+-
+Innehåller information om:
+- ...
+Innehåller referenser till:
+- ...
+Konsekvenser för verksamheten:
+- ...
+Övrigt:
+- ...]]></xs:documentation>
+</xs:annotation>
     <xs:sequence>
       <xs:element name="AdministrerandeLarosate" type="xs:boolean"/>
       <xs:element minOccurs="0" name="IngaendeExternPartID" type="xs:int"/>
@@ -1256,7 +1884,16 @@
 
   <xs:complexType name="UtbildningssamarbeteEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett utbildningssamarbete skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+-
+Innehåller information om:
+- ...
+Innehåller referenser till:
+- ...
+Konsekvenser för verksamheten:
+- ...
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1270,7 +1907,16 @@
 
   <xs:complexType name="AmnesgruppEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en ämnesgrupp skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En ämnesgrupp skapas eller ändras
+Innehåller information om:
+- Redigerad ämnesgrupp
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1281,7 +1927,16 @@
 
   <xs:complexType name="AmnesklassEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när en ämnesklass skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En ämnesklass skapas eller ändras
+Innehåller information om:
+- Redigerad ämnesklass
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin kan innehålla både nationella och lärosätesspecifika/lokala värden]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1292,7 +1947,16 @@
 
   <xs:complexType name="AmnesordEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett ämnesord skapas eller ändras]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett ämnesord skapas eller ändras
+Innehåller information om:
+- Redigerat ämnesord
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Grunddatakategorin innehåller enbart värden som redigeras på nationell nivå]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -1337,23 +2001,6 @@
           <xs:element name="Anvandarnamn" type="xs:string"/>
           <xs:element name="Efternamn" type="xs:string"/>
           <xs:element name="Fornamn" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="AnvandarbehorighetEnkel">
-<xs:annotation>
-<xs:documentation><![CDATA[Enkel representation av en användarbehörighet utan annat än det mest nödvändiga. Syftet med en lättviktig representation är att
-minska footprint i bland annat events.]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AnvandareUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="BehorighetsprofilUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Status" type="ki:Anvandarbehorighetsstatus"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

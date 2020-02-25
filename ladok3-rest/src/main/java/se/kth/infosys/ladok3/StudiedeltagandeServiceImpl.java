@@ -30,13 +30,14 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
+import se.ladok.schemas.studiedeltagande.PeriodLista;
 import se.ladok.schemas.studiedeltagande.SokresultatStudieAktivitetOchFinansiering;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 
 /**
- * Real implementation of the Ladok studiedeltagande  service. It is using JAX RS 
- * which means that errors will be thrown as unchecked runtime exceptions. See 
+ * Real implementation of the Ladok studiedeltagande service. It is using JAX RS
+ * which means that errors will be thrown as unchecked runtime exceptions. See
  * JAX RS client documentation.
  */
 public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implements StudiedeltagandeService {
@@ -44,11 +45,13 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
     private static final String SERVICE = "studiedeltagande";
 
     /**
-     * Constructor Web Service client end representing the Ladok studiedeltagande  endpoint.
+     * Constructor Web Service client end representing the Ladok studiedeltagande
+     * endpoint.
      * 
-     * @param host The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
+     * @param host     The hostname of the targeted Ladok environment, e.g.
+     *                 mit-ik.ladok.se
      * @param certFile The path to the certificate to use for authentication.
-     * @param key The key to certificate.
+     * @param key      The key to certificate.
      * @throws Exception on errors.
      */
     public StudiedeltagandeServiceImpl(final String host, final String certFile, final String key) throws Exception {
@@ -56,10 +59,12 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
     }
 
     /**
-     * Constructor Web Service client end representing the Ladok studiedeltagande  endpoint.
+     * Constructor Web Service client end representing the Ladok studiedeltagande
+     * endpoint.
      * 
-     * @param host The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
-     * @param context the SSLContext containing necessary information. 
+     * @param host    The hostname of the targeted Ladok environment, e.g.
+     *                mit-ik.ladok.se
+     * @param context the SSLContext containing necessary information.
      * @throws Exception on errors.
      */
     public StudiedeltagandeServiceImpl(final String host, final SSLContext context) throws Exception {
@@ -70,22 +75,16 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
      * {@inheritDoc}
      */
     public TillfallesdeltagandeLista pabarjadutbildningKurspaketeringStudent(String uid) {
-        return target.path("/paborjadutbilding/kurspaketering/student/{studentuid}")
-                .resolveTemplate("studentuid", uid)
-                .request()
-                .accept(SERVICE_TYPE)
-                .get(TillfallesdeltagandeLista.class);
+        return target.path("/paborjadutbilding/kurspaketering/student/{studentuid}").resolveTemplate("studentuid", uid)
+                .request().accept(SERVICE_TYPE).get(TillfallesdeltagandeLista.class);
     }
 
     /**
      * {@inheritDoc}
      */
     public IngaendeKurspaketeringstillfalleLista studiestrukturStudent(String uid) {
-        return target.path("/studiestruktur/student/{studentuid}")
-                .resolveTemplate("studentuid", uid)
-                .request()
-                .accept(SERVICE_TYPE)
-                .get(IngaendeKurspaketeringstillfalleLista.class);
+        return target.path("/studiestruktur/student/{studentuid}").resolveTemplate("studentuid", uid).request()
+                .accept(SERVICE_TYPE).get(IngaendeKurspaketeringstillfalleLista.class);
     }
 
     /**
@@ -101,16 +100,14 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
             request = request.queryParam(param, params.get(param));
         }
 
-        return request
-                .request()
-                .accept(SERVICE_TYPE)
-                .get(SokresultatStudieAktivitetOchFinansiering.class);
+        return request.request().accept(SERVICE_TYPE).get(SokresultatStudieAktivitetOchFinansiering.class);
     }
 
     /**
      * {@inheritDoc}
      */
-    public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIteraterable(Map<String, Object> params) {
+    public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIteraterable(
+            Map<String, Object> params) {
         return new StudieaktivitetUtdataResultat(this, params);
     }
 
@@ -119,9 +116,13 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
      */
     public TillfallesdeltagandeLista kurstillfallesdeltagandeStudent(String uid) {
         return target.path("/tillfallesdeltagande/kurstillfallesdeltagande/student/{studentuid}")
-                .resolveTemplate("studentuid", uid)
-                .request()
-                .accept(SERVICE_TYPE)
-                .get(TillfallesdeltagandeLista.class);
+                .resolveTemplate("studentuid", uid).request().accept(SERVICE_TYPE).get(TillfallesdeltagandeLista.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public PeriodLista studiedeltagandePeriod() {
+        return target.path("/period").request().accept(SERVICE_TYPE).get(PeriodLista.class);
     }
 }

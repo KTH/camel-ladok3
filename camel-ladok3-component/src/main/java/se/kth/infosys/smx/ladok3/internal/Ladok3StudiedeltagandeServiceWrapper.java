@@ -19,6 +19,7 @@ import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
+import se.ladok.schemas.studiedeltagande.PeriodLista;
 
 public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrapper {
     private static final Logger log = LoggerFactory.getLogger(Ladok3StudiedeltagandeServiceWrapper.class);
@@ -27,7 +28,8 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
             + "tillfallesdeltagande/kurstillfallesdeltagande/student|"
             + "utdata/studieaktivitetochfinansiering|"
             + "pabarjadutbildning/kurspaketering/student|"
-            + "studiestruktur/student"
+            + "studiestruktur/student|"
+            + "period"
             + "))+.*");
     private StudiedeltagandeService service;
     private String pathOperation;
@@ -55,6 +57,9 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
             break;
         case "studiestruktur/student":
             handleStudiestrukturStudent(exchange);
+            break;
+        case "period":
+            getStudiedeltagandePerioder(exchange);
             break;
         default:
             throw new CamelExchangeException("Unupported operation: %s" + operation, exchange);
@@ -115,5 +120,11 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
         }
 
         return exchange.getIn().getHeader(Ladok3Message.Header.Operation, String.class);
+    }
+
+    private void getStudiedeltagandePerioder(Exchange exchange) throws Exception {
+        PeriodLista fromLadok = service.studiedeltagandePeriod();
+        exchange.getIn().setBody(fromLadok);
+        
     }
 }

@@ -28,144 +28,143 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
-import org.apache.camel.impl.DefaultPollingEndpoint;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
 import org.apache.camel.spi.UriPath;
+import org.apache.camel.support.DefaultPollingEndpoint;
+
 
 /**
  * Represents a ladok3 endpoint.
  */
-@UriEndpoint(scheme = "ladok3", title = "ladok3", syntax="ladok3://", consumerClass = Ladok3Consumer.class, label = "ladok3")
+@UriEndpoint(scheme = "ladok3", title = "ladok3", syntax = "ladok3://", consumerClass = Ladok3Consumer.class, label = "ladok3")
 public class Ladok3Endpoint extends DefaultPollingEndpoint {
-    @UriParam(label = "consumer", name = "lastEntry", defaultValue = "", description = "Entry id to start consuming from")
-    private String lastEntry = "";
+  @UriParam(label = "consumer", name = "lastEntry", defaultValue = "", description = "Entry id to start consuming from")
+  private String lastEntry = "";
 
-    @UriParam(label = "consumer", name = "lastFeed", defaultValue = "", description = "Feed to start consuming from")
-    private String lastFeed = "";
+  @UriParam(label = "consumer", name = "lastFeed", defaultValue = "", description = "Feed to start consuming from")
+  private String lastFeed = "";
 
-    @UriParam(label = "consumer", name = "includeEvents", description = "List of event names to generate messages for.")
-    private HashSet<String> includeEvents = new HashSet<String>();
+  @UriParam(label = "consumer", name = "includeEvents", description = "List of event names to generate messages for.")
+  private HashSet<String> includeEvents = new HashSet<String>();
 
-    @UriParam(label = "consumer", name = "excludeEvents", description = "List of event names NOT to generate messages for.")
-    private HashSet<String> excludeEvents = new HashSet<String>();
+  @UriParam(label = "consumer", name = "excludeEvents", description = "List of event names NOT to generate messages for.")
+  private HashSet<String> excludeEvents = new HashSet<String>();
 
-    @UriPath(label = "producer", description = "Ladok3 REST API path")
-    private String api;
+  @UriPath(label = "producer", description = "Ladok3 REST API path")
+  private String api;
 
-    private final String host;
-    private final SSLContext context;
+  private final String host;
+  private final SSLContext context;
 
-    public Ladok3Endpoint(String uri, Ladok3Component component, String host, SSLContext context) throws Exception {
-        super(uri, component);
-        this.host = host;
-        this.context = context;
+  public Ladok3Endpoint(String uri, Ladok3Component component, String host, SSLContext context) throws Exception {
+    super(uri, component);
+    this.host = host;
+    this.context = context;
+  }
+
+  public Producer createProducer() throws Exception {
+    return new Ladok3Producer(this);
+  }
+
+  public Consumer createConsumer(Processor processor) throws Exception {
+    Ladok3Consumer consumer = new Ladok3Consumer(this, processor);
+    configureConsumer(consumer);
+    return consumer;
+  }
+
+  public boolean isSingleton() {
+    return false;
+  }
+
+  public InputStream get(final URL url) throws IOException {
+    HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+    connection.setReadTimeout(60000);
+    connection.setConnectTimeout(10000);
+    connection.setSSLSocketFactory(context.getSocketFactory());
+    return connection.getInputStream();
+  }
+
+  public String getLastEntry() {
+    return lastEntry;
+  }
+
+  public void setLastEntry(String lastEntry) {
+    this.lastEntry = lastEntry;
+  }
+
+  public String getLastFeed() {
+    return lastFeed;
+  }
+
+  public void setLastFeed(String lastFeed) {
+    this.lastFeed = lastFeed;
+  }
+
+  public void setNextURL(URL lastURL) {
+    this.lastFeed = lastURL.toString();
+  }
+
+  public URL getNextURL() throws MalformedURLException {
+    return new URL(this.lastFeed);
+  }
+
+  public SSLContext getContext() {
+    return context;
+  }
+
+  public HashSet<String> getIncludeEvents() {
+    return includeEvents;
+  }
+
+  public void setIncludeEvents(HashSet<String> events) {
+    this.includeEvents = events;
+  }
+
+  public void setIncludeEvents(String events) {
+    this.includeEvents = new HashSet<String>();
+    for (String event : events.split(",")) {
+      if (! event.isEmpty()) {
+        this.includeEvents.add(event);
+      }
     }
+  }
 
-    public Producer createProducer() throws Exception {
-        return new Ladok3Producer(this);
-    }
+  public HashSet<String> getExcludeEvents() {
+    return excludeEvents;
+  }
 
-    public Consumer createConsumer(Processor processor) throws Exception {
-        Ladok3Consumer consumer = new Ladok3Consumer(this, processor);
-        configureConsumer(consumer);
-        return consumer;
-    }
+  public void setExcludeEvents(HashSet<String> events) {
+    this.excludeEvents = events;
+  }
 
-    public boolean isSingleton() {
-        return false;
+  public void setExcludeEvents(String events) {
+    this.excludeEvents = new HashSet<String>();
+    for (String event : events.split(",")) {
+      if (! event.isEmpty()) {
+        this.excludeEvents.add(event);
+      }
     }
+  }
 
-    public InputStream get(final URL url) throws IOException {
-        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-        connection.setReadTimeout(60000);
-        connection.setConnectTimeout(10000);
-        connection.setSSLSocketFactory(context.getSocketFactory());
-        return connection.getInputStream();
-    }
+  public String getApi() {
+    return api;
+  }
 
-    public String getLastEntry() {
-        return lastEntry;
-    }
+  public void setApi(String api) {
+    this.api = api;
+  }
 
-    public void setLastEntry(String lastEntry) {
-        this.lastEntry = lastEntry;
-    }
-
-    public String getLastFeed() {
-        return lastFeed;
-    }
-
-    public void setLastFeed(String lastFeed) {
-        this.lastFeed = lastFeed;
-    }
-
-    public void setNextURL(URL lastURL) {
-        this.lastFeed = lastURL.toString();
-    }
-
-    public URL getNextURL() throws MalformedURLException {
-        return new URL(this.lastFeed);
-    }
-
-    public SSLContext getContext() {
-        return context;
-    }
-
-    public HashSet<String> getIncludeEvents() {
-        return includeEvents;
-    }
-
-    public void setIncludeEvents(HashSet<String> events) {
-        this.includeEvents = events;
-    }
-
-    public void setIncludeEvents(String events) {
-        this.includeEvents = new HashSet<String>();
-        for (String event : events.split(",")) {
-            if (! event.isEmpty()) {
-                this.includeEvents.add(event);
-            }
-        }
-    }
-
-    public HashSet<String> getExcludeEvents() {
-        return excludeEvents;
-    }
-
-    public void setExcludeEvents(HashSet<String> events) {
-        this.excludeEvents = events;
-    }
-
-    public void setExcludeEvents(String events) {
-        this.excludeEvents = new HashSet<String>();
-        for (String event : events.split(",")) {
-            if (! event.isEmpty()) {
-                this.excludeEvents.add(event);
-            }
-        }
-    }
-
-    public String getApi() {
-        return api;
-    }
-
-    public void setApi(String api) {
-        this.api = api;
-    }
-
-    /**
-     * The Ladok3 host environment, api.mit-ik.ladok.se etc.
-     * @return the host name
-     */
-    public String getHost() {
-        return host;
-    }
+  /**
+   * The Ladok3 host environment, api.mit-ik.ladok.se etc.
+   * @return the host name
+   */
+  public String getHost() {
+    return host;
+  }
 }

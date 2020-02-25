@@ -367,8 +367,19 @@
 
   <xs:complexType name="KunskapsoverlappningEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras vid ändringar av kunskapsöverlappningar. EventTyp innehåller information om hur kunskapsöverlappningen ändrats,
-t.ex. "SKAPAD" eller "UPPDATERAD"]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En (kunskaps-)överlappning skapas eller ändras. EventTyp innehåller information om hur överlappningen ändrats,t.ex. "SKAPAD" eller
+"UPPDATERAD"
+Innehåller information om:
+- Överlappningen, inkl omfattningsvärde, kod, enhet, benämning och beskrivning etc.
+Innehåller referenser till:
+- Utbildningar som överlappar varandra
+Konsekvenser för verksamheten:
+- ...
+Övrigt:
+- Överlappning representerar en del av en utbildning som överlappar mellan två eller flera kurser. Man kan även se det som en kunskap
+som du kan tillgodogöra dig på mer än ett sätt, och som du därför inte får använda mer än en gång per examen. I gamla ladok använde
+man enbart begreppet "överlapp", utan att specificera exakt vad överlappet bestod i (mer än en omfattning).]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -434,8 +445,17 @@ t.ex. "SKAPAD" eller "UPPDATERAD"]]></xs:documentation>
 
   <xs:complexType name="UtbildningsmallPubliceradEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en lokal utbildningsmall publicerats och gjorts tillgänglig för användning vid upprättande av utbildningar
-eller tillfällen]]></xs:documentation>
+<xs:documentation><![CDATA[(Deprecated): Händelsen publiceras när:
+            - En lokal utbildningsmall publicerats och gjorts tillgänglig för användning vid upprättande av utbildningareller
+            tillfällen
+            Innehåller information om:
+            - ...
+            Innehåller referenser till:
+            - ...
+            Konsekvenser för verksamheten:
+            - ...
+            Övrigt:
+            - Utbildningsmallar betraktas som intern information i tjänsten Utbildningsinformation]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -449,7 +469,23 @@ eller tillfällen]]></xs:documentation>
 
   <xs:complexType abstract="true" name="AbstraktStrukturEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som representerar en ny eller uppdaterad struktur för en utbildningsinstans eller ett utbildningstillfälle]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En struktur för en utbildning eller utbildningstillfälle skapas eller ändras
+Innehåller information om:
+- Strukturens innehåll/boxar
+Innehåller referenser till:
+- Den utbildningsinstans eller utbildningstillfälle som "äger" strukturen, samt utbildningstyp (anger vilken utbildningtyp som är
+"ägare" till strukturen - antingen utbildningsinstans eller utbildningstillfälle).
+Konsekvenser för verksamheten:
+- Modellen för strukturer och boxar är kraftigt generaliserad för att kunna representera många olika behov av att representera
+innehåll i kurser, kurspaketeringar, kurstillfällen och kurspaketeringstillfällen (av olika typer, med olika regelverkt). Händelserna
+som har med detta att göra är främst anpassade för att spegla den inre representationen i Utbildningsinformation och för att
+tillhandahålla ett underlag för andra tjänster i Ladok. De är inte anpassade för användning utanför Ladok.
+Övrigt:
+- Beskriver strukturen för en utbildning eller utbildningstillfälle. En struktur innehåller en sorterad lista av "boxar", dvs.
+strukturdelar som representerar t.ex. ett kurstillfälle eller ett val som man kan göra inom strukturen.
+- Strukturer växer fram med tiden. Ett exempel kan t.ex. vara att man i en programtillfällesstruktur först specificerar en kurs, för
+att senare detaljera denna kurs med ett specifikt kurstillfälle.]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -508,7 +544,8 @@ eller tillfällen]]></xs:documentation>
 
   <xs:complexType name="ValboxEventPart">
 <xs:annotation>
-<xs:documentation><![CDATA[Del av struktur som representerar valmöjligheter (valboxar)]]></xs:documentation>
+<xs:documentation><![CDATA[Del av struktur som representerar valmöjligheter (valboxar). En valbox har ett innehåll som utgör det studenten har att välja på,
+samt en valregel som specificerar kriterierna för hur valet ska gå till.]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:BoxEventPart">
@@ -523,10 +560,16 @@ eller tillfällen]]></xs:documentation>
   </xs:complexType>
 
   <xs:complexType abstract="true" name="ValregelEventPart">
+<xs:annotation>
+<xs:documentation><![CDATA[Basklass för valregler, dvs. regler som styr hur valen i en valbox ska göras]]></xs:documentation>
+</xs:annotation>
     <xs:sequence/>
   </xs:complexType>
 
   <xs:complexType name="ValjXRegelEventPart">
+<xs:annotation>
+<xs:documentation><![CDATA[Valregel som specificerar att man ska välja ett visst antal (utbildningar/tillfällen) ur det valbara innehållet]]></xs:documentation>
+</xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:ValregelEventPart">
         <xs:sequence>
@@ -537,6 +580,9 @@ eller tillfällen]]></xs:documentation>
   </xs:complexType>
 
   <xs:complexType name="ValjOmfattningRegelEventPart">
+<xs:annotation>
+<xs:documentation><![CDATA[Valregel som anger att man ska välja delar ur innehållet som uppgår till en viss omfattning]]></xs:documentation>
+</xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:ValregelEventPart">
         <xs:sequence>
@@ -548,7 +594,16 @@ eller tillfällen]]></xs:documentation>
 
   <xs:complexType name="BoxBorttagenEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en eller flera "boxar" (t.ex. ett kurstillfälle) i en utbildningsstruktur tagits bort]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En eller flera "boxar" (t.ex. ett kurstillfälle) i en utbildningsstruktur tagits bort
+Innehåller information om:
+-
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Se basklass för mer information!]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:BoxEvent">
@@ -559,7 +614,24 @@ eller tillfällen]]></xs:documentation>
 
   <xs:complexType abstract="true" name="BoxEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en eller flera "boxar" inom en struktur publiceras eller tas bort]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En eller flera "boxar" inom en struktur publiceras eller tas bort
+Innehåller information om:
+- Boxens innehåll, boxens typ
+Innehåller referenser till:
+- Den struktur boxen ingår i, den utbildningsinstans eller utbildningstillfälle som "äger" strukturen, samt utbildningstyp (anger
+vilken utbildningtyp som är "ägare" till strukturen - antingen utbildningsinstans eller utbildningstillfälle).
+Konsekvenser för verksamheten:
+- Modellen för strukturer och boxar är kraftigt generaliserad för att kunna representera många olika behov av att representera
+innehåll i kurser, kurspaketeringar, kurstillfällen och kurspaketeringstillfällen (av olika typer, med olika regelverkt). Händelserna
+som har med detta att göra är främst anpassade för att spegla den inre representationen i Utbildningsinformation och för att
+tillhandahålla ett underlag för andra tjänster i Ladok. De är inte anpassade för användning utanför Ladok.
+Övrigt:
+- En "box" är en del av en utbildningsinstans eller ett utbildningstillfälles planerade innehåll. Flera boxar tillsammans utgör en
+struktur. En box kan t.ex. avse ett specificerat utbildningstillfälle eller ett val inom strukturen. När en box publiceras betyder
+det att den görs tillgänglig för andra domäner och att dess "innehåll" inte längre kan förändras. En box har ett ordningstal (lägst
+0) som beskriver dess ordning inom den struktur som den tillhör. Detta har att göra med att innehållet i strukturen är storterat,
+antingen manuellt eller via en naturlig ordning som baseras t.ex. på tillfällesdatum.]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -575,7 +647,16 @@ eller tillfällen]]></xs:documentation>
 
   <xs:complexType name="BoxPubliceradEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en "box" (t.ex. ett utbildningstillfälle) lagts till i en utbildningsstruktur _och publicerats_.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En "box" (t.ex. ett utbildningstillfälle) lagts till i en utbildningsstruktur _och publicerats_.
+Innehåller information om:
+-
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Se basklass för mer information!]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:BoxEvent">
@@ -586,7 +667,16 @@ eller tillfällen]]></xs:documentation>
 
   <xs:complexType name="StrukturEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som representerar en ny eller uppdaterad struktur för en utbildningsinstans eller utbildningstillfälle]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En struktur för en utbildning eller utbildningstillfälle skapas eller ändras
+Innehåller information om:
+- Se basklass
+Innehåller referenser till:
+- Se basklass
+Konsekvenser för verksamheten:
+- Se basklass för mer information!
+Övrigt:
+- Se basklass för mer information!]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:AbstraktStrukturEvent">
@@ -597,8 +687,16 @@ eller tillfällen]]></xs:documentation>
 
   <xs:complexType name="StrukturIStatus2">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som representerar en skapad eller ändrad struktur för en utbildning eller utbildningstillfälle som befinner sig i stauts 2
-(PÅBÖRJAD)]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En skapad eller ändrad struktur för en utbildning eller utbildningstillfälle som befinner sig i status 2(PÅBÖRJAD)
+Innehåller information om:
+- Se basklass
+Innehåller referenser till:
+- Se basklass
+Konsekvenser för verksamheten:
+- Se basklass för mer information!
+Övrigt:
+- Se basklass för mer information!]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:AbstraktStrukturEvent">
@@ -737,7 +835,17 @@ inte. Räkna alltså med att dessa attribut kan vara tomma för vissa konfigurat
 
   <xs:complexType name="KursTillStatusEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en kurs byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En kurs byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD. Kursen kan ha funnits i systemet i status UTKAST
+tidigare, men i och med att man byter status till PÅBÖRJAD publiceras den första händelsen som avser denna kurs.
+Innehåller information om:
+- Kurs
+Innehåller referenser till:
+- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
+Konsekvenser för verksamheten:
+- ...
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:KursEvent">
@@ -748,7 +856,16 @@ inte. Räkna alltså med att dessa attribut kan vara tomma för vissa konfigurat
 
   <xs:complexType name="KursUppdateradEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en kurs uppdateras. Publiceras först efter att kursen nått status PÅBÖRJAD.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En kurs uppdateras. Publiceras först efter att kursen nått status PÅBÖRJAD.
+Innehåller information om:
+- Kurs
+Innehåller referenser till:
+- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
+Konsekvenser för verksamheten:
+- ...
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:KursEvent">
@@ -775,7 +892,18 @@ inte. Räkna alltså med att dessa attribut kan vara tomma för vissa konfigurat
 
   <xs:complexType name="KurspaketeringTillStatusEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en kurspaketering byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En kurspaketering byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD. Kurspaketeringen kan ha funnits i
+systemet i status UTKAST tidigare, men i och med att man byter status till PÅBÖRJAD publiceras den första händelsen som avser denna
+kurspaketering.
+Innehåller information om:
+- Kurspaketering
+Innehåller referenser till:
+- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
+Konsekvenser för verksamheten:
+- ...
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:KurspaketeringEvent">
@@ -786,7 +914,16 @@ inte. Räkna alltså med att dessa attribut kan vara tomma för vissa konfigurat
 
   <xs:complexType name="KurspaketeringUppdateradEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en kurspaketering uppdateras. Publiceras först efter att kurspaketeringen nått status PÅBÖRJAD.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En kurspaketering uppdateras. Publiceras först efter att kurspaketeringen nått status PÅBÖRJAD.
+Innehåller information om:
+- Kurspaketering
+Innehåller referenser till:
+- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
+Konsekvenser för verksamheten:
+- ...
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:KurspaketeringEvent">
@@ -819,8 +956,17 @@ inte. Räkna alltså med att dessa attribut kan vara tomma för vissa konfigurat
 
   <xs:complexType name="ModulTillStatusEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en modul byter till en ny status, t.ex. från status PÅBÖRJAD till status KOMPLETT. Detta sker normalt sett
-samtidigt som kursen som innehåller modulen byter status (vilket publiceras i ett separat event vid samma tidpunkt).]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En modul byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD. Detta sker normalt settsamtidigt som kursen som
+innehåller modulen byter status (vilket publiceras i ett separat event vid samma tidpunkt).
+Innehåller information om:
+- Modul
+Innehåller referenser till:
+- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
+Konsekvenser för verksamheten:
+- ...
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:ModulEvent">
@@ -831,7 +977,16 @@ samtidigt som kursen som innehåller modulen byter status (vilket publiceras i e
 
   <xs:complexType name="ModulUppdateradEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en modul uppdateras. Publiceras först efter att modulen nått status PÅBÖRJAD.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- När en modul uppdateras. Publiceras först efter att kursen och modulen nått status PÅBÖRJAD.
+Innehåller information om:
+- Modul
+Innehåller referenser till:
+- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
+Konsekvenser för verksamheten:
+- ...
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:ModulEvent">
@@ -842,9 +997,18 @@ samtidigt som kursen som innehåller modulen byter status (vilket publiceras i e
 
   <xs:complexType name="UtbildningAvveckladEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en utbildning avvecklas, dvs. en utbildning inklusive alla dess instanser. Denna eventtyp följer inte
-riktigt samma mönster som andra statusövergångar i och med att det inte är utbildningsinstansen som avvecklas utan själva
-utbildningen (inklusive alla instanser).]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- När en utbildning avvecklas, dvs. en utbildning inklusive alla dess instanser. Denna eventtyp följer inte riktigt samma mönster som
+andra statusövergångar i och med att det inte är utbildningsinstansen som avvecklas utan själva utbildningen (påverkar alltså alla
+versioner av utbildningen).
+Innehåller information om:
+- ...
+Innehåller referenser till:
+- Avvecklad utbildning
+Konsekvenser för verksamheten:
+- Samtliga utbildningsinstanser (versioner) som hör till denna utbildning ska betraktas som avvecklade
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -866,7 +1030,16 @@ utbildningen (inklusive alla instanser).]]></xs:documentation>
 
   <xs:complexType name="UtbildningAteraktiveradEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när en avvecklad utbildning återaktiveras.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- en avvecklad utbildning återaktiveras, t.ex. som en registervårdsåtgärd efter ett misstag eller felaktigt beslut.
+Innehåller information om:
+- ...
+Innehåller referenser till:
+- Återaktiverad utbildning
+Konsekvenser för verksamheten:
+- Utbildningsinstanser som tidigare betraktats som avvecklade ska återaktiveras igen
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -928,7 +1101,16 @@ utbildningen (inklusive alla instanser).]]></xs:documentation>
 
   <xs:complexType name="KurspaketeringstillfalleTillStatusEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när ett kurspaketeringstillfälle byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett kurspaketeringstillfälle byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD.
+Innehåller information om:
+- Det redigerade kurspaketeringstillfällets attribut/egenskaper, dock ej dess innehåll/struktur
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+- Kurspaketeringstillfället kan från och med status PÅBÖRJAD användas i andra domäner, t.ex. för registreringar, antagningar etc.
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:KurspaketeringstillfalleEvent">
@@ -939,8 +1121,16 @@ utbildningen (inklusive alla instanser).]]></xs:documentation>
 
   <xs:complexType name="KurspaketeringstillfalleUppdateratEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när ett kurspaketeringstillfälle uppdateras. Publiceras först efter att kurspaketeringstillfället nått status
-PÅBÖRJAD.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett kurspaketeringstillfälle uppdateras. Publiceras först efter att kurspaketeringstillfället nått status PÅBÖRJAD.
+Innehåller information om:
+- Det redigerade kurspaketeringstillfällets attribut/egenskaper, dock ej dess innehåll/struktur
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+- Ändringar av t.ex. kurspaketeringstillfällets kod bör man vara uppmärksam på då den ofta används för matchning i andra system
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:KurspaketeringstillfalleEvent">
@@ -983,7 +1173,16 @@ PÅBÖRJAD.]]></xs:documentation>
 
   <xs:complexType name="KurstillfalleTillStatusEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när ett kurstillfälle byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett kurstillfälle byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD.
+Innehåller information om:
+- Det redigerade kurstillfällets attribut/egenskaper
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+- Kurstillfället kan från och med status PÅBÖRJAD användas i andra domäner, t.ex. för registreringar, antagningar etc.
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:KurstillfalleEvent">
@@ -994,7 +1193,16 @@ PÅBÖRJAD.]]></xs:documentation>
 
   <xs:complexType name="KurstillfalleUppdateratEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när ett kurstillfälle uppdateras. Publiceras först efter att kurstillfället nått status PÅBÖRJAD.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett kurstillfälle uppdateras. Publiceras först efter att kurstillfället nått status PÅBÖRJAD.
+Innehåller information om:
+- Det redigerade kurstillfällets attribut/egenskaper
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+- Ändringar av t.ex. kurstillfällets kod bör man vara uppmärksam på då den ofta används för matchning i andra system
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ui:KurstillfalleEvent">
@@ -1005,8 +1213,18 @@ PÅBÖRJAD.]]></xs:documentation>
 
   <xs:complexType name="UtannonseraUtbildningstillfalleEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när ett kurstillfälle utannonseras i syfte att överföras till antagningssystemet. Händelsen konsumeras av
-domänen extintegration som i sin tur skapar de EMIL-filer som överförs till antagningssystemet.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- När ett kurstillfälle utannonseras i syfte att överföras till antagningssystemet. Händelsen konsumeras av domänen extintegration
+som i sin tur skapar de EMIL-filer som överförs till antagningssystemet.
+Innehåller information om:
+-
+Innehåller referenser till:
+- Utannonserat utbildningstillfälle
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Om innehållet i utbildningstillfället av någon anledning bryter mot EMIL-regelverket kan det leda till att utannonseringen avbryts
+och inte genomförs. Ett ovanligt fall, men har förekommit.]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -1018,6 +1236,20 @@ domänen extintegration som i sin tur skapar de EMIL-filer som överförs till a
   </xs:complexType>
 
   <xs:complexType name="UtbildningsinstansBorttagenEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[(deprecated): Händelsen publiceras inte längre
+            Händelsen publiceras när:
+            - En utbildningsinstans tas bort. Normalt sett måste utbildningsinstansen vara i status UTKAST eller PÅBÖRJAD för att
+            detta ska tillåtas.
+            Innehåller information om:
+            -
+            Innehåller referenser till:
+            - Borttagen utbildningsinstans
+            Konsekvenser för verksamheten:
+            -
+            Övrigt:
+            -]]></xs:documentation>
+</xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
         <xs:sequence>
@@ -1029,8 +1261,17 @@ domänen extintegration som i sin tur skapar de EMIL-filer som överförs till a
 
   <xs:complexType name="UtbildningsinstansPaUtbildningstillfalleAndradEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när man flyttat ett utbildningstillfälle från en utbildningsinstans till en annan utbildningsinstans, t.ex. när
-man upprättat skapat en ny kursversion och vill flytta planerade kurstillfällen till den nya kursversionen.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- ...man flyttat ett utbildningstillfälle från en utbildningsinstans till en annan utbildningsinstans, t.ex. när man upprättat skapat
+en ny kursversion och vill flytta planerade kurstillfällen till den nya kursversionen.
+Innehåller information om:
+-
+Innehåller referenser till:
+- Utbildningsinstans, utbildningstillfälle, grundtyp (KURSPAKETERING/KURS)
+Konsekvenser för verksamheten:
+-
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -1045,9 +1286,17 @@ man upprättat skapat en ny kursversion och vill flytta planerade kurstillfälle
 
   <xs:complexType name="UtbildningstillfalleBorttagetEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett utbildningstillfälle tas bort.
-
-(deprecated): Händelsen verkar inte användas. Dubbelkolla med PÄ och ta bort!]]></xs:documentation>
+<xs:documentation><![CDATA[(deprecated): Händelsen används inte längre.
+            Händelsen publiceras när:
+            - Händelse som publiceras när ett utbildningstillfälle tas bort.
+            Innehåller information om:
+            -
+            Innehåller referenser till:
+            - Borttaget utbildningstillfälle
+            Konsekvenser för verksamheten:
+            -
+            Övrigt:
+            -]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -1060,7 +1309,18 @@ man upprättat skapat en ny kursversion och vill flytta planerade kurstillfälle
 
   <xs:complexType name="UtbildningstillfalleInstalltEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när ett utbildningstillfälle ställs in]]></xs:documentation>
+<xs:documentation><![CDATA[Event som publiceras när ett utbildningstillfälle ställs in
+Händelsen publiceras när:
+- ...ett utbildningstillfälle ställs in
+Innehåller information om:
+-
+Innehåller referenser till:
+- Inställt utbildningstillfälle
+Konsekvenser för verksamheten:
+- Får påverkan på regelverket i andra tjänster, bl.a. i studiedeltagande där det t.ex. leder till att man inte längre kan registrera
+sig på tillfället.
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -1073,8 +1333,16 @@ man upprättat skapat en ny kursversion och vill flytta planerade kurstillfälle
 
   <xs:complexType name="UtbildningstillfalleAteraktiveratEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när ett inställt utbildningstillfälle återaktiveras. Innehåller även utbildningstillfällets (föregående) status
-om det visar sig att konsumerande tjänst tappat bort denna information.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- ...ett inställt utbildningstillfälle återaktiveras. Normalt sett en registervårdsaktivitet.
+Innehåller information om:
+- Utbildningstillfällets (föregående) status, för att konsumenten ska veta vilket tillstånd som gäller nu om detta inte bevarats.
+Innehåller referenser till:
+- Återaktiverat utbildningstillfälle
+Konsekvenser för verksamheten:
+-
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -1941,6 +2209,7 @@ regler som har bäring i Utbildningsinformation på ett konkret sätt istället 
       <xs:element minOccurs="0" name="ForvaldOmfattning" type="xs:int"/>
       <xs:element name="HarOmfattning" type="xs:boolean"/>
       <xs:element name="Individuell" type="xs:boolean"/>
+      <xs:element name="KanTillgodoraknas" type="xs:boolean"/>
       <xs:element name="KanUtannonseras" type="xs:boolean"/>
       <xs:element name="Sjalvstandig" type="xs:boolean"/>
       <xs:element name="Versionshanteras" type="xs:boolean"/>

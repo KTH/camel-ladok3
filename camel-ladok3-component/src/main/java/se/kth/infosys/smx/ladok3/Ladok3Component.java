@@ -34,20 +34,20 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 
 import org.apache.camel.Endpoint;
-import org.apache.camel.impl.DefaultComponent;
+import org.apache.camel.support.DefaultComponent;
 import org.apache.camel.spi.Metadata;
 
 /**
  * Represents the component that manages {@link Ladok3Endpoint}.
  */
 public class Ladok3Component extends DefaultComponent {
-    @Metadata(required = "true")
+    @Metadata(required = true)
     private String cert;
 
-    @Metadata(required = "true")
+    @Metadata(required = true)
     private String key;
 
-    @Metadata(required = "true")
+    @Metadata(required = true)
     private String host;
 
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {

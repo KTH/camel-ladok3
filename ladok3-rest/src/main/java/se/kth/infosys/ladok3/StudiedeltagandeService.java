@@ -29,6 +29,7 @@ import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.SokresultatStudieAktivitetOchFinansiering;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
+import se.ladok.schemas.studiedeltagande.PeriodLista;
 
 /**
  * Interface representing the Ladok studiedeltagande service.
@@ -36,6 +37,7 @@ import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 public interface StudiedeltagandeService extends Ladok3Service {
     /**
      * Lista alla påbörjade kurspaketeringar för en student.
+     * 
      * @param uid student UID
      * @return påbörjade kurspaketeringar.
      */
@@ -43,6 +45,7 @@ public interface StudiedeltagandeService extends Ladok3Service {
 
     /**
      * Hämta studiestrukturer för student, en per rotkurspaketeringstillfälle.
+     * 
      * @param uid student UID
      * @return studiestrukturer för student.
      */
@@ -51,31 +54,27 @@ public interface StudiedeltagandeService extends Ladok3Service {
     /**
      * Sök studieaktivitet och finansiering.
      * 
-     * Anropar /studiedeltagande/utdata/studieaktivitetochfinansiering med frågeparametrar
-     * enligt params. Se Ladok REST-dokumentation för mer information om parametrar.
+     * Anropar /studiedeltagande/utdata/studieaktivitetochfinansiering med
+     * frågeparametrar enligt params. Se Ladok REST-dokumentation för mer
+     * information om parametrar.
      *
-     * <pre>
-     * {@code
-     * Map<String, Object> params = new HashMap<String, Object>();
-     * params.put("datumperiod", "2018-01-14_2018-06-04");
-     * SokresultatStudieAktivitetOchFinansiering res =
-     *     studiedeltagandeService.utdataStudieaktivitetOchFinansiering(params);
-     * }
-     * </pre>
      * 
      * @param params A map between parameter strings and their object values.
      * @return The search result.
      */
-    public SokresultatStudieAktivitetOchFinansiering utdataStudieaktivitetOchFinansiering(final Map<String, Object> params);
+    public SokresultatStudieAktivitetOchFinansiering utdataStudieaktivitetOchFinansiering(
+            final Map<String, Object> params);
 
     /**
-     * Higher abstraction of {@link #utdataStudieaktivitetOchFinansiering} method which returns 
-     * an iterable of StudieaktivitetUtdata hiding all paging related issues.
+     * Higher abstraction of {@link #utdataStudieaktivitetOchFinansiering} method
+     * which returns an iterable of StudieaktivitetUtdata hiding all paging related
+     * issues.
      * 
      * @param params A map between parameter strings and their object values.
      * @return an iterable for all search results matching params.
      */
-    public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIteraterable(final Map<String, Object> params);
+    public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIteraterable(
+            final Map<String, Object> params);
 
     /**
      * Hämta alla kurstillfällesdeltaganden för en student.
@@ -84,4 +83,11 @@ public interface StudiedeltagandeService extends Ladok3Service {
      * @return kurstillfällesdeltagande för student.
      */
     public TillfallesdeltagandeLista kurstillfallesdeltagandeStudent(String uid);
+    
+    /**
+     * Hämta alla perioder för studiedeltagande.
+     *
+     * @return perioder för studiedeltagande
+     */
+    public PeriodLista studiedeltagandePeriod();
 }

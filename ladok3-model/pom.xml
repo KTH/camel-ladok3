@@ -28,11 +28,11 @@
   <parent>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
     <artifactId>ladok3</artifactId>
-    <version>1.40.1</version>
+    <version>3.0.1</version>
   </parent>
 
   <artifactId>ladok3-model</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
 
   <name>ladok3-events</name>
   <url>https://www.kth.se</url>
@@ -48,34 +48,10 @@
 
   <build>
     <plugins>
-      <!-- to generate the MANIFEST-FILE of the bundle -->
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <version>3.3.0</version>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Bundle-SymbolicName>se.kth.infosys.ladok3-model</Bundle-SymbolicName>
-            <Export-Package>se.ladok.schemas,se.ladok.schemas.**,org.w3._2001.xmlschema</Export-Package>
-            <Import-Package>*</Import-Package>
-          </instructions>
-        </configuration>
-        <executions> 
-          <execution> 
-            <id>bundle-manifest</id> 
-            <phase>process-classes</phase> 
-            <goals> 
-              <goal>manifest</goal> 
-            </goals> 
-          </execution> 
-        </executions> 
-      </plugin>
-
       <plugin>
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>0.13.2</version>
+        <version>0.14.0</version>
         <executions>
           <execution>
             <goals>

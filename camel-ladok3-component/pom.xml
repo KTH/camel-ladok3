@@ -29,11 +29,11 @@
   <parent>
     <artifactId>ladok3</artifactId>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
-    <version>1.40.1</version>
+    <version>3.0.1</version>
   </parent>
 
   <artifactId>camel-ladok3-component</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
 
   <name>Camel Ladok3 Component</name>
   <description>The Ladok3 Endpoint Component</description>
@@ -48,7 +48,7 @@
     <dependency>
       <groupId>com.rometools</groupId>
       <artifactId>rome</artifactId>
-      <version>1.7.4</version>
+      <version>1.12.2</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -60,6 +60,12 @@
       <artifactId>ladok3-model</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-support</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+
 
     <dependency>
       <groupId>org.apache.cxf</groupId>
@@ -138,30 +144,6 @@
             <phase>prepare-package</phase>
           </execution>
         </executions>
-      </plugin>
-
-      <!-- to generate the MANIFEST-FILE of the bundle -->
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <version>2.3.7</version>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Embed-Dependency>rome</Embed-Dependency>
-            <Bundle-SymbolicName>se.kth.infosys.smx.camel-ladok3-component</Bundle-SymbolicName>
-            <Export-Service>org.apache.camel.spi.ComponentResolver;component=ladok3</Export-Service>
-          </instructions>
-        </configuration>
-        <executions> 
-          <execution> 
-            <id>bundle-manifest</id> 
-            <phase>process-classes</phase> 
-            <goals> 
-              <goal>manifest</goal> 
-            </goals> 
-          </execution> 
-        </executions> 
       </plugin>
     </plugins>
   </build>

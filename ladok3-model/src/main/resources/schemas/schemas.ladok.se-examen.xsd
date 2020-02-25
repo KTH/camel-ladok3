@@ -235,8 +235,17 @@
 
   <xs:complexType name="BevisbenamningEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras vid ändringar av en bevisbenämning. Händelsen kan via attributet Händelsetyp avse SKAPAD, UPPDATERAD eller
-BORTTAGEN.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En bevisbenämning skapas eller ändras.
+Innehåller information om:
+- Redigerad bevisbenämning - Märkningsvärden
+Innehåller referenser till:
+- Nationell bevistyp
+Konsekvenser för verksamheten:
+- Ändringar på befintliga bevisbenämningar kan påverka pågående bevisärenden
+- Skapade bevisbenämningar blir möjliga att använda i utfärdande av bevis
+Övrigt:
+- ...]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -257,7 +266,17 @@ BORTTAGEN.]]></xs:documentation>
 
   <xs:complexType name="MarkningEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras vid ändring av en märkning.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En märkning skapas eller ändras
+Innehåller information om:
+- Redigerad märkning, inklusive märkningstyp
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+- Redigerad märkning kan refereras från bevisbenämningar
+Övrigt:
+- Märkning är en form av kategorisering av bevis som beslutas på nationell nivå och således kan uppföljas på över alla lärosäten. De
+märkningstyper som stöds just nu är NivåInomStudieordning, Beviskategori och Nationell examenskod]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -270,8 +289,19 @@ BORTTAGEN.]]></xs:documentation>
 
   <xs:complexType name="NationellBevistypEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras vid ändring av en nationell bevistyp. Händelsen kan via attributet Händelsetyp avse SKAPAD, UPPDATERAD eller
-BORTTAGEN.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En nationell bevistyp skapas eller ändras.
+Innehåller information om:
+- Redigerad nationell bevistyp.
+- Om nationell bevistyp avser examensbevis eller bevis för genomförd utbildning
+- Preciseringsmöjligheter
+Innehåller referenser till:
+- Studieordning inom vilken den nationella bevistypen gäller
+- Kompatibla utbildningstyper
+Konsekvenser för verksamheten:
+- Nationell bevistyp blir möjlig att välja/referera från bevisbenämningar och därmed för utfärdade bevis
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -337,7 +367,22 @@ BORTTAGEN.]]></xs:documentation>
 
   <xs:complexType name="PreciseringEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras vid ändring av en precisering.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelse som publiceras vid ändring av en precisering.
+Händelsen publiceras när:
+- En precisering skapas eller ändras
+Innehåller information om:
+- Redigerad precisering, inklusive preciseringstyp
+- Märkningsvärden
+Innehåller referenser till:
+- Preciseringsgruppering
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Preciseringar används för att kategorisera utfärdade bevis på lokal nivå. T.ex. kan ett examensbevis märkas med Huvudområde och
+Huvudområdesinriktning, men för att ta höjd för fler typer av preciseringar använder vi inte dessa konkreta begrepp utan talar om
+olika Preciseringstyper. Ladok måste kunna hantera många olika studieordningar och utbildningsformer och ta hänsyn till lokala
+önskemål - därför är det inte lämpligt att hårdkoda preciseringsbegrepp utan lämna vilka preciseringstyper som ska finnas så öppet
+som möjligt för framtida krav.]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
@@ -352,7 +397,17 @@ BORTTAGEN.]]></xs:documentation>
 
   <xs:complexType name="PreciseringstypUtbyttEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Event som representerar ett byte av preciseringstyp, dvs när en gammal preciseringstyp som ska sluta användas ska ersättas av en ny.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- En gammal inaktuell preciseringstyp har ersatts av en ny aktuell typ, dvs när en gammal preciseringstyp som ska sluta användas ska
+ersättas av en ny.
+Innehåller information om:
+-
+Innehåller referenser till:
+- Gammal/inaktuell preciseringstyp, samt ny/ersättande preciseringstyp
+Konsekvenser för verksamheten:
+-
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -365,6 +420,9 @@ BORTTAGEN.]]></xs:documentation>
   </xs:complexType>
 
   <xs:complexType name="IngaendePartEventPart">
+<xs:annotation>
+<xs:documentation><![CDATA[Information om ingående lärosäte och extern part]]></xs:documentation>
+</xs:annotation>
     <xs:sequence>
       <xs:element name="AdministrerandeLarosate" type="xs:boolean"/>
       <xs:element minOccurs="0" name="IngaendeExternPartID" type="xs:int"/>
@@ -374,7 +432,16 @@ BORTTAGEN.]]></xs:documentation>
 
   <xs:complexType name="UtfardatBevisBorttagetEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett utfärdat bevis av någon anledning tas bort.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett utfärdat bevis av någon anledning tas bort, t.ex. i samband med registervård.
+Innehåller information om:
+- Det utfärdade beviset som ska tas bort
+Innehåller referenser till:
+-
+Konsekvenser för verksamheten:
+-
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ex:UtfardatBevisEvent">
@@ -385,7 +452,17 @@ BORTTAGEN.]]></xs:documentation>
 
   <xs:complexType name="UtfardatBevisEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett bevis utfärdas.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelse som publiceras när ett bevis utfärdas.
+Händelsen publiceras när:
+- ett bevis utfärdas
+Innehåller information om:
+- Det utfärdade beviset, t.ex. preciseringar, omfattning, resultat- och meritlistor, tillgodoräknanden, datum, etc.
+Innehåller referenser till:
+- Student, nationell bevistyp, bevisbenämning, utbildningssamarbete etc.
+Konsekvenser för verksamheten:
+-
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -430,7 +507,19 @@ BORTTAGEN.]]></xs:documentation>
 
   <xs:complexType name="UtfardatBevisNyNationellBevistypEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett utfärdat bevis byter till en ny nationell bevistyp.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Man vid registervård har ändrat nationell bevistyp på en bevisbenämning. Detta får konsekvensen att alla utfärdade bevis med denna
+bevisbenämning får en händelse för att korrigera nationell bevistyp.
+Innehåller information om:
+- Det sedan tidigare utfärdade beviset, nu med korrekt nationell bevistyp
+Innehåller referenser till:
+- Se basklass.
+Konsekvenser för verksamheten:
+- Rättning av sedan tidigare utfärdade bevis bör uppdateras i de system som sparat information om bevisens nationella bevistyp.
+Övrigt:
+- Sker normalt i samband med registervård.
+- Man kan som integratör välja att istället konsumera händelsen BevisbenamningEvent och tolka ändringar av nationell bevistyp där
+(och tillämpa på alla utfärdade bevis) istället för att konsumera denna händelsetyp.]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ex:UtfardatBevisEvent">
@@ -441,7 +530,16 @@ BORTTAGEN.]]></xs:documentation>
 
   <xs:complexType name="UtfardatBevisRattatEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett utfärdat bevis av någon anledning behöver rättas i efterhand.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett utfärdat bevis av någon anledning behöver rättas i efterhand.
+Innehåller information om:
+- Ett sedan tidigare utfärdat bevis som nu fått nya uppgifter.
+Innehåller referenser till:
+- Se UtfardatBevisEvent
+Konsekvenser för verksamheten:
+-
+Övrigt:
+- Används vid registervård]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ex:UtfardatBevisEvent">
@@ -452,7 +550,18 @@ BORTTAGEN.]]></xs:documentation>
 
   <xs:complexType name="UtfardatBevisUppdateradEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett utfärdat bevis uppdateras.]]></xs:documentation>
+<xs:documentation><![CDATA[(deprecated): Användes tidigare, men har ersatts av UtfärdatBevisRättatEvent
+            Händelsen publiceras när:
+            - Ändring av utfärdat bevis gjorts
+            Innehåller information om:
+            - Se basklass.
+            Innehåller referenser till:
+            - Se basklass.
+            Konsekvenser för verksamheten:
+            - Det kan förekomma äldre händelser av denna typ i gamla feeds, och det kan vara aktuellt att ta hand om dessa vid
+            återläsning av gamla händelser.
+            Övrigt:
+            - Händelsen ska inte längre publiceras.]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="ex:UtfardatBevisEvent">
@@ -463,7 +572,16 @@ BORTTAGEN.]]></xs:documentation>
 
   <xs:complexType name="UtfardadKursbevisEvent">
 <xs:annotation>
-<xs:documentation><![CDATA[Händelse som publiceras när ett kursbevis utfärdas.]]></xs:documentation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+- Ett kursbevis utfärdas.
+Innehåller information om:
+- Kursbetyg som ingår i beviset, datum för utfärande, handläggare
+Innehåller referenser till:
+- Student
+Konsekvenser för verksamheten:
+-
+Övrigt:
+-]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="events:BaseEvent">
@@ -1628,6 +1746,8 @@ beviskombination och förvalda kursresultat.]]></xs:documentation>
     <xs:sequence>
       <xs:element minOccurs="0" name="datumPeriod" type="base:Datumperiod"/>
       <xs:element minOccurs="0" name="fritext" type="xs:string"/>
+      <xs:element minOccurs="0" name="kurspaketeringsinstansUID" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="onskadeUtbildningar" type="xs:string"/>
       <xs:element minOccurs="0" name="sprakkod" type="xs:string"/>
       <xs:element name="visaBetygsfordelning" type="xs:boolean"/>
       <xs:element name="visaEndastAvklaradeKurser" type="xs:boolean"/>
