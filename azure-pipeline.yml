@@ -1,0 +1,24 @@
+trigger:
+  - camel3
+  
+pool:
+    vmImage: 'ubuntu-latest'
+  
+steps:
+  - task: MavenAuthenticate@0
+    displayName: Authenticate to Azure Artifacts 
+    inputs:
+      artifactsFeeds: 'integration'
+      
+  - task: Maven@3
+    displayName: Run Maven Deploy 
+    inputs:
+      mavenPomFile: 'pom.xml'
+      mavenOptions: '-Xmx3072m'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.11'
+      jdkArchitectureOption: 'x64'
+      publishJUnitResults: true
+      checkStyleRunAnalysis: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      goals: 'deploy'
