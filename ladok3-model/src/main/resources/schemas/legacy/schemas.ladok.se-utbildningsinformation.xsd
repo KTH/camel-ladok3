@@ -327,6 +327,10 @@
 
   <xs:element name="UtbildningstillfalleAteraktiveratEvent" type="ui:UtbildningstillfalleAteraktiveratEvent"/>
 
+  <xs:element name="UtbildningstillfalleAvgransning" type="ui:UtbildningstillfalleAvgransning"/>
+
+  <xs:element name="UtbildningstillfalleAvgransningar" type="ui:UtbildningstillfalleAvgransningar"/>
+
   <xs:element name="UtbildningstillfalleBorttagetEvent" type="ui:UtbildningstillfalleBorttagetEvent"/>
 
   <xs:element name="UtbildningstillfalleInstalltEvent" type="ui:UtbildningstillfalleInstalltEvent"/>
@@ -334,6 +338,8 @@
   <xs:element name="UtbildningstillfalleProjektion" type="ui:UtbildningstillfalleProjektion"/>
 
   <xs:element name="UtbildningstillfalleProjektionLista" type="ui:UtbildningstillfalleProjektionLista"/>
+
+  <xs:element name="Utbildningstillfallefraga" type="ui:Utbildningstillfallefraga"/>
 
   <xs:element name="Utbildningstillfallekonkretisering" type="ui:Utbildningstillfallekonkretisering"/>
 
@@ -3139,6 +3145,31 @@ attributen för en utbildningsinstansen, dvs. kod, benämningar och versionsinfo
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="UtbildningstillfalleAvgransning">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UtbildningstillfalleAvgransningstyp" type="ui:UtbildningstillfalleAvgransningstyp"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="UtbildningstillfalleAvgransningsvarden" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UtbildningstillfalleAvgransningar">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="UtbildningstillfalleAvgransningar" type="ui:UtbildningstillfalleAvgransning"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Utbildningstillfallefraga">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="ui:UtbildningstillfalleAvgransningar"/>
+          <xs:element name="Sida" type="xs:int"/>
+          <xs:element name="Sidstorlek" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:simpleType name="BoxtypEventPart">
     <xs:restriction base="xs:string">
       <xs:enumeration value="UTBILDNING"/>
@@ -3226,6 +3257,21 @@ attributen för en utbildningsinstansen, dvs. kod, benämningar och versionsinfo
     <xs:restriction base="xs:string">
       <xs:enumeration value="SingelVarde"/>
       <xs:enumeration value="MultiVarde"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="UtbildningstillfalleAvgransningstyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AKTUELLVERSION"/>
+      <xs:enumeration value="BENAMNING"/>
+      <xs:enumeration value="ORGANISATIONUID"/>
+      <xs:enumeration value="STUDIEORDNINGID"/>
+      <xs:enumeration value="STUDIEPERIOD"/>
+      <xs:enumeration value="UTBILDNINGSKOD"/>
+      <xs:enumeration value="UTBILDNINGSTILLFALLESKOD"/>
+      <xs:enumeration value="UTBILDNINGSTILLFALLESTYPID"/>
+      <xs:enumeration value="UTBILDNINGSTYPID"/>
+      <xs:enumeration value="STATUS"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

@@ -191,6 +191,10 @@
 
   <xs:element name="KopieraStudieresultatskandidatLista" type="rr:KopieraStudieresultatskandidatLista"/>
 
+  <xs:element name="KursRedoForResultatPaHelKurs" type="rr:KursRedoForResultatPaHelKurs"/>
+
+  <xs:element name="KurserRedoForResultatPaHelKurs" type="rr:KurserRedoForResultatPaHelKurs"/>
+
   <xs:element name="Kursinstansavisering" type="rr:Kursinstansavisering"/>
 
   <xs:element name="Kursinstansaviseringar" type="rr:Kursinstansaviseringar"/>
@@ -326,10 +330,6 @@
   <xs:element name="ResultatPaUtbildning" type="rr:ResultatPaUtbildning"/>
 
   <xs:element name="ResultatPaUtbildningTillStatusEvent" type="rr:ResultatPaUtbildningTillStatusEvent"/>
-
-  <xs:element name="ResultatStartsidaKurstillfalleMedKlarmarkeradeEllerFlaggadeRepresentation" type="rr:ResultatStartsidaKurstillfalleMedKlarmarkeradeEllerFlaggadeRepresentation"/>
-
-  <xs:element name="ResultatStartsidaKurstillfalleMedKlarmarkeradeEllerListaFlaggadeRepresentation" type="rr:ResultatStartsidaKurstillfalleMedKlarmarkeradeEllerFlaggadeListaRepresentation"/>
 
   <xs:element name="ResultatStartsideaktivitetstillfalle" type="rr:ResultatStartsideaktivitetstillfalle"/>
 
@@ -3031,6 +3031,7 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
           <xs:element maxOccurs="unbounded" minOccurs="0" name="AnvandareSomKlarmarkeratIKlarmarkering" type="rr:AnvandareSomKlarmarkerat"/>
           <xs:element name="AviseradTillInloggadAnvandare" type="xs:boolean"/>
           <xs:element minOccurs="0" name="DatumForForstaKlarmarkering" type="xs:string"/>
+          <xs:element name="GallerResultatFlaggatForBorttag" type="xs:boolean"/>
           <xs:element name="GallerAndringAvAttesteratResultat" type="xs:boolean"/>
           <xs:element minOccurs="0" name="Kontext" type="rr:Klarmarkeringskontext"/>
         </xs:sequence>
@@ -3901,6 +3902,24 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="KurserRedoForResultatPaHelKurs">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:KursRedoForResultatPaHelKurs"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="KursRedoForResultatPaHelKurs">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AntalRedoForKursresultat" type="xs:int"/>
+          <xs:element minOccurs="0" name="Kursinstans" type="rr:Utbildningsinstans"/>
+          <xs:element maxOccurs="unbounded" name="KurstillfalleUIDer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="Attesteringsinformation">
     <xs:complexContent>
       <xs:extension base="dap:Base">
@@ -4207,8 +4226,6 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
 
   <xs:complexType name="AttGoraPaKurstillfalle">
     <xs:sequence>
-      <xs:element minOccurs="0" name="AntalForbereddaForBorttag" type="xs:int"/>
-      <xs:element minOccurs="0" name="AntalRedoForAttestering" type="xs:int"/>
       <xs:element minOccurs="0" name="AntalRedoForKursresultat" type="xs:int"/>
       <xs:element minOccurs="0" name="KurstillfalleUID" type="xs:string"/>
     </xs:sequence>
@@ -4236,7 +4253,6 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="AttGoraUtanforVersion" type="rr:AttGoraUtanforAktuellVersion"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:AttGoraPaKurstillfalle"/>
           <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="Enhet" type="xs:string"/>
@@ -4283,28 +4299,6 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="ResultatStartsidaKurstillfalleMedKlarmarkeradeEllerFlaggadeListaRepresentation">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="KurstillfallenMedKlarmarkeradeEllerFlaggade" type="rr:ResultatStartsidaKurstillfalleMedKlarmarkeradeEllerFlaggadeRepresentation"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="ResultatStartsidaKurstillfalleMedKlarmarkeradeEllerFlaggadeRepresentation">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element name="HarFlaggadeResultat" type="xs:boolean"/>
-          <xs:element name="HarKlarmarkeradeResultat" type="xs:boolean"/>
-          <xs:element minOccurs="0" ref="rr:Kurstillfalle"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="ResultatStartsideaktivitetstillfalle">
     <xs:complexContent>
       <xs:extension base="dap:Base">
@@ -4312,7 +4306,6 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
           <xs:element minOccurs="0" name="AktivitetstillfalleUID" type="xs:string"/>
           <xs:element minOccurs="0" name="Anmalningsperiod" type="base:Datumperiod"/>
           <xs:element minOccurs="0" name="Anonymt" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="AntalRedoForAttestering" type="xs:int"/>
           <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="Datumperiod" type="base:Datumperiod"/>
           <xs:element minOccurs="0" name="Ort" type="xs:string"/>
@@ -4361,8 +4354,6 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" name="AntalForbereddaForBorttag" type="xs:int"/>
-          <xs:element minOccurs="0" name="AntalRedoForAttestering" type="xs:int"/>
           <xs:element minOccurs="0" name="AntalRedoForResultatPaKurs" type="xs:int"/>
           <xs:element name="AvserAvveckladKurs" type="xs:boolean"/>
           <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>

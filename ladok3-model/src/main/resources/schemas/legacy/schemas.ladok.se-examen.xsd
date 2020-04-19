@@ -7,9 +7,9 @@
 
   <xs:import namespace="http://schemas.ladok.se/dap" schemaLocation="schemas.ladok.se-dap.xsd"/>
 
-  <xs:import namespace="http://schemas.ladok.se/attestering" schemaLocation="schemas.ladok.se-at.xsd"/>
-
   <xs:import namespace="http://schemas.ladok.se/arendestod" schemaLocation="schemas.ladok.se-ar.xsd"/>
+
+  <xs:import namespace="http://schemas.ladok.se/attestering" schemaLocation="schemas.ladok.se-at.xsd"/>
 
   <xs:element name="AndraMeriter" type="ex:AndraMeriter"/>
 
@@ -1539,7 +1539,7 @@ det huvudområdet.]]></xs:documentation>
 beviskombination och förvalda kursresultat.]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="dap:Base">
+      <xs:extension base="ar:Ansokan">
         <xs:sequence>
           <xs:element minOccurs="0" name="BeviskombinationUID" type="xs:string"/>
           <xs:element minOccurs="0" name="Fritext" type="xs:string"/>
