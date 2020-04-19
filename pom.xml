@@ -26,7 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.kth.infosys.smx.ladok3</groupId>
   <artifactId>ladok3</artifactId>
-  <version>1.45.1</version>
+  <version>1.46.1</version>
   <packaging>pom</packaging>
 
   <name>KTH Ladok3 Integration</name>
@@ -35,14 +35,14 @@
 
   <distributionManagement>
     <repository>
-      <id>dev-azure-com-kth-integration-integration</id>
+      <id>kth-integration</id>
       <url>https://pkgs.dev.azure.com/kth-integration/_packaging/integration/maven/v1</url>
     </repository>
   </distributionManagement>
 
   <repositories>
     <repository>
-      <id>dev-azure-com-kth-integration-integration</id>
+      <id>kth-integration</id>
       <url>https://pkgs.dev.azure.com/kth-integration/_packaging/integration/maven/v1</url>
       <releases>
         <enabled>true</enabled>
