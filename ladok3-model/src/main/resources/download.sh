@@ -1,5 +1,8 @@
 #!/bin/bash
 
+files=legacy
+#files=files
+
 function fail() {
     echo $*
     echo
@@ -26,7 +29,7 @@ if [ ! -z "$3" ]; then
     mkdir -p "$3"
 fi
 
-for url in $(cat files); do
+for url in $(cat ${files}); do
     file=${url##*/}
     curl -b "${cookie}" $url -o ${3:-.}/$file
 done
