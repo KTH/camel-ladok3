@@ -39,6 +39,8 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.camel.support.ScheduledPollConsumer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -66,6 +68,8 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
   private static final String SCHEMA_BASE_URL = "http://schemas.ladok.se/";
   private static final String FIRST_FEED_FORMAT = "https://%s/handelser/feed/first";
   private static final String LAST_FEED_FORMAT = "https://%s/handelser/feed/recent";
+  private static final Logger LOG = LoggerFactory.getLogger(Ladok3Consumer.class);
+
 
   private final Ladok3Endpoint endpoint;
   private final DocumentBuilder builder;
@@ -83,7 +87,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
   /*
     * Will fetch and handle one Ladok3 feed each poll until we are the last feed.
     * Handles any unread events for the last feed for each poll.
-    * 
+    *
     * @see org.apache.camel.impl.ScheduledPollConsumer#poll()
     */
   @Override
@@ -131,7 +135,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     doControlExchange(feed, false);
     messageCount++;
 
-    log.debug("Consumed Ladok ATOM feed {} up to id {}", feed.getURL(), endpoint.getLastEntry());
+    LOG.debug("Consumed Ladok ATOM feed {} up to id {}", feed.getURL(), endpoint.getLastEntry());
 
     if (feed.isLast()) {
       endpoint.setNextURL(feed.getURL());
@@ -221,9 +225,9 @@ private void doControlExchange(final Ladok3Feed feed, final boolean start) throw
   }
 
   /*
-    * Get the latest feed not yet completed. Will return the first URL if no 
+    * Get the latest feed not yet completed. Will return the first URL if no
     * events have been read, last known URL if any, or search for the feed from
-    * the most recent to the one containing the last known event. The latter may 
+    * the most recent to the one containing the last known event. The latter may
     * take a *lot* of time if the consumer is not run regularly.
     */
   private Ladok3Feed getLastUnreadFeed() throws IOException, FeedException {
@@ -272,7 +276,7 @@ private void doControlExchange(final Ladok3Feed feed, final boolean start) throw
         * Create the feed from the URL.
         */
       public Ladok3Feed(final URL url) throws IOException, IllegalArgumentException, FeedException {
-        log.debug("fetching feed: {}", url);
+        LOG.debug("fetching feed: {}", url);
         XmlReader reader = new XmlReader(endpoint.get(url));
         SyndFeedInput input = new SyndFeedInput();
 
@@ -325,7 +329,7 @@ private void doControlExchange(final Ladok3Feed feed, final boolean start) throw
       }
 
       /*
-        * Get the link with specified rel label "next-archive", "prev-archive", etc, 
+        * Get the link with specified rel label "next-archive", "prev-archive", etc,
         * or null if the link does not exist.
         */
       public URL getLink(final String rel) throws MalformedURLException {
