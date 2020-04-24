@@ -30,6 +30,8 @@ import se.ladok.schemas.kataloginformation.Anvandarbehorighetsstatus;
 import se.ladok.schemas.kataloginformation.Anvandare;
 import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
+import se.ladok.schemas.kataloginformation.OrganisationLista;
+
 
 /**
  * Interface representing the Ladok kataloginformation service.
@@ -44,7 +46,7 @@ public interface KataloginformationService extends Ladok3Service {
 
     /**
      * Create a user.
-     * 
+     *
      * @param anvandare The user object.
      * @return The created user.
      */
@@ -52,7 +54,7 @@ public interface KataloginformationService extends Ladok3Service {
 
     /**
      * Update a user.
-     * 
+     *
      * @param anvandare The user object.
      * @return The updated user.
      */
@@ -60,7 +62,7 @@ public interface KataloginformationService extends Ladok3Service {
 
     /**
      * Retrieve Anvandarinformation for a user (anvandare) given its UID.
-     * 
+     *
      * @param uid The unique identifier for the user.
      * @return The user information matching the UID
      */
@@ -68,7 +70,7 @@ public interface KataloginformationService extends Ladok3Service {
 
     /**
      * Create Anvandarinformation for a user (anvandare).
-     * 
+     *
      * @param anvandarinformation the user information object.
      * @return The resulting user information.
      */
@@ -76,19 +78,19 @@ public interface KataloginformationService extends Ladok3Service {
 
     /**
      * Update Anvandarinformation for a user (anvandare).
-     * 
+     *
      * @param anvandarinformation the user information object.
      * @return The resulting user information.
      */
     public Anvandarinformation updateAnvandarinformation(final Anvandarinformation anvandarinformation);
 
     /**
-     * Calls /anvandare with query parameters as specified in the params Map. 
+     * Calls /anvandare with query parameters as specified in the params Map.
      * See Ladok REST documentation for more information about parameters.
-     * 
+     *
      * NOTE: the list of Anvandare does not contain all information, to retrieve
      * all information about Anvandare, use anvandare(final String uid)
-     * 
+     *
      * <pre>
      * {@code
      * Map<String, Object> params = new HashMap<String, Object>();
@@ -97,8 +99,8 @@ public interface KataloginformationService extends Ladok3Service {
      *     katatlogInformationService.anvandareFiltrerade(params);
      * }
      * </pre>
-     * 
-     * Objects passed as values will be rendered into parameters using their 
+     *
+     * Objects passed as values will be rendered into parameters using their
      * toString() method.
      *
      * @param params A map between parameter strings and their object values.
@@ -107,9 +109,9 @@ public interface KataloginformationService extends Ladok3Service {
     public AnvandareLista anvandare(final Map<String, Object> params);
 
     /**
-     * Calls /anvandare/filtrerade with query parameters as specified in the params Map. 
+     * Calls /anvandare/filtrerade with query parameters as specified in the params Map.
      * See Ladok REST documentation for more information about parameters.
-     * 
+     *
      * <pre>
      * {@code
      * Map<String, Object> params = new HashMap<String, Object>();
@@ -118,13 +120,15 @@ public interface KataloginformationService extends Ladok3Service {
      *     katatlogInformationService.anvandareFiltrerade(params);
      * }
      * </pre>
-     * 
-     * Objects passed as values will be rendered into parameters using their 
+     *
+     * Objects passed as values will be rendered into parameters using their
      * toString() method.
      *
      * @param params A map between parameter strings and their object values.
      * @return The search result.
      */
     public AnvandareLista anvandareFiltrerade(final Map<String, Object> params);
+
+    public OrganisationLista organisationLista();
 
 }

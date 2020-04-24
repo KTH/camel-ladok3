@@ -15,6 +15,7 @@ import se.kth.infosys.ladok3.KataloginformationServiceImpl;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.kataloginformation.Anvandare;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
+import se.ladok.schemas.kataloginformation.OrganisationLista;
 
 public class Ladok3KataloginformationServiceWrapper implements Ladok3ServiceWrapper {
   private static final Logger log = LoggerFactory.getLogger(Ladok3KataloginformationServiceWrapper.class);
@@ -26,7 +27,8 @@ public class Ladok3KataloginformationServiceWrapper implements Ladok3ServiceWrap
                   "filtrera|" +
                   "anvandarinformation|" +
                   "createAnvandarinformation|" +
-                  "updateAnvandarinformation" +
+                  "updateAnvandarinformation|" +
+                  "organisation" +
                   "))+.*");
 
   private final KataloginformationService service;
@@ -67,6 +69,9 @@ public class Ladok3KataloginformationServiceWrapper implements Ladok3ServiceWrap
       case "updateAnvandarinformation":
           handleUpdateAnvandarinformationRequest(exchange);
           break;
+      case "organisation":
+        handleGetOrganisationRequest(exchange);
+        break;
       default:
           throw new CamelExchangeException("Unupported operation: %s" + operation, exchange);
       }
@@ -140,6 +145,12 @@ public class Ladok3KataloginformationServiceWrapper implements Ladok3ServiceWrap
     exchange.getIn().setBody(fromLadok);
   }
 
+  private void handleGetOrganisationRequest(final Exchange exchange) throws Exception {
+
+    log.debug("Getting organisation information");
+    final OrganisationLista fromLadok = service.organisationLista();
+    exchange.getIn().setBody(fromLadok);
+  }
   private String currentOperation(final Exchange exchange) throws Exception {
     if (pathOperation != null && ! pathOperation.isEmpty()) {
       return pathOperation;

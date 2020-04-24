@@ -26,7 +26,7 @@ package se.kth.infosys.ladok3;
 import se.ladok.schemas.kataloginformation.Anvandare;
 import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
-
+import se.ladok.schemas.kataloginformation.OrganisationLista;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -160,6 +160,15 @@ public class KataloginformationServiceImpl extends AbstractLadok3Service impleme
                 .request()
                 .accept(SERVICE_TYPE)
                 .get(AnvandareLista.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public OrganisationLista organisationLista() {
+        WebTarget request = target.path("/organisation");
+
+        return request.request().accept(SERVICE_TYPE).get(OrganisationLista.class);
     }
 
 }
