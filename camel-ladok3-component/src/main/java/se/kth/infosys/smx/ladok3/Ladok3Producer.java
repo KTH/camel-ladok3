@@ -28,12 +28,11 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.camel.Exchange;
 import org.apache.camel.support.DefaultProducer;
 import org.apache.camel.support.ExchangeHelper;
-import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.kth.infosys.smx.ladok3.internal.Ladok3KataloginformationServiceWrapper;
 import se.kth.infosys.smx.ladok3.internal.Ladok3ServiceWrapper;
 import se.kth.infosys.smx.ladok3.internal.Ladok3StudentInformationServiceWrapper;
@@ -50,7 +49,8 @@ public class Ladok3Producer extends DefaultProducer {
   // of "supported" services in the HashMap apis.
 
   private static final Pattern API_PATTERN = Pattern.compile("(^/(?<api>[a-zA-Z]*))+.*");
-  private static final HashMap<String, Ladok3ServiceWrapper> services = new HashMap<String, Ladok3ServiceWrapper>();
+
+  private final HashMap<String, Ladok3ServiceWrapper> services = new HashMap<String, Ladok3ServiceWrapper>();
 
   public Ladok3Producer(Ladok3Endpoint endpoint) throws Exception {
     super(endpoint);

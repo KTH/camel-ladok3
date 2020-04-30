@@ -3,35 +3,9 @@
 
   <xs:import namespace="http://schemas.ladok.se/events" schemaLocation="schemas.ladok.se-events.xsd"/>
 
-  <xs:element name="DokumentkonfigurationEvent" type="dok:DokumentkonfigurationEvent"/>
-
   <xs:element name="DokumentmallEvent" type="dok:DokumentmallEvent"/>
 
   <xs:element name="DokumentmallParameter" type="dok:DokumentmallParameter"/>
-
-  <xs:complexType name="DokumentkonfigurationEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Event för en skapad eller uppdaterad Dokumentkonfiguration]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:grunddataBaseEvent">
-        <xs:sequence>
-          <xs:element name="DokumentmallID" type="xs:int"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="DokumentmallParametrar" type="dok:DokumentmallParameter"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="DokumentmallParameter">
-<xs:annotation>
-<xs:documentation><![CDATA[Del av event som innehåller information om en dokumentparameter]]></xs:documentation>
-</xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Nyckel" type="xs:string"/>
-      <xs:element minOccurs="0" name="Varde" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
 
   <xs:complexType name="DokumentmallEvent">
 <xs:annotation>
@@ -46,5 +20,15 @@
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DokumentmallParameter">
+<xs:annotation>
+<xs:documentation><![CDATA[Del av event som innehåller information om en dokumentparameter]]></xs:documentation>
+</xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Nyckel" type="xs:string"/>
+      <xs:element minOccurs="0" name="Varde" type="xs:string"/>
+    </xs:sequence>
   </xs:complexType>
 </xs:schema>

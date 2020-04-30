@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:base="http://schemas.ladok.se" xmlns:dap="http://schemas.ladok.se/dap" xmlns:events="http://schemas.ladok.se/events" xmlns:ui="http://schemas.ladok.se/utbildningsinformation" elementFormDefault="qualified" targetNamespace="http://schemas.ladok.se/utbildningsinformation" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:base="http://schemas.ladok.se" xmlns:dap="http://schemas.ladok.se/dap" xmlns:ui="http://schemas.ladok.se/utbildningsinformation" elementFormDefault="qualified" targetNamespace="http://schemas.ladok.se/utbildningsinformation" version="1.0">
 
   <xs:import namespace="http://schemas.ladok.se" schemaLocation="schemas.ladok.se.xsd"/>
 
-  <xs:import namespace="http://schemas.ladok.se/events" schemaLocation="schemas.ladok.se-events.xsd"/>
-
   <xs:import namespace="http://schemas.ladok.se/dap" schemaLocation="schemas.ladok.se-dap.xsd"/>
-
-  <xs:element name="AbstraktStrukturEvent" type="ui:AbstraktStrukturEvent"/>
 
   <xs:element name="Amnesgrupp" type="ui:Amnesgrupp"/>
 
@@ -50,14 +46,6 @@
   <xs:element name="Bevisbenamningar" type="ui:Bevisbenamningar"/>
 
   <xs:element name="Box" type="ui:Box"/>
-
-  <xs:element name="BoxBorttagenEvent" type="ui:BoxBorttagenEvent"/>
-
-  <xs:element name="BoxEvent" type="ui:BoxEvent"/>
-
-  <xs:element name="BoxEventPart" type="ui:BoxEventPart"/>
-
-  <xs:element name="BoxPubliceradEvent" type="ui:BoxPubliceradEvent"/>
 
   <xs:element name="BytStatusPaUtbildningstillfalleUnderlag" type="ui:BytStatusPaUtbildningstillfalleUnderlag"/>
 
@@ -115,24 +103,6 @@
 
   <xs:element name="Kunskapsoverlappning" type="ui:Kunskapsoverlappning"/>
 
-  <xs:element name="KunskapsoverlappningEvent" type="ui:KunskapsoverlappningEvent"/>
-
-  <xs:element name="KursTillStatusEvent" type="ui:KursTillStatusEvent"/>
-
-  <xs:element name="KursUppdateradEvent" type="ui:KursUppdateradEvent"/>
-
-  <xs:element name="KurspaketeringTillStatusEvent" type="ui:KurspaketeringTillStatusEvent"/>
-
-  <xs:element name="KurspaketeringUppdateradEvent" type="ui:KurspaketeringUppdateradEvent"/>
-
-  <xs:element name="KurspaketeringstillfalleTillStatusEvent" type="ui:KurspaketeringstillfalleTillStatusEvent"/>
-
-  <xs:element name="KurspaketeringstillfalleUppdateratEvent" type="ui:KurspaketeringstillfalleUppdateratEvent"/>
-
-  <xs:element name="KurstillfalleTillStatusEvent" type="ui:KurstillfalleTillStatusEvent"/>
-
-  <xs:element name="KurstillfalleUppdateratEvent" type="ui:KurstillfalleUppdateratEvent"/>
-
   <xs:element name="Land" type="ui:Land"/>
 
   <xs:element name="Lander" type="ui:Lander"/>
@@ -160,10 +130,6 @@
   <xs:element name="MisslyckadStatusAndringAvUtbildningstillfalle" type="ui:MisslyckadStatusAndringAvUtbildningstillfalle"/>
 
   <xs:element name="MisslyckadUtannonseringAvUtbildningstillfalle" type="ui:MisslyckadUtannonseringAvUtbildningstillfalle"/>
-
-  <xs:element name="ModulTillStatusEvent" type="ui:ModulTillStatusEvent"/>
-
-  <xs:element name="ModulUppdateradEvent" type="ui:ModulUppdateradEvent"/>
 
   <xs:element name="NationellUtbildningsmall" type="ui:NationellUtbildningsmall"/>
 
@@ -204,10 +170,6 @@
   <xs:element name="StatusAndradForUtildningstillfallen" type="ui:StatusAndradForUtildningstillfallen"/>
 
   <xs:element name="Statuskonfiguration" type="ui:Statuskonfiguration"/>
-
-  <xs:element name="StrukturEvent" type="ui:StrukturEvent"/>
-
-  <xs:element name="StrukturIStatus2" type="ui:StrukturIStatus2"/>
 
   <xs:element name="Studielokalisering" type="ui:Studielokalisering"/>
 
@@ -253,8 +215,6 @@
 
   <xs:element name="UtannonseraUnderlag" type="ui:UtannonseraUnderlag"/>
 
-  <xs:element name="UtannonseraUtbildningstillfalleEvent" type="ui:UtannonseraUtbildningstillfalleEvent"/>
-
   <xs:element name="Utannonsering" type="ui:Utannonsering"/>
 
   <xs:element name="UtannonseringAvUtbildningstillfallen" type="ui:UtannonseringAvUtbildningstillfallen"/>
@@ -262,10 +222,6 @@
   <xs:element name="UtannonseringLista" type="ui:UtannonseringLista"/>
 
   <xs:element name="Utbildning" type="ui:Utbildning"/>
-
-  <xs:element name="UtbildningAteraktiveradEvent" type="ui:UtbildningAteraktiveradEvent"/>
-
-  <xs:element name="UtbildningAvveckladEvent" type="ui:UtbildningAvveckladEvent"/>
 
   <xs:element name="UtbildningLista" type="ui:UtbildningLista"/>
 
@@ -285,23 +241,15 @@
 
   <xs:element name="Utbildningsinstans" type="ui:Utbildningsinstans"/>
 
-  <xs:element name="UtbildningsinstansBorttagenEvent" type="ui:UtbildningsinstansBorttagenEvent"/>
-
   <xs:element name="UtbildningsinstansLista" type="ui:UtbildningsinstansLista"/>
 
   <xs:element name="UtbildningsinstansOchTillfalle" type="ui:UtbildningsinstansOchTillfalle"/>
 
-  <xs:element name="UtbildningsinstansPaUtbildningstillfalleAndradEvent" type="ui:UtbildningsinstansPaUtbildningstillfalleAndradEvent"/>
-
   <xs:element name="Utbildningsinstansbox" type="ui:Utbildningsinstansbox"/>
-
-  <xs:element name="UtbildningsinstansboxEventPart" type="ui:UtbildningsinstansboxEventPart"/>
 
   <xs:element name="Utbildningsinstansprojektioner" type="ui:Utbildningsinstansprojektioner"/>
 
   <xs:element name="Utbildningskonkretisering" type="ui:Utbildningskonkretisering"/>
-
-  <xs:element name="UtbildningsmallPubliceradEvent" type="ui:UtbildningsmallPubliceradEvent"/>
 
   <xs:element name="Utbildningsmallversion" type="ui:Utbildningsmallversion"/>
 
@@ -325,12 +273,6 @@
 
   <xs:element name="Utbildningstillfalle" type="ui:Utbildningstillfalle"/>
 
-  <xs:element name="UtbildningstillfalleAteraktiveratEvent" type="ui:UtbildningstillfalleAteraktiveratEvent"/>
-
-  <xs:element name="UtbildningstillfalleBorttagetEvent" type="ui:UtbildningstillfalleBorttagetEvent"/>
-
-  <xs:element name="UtbildningstillfalleInstalltEvent" type="ui:UtbildningstillfalleInstalltEvent"/>
-
   <xs:element name="UtbildningstillfalleProjektion" type="ui:UtbildningstillfalleProjektion"/>
 
   <xs:element name="UtbildningstillfalleProjektionLista" type="ui:UtbildningstillfalleProjektionLista"/>
@@ -340,8 +282,6 @@
   <xs:element name="Utbildningstillfallen" type="ui:Utbildningstillfallen"/>
 
   <xs:element name="Utbildningstillfallesbox" type="ui:Utbildningstillfallesbox"/>
-
-  <xs:element name="UtbildningstillfallesboxEventBox" type="ui:UtbildningstillfallesboxEventBox"/>
 
   <xs:element name="Utbildningstyp" type="ui:Utbildningstyp"/>
 
@@ -353,1006 +293,11 @@
 
   <xs:element name="Valbox" type="ui:Valbox"/>
 
-  <xs:element name="ValboxEventPart" type="ui:ValboxEventPart"/>
-
-  <xs:element name="ValjOmfattningRegelEventPart" type="ui:ValjOmfattningRegelEventPart"/>
-
   <xs:element name="ValjOmfattningRegelParametrar" type="ui:ValjOmfattningRegelParametrar"/>
-
-  <xs:element name="ValjXRegelEventPart" type="ui:ValjXRegelEventPart"/>
 
   <xs:element name="ValjXRegelParametrar" type="ui:ValjXRegelParametrar"/>
 
   <xs:element name="Versionsinformation" type="ui:Versionsinformation"/>
-
-  <xs:complexType name="KunskapsoverlappningEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En (kunskaps-)överlappning skapas eller ändras. EventTyp innehåller information om hur överlappningen ändrats,t.ex. "SKAPAD" eller
-"UPPDATERAD"
-Innehåller information om:
-- Överlappningen, inkl omfattningsvärde, kod, enhet, benämning och beskrivning etc.
-Innehåller referenser till:
-- Utbildningar som överlappar varandra
-Konsekvenser för verksamheten:
-- ...
-Övrigt:
-- Överlappning representerar en del av en utbildning som överlappar mellan två eller flera kurser. Man kan även se det som en kunskap
-som du kan tillgodogöra dig på mer än ett sätt, och som du därför inte får använda mer än en gång per examen. I gamla ladok använde
-man enbart begreppet "överlapp", utan att specificera exakt vad överlappet bestod i (mer än en omfattning).]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="Beskrivningar" type="base:Benamningar"/>
-          <xs:element name="EnhetID" type="xs:int"/>
-          <xs:element minOccurs="0" name="EventTyp" type="xs:string"/>
-          <xs:element minOccurs="0" name="Giltighetsperiod" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="Kod" type="xs:string"/>
-          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string"/>
-          <xs:element minOccurs="0" name="Uid" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningar">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="UtbildningUID" type="xs:string"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="UtbildningsattributbasEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Gemensam basklass för events för utbildningsinstanser och tillfällen]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="LokalMarkning" type="ui:LokalMarkningEventPart"/>
-          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
-          <xs:element name="Status" type="xs:int"/>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Attributvarde" type="ui:Utbildningsattributvarde"/>
-          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="UtbildningstypID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="LokalMarkningEventPart">
-    <xs:sequence>
-      <xs:element name="Markningsnyckel" type="xs:int"/>
-      <xs:element name="Markningsvarde" type="xs:int"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="Utbildningsattributvarde">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AttributdefinitionUID" type="xs:string"/>
-          <xs:element name="Grupp" type="xs:int"/>
-          <xs:element minOccurs="0" name="Namn" type="xs:string"/>
-          <xs:element minOccurs="0" name="Varde" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningsmallPubliceradEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[(Deprecated): Händelsen publiceras när:
-            - En lokal utbildningsmall publicerats och gjorts tillgänglig för användning vid upprättande av utbildningareller
-            tillfällen
-            Innehåller information om:
-            - ...
-            Innehåller referenser till:
-            - ...
-            Konsekvenser för verksamheten:
-            - ...
-            Övrigt:
-            - Utbildningsmallar betraktas som intern information i tjänsten Utbildningsinformation]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UtbildningsmallUID" type="xs:string"/>
-          <xs:element name="UtbildningstypID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="AbstraktStrukturEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En struktur för en utbildning eller utbildningstillfälle skapas eller ändras
-Innehåller information om:
-- Strukturens innehåll/boxar
-Innehåller referenser till:
-- Den utbildningsinstans eller utbildningstillfälle som "äger" strukturen, samt utbildningstyp (anger vilken utbildningtyp som är
-"ägare" till strukturen - antingen utbildningsinstans eller utbildningstillfälle).
-Konsekvenser för verksamheten:
-- Modellen för strukturer och boxar är kraftigt generaliserad för att kunna representera många olika behov av att representera
-innehåll i kurser, kurspaketeringar, kurstillfällen och kurspaketeringstillfällen (av olika typer, med olika regelverkt). Händelserna
-som har med detta att göra är främst anpassade för att spegla den inre representationen i Utbildningsinformation och för att
-tillhandahålla ett underlag för andra tjänster i Ladok. De är inte anpassade för användning utanför Ladok.
-Övrigt:
-- Beskriver strukturen för en utbildning eller utbildningstillfälle. En struktur innehåller en sorterad lista av "boxar", dvs.
-strukturdelar som representerar t.ex. ett kurstillfälle eller ett val som man kan göra inom strukturen.
-- Strukturer växer fram med tiden. Ett exempel kan t.ex. vara att man i en programtillfällesstruktur först specificerar en kurs, för
-att senare detaljera denna kurs med ett specifikt kurstillfälle.]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Innehall" type="ui:BoxEventPart"/>
-          <xs:element name="StrukturUID" type="xs:string"/>
-          <xs:element name="UtbildningsbasUID" type="xs:string"/>
-          <xs:element name="UtbildningstypID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="BoxEventPart">
-<xs:annotation>
-<xs:documentation><![CDATA[Basklass för alla typer av "boxar"]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element name="Boxtyp" type="ui:BoxtypEventPart"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningstillfallesboxEventBox">
-<xs:annotation>
-<xs:documentation><![CDATA[Del av event för utbildningstillfällesboxar, dvs. boxar i en struktur som innehåller konkreta utbildningstillfällen]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:BoxEventPart">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Acceptansperiod" type="base:Datumperiod"/>
-          <xs:element name="Antagningsforfarande" type="base:Antagningsforfarande"/>
-          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
-          <xs:element name="UtbildningstypID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningsinstansboxEventPart">
-<xs:annotation>
-<xs:documentation><![CDATA[Del av event för utbildningsinstansboxar, dvs. boxar i en struktur som innehåller konkreta utbildningar]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:BoxEventPart">
-        <xs:sequence>
-          <xs:element name="UtbildningsinstansUID" type="xs:string"/>
-          <xs:element name="UtbildningstypID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="ValboxEventPart">
-<xs:annotation>
-<xs:documentation><![CDATA[Del av struktur som representerar valmöjligheter (valboxar). En valbox har ett innehåll som utgör det studenten har att välja på,
-samt en valregel som specificerar kriterierna för hur valet ska gå till.]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:BoxEventPart">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Innehall" type="ui:BoxEventPart"/>
-          <xs:element name="Valperiod" type="base:Datumperiod"/>
-          <xs:element name="Valregel" type="base:Valregel"/>
-          <xs:element name="ValregelEventPart" type="ui:ValregelEventPart"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="ValregelEventPart">
-<xs:annotation>
-<xs:documentation><![CDATA[Basklass för valregler, dvs. regler som styr hur valen i en valbox ska göras]]></xs:documentation>
-</xs:annotation>
-    <xs:sequence/>
-  </xs:complexType>
-
-  <xs:complexType name="ValjXRegelEventPart">
-<xs:annotation>
-<xs:documentation><![CDATA[Valregel som specificerar att man ska välja ett visst antal (utbildningar/tillfällen) ur det valbara innehållet]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:ValregelEventPart">
-        <xs:sequence>
-          <xs:element name="Antal" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="ValjOmfattningRegelEventPart">
-<xs:annotation>
-<xs:documentation><![CDATA[Valregel som anger att man ska välja delar ur innehållet som uppgår till en viss omfattning]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:ValregelEventPart">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="BoxBorttagenEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En eller flera "boxar" (t.ex. ett kurstillfälle) i en utbildningsstruktur tagits bort
-Innehåller information om:
--
-Innehåller referenser till:
--
-Konsekvenser för verksamheten:
--
-Övrigt:
-- Se basklass för mer information!]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:BoxEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="BoxEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En eller flera "boxar" inom en struktur publiceras eller tas bort
-Innehåller information om:
-- Boxens innehåll, boxens typ
-Innehåller referenser till:
-- Den struktur boxen ingår i, den utbildningsinstans eller utbildningstillfälle som "äger" strukturen, samt utbildningstyp (anger
-vilken utbildningtyp som är "ägare" till strukturen - antingen utbildningsinstans eller utbildningstillfälle).
-Konsekvenser för verksamheten:
-- Modellen för strukturer och boxar är kraftigt generaliserad för att kunna representera många olika behov av att representera
-innehåll i kurser, kurspaketeringar, kurstillfällen och kurspaketeringstillfällen (av olika typer, med olika regelverkt). Händelserna
-som har med detta att göra är främst anpassade för att spegla den inre representationen i Utbildningsinformation och för att
-tillhandahålla ett underlag för andra tjänster i Ladok. De är inte anpassade för användning utanför Ladok.
-Övrigt:
-- En "box" är en del av en utbildningsinstans eller ett utbildningstillfälles planerade innehåll. Flera boxar tillsammans utgör en
-struktur. En box kan t.ex. avse ett specificerat utbildningstillfälle eller ett val inom strukturen. När en box publiceras betyder
-det att den görs tillgänglig för andra domäner och att dess "innehåll" inte längre kan förändras. En box har ett ordningstal (lägst
-0) som beskriver dess ordning inom den struktur som den tillhör. Detta har att göra med att innehållet i strukturen är storterat,
-antingen manuellt eller via en naturlig ordning som baseras t.ex. på tillfällesdatum.]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Innehall" type="ui:BoxEventPart"/>
-          <xs:element name="StrukturUID" type="xs:string"/>
-          <xs:element name="UtbildningsbasUID" type="xs:string"/>
-          <xs:element name="UtbildningstypID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="BoxPubliceradEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En "box" (t.ex. ett utbildningstillfälle) lagts till i en utbildningsstruktur _och publicerats_.
-Innehåller information om:
--
-Innehåller referenser till:
--
-Konsekvenser för verksamheten:
--
-Övrigt:
-- Se basklass för mer information!]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:BoxEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StrukturEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En struktur för en utbildning eller utbildningstillfälle skapas eller ändras
-Innehåller information om:
-- Se basklass
-Innehåller referenser till:
-- Se basklass
-Konsekvenser för verksamheten:
-- Se basklass för mer information!
-Övrigt:
-- Se basklass för mer information!]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:AbstraktStrukturEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="StrukturIStatus2">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En skapad eller ändrad struktur för en utbildning eller utbildningstillfälle som befinner sig i status 2(PÅBÖRJAD)
-Innehåller information om:
-- Se basklass
-Innehåller referenser till:
-- Se basklass
-Konsekvenser för verksamheten:
-- Se basklass för mer information!
-Övrigt:
-- Se basklass för mer information!]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:AbstraktStrukturEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="BevisbenamningarEventPart">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="BevisbenamningUID" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="ExternPartEventPart">
-    <xs:sequence>
-      <xs:element name="ExternPartID" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="HuvudomradeSuccessivFordjupningEventPart">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="HuvudomradeID" type="xs:int"/>
-      <xs:element name="SuccessivFordjupningID" type="xs:int"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="KursEvent">
-    <xs:complexContent>
-      <xs:extension base="ui:UtbildningsinstansbasEvent">
-        <xs:sequence>
-          <xs:element name="Kursattribut" type="ui:KursattributEventPart"/>
-          <xs:element minOccurs="0" name="Kurskod" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="UtbildningsinstansbasEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Gemensam basklass för events för Utbildningsinstanser]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:UtbildningsattributbasEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="EnhetID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string">
-<xs:annotation>
-<xs:documentation><![CDATA[Värde för omfattning (en BigDecimal as String) enligt den enhet som "enhetID" perkar ut, dvs båda enhet och värde måste senare
-konverteras till ett Omfattning object.]]></xs:documentation>
-</xs:annotation>
-</xs:element>
-          <xs:element minOccurs="0" name="StudieordningID" type="xs:int"/>
-          <xs:element minOccurs="0" name="UtbildningsformID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
-          <xs:element ref="ui:Versionsinformation"/>
-          <xs:element minOccurs="0" name="OverliggandeUtbildningUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="OverliggandeUtbildningsinstansUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="KursattributEventPart">
-<xs:annotation>
-<xs:documentation><![CDATA[Attribut som kan förekomma på en kurs. Obs! Det är konfigurationen per utbildningstyp som bestämmer om attributet kan förekomma eller
-inte. Räkna alltså med att dessa attribut kan vara tomma för vissa konfigurationer.]]></xs:documentation>
-</xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="HuvudomradeMedSuccessivFordjupning" type="ui:HuvudomradeSuccessivFordjupningEventPart">
-<xs:annotation>
-<xs:documentation><![CDATA[Huvudområde med successiv fördjupning]]></xs:documentation>
-</xs:annotation>
-</xs:element>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="MarkningForBevis" type="ui:MarkningForBevisEventPart"/>
-      <xs:element minOccurs="0" name="NivaInomStudieordningID" type="xs:int">
-<xs:annotation>
-<xs:documentation><![CDATA[nivå inom studieordning. nullable beroende på utbildningsform]]></xs:documentation>
-</xs:annotation>
-</xs:element>
-      <xs:element minOccurs="0" name="TitelSkaAnges" type="xs:boolean"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="UtbildningsomradeFordelning" type="ui:UtbildningsomradePerOrganisation">
-<xs:annotation>
-<xs:documentation><![CDATA[Utbildningsomraden med fördelning]]></xs:documentation>
-</xs:annotation>
-</xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="MarkningForBevisEventPart">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ExamensamneID" type="xs:int"/>
-      <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningsomradePerOrganisation">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Procent" type="xs:int"/>
-          <xs:element minOccurs="0" name="UtbildningsomradeID" type="xs:int"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Versionsinformation">
-<xs:annotation>
-<xs:documentation><![CDATA[Representation av versionsinformation för utbildningsinstanser]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element name="GiltigFranPeriodID" type="ui:PeriodID"/>
-          <xs:element minOccurs="0" name="Versionsnummer" type="xs:int"/>
-          <xs:element minOccurs="0" name="ArSenasteVersion" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="PeriodID">
-    <xs:simpleContent>
-      <xs:extension base="ui:Integer"/>
-    </xs:simpleContent>
-  </xs:complexType>
-
-  <xs:simpleType name="Integer">
-    <xs:restriction base="xs:int"/>
-  </xs:simpleType>
-
-  <xs:complexType name="KursTillStatusEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En kurs byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD. Kursen kan ha funnits i systemet i status UTKAST
-tidigare, men i och med att man byter status till PÅBÖRJAD publiceras den första händelsen som avser denna kurs.
-Innehåller information om:
-- Kurs
-Innehåller referenser till:
-- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
-Konsekvenser för verksamheten:
-- ...
-Övrigt:
-- ...]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:KursEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="KursUppdateradEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En kurs uppdateras. Publiceras först efter att kursen nått status PÅBÖRJAD.
-Innehåller information om:
-- Kurs
-Innehåller referenser till:
-- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
-Konsekvenser för verksamheten:
-- ...
-Övrigt:
-- ...]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:KursEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="KurspaketeringEvent">
-    <xs:complexContent>
-      <xs:extension base="ui:UtbildningsinstansbasEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Bevisbenamningar" type="ui:BevisbenamningarEventPart"/>
-          <xs:element minOccurs="0" name="ExternPartID" type="xs:int"/>
-          <xs:element minOccurs="0" name="TilltradesnivaID" type="xs:int">
-<xs:annotation>
-<xs:documentation><![CDATA[tillträdesnivåID nullable beroende på utbildningsform]]></xs:documentation>
-</xs:annotation>
-</xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="KurspaketeringTillStatusEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En kurspaketering byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD. Kurspaketeringen kan ha funnits i
-systemet i status UTKAST tidigare, men i och med att man byter status till PÅBÖRJAD publiceras den första händelsen som avser denna
-kurspaketering.
-Innehåller information om:
-- Kurspaketering
-Innehåller referenser till:
-- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
-Konsekvenser för verksamheten:
-- ...
-Övrigt:
-- ...]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:KurspaketeringEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="KurspaketeringUppdateradEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En kurspaketering uppdateras. Publiceras först efter att kurspaketeringen nått status PÅBÖRJAD.
-Innehåller information om:
-- Kurspaketering
-Innehåller referenser till:
-- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
-Konsekvenser för verksamheten:
-- ...
-Övrigt:
-- ...]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:KurspaketeringEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="ModulEvent">
-    <xs:complexContent>
-      <xs:extension base="ui:UtbildningsinstansbasEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
-          <xs:element minOccurs="0" name="TitelSkaAnges" type="xs:boolean"/>
-          <xs:element minOccurs="0" ref="ui:Utbildningsomradesfordelning"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Utbildningsomradesfordelning">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="UtbildningsomradenPerOrganisation" type="ui:UtbildningsomradePerOrganisation"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="ModulTillStatusEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- En modul byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD. Detta sker normalt settsamtidigt som kursen som
-innehåller modulen byter status (vilket publiceras i ett separat event vid samma tidpunkt).
-Innehåller information om:
-- Modul
-Innehåller referenser till:
-- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
-Konsekvenser för verksamheten:
-- ...
-Övrigt:
-- ...]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:ModulEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="ModulUppdateradEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- När en modul uppdateras. Publiceras först efter att kursen och modulen nått status PÅBÖRJAD.
-Innehåller information om:
-- Modul
-Innehåller referenser till:
-- Utbildningstyp, studieordning/utbildningsform, grunddata, utbildningsmall etc. Se detaljer i basklasser.
-Konsekvenser för verksamheten:
-- ...
-Övrigt:
-- ...]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:ModulEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningAvveckladEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- När en utbildning avvecklas, dvs. en utbildning inklusive alla dess instanser. Denna eventtyp följer inte riktigt samma mönster som
-andra statusövergångar i och med att det inte är utbildningsinstansen som avvecklas utan själva utbildningen (påverkar alltså alla
-versioner av utbildningen).
-Innehåller information om:
-- ...
-Innehåller referenser till:
-- Avvecklad utbildning
-Konsekvenser för verksamheten:
-- Samtliga utbildningsinstanser (versioner) som hör till denna utbildning ska betraktas som avvecklade
-Övrigt:
-- ...]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningsomradeFordelningEventPart">
-<xs:annotation>
-<xs:documentation><![CDATA[Denna används endast av Utbildning. För kurstillfälle och moduler används UtbildningsområdePerOrganisationRepresentation]]></xs:documentation>
-</xs:annotation>
-    <xs:sequence/>
-    <xs:attribute name="Procent" type="xs:int" use="required"/>
-    <xs:attribute name="UtbildningsomradeID" type="xs:int" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningAteraktiveradEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- en avvecklad utbildning återaktiveras, t.ex. som en registervårdsåtgärd efter ett misstag eller felaktigt beslut.
-Innehåller information om:
-- ...
-Innehåller referenser till:
-- Återaktiverad utbildning
-Konsekvenser för verksamheten:
-- Utbildningsinstanser som tidigare betraktats som avvecklade ska återaktiveras igen
-Övrigt:
-- ...]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UtbildningUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="KurspaketeringstillfalleEvent">
-    <xs:complexContent>
-      <xs:extension base="ui:TillfallesbasEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AlternativaBenamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="AntagningTillSenareDel" type="xs:boolean"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Tillfallesperioder" type="ui:Tillfallesperiod"/>
-          <xs:element minOccurs="0" name="SpecificeratOmfattningsvarde" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="TillfallesbasEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Gemensam basklass för events för utbildningar]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:UtbildningsattributbasEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Avgiftsbelagt" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="StartperiodID" type="xs:int"/>
-          <xs:element minOccurs="0" name="StudielokaliseringID" type="xs:int"/>
-          <xs:element minOccurs="0" name="StudietaktID" type="xs:int"/>
-          <xs:element minOccurs="0" name="UndervisningsformID" type="xs:int"/>
-          <xs:element minOccurs="0" name="UndervisningstidID" type="xs:int"/>
-          <xs:element minOccurs="0" name="UtbildningUtbildningstypID" type="xs:int"/>
-          <xs:element minOccurs="0" name="UtbildningstillfalleUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Utbildningstillfalleskod" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Tillfallesperiod">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="ForstaRegistreringsdatum" type="xs:date"/>
-          <xs:element name="ForstaUndervisningsdatum" type="xs:date"/>
-          <xs:element name="Omfattningsvarde" type="xs:decimal"/>
-          <xs:element minOccurs="0" name="SistaRegistreringsdatum" type="xs:date"/>
-          <xs:element name="SistaUndervisningsdatum" type="xs:date"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="ui:UtbildningsomradePerOrganisation"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="KurspaketeringstillfalleTillStatusEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- Ett kurspaketeringstillfälle byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD.
-Innehåller information om:
-- Det redigerade kurspaketeringstillfällets attribut/egenskaper, dock ej dess innehåll/struktur
-Innehåller referenser till:
--
-Konsekvenser för verksamheten:
-- Kurspaketeringstillfället kan från och med status PÅBÖRJAD användas i andra domäner, t.ex. för registreringar, antagningar etc.
-Övrigt:
--]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:KurspaketeringstillfalleEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="KurspaketeringstillfalleUppdateratEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- Ett kurspaketeringstillfälle uppdateras. Publiceras först efter att kurspaketeringstillfället nått status PÅBÖRJAD.
-Innehåller information om:
-- Det redigerade kurspaketeringstillfällets attribut/egenskaper, dock ej dess innehåll/struktur
-Innehåller referenser till:
--
-Konsekvenser för verksamheten:
-- Ändringar av t.ex. kurspaketeringstillfällets kod bör man vara uppmärksam på då den ofta används för matchning i andra system
-Övrigt:
--]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:KurspaketeringstillfalleEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType abstract="true" name="KurstillfalleEvent">
-    <xs:complexContent>
-      <xs:extension base="ui:TillfallesbasEvent">
-        <xs:sequence>
-          <xs:element name="Kurstillfallesattribut" type="ui:KurstillfallesattributEventPart"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Kurstillfallesperioder" type="ui:Tillfallesperiod"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="KurstillfallesattributEventPart">
-<xs:annotation>
-<xs:documentation><![CDATA[Gruppering av de attribut som publiceras för ett kurstillfälle]]></xs:documentation>
-</xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Finansieringsform" type="xs:int"/>
-      <xs:element minOccurs="0" name="ForegaendeTillfallesantagningUID" type="xs:string"/>
-      <xs:element minOccurs="0" name="IndividuelltAtagandeReferensUID" type="xs:string"/>
-      <xs:element minOccurs="0" name="KurspaketeringstillfallesantagningUID" type="xs:string"/>
-      <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-      <xs:element minOccurs="0" name="TillfallesByteForStudentTillatet" type="xs:boolean">
-<xs:annotation>
-<xs:documentation><![CDATA[Indikerar om tillfällesbyte är tillåtet för student. Bytet görs till ett tillfälle som har denna flagga satt som true
-
-(return): true om tillfällesbyte är tillåtet till detta kurstillfälle, false om det inte är tillåtet, null om det inte är angivet]]></xs:documentation>
-</xs:annotation>
-</xs:element>
-      <xs:element minOccurs="0" name="Undervisningsform" type="xs:int"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="KurstillfalleTillStatusEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- Ett kurstillfälle byter till en ny status, t.ex. från status UTKAST till status PÅBÖRJAD.
-Innehåller information om:
-- Det redigerade kurstillfällets attribut/egenskaper
-Innehåller referenser till:
--
-Konsekvenser för verksamheten:
-- Kurstillfället kan från och med status PÅBÖRJAD användas i andra domäner, t.ex. för registreringar, antagningar etc.
-Övrigt:
--]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:KurstillfalleEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="KurstillfalleUppdateratEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- Ett kurstillfälle uppdateras. Publiceras först efter att kurstillfället nått status PÅBÖRJAD.
-Innehåller information om:
-- Det redigerade kurstillfällets attribut/egenskaper
-Innehåller referenser till:
--
-Konsekvenser för verksamheten:
-- Ändringar av t.ex. kurstillfällets kod bör man vara uppmärksam på då den ofta används för matchning i andra system
-Övrigt:
--]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="ui:KurstillfalleEvent">
-        <xs:sequence/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtannonseraUtbildningstillfalleEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- När ett kurstillfälle utannonseras i syfte att överföras till antagningssystemet. Händelsen konsumeras av domänen extintegration
-som i sin tur skapar de EMIL-filer som överförs till antagningssystemet.
-Innehåller information om:
--
-Innehåller referenser till:
-- Utannonserat utbildningstillfälle
-Konsekvenser för verksamheten:
--
-Övrigt:
-- Om innehållet i utbildningstillfället av någon anledning bryter mot EMIL-regelverket kan det leda till att utannonseringen avbryts
-och inte genomförs. Ett ovanligt fall, men har förekommit.]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element name="UtbildningstillfalleUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningsinstansBorttagenEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[(deprecated): Händelsen publiceras inte längre
-            Händelsen publiceras när:
-            - En utbildningsinstans tas bort. Normalt sett måste utbildningsinstansen vara i status UTKAST eller PÅBÖRJAD för att
-            detta ska tillåtas.
-            Innehåller information om:
-            -
-            Innehåller referenser till:
-            - Borttagen utbildningsinstans
-            Konsekvenser för verksamheten:
-            -
-            Övrigt:
-            -]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningsinstansPaUtbildningstillfalleAndradEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- ...man flyttat ett utbildningstillfälle från en utbildningsinstans till en annan utbildningsinstans, t.ex. när man upprättat skapat
-en ny kursversion och vill flytta planerade kurstillfällen till den nya kursversionen.
-Innehåller information om:
--
-Innehåller referenser till:
-- Utbildningsinstans, utbildningstillfälle, grundtyp (KURSPAKETERING/KURS)
-Konsekvenser för verksamheten:
--
-Övrigt:
--]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element name="UtbildningsinstansUid" type="xs:string"/>
-          <xs:element name="UtbildningstillfalleUid" type="xs:string"/>
-          <xs:element name="Utbildningstillfallesgrundtyp" type="base:Utbildningsgrundtyp"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningstillfalleBorttagetEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[(deprecated): Händelsen används inte längre.
-            Händelsen publiceras när:
-            - Händelse som publiceras när ett utbildningstillfälle tas bort.
-            Innehåller information om:
-            -
-            Innehåller referenser till:
-            - Borttaget utbildningstillfälle
-            Konsekvenser för verksamheten:
-            -
-            Övrigt:
-            -]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UtbildningstillfalleUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningstillfalleInstalltEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Event som publiceras när ett utbildningstillfälle ställs in
-Händelsen publiceras när:
-- ...ett utbildningstillfälle ställs in
-Innehåller information om:
--
-Innehåller referenser till:
-- Inställt utbildningstillfälle
-Konsekvenser för verksamheten:
-- Får påverkan på regelverket i andra tjänster, bl.a. i studiedeltagande där det t.ex. leder till att man inte längre kan registrera
-sig på tillfället.
-Övrigt:
--]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UtbildningstillfalleUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtbildningstillfalleAteraktiveratEvent">
-<xs:annotation>
-<xs:documentation><![CDATA[Händelsen publiceras när:
-- ...ett inställt utbildningstillfälle återaktiveras. Normalt sett en registervårdsaktivitet.
-Innehåller information om:
-- Utbildningstillfällets (föregående) status, för att konsumenten ska veta vilket tillstånd som gäller nu om detta inte bevarats.
-Innehåller referenser till:
-- Återaktiverat utbildningstillfälle
-Konsekvenser för verksamheten:
--
-Övrigt:
--]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="events:BaseEvent">
-        <xs:sequence>
-          <xs:element name="Status" type="xs:int"/>
-          <xs:element minOccurs="0" name="UtbildningstillfalleUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
 
   <xs:complexType name="Beslut">
     <xs:complexContent>
@@ -1610,6 +555,45 @@ informationskonverteringen.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="Versionsinformation">
+<xs:annotation>
+<xs:documentation><![CDATA[Representation av versionsinformation för utbildningsinstanser]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element name="GiltigFranPeriodID" type="ui:PeriodID"/>
+          <xs:element minOccurs="0" name="Versionsnummer" type="xs:int"/>
+          <xs:element minOccurs="0" name="ArSenasteVersion" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PeriodID">
+    <xs:simpleContent>
+      <xs:extension base="ui:Integer"/>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:simpleType name="Integer">
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+
+  <xs:complexType name="Utbildningsattributvarde">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AttributdefinitionUID" type="xs:string"/>
+          <xs:element name="Grupp" type="xs:int"/>
+          <xs:element minOccurs="0" name="Namn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Varde" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="UtbildningsinstansLista">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" ref="ui:Utbildningsinstans"/>
@@ -1672,6 +656,33 @@ informationskonverteringen.]]></xs:documentation>
     <xs:simpleContent>
       <xs:extension base="ui:Integer"/>
     </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="Tillfallesperiod">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ForstaRegistreringsdatum" type="xs:date"/>
+          <xs:element name="ForstaUndervisningsdatum" type="xs:date"/>
+          <xs:element name="Omfattningsvarde" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="SistaRegistreringsdatum" type="xs:date"/>
+          <xs:element name="SistaUndervisningsdatum" type="xs:date"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="ui:UtbildningsomradePerOrganisation"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UtbildningsomradePerOrganisation">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Procent" type="xs:int"/>
+          <xs:element minOccurs="0" name="UtbildningsomradeID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="UndervisningsformID">
@@ -2209,7 +1220,6 @@ regler som har bäring i Utbildningsinformation på ett konkret sätt istället 
       <xs:element minOccurs="0" name="ForvaldOmfattning" type="xs:int"/>
       <xs:element name="HarOmfattning" type="xs:boolean"/>
       <xs:element name="Individuell" type="xs:boolean"/>
-      <xs:element name="KanTillgodoraknas" type="xs:boolean"/>
       <xs:element name="KanUtannonseras" type="xs:boolean"/>
       <xs:element name="Sjalvstandig" type="xs:boolean"/>
       <xs:element name="Versionshanteras" type="xs:boolean"/>
@@ -3008,6 +2018,16 @@ attributen för en utbildningsinstansen, dvs. kod, benämningar och versionsinfo
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="Utbildningsomradesfordelning">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="UtbildningsomradenPerOrganisation" type="ui:UtbildningsomradePerOrganisation"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="Attributdefinitioner">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="Attributdefinitioner" type="ui:Attributdefinition"/>
@@ -3138,14 +2158,6 @@ attributen för en utbildningsinstansen, dvs. kod, benämningar och versionsinfo
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-
-  <xs:simpleType name="BoxtypEventPart">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="UTBILDNING"/>
-      <xs:enumeration value="UTBILDNINGSTILLFALLE"/>
-      <xs:enumeration value="VAL"/>
-    </xs:restriction>
-  </xs:simpleType>
 
   <xs:simpleType name="Boxtyp">
     <xs:restriction base="xs:string">

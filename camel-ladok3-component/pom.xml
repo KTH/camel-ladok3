@@ -29,7 +29,7 @@
   <parent>
     <artifactId>ladok3</artifactId>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
-    <version>3.46.2</version>
+    <version>3.2.0</version>
   </parent>
 
   <artifactId>camel-ladok3-component</artifactId>
@@ -38,6 +38,11 @@
   <name>Camel Ladok3 Component</name>
   <description>The Ladok3 Endpoint Component</description>
   <url>https://www.kth.se</url>
+
+  <properties>
+    <checkstyle.failOnViolation>false</checkstyle.failOnViolation>
+    <checkstyle.skip>true</checkstyle.skip>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -65,7 +70,6 @@
       <artifactId>camel-support</artifactId>
       <version>${camel-version}</version>
     </dependency>
-
 
     <dependency>
       <groupId>org.apache.cxf</groupId>
@@ -110,12 +114,32 @@
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
+      <artifactId>camel-test-spring</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
       <artifactId>camel-jackson</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-jaxb</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-test-spring-junit5</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-spring-javaconfig</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
