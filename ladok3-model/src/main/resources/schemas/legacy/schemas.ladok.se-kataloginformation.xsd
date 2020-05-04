@@ -3762,6 +3762,7 @@ Endast för intern åtkomst.]]></xs:documentation>
       <xs:enumeration value="anvandare.saknas"/>
       <xs:enumeration value="larosatet.inte.konfigurerat"/>
       <xs:enumeration value="anvandare.far.inte.agera.student"/>
+      <xs:enumeration value="anvandare.far.inte.agera.ombud.for.annan.anvandare"/>
     </xs:restriction>
   </xs:simpleType>
 
