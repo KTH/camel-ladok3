@@ -4271,11 +4271,27 @@ representationer.]]></xs:documentation>
       <xs:enumeration value="REGISTRERING_ELLER_AKTIVITET_INOM"/>
       <xs:enumeration value="REGISTRERING_INOM"/>
       <xs:enumeration value="AKTORSROLL"/>
+      <xs:enumeration value="PAGAR_INOM"/>
+      <xs:enumeration value="BETALNINGSSTATUS"/>
       <xs:enumeration value="KURSER"/>
       <xs:enumeration value="DELTAGARETILLSTAND"/>
       <xs:enumeration value="PERIODDELTAGARETILLSTAND"/>
       <xs:enumeration value="PERIODTYP"/>
       <xs:enumeration value="KURSTILLFALLE_STARTAR_INOM"/>
+      <xs:enumeration value="STARTAR_INOM"/>
+      <xs:enumeration value="SLUTAR_INOM"/>
+      <xs:enumeration value="RATT_ATT_ATERUPPTA"/>
+      <xs:enumeration value="EXTERN_REFERENS"/>
+      <xs:enumeration value="KURSPAKETERINGAR"/>
+      <xs:enumeration value="TILLSTAND"/>
+      <xs:enumeration value="UTBYTESALTERNATIV"/>
+      <xs:enumeration value="UTBYTESAVTAL"/>
+      <xs:enumeration value="UTBYTESPROGRAM"/>
+      <xs:enumeration value="LANDER"/>
+      <xs:enumeration value="EXTERNAPARTER"/>
+      <xs:enumeration value="VISA_UNDERLIGGANDE"/>
+      <xs:enumeration value="UNDERLIGGANDE_KURSPAKETERINGAR"/>
+      <xs:enumeration value="UNDERLIGGANDE_DELTAGARETILLSTAND"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -4291,6 +4307,8 @@ representationer.]]></xs:documentation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="TILLFALLESTARTARINOM"/>
       <xs:enumeration value="TILLFALLEPAGARINOM"/>
+      <xs:enumeration value="PAKETERINGSTILLFALLESTARTARINOM"/>
+      <xs:enumeration value="PAKETERINGSTILLFALLEPAGARINOM"/>
       <xs:enumeration value="STUDIEPERIODSTARTARINOM"/>
       <xs:enumeration value="STUDIEPERIODPAGARINOM"/>
     </xs:restriction>
@@ -4301,6 +4319,10 @@ representationer.]]></xs:documentation>
       <xs:enumeration value="studiedeltagande.utdata.deltagande.kurs"/>
       <xs:enumeration value="studiedeltagande.utdata.studieaktivitet.och.finansiering"/>
       <xs:enumeration value="studiedeltagande.utdata.aktor"/>
+      <xs:enumeration value="studiedeltagande.utdata.studieavgiftsbetalning"/>
+      <xs:enumeration value="studiedeltagande.utdata.uppehall"/>
+      <xs:enumeration value="studiedeltagande.utdata.utbytesstudier"/>
+      <xs:enumeration value="studiedeltagande.utdata.deltagande.kurspaketering"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

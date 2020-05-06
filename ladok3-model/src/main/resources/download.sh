@@ -30,5 +30,7 @@ fi
 
 for url in $(cat ${files}); do
     file=${url##*/}
+    echo "-> $url -> ${3:-.}"
     curl -b "${cookie}" $url -o ${3:-.}/$file
+    echo
 done
