@@ -34,7 +34,7 @@
   <artifactId>ladok3-model</artifactId>
   <packaging>jar</packaging>
 
-  <name>ladok3-events</name>
+  <name>ladok3-model</name>
   <url>https://www.kth.se</url>
 
   <dependencies>

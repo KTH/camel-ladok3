@@ -10,13 +10,13 @@
     <!-- We want the generated Java code to use Date objects for xs:date, 
 	 instead of XMLGregorianCalendar objects -->
     <jaxb:javaType name="java.util.Date" xmlType="xs:date"
-                   parseMethod="se.kth.infosys.ladok3.DateParseAdapter.parse"
-                   printMethod="se.kth.infosys.ladok3.DateParseAdapter.print" />
+                   parseMethod="se.kth.infosys.ladok3.DateParseAdapter.parseDate"
+                   printMethod="se.kth.infosys.ladok3.DateParseAdapter.printDate" />
     <!-- We want the generated Java code to use Date objects for xs:dateTime,
 	 instead of XMLGregorianCalendar objects -->
     <jaxb:javaType name="java.util.Date" xmlType="xs:dateTime"
-                   parseMethod="se.kth.infosys.ladok3.DateParseAdapter.parse"
-                   printMethod="se.kth.infosys.ladok3.DateParseAdapter.print" />
+                   parseMethod="se.kth.infosys.ladok3.DateParseAdapter.parseDateTime"
+                   printMethod="se.kth.infosys.ladok3.DateParseAdapter.printDateTime" />
     <xjc:serializable uid="-1" />
   </jaxb:globalBindings>
 

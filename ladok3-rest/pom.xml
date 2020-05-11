@@ -32,7 +32,7 @@
   </parent>
 
   <artifactId>ladok3-rest</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
 
   <name>ladok3-rest</name>
   <url>https://www.kth.se</url>
@@ -76,31 +76,4 @@
     <version>2.4.0-b180830.0438</version>
   </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <!-- to generate the MANIFEST-FILE of the bundle -->
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <version>4.2.1</version>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Bundle-SymbolicName>se.kth.infosys.ladok3-rest</Bundle-SymbolicName>
-            <Export-Package>se.kth.infosys.ladok3;-split-package:=merge-first</Export-Package>
-          </instructions>
-        </configuration>
-        <executions> 
-          <execution> 
-            <id>bundle-manifest</id> 
-            <phase>process-classes</phase> 
-            <goals> 
-              <goal>manifest</goal> 
-            </goals> 
-          </execution> 
-        </executions> 
-      </plugin>
-    </plugins>
-  </build>
 </project>

@@ -4,9 +4,7 @@ import static java.time.ZoneOffset.UTC;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 /**
@@ -18,40 +16,24 @@ import java.util.Date;
  */
 public class DateParseAdapter {
 
-  private static final DateTimeFormatter formatterDateTimeZone = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS]Z");
   private static final DateTimeFormatter formatterDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS]");
   private static final DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-  public static Date parse(final String date) {
-    try {
-      return parseDateTimeZone(date);
-    } catch (DateTimeParseException e) {
-      try {
-        return parseDateTime(date);
-      } catch (DateTimeParseException dateTimeParseException) {
-        return parseDate(date);
-      }
-    }
+  public static String printDateTime(final Date date) {
+    return LocalDateTime.from(date.toInstant()).format(formatterDateTime);
   }
 
-  public static String print(final Date date) {
-    final UnsupportedOperationException e = new UnsupportedOperationException("DateParseAdapter only supports parsing");
-    e.printStackTrace();
-    throw e;
+  public static String printDate(final Date date) {
+    return LocalDate.from(date.toInstant()).format(formatterDate);
   }
 
-  private static Date parseDateTimeZone(final String dateTime) throws DateTimeParseException {
-    ZonedDateTime d = ZonedDateTime.parse(dateTime, formatterDateTimeZone);
-    return Date.from(d.toInstant());
-  }
-
-  private static Date parseDateTime(final String dateTime) {
+  public static Date parseDateTime(final String dateTime) {
     LocalDateTime d = LocalDateTime.parse(dateTime, formatterDateTime);
     return Date.from(d.toInstant(UTC));
 
   }
 
-  private static Date parseDate(final String date) {
+  public static Date parseDate(final String date) {
     LocalDate d = LocalDate.parse(date, formatterDate);
     return Date.from(d.atTime(0,0).toInstant(UTC));
   }
