@@ -27,8 +27,8 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
-    <artifactId>ladok3</artifactId>
-    <version>3.47.0</version>
+    <artifactId>camel-ladok3</artifactId>
+    <version>3.47.2</version>
   </parent>
 
   <artifactId>ladok3-model</artifactId>
