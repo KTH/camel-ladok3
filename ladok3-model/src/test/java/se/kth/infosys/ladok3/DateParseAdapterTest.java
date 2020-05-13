@@ -3,49 +3,46 @@ package se.kth.infosys.ladok3;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import org.junit.jupiter.api.Test;
 
 public class DateParseAdapterTest {
 
+  private static final ZoneId ZONE_ID = ZoneId.of("Europe/Stockholm");
+
   @Test
   public void testParseDate() {
-    final Date result = DateParseAdapter.parse("2020-01-15");
-    assertThat(result).isEqualTo("2020-01-15T00:00:00.000+0000");
+    final Date result = DateParseAdapter.parseDate("2020-05-08");
+    assertThat(result).isEqualTo("2020-05-008T00:00:00.000");
   }
 
   @Test
   public void testParseDateTime() {
-    final Date result = DateParseAdapter.parse("2020-01-15T00:00:00");
-    assertThat(result).isEqualTo("2020-01-15T00:00:00.000+0000");
+    final Date result = DateParseAdapter.parseDateTime("2020-05-08T00:00:00.000");
+    assertThat(result).isEqualTo("2020-05-008T00:00:00.000");
+  }
+
+
+  @Test
+  public void testPrintDate() {
+    final LocalDate localDate = LocalDate.of(2020, 5, 8);
+    final String s = DateParseAdapter.printDate(Date.from(localDate.atStartOfDay(ZONE_ID).toInstant()));
+    assertThat(s).isEqualTo("2020-05-08");
   }
 
   @Test
-  public void testParseDateTimeMs() {
-    final Date result = DateParseAdapter.parse("2020-01-15T00:00:00.000");
-    assertThat(result).isEqualTo("2020-01-15T00:00:00.000+0000");
-  }
-
-  @Test
-  public void testParseDateTimeZone() {
-    final Date result = DateParseAdapter.parse("2020-01-15T00:00:00+0000");
-    assertThat(result).isEqualTo("2020-01-15T00:00:00.000+0000");
-  }
-
-  @Test
-  public void testParseDateTimeMsZone() {
-    final Date result = DateParseAdapter.parse("2020-01-15T00:00:00.000+0000");
-    assertThat(result).isEqualTo("2020-01-15T00:00:00.000+0000");
+  public void testPrintDateTime() {
+    final LocalDateTime localDateTime = LocalDateTime.of(2020, 5, 8, 0, 0, 0);
+    final String s = DateParseAdapter.printDateTime(Date.from(localDateTime.atZone(ZONE_ID).toInstant()));
+    assertThat(s).isEqualTo("2020-05-08T00:00:00.000");
   }
 
   @Test
   public void testParseFail() {
-    assertThrows(DateTimeParseException.class, () -> DateParseAdapter.parse("2020-01-15T00"));
-  }
-
-  @Test
-  public void testPrint() {
-    assertThrows(UnsupportedOperationException.class, () -> DateParseAdapter.print(new Date()));
+    assertThrows(DateTimeParseException.class, () -> DateParseAdapter.parseDateTime("2020-01-15T00"));
   }
 }

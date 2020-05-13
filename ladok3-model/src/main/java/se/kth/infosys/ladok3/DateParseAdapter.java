@@ -1,9 +1,8 @@
 package se.kth.infosys.ladok3;
 
-import static java.time.ZoneOffset.UTC;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -16,25 +15,29 @@ import java.util.Date;
  */
 public class DateParseAdapter {
 
-  private static final DateTimeFormatter formatterDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS]");
-  private static final DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+  private static final ZoneId ZONE_ID = ZoneId.of("Europe/Stockholm");
+
+  private static final DateTimeFormatter formatterDateTime =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS").withZone(ZONE_ID);
+
+  private static final DateTimeFormatter formatterDate =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZONE_ID);
 
   public static String printDateTime(final Date date) {
-    return LocalDateTime.from(date.toInstant()).format(formatterDateTime);
+    return LocalDateTime.ofInstant(date.toInstant(), ZONE_ID).format(formatterDateTime);
   }
 
   public static String printDate(final Date date) {
-    return LocalDate.from(date.toInstant()).format(formatterDate);
+    return LocalDate.ofInstant(date.toInstant(), ZONE_ID).format(formatterDate);
   }
 
   public static Date parseDateTime(final String dateTime) {
-    LocalDateTime d = LocalDateTime.parse(dateTime, formatterDateTime);
-    return Date.from(d.toInstant(UTC));
-
+    LocalDateTime localDateTime = LocalDateTime.parse(dateTime, formatterDateTime);
+    return Date.from(localDateTime.atZone(ZONE_ID).toInstant());
   }
 
   public static Date parseDate(final String date) {
     LocalDate d = LocalDate.parse(date, formatterDate);
-    return Date.from(d.atTime(0,0).toInstant(UTC));
+    return Date.from(d.atTime(0,0).atZone(ZONE_ID).toInstant());
   }
 }
