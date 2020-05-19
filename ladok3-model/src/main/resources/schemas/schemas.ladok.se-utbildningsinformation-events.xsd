@@ -43,11 +43,15 @@
 
   <xs:element name="StrukturIStatus2" type="ui:StrukturIStatus2"/>
 
+  <xs:element name="Tillfallesperiod" type="ui:Tillfallesperiod"/>
+
   <xs:element name="UtannonseraUtbildningstillfalleEvent" type="ui:UtannonseraUtbildningstillfalleEvent"/>
 
   <xs:element name="UtbildningAteraktiveradEvent" type="ui:UtbildningAteraktiveradEvent"/>
 
   <xs:element name="UtbildningAvveckladEvent" type="ui:UtbildningAvveckladEvent"/>
+
+  <xs:element name="Utbildningsattributvarde" type="ui:Utbildningsattributvarde"/>
 
   <xs:element name="UtbildningsinstansBorttagenEvent" type="ui:UtbildningsinstansBorttagenEvent"/>
 
@@ -56,6 +60,10 @@
   <xs:element name="UtbildningsinstansboxEventPart" type="ui:UtbildningsinstansboxEventPart"/>
 
   <xs:element name="UtbildningsmallPubliceradEvent" type="ui:UtbildningsmallPubliceradEvent"/>
+
+  <xs:element name="UtbildningsomradePerOrganisation" type="ui:UtbildningsomradePerOrganisation"/>
+
+  <xs:element name="Utbildningsomradesfordelning" type="ui:Utbildningsomradesfordelning"/>
 
   <xs:element name="UtbildningstillfalleAteraktiveratEvent" type="ui:UtbildningstillfalleAteraktiveratEvent"/>
 
@@ -70,6 +78,8 @@
   <xs:element name="ValjOmfattningRegelEventPart" type="ui:ValjOmfattningRegelEventPart"/>
 
   <xs:element name="ValjXRegelEventPart" type="ui:ValjXRegelEventPart"/>
+
+  <xs:element name="Versionsinformation" type="ui:Versionsinformation"/>
 
   <xs:complexType name="KunskapsoverlappningEvent">
 <xs:annotation>
@@ -134,6 +144,19 @@ man enbart begreppet "överlapp", utan att specificera exakt vad överlappet bes
       <xs:element name="Markningsnyckel" type="xs:int"/>
       <xs:element name="Markningsvarde" type="xs:int"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Utbildningsattributvarde">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AttributdefinitionUID" type="xs:string"/>
+          <xs:element name="Grupp" type="xs:int"/>
+          <xs:element minOccurs="0" name="Namn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Varde" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="UtbildningsmallPubliceradEvent">
@@ -488,6 +511,41 @@ inte. Räkna alltså med att dessa attribut kan vara tomma för vissa konfigurat
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="UtbildningsomradePerOrganisation">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Procent" type="xs:int"/>
+          <xs:element minOccurs="0" name="UtbildningsomradeID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Versionsinformation">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element name="GiltigFranPeriodID" type="ui:PeriodID"/>
+          <xs:element minOccurs="0" name="Versionsnummer" type="xs:int"/>
+          <xs:element minOccurs="0" name="ArSenasteVersion" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PeriodID">
+    <xs:simpleContent>
+      <xs:extension base="ui:Integer"/>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:simpleType name="Integer">
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+
   <xs:complexType name="KursTillStatusEvent">
 <xs:annotation>
 <xs:documentation><![CDATA[Händelsen publiceras när:
@@ -594,6 +652,16 @@ Konsekvenser för verksamheten:
           <xs:element minOccurs="0" name="BetygsskalaID" type="xs:int"/>
           <xs:element minOccurs="0" name="TitelSkaAnges" type="xs:boolean"/>
           <xs:element minOccurs="0" ref="ui:Utbildningsomradesfordelning"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Utbildningsomradesfordelning">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="UtbildningsomradenPerOrganisation" type="ui:UtbildningsomradePerOrganisation"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -724,6 +792,21 @@ Konsekvenser för verksamheten:
           <xs:element minOccurs="0" name="UtbildningUtbildningstypID" type="xs:int"/>
           <xs:element minOccurs="0" name="UtbildningstillfalleUID" type="xs:string"/>
           <xs:element minOccurs="0" name="Utbildningstillfalleskod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Tillfallesperiod">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ForstaRegistreringsdatum" type="xs:date"/>
+          <xs:element name="ForstaUndervisningsdatum" type="xs:date"/>
+          <xs:element name="Omfattningsvarde" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="SistaRegistreringsdatum" type="xs:date"/>
+          <xs:element name="SistaUndervisningsdatum" type="xs:date"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="ui:UtbildningsomradePerOrganisation"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

@@ -278,6 +278,13 @@ Konsekvenser för verksamheten:
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:simpleType name="PostadressTypRepresentation">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FOLKBOKFORINGSADRESS"/>
+      <xs:enumeration value="POSTADRESS"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="RestriktionstypEventPart">
 <xs:annotation>
 <xs:documentation><![CDATA[Del av händelse för studentrestriktioner. Särskiljer studentrestriktioner i typerna AVSTÄNGNING och AVSKILJANDE.]]></xs:documentation>
@@ -288,4 +295,21 @@ Konsekvenser för verksamheten:
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="Avgiftsskyldighetsvarde">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Ursprung">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NYA_MASKINELLT"/>
+      <xs:enumeration value="NYA_MANUELLT"/>
+      <xs:enumeration value="LADOK_MASKINELLT"/>
+      <xs:enumeration value="LADOK_MANUELLT"/>
+      <xs:enumeration value="FOLKBOKFORING"/>
+    </xs:restriction>
+  </xs:simpleType>
 </xs:schema>

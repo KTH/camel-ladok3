@@ -111,6 +111,8 @@
 
   <xs:element name="IngaendeKurspaketeringstillfalleLista" type="sd:IngaendeKurspaketeringstillfalleLista"/>
 
+  <xs:element name="Kolumntitel" type="sd:Kolumntitel"/>
+
   <xs:element name="KonverteradAktorAndring" type="sd:KonverteradAktorAndring"/>
 
   <xs:element name="KopieraDeltagandeKandidatLista" type="sd:KopieraDeltagandeKandidatLista"/>
@@ -332,6 +334,24 @@
   <xs:element name="Utbytesprogram" type="sd:Utbytesprogram"/>
 
   <xs:element name="Utbytesstudie" type="sd:Utbytesstudie"/>
+
+  <xs:element name="Utdata" type="sd:Utdata"/>
+
+  <xs:element name="UtdataAvgransning" type="sd:UtdataAvgransning"/>
+
+  <xs:element name="UtdataAvgransningar" type="sd:UtdataAvgransningar"/>
+
+  <xs:element name="UtdataMetadata" type="sd:UtdataMetadata"/>
+
+  <xs:element name="UtdataResultat" type="sd:UtdataResultat"/>
+
+  <xs:element name="UtdataResultatrad" type="sd:UtdataResultatrad"/>
+
+  <xs:element name="UtdataSokningar" type="sd:UtdataSokningar"/>
+
+  <xs:element name="UtdataTabellrubriker" type="sd:UtdataTabellrubriker"/>
+
+  <xs:element name="Utdatafraga" type="sd:Utdatafraga"/>
 
   <xs:element name="ValboxMedVal" type="sd:ValboxMedVal"/>
 
@@ -2366,6 +2386,18 @@ ett programtillfälle)]]></xs:documentation>
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="Kolumntitel">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="I18nNyckel" type="xs:string"/>
+          <xs:element minOccurs="0" name="Kolumntyp" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Underliggande" type="sd:Kolumntitel"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="PerioddeltagandeKursUtdata">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
@@ -2457,14 +2489,14 @@ representationer.]]></xs:documentation>
           <xs:element name="StudentLista">
             <xs:complexType>
               <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="Student" type="base:Student"/>
+                <xs:element maxOccurs="unbounded" name="Student" type="base:Student"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
           <xs:element name="UtbildningsinformationLista">
             <xs:complexType>
               <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="sd:Utbildningsinformation"/>
+                <xs:element maxOccurs="unbounded" ref="sd:Utbildningsinformation"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -2715,6 +2747,104 @@ representationer.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="UtdataAvgransning">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UtdataAvgransningstyp" type="sd:UtdataAvgransningstyp"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="UtdataAvgransningsvarden" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UtdataAvgransningar">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="UtdataAvgransningar" type="sd:UtdataAvgransning"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Utdatafraga">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="sd:UtdataAvgransningar"/>
+          <xs:element name="Sida" type="xs:int"/>
+          <xs:element name="Sidstorlek" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UtdataTabellrubriker">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="kolumntitlar" nillable="true" type="sd:Kolumntitel"/>
+      <xs:element minOccurs="0" name="UtdataTyp" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UtdataMetadata">
+    <xs:sequence>
+      <xs:element name="metadata">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" name="key" type="sd:UtdataMetadataTyp"/>
+                  <xs:element minOccurs="0" name="value" type="xs:anyType"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Utdata">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Sokningar" type="sd:UtdataSokningar"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UtdataSokningar">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element name="Utdatatyp" type="sd:Utdatatyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UtdataResultat">
+    <xs:sequence>
+      <xs:element name="AntalTraffar" type="xs:int"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="kolumntitlar" nillable="true" type="sd:Kolumntitel"/>
+      <xs:element minOccurs="0" name="Metadata" type="sd:UtdataMetadata"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="resultatrader" nillable="true" type="sd:UtdataResultatrad"/>
+      <xs:element minOccurs="0" name="UtdataFraga" type="sd:Utdatafraga"/>
+      <xs:element minOccurs="0" name="UtdataTyp" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UtdataResultatrad">
+    <xs:sequence>
+      <xs:element name="metadata">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" name="key" type="xs:int"/>
+                  <xs:element minOccurs="0" name="value" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Varden" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:simpleType name="DeltagareKurspaketeringstillfalleOrderByEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="FORNAMN_ASC"/>
@@ -2910,6 +3040,79 @@ representationer.]]></xs:documentation>
       <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.omregistrerad"/>
       <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.tidigtavbrott"/>
       <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.deltar_ej"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="UtdataAvgransningstyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UTBILDNINGSTYPSGRUPPER"/>
+      <xs:enumeration value="ORGANISATIONSENHETER"/>
+      <xs:enumeration value="KURSPAKETERINGAR"/>
+      <xs:enumeration value="DOKUMENTERADAKTIVITET"/>
+      <xs:enumeration value="REGISTRERING_ELLER_AKTIVITET_INOM"/>
+      <xs:enumeration value="REGISTRERING_INOM"/>
+      <xs:enumeration value="AKTORSROLL"/>
+      <xs:enumeration value="PAGAR_INOM"/>
+      <xs:enumeration value="BETALNINGSSTATUS"/>
+      <xs:enumeration value="KURSER"/>
+      <xs:enumeration value="DELTAGARETILLSTAND"/>
+      <xs:enumeration value="PERIODDELTAGARETILLSTAND"/>
+      <xs:enumeration value="PERIODTYP"/>
+      <xs:enumeration value="KURSTILLFALLE_STARTAR_INOM"/>
+      <xs:enumeration value="STARTAR_INOM"/>
+      <xs:enumeration value="SLUTAR_INOM"/>
+      <xs:enumeration value="RATT_ATT_ATERUPPTA"/>
+      <xs:enumeration value="EXTERN_REFERENS"/>
+      <xs:enumeration value="DELTAGANDE_KURSPAKETERINGAR"/>
+      <xs:enumeration value="TILLSTAND"/>
+      <xs:enumeration value="UTBYTESALTERNATIV"/>
+      <xs:enumeration value="UTBYTESAVTAL"/>
+      <xs:enumeration value="UTBYTESPROGRAM"/>
+      <xs:enumeration value="LANDER"/>
+      <xs:enumeration value="EXTERNAPARTER"/>
+      <xs:enumeration value="VISA_UNDERLIGGANDE"/>
+      <xs:enumeration value="UNDERLIGGANDE_KURSPAKETERINGAR"/>
+      <xs:enumeration value="UNDERLIGGANDE_DELTAGARETILLSTAND"/>
+      <xs:enumeration value="BEHORIGHETSVILLKORSTYPER"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="UtdataMetadataTyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="METADATAFALT"/>
+      <xs:enumeration value="ANTAL_UNIKA_INDIVIDER"/>
+      <xs:enumeration value="KOLUMNTYP"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="UtdataMetadataFaltTyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="STUDENTUID"/>
+      <xs:enumeration value="POPOVER"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="UtdataPeriodTypRepresentation">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TILLFALLESTARTARINOM"/>
+      <xs:enumeration value="TILLFALLEPAGARINOM"/>
+      <xs:enumeration value="PAKETERINGSTILLFALLESTARTARINOM"/>
+      <xs:enumeration value="PAKETERINGSTILLFALLEPAGARINOM"/>
+      <xs:enumeration value="STUDIEPERIODSTARTARINOM"/>
+      <xs:enumeration value="STUDIEPERIODPAGARINOM"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Utdatatyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="studiedeltagande.utdata.deltagande.kurs"/>
+      <xs:enumeration value="studiedeltagande.utdata.studieaktivitet.och.finansiering"/>
+      <xs:enumeration value="studiedeltagande.utdata.aktor"/>
+      <xs:enumeration value="studiedeltagande.utdata.studieavgiftsbetalning"/>
+      <xs:enumeration value="studiedeltagande.utdata.uppehall"/>
+      <xs:enumeration value="studiedeltagande.utdata.utbytesstudier"/>
+      <xs:enumeration value="studiedeltagande.utdata.deltagande.kurspaketering"/>
+      <xs:enumeration value="studiedeltagande.utdata.behorighetsvillkor"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

@@ -4046,7 +4046,20 @@ representationer.]]></xs:documentation>
 
   <xs:complexType name="UtdataResultatrad">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="Metadata" type="xs:string"/>
+      <xs:element name="metadata">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" name="key" type="xs:int"/>
+                  <xs:element minOccurs="0" name="value" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="Varden" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
@@ -4265,8 +4278,8 @@ representationer.]]></xs:documentation>
   <xs:simpleType name="UtdataAvgransningstyp">
     <xs:restriction base="xs:string">
       <xs:enumeration value="UTBILDNINGSTYPSGRUPPER"/>
-      <xs:enumeration value="ORGANISATIONUIDS"/>
-      <xs:enumeration value="UTBILDNINGSINSTANSUIDS"/>
+      <xs:enumeration value="ORGANISATIONSENHETER"/>
+      <xs:enumeration value="KURSPAKETERINGAR"/>
       <xs:enumeration value="DOKUMENTERADAKTIVITET"/>
       <xs:enumeration value="REGISTRERING_ELLER_AKTIVITET_INOM"/>
       <xs:enumeration value="REGISTRERING_INOM"/>
@@ -4282,7 +4295,7 @@ representationer.]]></xs:documentation>
       <xs:enumeration value="SLUTAR_INOM"/>
       <xs:enumeration value="RATT_ATT_ATERUPPTA"/>
       <xs:enumeration value="EXTERN_REFERENS"/>
-      <xs:enumeration value="KURSPAKETERINGAR"/>
+      <xs:enumeration value="DELTAGANDE_KURSPAKETERINGAR"/>
       <xs:enumeration value="TILLSTAND"/>
       <xs:enumeration value="UTBYTESALTERNATIV"/>
       <xs:enumeration value="UTBYTESAVTAL"/>
@@ -4292,6 +4305,7 @@ representationer.]]></xs:documentation>
       <xs:enumeration value="VISA_UNDERLIGGANDE"/>
       <xs:enumeration value="UNDERLIGGANDE_KURSPAKETERINGAR"/>
       <xs:enumeration value="UNDERLIGGANDE_DELTAGARETILLSTAND"/>
+      <xs:enumeration value="BEHORIGHETSVILLKORSTYPER"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -4300,6 +4314,13 @@ representationer.]]></xs:documentation>
       <xs:enumeration value="METADATAFALT"/>
       <xs:enumeration value="ANTAL_UNIKA_INDIVIDER"/>
       <xs:enumeration value="KOLUMNTYP"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="UtdataMetadataFaltTyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="STUDENTUID"/>
+      <xs:enumeration value="POPOVER"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -4323,6 +4344,7 @@ representationer.]]></xs:documentation>
       <xs:enumeration value="studiedeltagande.utdata.uppehall"/>
       <xs:enumeration value="studiedeltagande.utdata.utbytesstudier"/>
       <xs:enumeration value="studiedeltagande.utdata.deltagande.kurspaketering"/>
+      <xs:enumeration value="studiedeltagande.utdata.behorighetsvillkor"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

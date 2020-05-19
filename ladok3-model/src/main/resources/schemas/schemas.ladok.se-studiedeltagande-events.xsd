@@ -35,6 +35,8 @@
 
   <xs:element name="BehorighetsvillkorEventPart" type="sd:BehorighetsvillkorEventPart"/>
 
+  <xs:element name="Behorighetsvillkorstyp" type="sd:Behorighetsvillkorstyp"/>
+
   <xs:element name="DokumenteratbeslutForIndividuellStudieplanEvent" type="sd:DokumenteratbeslutForIndividuellStudieplanEvent"/>
 
   <xs:element name="DokumenteratbeslutForUppnaddAndelEvent" type="sd:DokumenteratbeslutForUppnaddAndelEvent"/>
@@ -71,6 +73,8 @@
 
   <xs:element name="StudieavgiftsbetalningForPeriodEvent" type="sd:StudieavgiftsbetalningForPeriodEvent"/>
 
+  <xs:element name="Studieavgiftsbetalningsvarde" type="sd:Studieavgiftsbetalningsvarde"/>
+
   <xs:element name="StudiebehorighetEvent" type="sd:StudiebehorighetEvent"/>
 
   <xs:element name="StudiefinansieringIEvent" type="sd:StudiefinansieringIEvent"/>
@@ -80,6 +84,8 @@
   <xs:element name="UppehallEvent" type="sd:UppehallEvent"/>
 
   <xs:element name="UppehallUppdateratEvent" type="sd:UppehallUppdateratEvent"/>
+
+  <xs:element name="VerifierbartIntygEvent" type="sd:VerifierbartIntygEvent"/>
 
   <xs:complexType name="AktorEvent">
 <xs:annotation>
@@ -997,6 +1003,45 @@ Konsekvenser för verksamheten:
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="VerifierbartIntygEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelse som publiceras när ett verifierbart intyg utfärdas.
+<p>
+Händelsen publiceras när:
+<p>
+- ett verifierbart intyg utfärdas (registreringsintyg och förväntatdeltagandeintyg)
+<p>
+Innehåller information om:
+<p>
+- Referenser till filen på fileservice (filkategori, nyckel) samt uppgifter för verifiering
+(kontrollkod och verifierbart_tom)
+<p>
+Innehåller referenser till:
+<p>
+- Student, Lärosäte (-1 = nationellt intyg)
+<p>
+Konsekvenser för verksamheten:
+<p>
+-
+<p>
+Övrigt:
+<p>
+-]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SkapadTidpunkt" type="xs:dateTime"/>
+          <xs:element name="Filkategori" type="xs:string"/>
+          <xs:element minOccurs="0" name="Kontrollkod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Nyckel" type="xs:string"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="VerifierbartTOMDatum" type="xs:date"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="AndradPlaceringIPlan2Event">
 <xs:annotation>
 <xs:documentation><![CDATA[Händelsen publiceras när:
@@ -1182,6 +1227,25 @@ Konsekvenser för verksamheten:
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+
+  <xs:simpleType name="Behorighetsvillkorstyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="studiedeltagande.domain.behorighetsvillkor.typ.sb"/>
+      <xs:enumeration value="studiedeltagande.domain.behorighetsvillkor.typ.gba"/>
+      <xs:enumeration value="studiedeltagande.domain.behorighetsvillkor.typ.ov"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Studieavgiftsbetalningsvarde">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_betald"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_aktuell"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.betald"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.aterbetald"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_provad"/>
+      <xs:enumeration value="studiedeltagande.domain.studieavgiftsbetalningsvarde.undantag"/>
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:simpleType name="TypAvKopplingForGruppEventPart">
     <xs:restriction base="xs:string">

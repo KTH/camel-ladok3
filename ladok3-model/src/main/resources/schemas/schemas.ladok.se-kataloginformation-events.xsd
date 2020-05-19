@@ -93,6 +93,10 @@
 
   <xs:element name="PraktiktypEvent" type="ki:PraktiktypEvent"/>
 
+  <xs:element name="Regelvarde" type="ki:Regelvarde"/>
+
+  <xs:element name="RegelverkForUtbildningstyp" type="ki:RegelverkForUtbildningstyp"/>
+
   <xs:element name="SakerhetsnivaForAutentiseringEvent" type="ki:SakerhetsnivaForAutentiseringEvent"/>
 
   <xs:element name="StudiefinansieringEvent" type="ki:StudiefinansieringEvent"/>
@@ -1337,6 +1341,27 @@ efter avisering. Lärosäten aktiverar olika utbildningstyper genom att skapa lo
           <xs:element minOccurs="0" name="Regelverk" type="ki:RegelverkForUtbildningstyp"/>
           <xs:element minOccurs="0" name="Sorteringsordning" type="xs:int"/>
           <xs:element minOccurs="0" name="StudieordningID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RegelverkForUtbildningstyp">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Regelvarden" type="ki:Regelvarde"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Regelvarde">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element name="Regelnamn" type="xs:string"/>
+          <xs:element name="Varde" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

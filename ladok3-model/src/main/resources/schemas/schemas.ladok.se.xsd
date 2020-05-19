@@ -463,7 +463,8 @@ tjänsteanrop. Serialiserar behörighetsrelaterade informationen i UserContext.]
 <xs:documentation><![CDATA[Wrapper-klass för ett sökresultat. Denna klass måste subklassas i respektive tjänst och förses med följande:
 
 (XmlRootElement(name): = "MinDomanSokresultat")
-(XmlType(name): = "MinDomanSokresultat", namespace = BaseRepresentation.LADOK_NAMESPACE)]]></xs:documentation>
+(XmlType(name): = "MinDomanSokresultat", namespace = BaseRepresentation.LADOK_NAMESPACE)
+(com.fasterxml.jackson.annotation.JsonRootName(value): = "MinDomanSokresultat")]]></xs:documentation>
 </xs:annotation>
     <xs:complexContent>
       <xs:extension base="dap:Base">

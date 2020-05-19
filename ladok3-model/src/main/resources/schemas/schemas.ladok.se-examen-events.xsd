@@ -9,11 +9,21 @@
 
   <xs:element name="BevisbenamningEvent" type="ex:BevisbenamningEvent"/>
 
+  <xs:element name="Markning" type="ex:Markning"/>
+
   <xs:element name="MarkningEvent" type="ex:MarkningEvent"/>
+
+  <xs:element name="MarkningLista" type="ex:MarkningLista"/>
 
   <xs:element name="NationellBevistypEvent" type="ex:NationellBevistypEvent"/>
 
   <xs:element name="PreciseringEvent" type="ex:PreciseringEvent"/>
+
+  <xs:element name="PreciseringsInfo" type="ex:PreciseringsInfo"/>
+
+  <xs:element name="Preciseringsmojlighet" type="ex:Preciseringsmojlighet"/>
+
+  <xs:element name="Preciseringstyp" type="ex:Preciseringstyp"/>
 
   <xs:element name="PreciseringstypUtbyttEvent" type="ex:PreciseringstypUtbyttEvent"/>
 
@@ -28,6 +38,8 @@
   <xs:element name="UtfardatBevisRattatEvent" type="ex:UtfardatBevisRattatEvent"/>
 
   <xs:element name="UtfardatBevisUppdateradEvent" type="ex:UtfardatBevisUppdateradEvent"/>
+
+  <xs:element name="VerifierbartIntygEvent" type="ex:VerifierbartIntygEvent"/>
 
   <xs:complexType name="BevisbenamningEvent">
 <xs:annotation>
@@ -111,6 +123,51 @@ Konsekvenser för verksamheten:
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Preciseringsmojligheter" type="ex:Preciseringsmojlighet"/>
           <xs:element minOccurs="0" name="StudieordningID" type="xs:int"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Utbildningstyper" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MarkningLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="ex:Markning"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Markning">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence>
+          <xs:element name="Markningstyp" type="ex:Markningstyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Preciseringsmojlighet">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Obligatorisk" type="xs:boolean"/>
+          <xs:element minOccurs="0" ref="ex:Preciseringstyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Preciseringstyp">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="BenamningPlural" type="xs:string"/>
+          <xs:element minOccurs="0" name="KanGrupperasMed" type="xs:string"/>
+          <xs:element minOccurs="0" name="Namn" type="xs:string"/>
+          <xs:element name="Ordningstal" type="xs:int"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -244,6 +301,15 @@ Konsekvenser för verksamheten:
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="PreciseringsInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID" type="xs:string"/>
+      <xs:element minOccurs="0" name="Kod" type="xs:string"/>
+      <xs:element name="PreciseringsgrupperingID" type="xs:int"/>
+      <xs:element minOccurs="0" name="PreciseringstypsNamn" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="UtfardatBevisNyNationellBevistypEvent">
 <xs:annotation>
 <xs:documentation><![CDATA[Händelsen publiceras när:
@@ -334,4 +400,57 @@ Konsekvenser för verksamheten:
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="VerifierbartIntygEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelse som publiceras när ett verifierbart intyg utfärdas.
+<p>
+Händelsen publiceras när:
+<p>
+- ett verifierbart intyg utfärdas
+<p>
+Innehåller information om:
+<p>
+- Referenser till filen på fileservice (filkategori, nyckel) samt uppgifter för verifiering
+(kontrollkod och verifierbart_tom)
+<p>
+Innehåller referenser till:
+<p>
+- Student, Lärosäte (-1 = nationellt intyg)
+<p>
+Konsekvenser för verksamheten:
+<p>
+-
+<p>
+Övrigt:
+<p>
+-]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SkapadTidpunkt" type="xs:dateTime"/>
+          <xs:element name="Filkategori" type="xs:string"/>
+          <xs:element minOccurs="0" name="Kontrollkod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Nyckel" type="xs:string"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="VerifierbartTOMDatum" type="xs:date"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="BevisgrundtypRepresentation">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="examensbevis"/>
+      <xs:enumeration value="bevisovergenomfordutbildning"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Markningstyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="nivainomstudieordning"/>
+      <xs:enumeration value="beviskategori"/>
+      <xs:enumeration value="nationellexamensgrupp"/>
+    </xs:restriction>
+  </xs:simpleType>
 </xs:schema>
