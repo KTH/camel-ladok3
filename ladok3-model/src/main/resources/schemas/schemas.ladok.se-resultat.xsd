@@ -3026,9 +3026,13 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
           <xs:element minOccurs="0" name="Beslutsfattare" type="xs:string"/>
           <xs:element minOccurs="0" name="BetygsgradID" type="xs:int"/>
           <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="ExamineradOmfattning" type="xs:decimal"/>
+          <xs:element minOccurs="0" ref="rr:HanvisningTillBeslutshandling"/>
           <xs:element minOccurs="0" name="UnderlagetsKlarmarkeringsinformation" type="rr:Klarmarkeringsinformation"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Noteringar" type="rr:Notering"/>
           <xs:element minOccurs="0" name="NyttResultat" type="rr:Resultat"/>
           <xs:element minOccurs="0" name="Processtatus" type="xs:int"/>
+          <xs:element minOccurs="0" ref="rr:Projekttitel"/>
           <xs:element minOccurs="0" name="ResultatUIDForNyttAndratResultat" type="xs:string"/>
           <xs:element name="ResultatUIDForResultatSomSkaAndras" type="xs:string"/>
         </xs:sequence>
@@ -3042,6 +3046,10 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
         <xs:sequence>
           <xs:element minOccurs="0" name="BetygsgradID" type="xs:int"/>
           <xs:element minOccurs="0" name="Examinationsdatum" type="xs:string"/>
+          <xs:element minOccurs="0" name="ExamineradOmfattning" type="xs:decimal"/>
+          <xs:element minOccurs="0" ref="rr:HanvisningTillBeslutshandling"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Noteringar" type="rr:Notering"/>
+          <xs:element minOccurs="0" ref="rr:Projekttitel"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

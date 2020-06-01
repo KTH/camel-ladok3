@@ -37,6 +37,8 @@
 
   <xs:element name="Behorighetsvillkorstyp" type="sd:Behorighetsvillkorstyp"/>
 
+  <xs:element name="DeltagandePeriod" type="sd:DeltagandePeriod"/>
+
   <xs:element name="DokumenteratbeslutForIndividuellStudieplanEvent" type="sd:DokumenteratbeslutForIndividuellStudieplanEvent"/>
 
   <xs:element name="DokumenteratbeslutForUppnaddAndelEvent" type="sd:DokumenteratbeslutForUppnaddAndelEvent"/>
@@ -44,6 +46,8 @@
   <xs:element name="ForvantatDeltagandeBorttagetEvent" type="sd:ForvantatDeltagandeBorttagetEvent"/>
 
   <xs:element name="ForvantatDeltagandeSkapadEvent" type="sd:ForvantatDeltagandeSkapadEvent"/>
+
+  <xs:element name="ForvantatDeltagandeUppdateradEvent" type="sd:ForvantatDeltagandeUppdateradEvent"/>
 
   <xs:element name="GruppEvent" type="sd:GruppEvent"/>
 
@@ -375,15 +379,24 @@ under förutsättning att eventuella villkor uppfylls]]></xs:documentation>
   <xs:complexType name="ForvantatDeltagandeSkapadEvent">
 <xs:annotation>
 <xs:documentation><![CDATA[Händelsen publiceras när:
+<p>
 - Ett förväntat deltagande ("antagning") skapas av någon anledning, t.ex. pga ett val eller att enutbildningstillfällesstruktur anger
 att en antagning ska skapas automatiskt. Den skapas även vid externa antagningar.
+<p>
 Innehåller information om:
+<p>
 - kurspaketeringstillfällen där denna antagning ingår, senare del-markering, lista av behörighetsvillkor, studieavgiftsbetalning
+<p>
 Innehåller referenser till:
+<p>
 - Student, utbildningstillfälle, tillfällesantagning, tidigare tillfällesantagning
+<p>
 Konsekvenser för verksamheten:
+<p>
 - ...
+<p>
 Övrigt:
+<p>
 - Förväntad deltagare är den person som genom ett antagningsbeslut eller motsvarande medgivits tillträde till utbildningstillfälle
 under förutsättning att eventuella villkor uppfylls]]></xs:documentation>
 </xs:annotation>
@@ -401,14 +414,124 @@ under förutsättning att eventuella villkor uppfylls]]></xs:documentation>
 <xs:annotation>
 <xs:documentation><![CDATA[Anger inom vilket kurspaketeringstillfälle/vilka kurspaketeringstillfällen det förväntade deltagandet ligger. Listan är tom för
 fristående kurser.
+<p>
 På samma sätt som för InomKurspaketering så ligger det översta tillfället ligger sist, det vill säga:
+<p>
 För en registrering inom ett programtillfälle innehåller listan: programtillfälle-UID
+<p>
 För en registrering inom ett inriktningstillfälle innehåller listan: inriktningstillfälle-UID, programtillfälle-UID
+<p>
 De paketerande utbildningstillfällena som antagningen sker inom, i ordning från närmaste till yttersta paketering. <br>
 T.ex. [inriktningstillfälle-uid, programtillfälle-uid]<br>
 Listan är tom för fristående kurser]]></xs:documentation>
 </xs:annotation>
 </xs:element>
+          <xs:element minOccurs="0" name="Perioddeltaganden">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Perioddeltagande" type="sd:DeltagandePeriod"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Senaredelmarkering" type="xs:boolean"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Studieavgiftsbetalning" type="sd:Studieavgiftsbetalningsvarde">
+<xs:annotation>
+<xs:documentation><![CDATA[Den studieavgiftsbetalning det förväntade deltagandet hade när det skapades. OBS: Är aldrig null för kurstillfällen, är alltid
+null för kurspaketeringstillfällen.]]></xs:documentation>
+</xs:annotation>
+</xs:element>
+          <xs:element minOccurs="0" name="TidigareTillfallesantagningUID" type="xs:string"/>
+          <xs:element name="TillfallesantagningUID" type="xs:string">
+<xs:annotation>
+<xs:documentation><![CDATA[UID till tillfällesantagningen som blivit ett förväntat deltagande för studenten]]></xs:documentation>
+</xs:annotation>
+</xs:element>
+          <xs:element name="UtbildningstillfalleUID" type="xs:string">
+<xs:annotation>
+<xs:documentation><![CDATA[Utbildningstillfället som som studenten blivit antagen på.]]></xs:documentation>
+</xs:annotation>
+</xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DeltagandePeriod">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element name="Anpassat" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string"/>
+          <xs:element minOccurs="0" name="Periodbenamningar" type="base:Benamningar"/>
+          <xs:element name="PerioddeltagandeUID" type="xs:string"/>
+          <xs:element name="Periodindex" type="xs:int"/>
+          <xs:element minOccurs="0" name="Registreringsperiod" type="base:Datumperiod"/>
+          <xs:element name="Tillstand" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningsPeriodFran" type="xs:date"/>
+          <xs:element minOccurs="0" name="UtbildningsPeriodTill" type="xs:date"/>
+          <xs:element minOccurs="0" name="AterkalladDatum" type="xs:date"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ForvantatDeltagandeUppdateradEvent">
+<xs:annotation>
+<xs:documentation><![CDATA[Händelsen publiceras när:
+<p>
+- Ett förväntat deltagande ("antagning") uppdateras av någon anledning, t.ex. pga att man ändrar informationen i ett perioddeltagande.
+<p>
+Innehåller information om:
+<p>
+- kurspaketeringstillfällen där denna antagning ingår, senare del-markering, lista av behörighetsvillkor, studieavgiftsbetalning
+<p>
+Innehåller referenser till:
+<p>
+- Student, utbildningstillfälle, tillfällesantagning, tidigare tillfällesantagning
+<p>
+Konsekvenser för verksamheten:
+<p>
+- ...
+<p>
+Övrigt:
+<p>
+- Förväntad deltagare är den person som genom ett antagningsbeslut eller motsvarande medgivits tillträde till utbildningstillfälle
+under förutsättning att eventuella villkor uppfylls]]></xs:documentation>
+</xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="events:BaseEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BehorighetsvillkorLista">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="sd:BehorighetsvillkorEventPart"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="PaketerandeUtbildningstillfalleUID" type="xs:string">
+<xs:annotation>
+<xs:documentation><![CDATA[Anger inom vilket kurspaketeringstillfälle/vilka kurspaketeringstillfällen det förväntade deltagandet ligger. Listan är tom för
+fristående kurser.
+<p>
+På samma sätt som för InomKurspaketering så ligger det översta tillfället ligger sist, det vill säga:
+<p>
+För en registrering inom ett programtillfälle innehåller listan: programtillfälle-UID
+<p>
+För en registrering inom ett inriktningstillfälle innehåller listan: inriktningstillfälle-UID, programtillfälle-UID
+<p>
+De paketerande utbildningstillfällena som antagningen sker inom, i ordning från närmaste till yttersta paketering. <br>
+T.ex. [inriktningstillfälle-uid, programtillfälle-uid]<br>
+Listan är tom för fristående kurser]]></xs:documentation>
+</xs:annotation>
+</xs:element>
+          <xs:element minOccurs="0" name="Perioddeltaganden">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Perioddeltaganden" type="sd:DeltagandePeriod"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
           <xs:element name="Senaredelmarkering" type="xs:boolean"/>
           <xs:element name="StudentUID" type="xs:string"/>
           <xs:element minOccurs="0" name="Studieavgiftsbetalning" type="sd:Studieavgiftsbetalningsvarde">

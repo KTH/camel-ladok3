@@ -185,8 +185,6 @@
 
   <xs:element name="SokkriterierDeltagandeKurspaketeringUtdata" type="sd:SokkriterierDeltagandeKurspaketeringUtdata"/>
 
-  <xs:element name="SokkriterierPerioddeltagandeKursUtdata" type="sd:SokkriterierPerioddeltagandeKursUtdata"/>
-
   <xs:element name="SokparametrarDeltagande" type="sd:SokparametrarDeltagande"/>
 
   <xs:element name="SokparametrarDeltagandeForRegistrering" type="sd:SokparametrarDeltagandeForRegistrering"/>
@@ -197,8 +195,6 @@
 
   <xs:element name="SokparametrarKurspaketeringstillfallesdeltagandesummering" type="sd:SokparametrarKurspaketeringstillfallesdeltagandesummering"/>
 
-  <xs:element name="SokresultatAktor" type="sd:SokresultatAktor"/>
-
   <xs:element name="SokresultatDeltagandeKurs" type="sd:SokresultatDeltagandeKurs"/>
 
   <xs:element name="SokresultatDeltagandeKurspaketering" type="sd:SokresultatDeltagandeKurspaketering"/>
@@ -206,10 +202,6 @@
   <xs:element name="SokresultatDeltagare" type="sd:SokresultatDeltagare"/>
 
   <xs:element name="SokresultatEjHanteradAntagning" type="sd:SokresultatEjHanteradAntagning"/>
-
-  <xs:element name="SokresultatPerioddeltagandeKurs" type="sd:SokresultatPerioddeltagandeKurs"/>
-
-  <xs:element name="SokresultatStudieAktivitetOchFinansiering" type="sd:SokresultatStudieAktivitetOchFinansiering"/>
 
   <xs:element name="SokresultatStudieavgiftsbetalningPaKurstillfallesantagningar" type="sd:SokresultatStudieavgiftsbetalningPaKurstillfallesantagningar"/>
 
@@ -1192,6 +1184,7 @@ lista i framtiden.]]></xs:documentation>
           <xs:element name="Anpassat" type="xs:boolean"/>
           <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string"/>
           <xs:element minOccurs="0" name="Periodbenamningar" type="base:Benamningar"/>
+          <xs:element name="PerioddeltagandeUID" type="xs:string"/>
           <xs:element name="Periodindex" type="xs:int"/>
           <xs:element minOccurs="0" name="Registreringsperiod" type="base:Datumperiod"/>
           <xs:element name="Tillstand" type="xs:string"/>
@@ -2569,34 +2562,6 @@ representationer.]]></xs:documentation>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="SokkriterierPerioddeltagandeKursUtdata">
-    <xs:complexContent>
-      <xs:extension base="dap:Base">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="deltagaretillstand" type="sd:DeltagaretillstandEnum"/>
-          <xs:element maxOccurs="unbounded" name="kurser" type="xs:string"/>
-          <xs:element minOccurs="0" name="limit" type="xs:int"/>
-          <xs:element minOccurs="0" name="page" type="xs:int"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="sd:Perioddeltagaretillstand"/>
-          <xs:element minOccurs="0" name="StudieperiodPagarInom" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="StudieperiodStartarInom" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="TillfallePagarInom" type="base:Datumperiod"/>
-          <xs:element minOccurs="0" name="TillfalleStartarInom" type="base:Datumperiod"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SokresultatAktor">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="sd:AktorUtdata"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="SokresultatDeltagandeKurs">
     <xs:complexContent>
       <xs:extension base="base:Sokresultat">
@@ -2612,26 +2577,6 @@ representationer.]]></xs:documentation>
       <xs:extension base="base:Sokresultat">
         <xs:sequence>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="sd:DeltagandeKurspaketeringUtdata"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SokresultatPerioddeltagandeKurs">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="sd:PerioddeltagandeKursUtdata"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="SokresultatStudieAktivitetOchFinansiering">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="sd:StudieaktivitetUtdata"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
