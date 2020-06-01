@@ -37,6 +37,7 @@ import org.junit.Test;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
+import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
 
 @Ignore("Does not work without connection to Ladok")
 public class Ladok3StudiedeltagandeServiceTest {
@@ -78,7 +79,7 @@ public class Ladok3StudiedeltagandeServiceTest {
         params.put("datumperiod", "2018-01-16_2018-06-04");
         params.put("limit", 5);
 
-        Iterator<StudieaktivitetUtdata> iterator = studiedeltagandeService.utdataStudieaktivitetOchFinansieringIteraterable(params).iterator();
+        Iterator<UtdataResultatrad> iterator = studiedeltagandeService.utdataStudieaktivitetOchFinansieringIteraterable(params).iterator();
         assertNotNull(iterator);
         assertTrue(iterator.hasNext());
 

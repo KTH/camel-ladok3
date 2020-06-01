@@ -19,6 +19,7 @@ import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
+import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
 
 public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrapper {
     private static final Logger log = LoggerFactory.getLogger(Ladok3StudiedeltagandeServiceWrapper.class);
@@ -80,7 +81,7 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
 
         log.debug("Getting Ladok data for studieaktivetet och finansiering request with params: {}",
                 params);
-        Iterator<StudieaktivitetUtdata> fromLadok =
+        Iterator<UtdataResultatrad> fromLadok =
                 service.utdataStudieaktivitetOchFinansieringIteraterable(params).iterator();
         exchange.getIn().setBody(fromLadok);
     }

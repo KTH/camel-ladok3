@@ -26,9 +26,10 @@ package se.kth.infosys.ladok3;
 import java.util.Map;
 
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
-import se.ladok.schemas.studiedeltagande.SokresultatStudieAktivitetOchFinansiering;
-import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
+import se.ladok.schemas.studiedeltagande.UtdataResultat;
+import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
+import se.ladok.schemas.studiedeltagande.Utdatafraga;
 
 /**
  * Interface representing the Ladok studiedeltagande service.
@@ -50,7 +51,7 @@ public interface StudiedeltagandeService extends Ladok3Service {
 
     /**
      * Sök studieaktivitet och finansiering.
-     * 
+     *
      * Anropar /studiedeltagande/utdata/studieaktivitetochfinansiering med frågeparametrar
      * enligt params. Se Ladok REST-dokumentation för mer information om parametrar.
      *
@@ -62,20 +63,20 @@ public interface StudiedeltagandeService extends Ladok3Service {
      *     studiedeltagandeService.utdataStudieaktivitetOchFinansiering(params);
      * }
      * </pre>
-     * 
-     * @param params A map between parameter strings and their object values.
+     *
+     * @param utdatafraga A <code>Utdatafraga</code>.
      * @return The search result.
      */
-    public SokresultatStudieAktivitetOchFinansiering utdataStudieaktivitetOchFinansiering(final Map<String, Object> params);
+    public UtdataResultat utdataStudieaktivitetOchFinansiering(final Utdatafraga utdatafraga);
 
     /**
-     * Higher abstraction of {@link #utdataStudieaktivitetOchFinansiering} method which returns 
+     * Higher abstraction of {@link #utdataStudieaktivitetOchFinansiering} method which returns
      * an iterable of StudieaktivitetUtdata hiding all paging related issues.
-     * 
+     *
      * @param params A map between parameter strings and their object values.
      * @return an iterable for all search results matching params.
      */
-    public Iterable<StudieaktivitetUtdata> utdataStudieaktivitetOchFinansieringIteraterable(final Map<String, Object> params);
+    public Iterable<UtdataResultatrad> utdataStudieaktivitetOchFinansieringIteraterable(final Map<String, Object> params);
 
     /**
      * Hämta alla kurstillfällesdeltaganden för en student.

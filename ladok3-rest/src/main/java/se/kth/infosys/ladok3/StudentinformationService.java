@@ -30,7 +30,6 @@ import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresen
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 import se.ladok.schemas.studentinformation.Studenthistorikposter;
-import se.ladok.schemas.studiedeltagande.SokresultatStudieAktivitetOchFinansiering;
 
 /**
  * Interface representing the Ladok studentinformation service.
@@ -65,8 +64,8 @@ public interface StudentinformationService extends Ladok3Service {
     public Studenthistorikposter studentHistorik(final String uid);
 
     /**
-     * Calls /student/filtrera with query parameters as specified in the params Map. 
-     * See Ladok REST documentation for more information about parameters. Only 
+     * Calls /student/filtrera with query parameters as specified in the params Map.
+     * See Ladok REST documentation for more information about parameters. Only
      * difference is that this method will default to "limit=400" and "page=1"
      * unless something else is specified. E.g:
      *
@@ -78,8 +77,8 @@ public interface StudentinformationService extends Ladok3Service {
      *     studentInformationService.studentFiltrera(params);
      * }
      * </pre>
-     * 
-     * Objects passed as values will be rendered into parameters using their 
+     *
+     * Objects passed as values will be rendered into parameters using their
      * toString() method.
      *
      * @param params A map between parameter strings and their object values.
@@ -88,19 +87,19 @@ public interface StudentinformationService extends Ladok3Service {
     public SokresultatStudentinformationRepresentation studentFiltrera(final Map<String, Object> params);
 
     /**
-     * Higher abstraction of {@link #studentFiltrera} method which returns 
+     * Higher abstraction of {@link #studentFiltrera} method which returns
      * an iterable of StudentISokresultat hiding all paging related issues.
-     * 
+     *
      * @param params A map between parameter strings and their object values.
      * @return an iterable for all search results matching params.
      */
     public Iterable<StudentISokresultat> studentFiltreraIterable(final Map<String, Object> params);
 
     /**
-     * Higher abstraction of {@link #studentFiltrera} method which returns 
+     * Higher abstraction of {@link #studentFiltrera} method which returns
      * an iterable of Student hiding all paging related and call to student information
      * service issues.
-     * 
+     *
      * @param params A map between parameter strings and their object values.
      * @return an iterable for all search results matching params.
      */
