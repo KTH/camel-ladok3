@@ -95,7 +95,7 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
      * {@inheritDoc}
      */
     public UtdataResultat utdataStudieaktivitetOchFinansiering(final Utdatafraga utdatafraga) {
-        WebTarget request = target.path("/utdata/" + Utdatatyp.STUDIEDELTAGANDE_UTDATA_STUDIEAKTIVITET_OCH_FINANSIERING);
+        WebTarget request = target.path("/utdata/" + Utdatatyp.STUDIEDELTAGANDE_UTDATA_STUDIEAKTIVITET_OCH_FINANSIERING.value());
 
         Utdatafraga fraga = utdatafraga;
         if(fraga == null) {
