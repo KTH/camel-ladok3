@@ -23,6 +23,7 @@
  */
 package se.kth.infosys.ladok3;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -38,6 +39,7 @@ import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
+import se.ladok.schemas.studiedeltagande.Utdatafraga;
 
 @Ignore("Does not work without connection to Ladok")
 public class Ladok3StudiedeltagandeServiceTest {
@@ -86,6 +88,17 @@ public class Ladok3StudiedeltagandeServiceTest {
         for (int i = 0; i < 7; i++) {
             assertNotNull(iterator.next());
         }
+    }
+
+    @Test
+    public void testCreateUtdatafraga() {
+      Map<String, Object> params = new HashMap<String, Object>();
+      params.put("datumperiod", "2018-01-16_2018-06-04");
+      params.put("limit", 5);
+      Utdatafraga fraga = studiedeltagandeService.createUtdatafraga(params);
+
+      assertNotNull(fraga);
+      assertEquals(5, fraga.getSidstorlek());
     }
 
     @Test

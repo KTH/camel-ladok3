@@ -35,21 +35,12 @@ public class StudieaktivitetUtdataResultat implements Iterable<UtdataResultatrad
                 final StudiedeltagandeService studiedeltagandeService,
                 final Map<String, Object> params) {
             this.service = studiedeltagandeService;
-            utdatafraga = new Utdatafraga();
-
-            if (params.get("limit") != null) {
-                if (params.get("limit") instanceof Integer) {
-                    this.limit = (Integer) params.get("limit");
-                } else {
-                    this.limit = Integer.parseInt((String) params.get("limit"));
-                }
-            }
+            utdatafraga = service.createUtdatafraga(params);
 
             getNextPage();
         }
 
         protected void getNextPage() {
-            utdatafraga.setSidstorlek(limit);
             utdatafraga.setSida(++page);
             result = service.utdataStudieaktivitetOchFinansiering(utdatafraga);
             iterator = result.getResultatrader().iterator();

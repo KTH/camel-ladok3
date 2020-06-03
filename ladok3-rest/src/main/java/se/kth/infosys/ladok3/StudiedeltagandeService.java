@@ -68,6 +68,7 @@ public interface StudiedeltagandeService extends Ladok3Service {
      * @return The search result.
      */
     public UtdataResultat utdataStudieaktivitetOchFinansiering(final Utdatafraga utdatafraga);
+    public Utdatafraga createUtdatafraga(Map<String, Object> params);
 
     /**
      * Higher abstraction of {@link #utdataStudieaktivitetOchFinansiering} method which returns
