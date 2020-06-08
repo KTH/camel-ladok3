@@ -13,7 +13,7 @@ import java.util.Date;
  * Read more here:
  * <a href="https://jaxb.java.net/guide/Using_different_datatypes.html">https://jaxb.java.net/guide/Using_different_datatypes.html</a>
  */
-public class DateParseAdapter {
+public class DateAdapter {
 
   private static final ZoneId ZONE_ID = ZoneId.of("Europe/Stockholm");
 
