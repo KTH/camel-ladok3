@@ -20,6 +20,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="RESULTATINFORMATION"/>
       <xs:enumeration value="ATTESTERINGSINFORMATION"/>
+      <xs:enumeration value="TILLDELA_ARENDE"/>
     </xs:restriction>
   </xs:simpleType>
 
