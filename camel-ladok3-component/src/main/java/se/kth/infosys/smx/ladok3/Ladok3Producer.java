@@ -34,6 +34,7 @@ import org.apache.camel.support.ExchangeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import se.kth.infosys.smx.ladok3.internal.Ladok3KataloginformationServiceWrapper;
+import se.kth.infosys.smx.ladok3.internal.Ladok3ResultatServiceWrapper;
 import se.kth.infosys.smx.ladok3.internal.Ladok3ServiceWrapper;
 import se.kth.infosys.smx.ladok3.internal.Ladok3StudentInformationServiceWrapper;
 import se.kth.infosys.smx.ladok3.internal.Ladok3StudiedeltagandeServiceWrapper;
@@ -67,6 +68,8 @@ public class Ladok3Producer extends DefaultProducer {
         new Ladok3StudiedeltagandeServiceWrapper(endpoint.getHost(), path, endpoint.getContext()));
     services.put("kataloginformation",
         new Ladok3KataloginformationServiceWrapper(endpoint.getHost(), path, endpoint.getContext()));
+    services.put("resultat",
+        new Ladok3ResultatServiceWrapper(endpoint.getHost(), path, endpoint.getContext()));
   }
 
   public void process(Exchange exchange) throws Exception {
