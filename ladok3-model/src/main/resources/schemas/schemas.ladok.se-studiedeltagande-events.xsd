@@ -528,7 +528,7 @@ Listan är tom för fristående kurser]]></xs:documentation>
           <xs:element minOccurs="0" name="Perioddeltaganden">
             <xs:complexType>
               <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="Perioddeltaganden" type="sd:DeltagandePeriod"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Perioddeltagande" type="sd:DeltagandePeriod"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>

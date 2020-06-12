@@ -1700,6 +1700,7 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
       <xs:extension base="dap:Base">
         <xs:sequence>
           <xs:element name="AttestantUID" type="xs:string"/>
+          <xs:element name="Avisera" type="xs:boolean"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -3417,6 +3418,7 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
           <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="Enhet" type="xs:string"/>
           <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
           <xs:element minOccurs="0" name="Kurskod" type="xs:string"/>
           <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
         </xs:sequence>
@@ -3481,6 +3483,7 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
+          <xs:element minOccurs="0" name="GallandeKurstillfalle" type="rr:Kurstillfalle"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Kursversioner" type="rr:StudentensKurserKursversion"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="NoteringsdefinitionerKoppladeTillResultat" type="rr:Noteringsdefinition"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="ResultatUtanKopplingTillKursversion" type="rr:StudentensKurserUtbildningsinstans"/>

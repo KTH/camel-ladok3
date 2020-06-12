@@ -381,7 +381,7 @@
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element name="Anvandarnamn" type="xs:string"/>
-          <xs:element name="Efternamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
           <xs:element name="Fornamn" type="xs:string"/>
         </xs:sequence>
       </xs:extension>

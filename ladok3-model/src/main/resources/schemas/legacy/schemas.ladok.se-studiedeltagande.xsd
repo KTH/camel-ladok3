@@ -225,6 +225,8 @@
 
   <xs:element name="SammanfattatTillstand" type="sd:SammanfattatTillstand"/>
 
+  <xs:element name="SammanfattatTillstandKurstillfallesdeltagande" type="sd:SammanfattatTillstandKurstillfallesdeltagande"/>
+
   <xs:element name="SgStudieaktivitet" type="sd:SgStudieaktivitet"/>
 
   <xs:element name="SgStudieaktivitetLista" type="sd:SgStudieaktivitetLista"/>
@@ -257,11 +259,7 @@
 
   <xs:element name="SokresultatEjHanteradAntagning" type="sd:SokresultatEjHanteradAntagning"/>
 
-  <xs:element name="SokresultatStudieavgiftsbetalningPaKurstillfallesantagningar" type="sd:SokresultatStudieavgiftsbetalningPaKurstillfallesantagningar"/>
-
   <xs:element name="SokresultatTillfallesantagningMedBehorighetsvillkor" type="sd:SokresultatTillfallesantagningMedBehorighetsvillkor"/>
-
-  <xs:element name="SokresultatUppehallUtdata" type="sd:SokresultatUppehallUtdata"/>
 
   <xs:element name="SokresultatUtbildningsinformation" type="sd:SokresultatUtbildningsinformation"/>
 
@@ -871,7 +869,7 @@ Listan är tom för fristående kurser]]></xs:documentation>
           <xs:element minOccurs="0" name="Perioddeltaganden">
             <xs:complexType>
               <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="Perioddeltaganden" type="sd:DeltagandePeriod"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Perioddeltagande" type="sd:DeltagandePeriod"/>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
@@ -1908,6 +1906,7 @@ EnkeltGrunddatavärdeRepresentation är lite för tungviktig.]]></xs:documentati
   <xs:complexType name="TillstandKurs">
     <xs:sequence>
       <xs:element minOccurs="0" name="Sammanfattat" type="xs:string"/>
+      <xs:element minOccurs="0" name="Sammanfattattillstand" type="sd:SammanfattatTillstandKurstillfallesdeltagande"/>
       <xs:element minOccurs="0" name="Tillfallesdeltagande" type="xs:string"/>
       <xs:element minOccurs="0" name="Utbildning" type="xs:string"/>
     </xs:sequence>
@@ -3788,37 +3787,6 @@ representationer.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="SokresultatStudieavgiftsbetalningPaKurstillfallesantagningar">
-<xs:annotation>
-<xs:documentation><![CDATA[Representation för en "säck" som håller samman utdata-projektioner för studieavgiftsbetalning på kurstillfällesantagningar]]></xs:documentation>
-</xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="sd:StudieavgiftsbetalningPaKurstillfallesantagning">
-<xs:annotation>
-<xs:documentation><![CDATA[Sorterad lista enligt begäran med projektioner som kan vara en delmängd av det totala resultatet, givet paginering]]></xs:documentation>
-</xs:annotation>
-</xs:element>
-          <xs:element name="StudentLista">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" name="Student" type="base:Student"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-          <xs:element name="UtbildningsinformationLista">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" ref="sd:Utbildningsinformation"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="SokkriterierDeltagandeKursUtdata">
     <xs:complexContent>
       <xs:extension base="dap:Base">
@@ -3935,42 +3903,6 @@ representationer.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="SokresultatUppehallUtdata">
-    <xs:complexContent>
-      <xs:extension base="base:Sokresultat">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Resultat" type="sd:UppehallUtdata">
-<xs:annotation>
-<xs:documentation><![CDATA[Sorterad lista enligt begäran med projektioner som kan vara en delmängd av det totala resultatet, givet paginering]]></xs:documentation>
-</xs:annotation>
-</xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UppehallUtdata">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="StudentEfternamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="ExternReferens" type="xs:string"/>
-          <xs:element minOccurs="0" name="StudentFornamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="KurspaketeringEngelskBenamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="KurspaketeringSvenskBenamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="KurspaketeringUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Kurspaketeringskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="StudentPersonnummer" type="xs:string"/>
-          <xs:element name="RattAttAterupptaStudier" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="Slutdatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Startdatum" type="xs:date"/>
-          <xs:element name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="UppehallUID" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="SokresultatUtbytesstudie">
     <xs:complexContent>
       <xs:extension base="base:Sokresultat">
@@ -4008,6 +3940,28 @@ representationer.]]></xs:documentation>
               </xs:sequence>
             </xs:complexType>
           </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UppehallUtdata">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="StudentEfternamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="ExternReferens" type="xs:string"/>
+          <xs:element minOccurs="0" name="StudentFornamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="KurspaketeringEngelskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="KurspaketeringSvenskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="KurspaketeringUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Kurspaketeringskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="StudentPersonnummer" type="xs:string"/>
+          <xs:element name="RattAttAterupptaStudier" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Slutdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Startdatum" type="xs:date"/>
+          <xs:element name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="UppehallUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -4194,6 +4148,18 @@ representationer.]]></xs:documentation>
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="SammanfattatTillstandKurstillfallesdeltagande">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.ej_paborjad"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.registrerad"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.omregistrerad"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.tidigtavbrott"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.avbrott"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.aterbud"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.avklarad"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="DeltagaretillstandEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="EJ_PABORJAD"/>
@@ -4353,6 +4319,7 @@ representationer.]]></xs:documentation>
       <xs:enumeration value="UNDERLIGGANDE_KURSPAKETERINGAR"/>
       <xs:enumeration value="UNDERLIGGANDE_DELTAGARETILLSTAND"/>
       <xs:enumeration value="BEHORIGHETSVILLKORSTYPER"/>
+      <xs:enumeration value="UTBILDNINGSTILLFALLEN"/>
     </xs:restriction>
   </xs:simpleType>
 
