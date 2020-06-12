@@ -55,6 +55,9 @@ public interface ResultatService extends Ladok3Service {
    */
   public SokresultatStudieresultatResultat sokresultatStudieresultatResultat(final String aktivitetstillfalleUID, final Map<String, Object> sokVarden); 
 
+  /**
+   * Creates a representation for SokresultatStudieresultatResultat 
+   */
   public StudieresultatForRapporteringPaAktivitetstillfalleSokVarden createSokresultatStudieResultatSokVarden(Map<String, Object> params); 
 
 }

@@ -34,8 +34,6 @@ public class Ladok3ResultatServiceWrapper implements Ladok3ServiceWrapper {
     Matcher matcher = URL_PATTERN.matcher(path);
     if (matcher.matches()) {
         pathOperation = matcher.group("operation").toLowerCase();
-
-        log.info("Performing path operation {}", pathOperation);
     }
   }
 
@@ -53,7 +51,7 @@ public class Ladok3ResultatServiceWrapper implements Ladok3ServiceWrapper {
         handleSokresultatStudieresultatResultat(exchange);
         break;
       default:
-        log.info("Switch case unsupported");
+        log.warn("Unsupported operation");
     }
   }
 
@@ -69,7 +67,6 @@ public class Ladok3ResultatServiceWrapper implements Ladok3ServiceWrapper {
     exchange.getMessage().setBody(fromLadok);
   }
 
-  // /resultat/aktivitetstillfalle/student/{studentUID}
   private void handleAktivitetstillfalleForStudent(final Exchange exchange) throws Exception {
     String uid = exchange.getMessage().getHeader(Ladok3Message.Header.KeyValue, String.class);
 
