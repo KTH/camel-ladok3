@@ -39,6 +39,7 @@ import se.ladok.schemas.studiedeltagande.UtdataResultat;
 import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
 import se.ladok.schemas.studiedeltagande.Utdatafraga;
 import se.ladok.schemas.studiedeltagande.Utdatatyp;
+import se.ladok.schemas.studiedeltagande.UtdataAvgransningarLista.UtdataAvgransningar;
 
 /**
  * Real implementation of the Ladok studiedeltagande  service. It is using JAX RS
@@ -116,6 +117,7 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
     public Utdatafraga createUtdatafraga(Map<String, Object> params) {
       Utdatafraga fraga = new Utdatafraga();
       fraga.setUtdataAvgransningar(new UtdataAvgransningarLista());
+      fraga.getUtdataAvgransningar().setUtdataAvgransningar(new UtdataAvgransningar());
       if(params != null) {
         if(params.get("page") != null) {
           fraga.setSida((int)params.get("page"));
