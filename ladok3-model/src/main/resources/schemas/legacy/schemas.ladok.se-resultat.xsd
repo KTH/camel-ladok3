@@ -237,6 +237,8 @@
 
   <xs:element name="Medarbetarekoppling" type="rr:Medarbetarekoppling"/>
 
+  <xs:element name="Metadatavarde" type="rr:Metadatavarde"/>
+
   <xs:element name="Moduldetalj" type="rr:Moduldetalj"/>
 
   <xs:element name="MojligTillgodoraknandegrund" type="rr:MojligTillgodoraknandegrund"/>
@@ -583,7 +585,7 @@
 
   <xs:element name="UtdataAvgransning" type="rr:UtdataAvgransning"/>
 
-  <xs:element name="UtdataAvgransningar" type="rr:UtdataAvgransningar"/>
+  <xs:element name="UtdataAvgransningarLista" type="rr:UtdataAvgransningarLista"/>
 
   <xs:element name="UtdataMetadata" type="rr:UtdataMetadata"/>
 
@@ -4749,11 +4751,17 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="UtdataAvgransningar">
+  <xs:complexType name="UtdataAvgransningarLista">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="UtdataAvgransningar" type="rr:UtdataAvgransning"/>
+          <xs:element minOccurs="0" name="UtdataAvgransningar">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:UtdataAvgransning"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -4763,7 +4771,7 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" ref="rr:UtdataAvgransningar"/>
+          <xs:element minOccurs="0" name="UtdataAvgransningar" type="rr:UtdataAvgransningarLista"/>
           <xs:element name="Sida" type="xs:int"/>
           <xs:element name="Sidstorlek" type="xs:int"/>
         </xs:sequence>
@@ -4782,22 +4790,69 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="MetadataDataObjektfalt">
+    <xs:complexContent>
+      <xs:extension base="rr:UtdataMetadataData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Falt" type="xs:string"/>
+          <xs:element minOccurs="0" name="Faltdata" type="rr:UtdataMetadataData"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="UtdataMetadataData">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="MetadataDataVarde">
+    <xs:complexContent>
+      <xs:extension base="rr:UtdataMetadataData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Varde" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MetadataDataLista">
+    <xs:complexContent>
+      <xs:extension base="rr:UtdataMetadataData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Vardelista">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Element" type="rr:UtdataMetadataData"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="UtdataMetadata">
     <xs:sequence>
-      <xs:element name="metadata">
+      <xs:element minOccurs="0" name="Metadata" type="rr:Metadatavardelista"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Metadatavardelista">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Metadatavarden">
         <xs:complexType>
           <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element minOccurs="0" name="key" type="rr:UtdataMetadataTyp"/>
-                  <xs:element minOccurs="0" name="value" type="xs:anyType"/>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:Metadatavarde"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Metadatavarde">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Typ" type="rr:UtdataMetadataTyp"/>
+      <xs:element minOccurs="0" name="Data" type="rr:UtdataMetadataData"/>
     </xs:sequence>
   </xs:complexType>
 
