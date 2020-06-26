@@ -30,16 +30,16 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 import se.ladok.schemas.studiedeltagande.UtdataAvgransning;
 import se.ladok.schemas.studiedeltagande.UtdataAvgransningarLista;
+import se.ladok.schemas.studiedeltagande.UtdataAvgransningarLista.UtdataAvgransningar;
 import se.ladok.schemas.studiedeltagande.UtdataAvgransningstyp;
 import se.ladok.schemas.studiedeltagande.UtdataResultat;
-import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
 import se.ladok.schemas.studiedeltagande.Utdatafraga;
 import se.ladok.schemas.studiedeltagande.Utdatatyp;
-import se.ladok.schemas.studiedeltagande.UtdataAvgransningarLista.UtdataAvgransningar;
 
 /**
  * Real implementation of the Ladok studiedeltagande  service. It is using JAX RS
@@ -151,7 +151,7 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
     /**
      * {@inheritDoc}
      */
-    public Iterable<UtdataResultatrad> utdataStudieaktivitetOchFinansieringIteraterable(Map<String, Object> params) {
+    public Iterable<StudieaktivitetOchFinansiering> utdataStudieaktivitetOchFinansieringIteraterable(Map<String, Object> params) {
         return new StudieaktivitetUtdataResultat(this, params);
     }
 

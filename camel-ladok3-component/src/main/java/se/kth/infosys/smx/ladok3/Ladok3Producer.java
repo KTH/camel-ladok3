@@ -34,7 +34,6 @@ import org.apache.camel.util.ExchangeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.kth.infosys.smx.ladok3.internal.Ladok3KataloginformationServiceWrapper;
 import se.kth.infosys.smx.ladok3.internal.Ladok3ServiceWrapper;
 import se.kth.infosys.smx.ladok3.internal.Ladok3StudentInformationServiceWrapper;
@@ -47,7 +46,7 @@ public class Ladok3Producer extends DefaultProducer {
     @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(Ladok3Producer.class);
 
-    // First segment of URL (or ladok3Service header) should match the list 
+    // First segment of URL (or ladok3Service header) should match the list
     // of "supported" services in the HashMap apis.
     private static final Pattern API_PATTERN = Pattern.compile("(^/(?<api>[a-zA-Z]*))+.*");
     private static final HashMap<String, Ladok3ServiceWrapper> services = new HashMap<>();

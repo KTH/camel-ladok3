@@ -14,12 +14,11 @@ import org.slf4j.LoggerFactory;
 
 import se.kth.infosys.ladok3.StudiedeltagandeService;
 import se.kth.infosys.ladok3.StudiedeltagandeServiceImpl;
+import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
-import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
-import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
 
 public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrapper {
     private static final Logger log = LoggerFactory.getLogger(Ladok3StudiedeltagandeServiceWrapper.class);
@@ -81,7 +80,7 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
 
         log.debug("Getting Ladok data for studieaktivetet och finansiering request with params: {}",
                 params);
-        Iterator<UtdataResultatrad> fromLadok =
+        Iterator<StudieaktivitetOchFinansiering> fromLadok =
                 service.utdataStudieaktivitetOchFinansieringIteraterable(params).iterator();
         exchange.getIn().setBody(fromLadok);
     }

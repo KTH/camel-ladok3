@@ -62,8 +62,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <camel-version>2.24.2</camel-version>
-    <cxf-client-version>3.1.17</cxf-client-version>
+    <camel-version>2.24.3</camel-version>
+    <cxf-client-version>3.3.6</cxf-client-version>
   </properties>
 
   <dependencyManagement>
@@ -91,6 +91,26 @@
     <defaultGoal>install</defaultGoal>
 
     <plugins>
+
+      <!-- <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+            <execution>
+                <id>generated-folder</id>
+                <goals>
+                    <goal>add-source</goal>
+                </goals>
+                <configuration>
+                    <sources>
+                        <source>${basedir}/generated-sources/xjc</source>
+                    </sources>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin> -->
+
       <plugin>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
@@ -119,7 +139,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
+        <version>3.8.1</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -129,7 +149,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.2.0</version>
         <executions>
           <execution>
             <id>attach-sources</id>

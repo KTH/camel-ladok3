@@ -68,7 +68,7 @@
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
-      <version>2.2.11</version>
+      <version>2.3.3</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
@@ -87,15 +87,15 @@
             <Export-Package>se.kth.infosys.ladok3;-split-package:=merge-first</Export-Package>
           </instructions>
         </configuration>
-        <executions> 
-          <execution> 
-            <id>bundle-manifest</id> 
-            <phase>process-classes</phase> 
-            <goals> 
-              <goal>manifest</goal> 
-            </goals> 
-          </execution> 
-        </executions> 
+        <executions>
+          <execution>
+            <id>bundle-manifest</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>manifest</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

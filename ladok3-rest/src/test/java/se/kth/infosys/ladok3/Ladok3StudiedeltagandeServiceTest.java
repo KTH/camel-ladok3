@@ -32,13 +32,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
-import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
-import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
 import se.ladok.schemas.studiedeltagande.Utdatafraga;
 
 @Ignore("Does not work without connection to Ladok")
@@ -81,7 +82,7 @@ public class Ladok3StudiedeltagandeServiceTest {
         params.put("datumperiod", "2018-01-16_2018-06-04");
         params.put("limit", 5);
 
-        Iterator<UtdataResultatrad> iterator = studiedeltagandeService.utdataStudieaktivitetOchFinansieringIteraterable(params).iterator();
+        Iterator<StudieaktivitetOchFinansiering> iterator = studiedeltagandeService.utdataStudieaktivitetOchFinansieringIteraterable(params).iterator();
         assertNotNull(iterator);
         assertTrue(iterator.hasNext());
 
