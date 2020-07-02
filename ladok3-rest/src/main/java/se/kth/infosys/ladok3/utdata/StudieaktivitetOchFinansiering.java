@@ -40,8 +40,8 @@ public class StudieaktivitetOchFinansiering {
     studieaktivitetPeriod = next.getVarden().get(9);
     studieaktivitetProcent = next.getVarden().get(10);
     studiefinansieringProcent = next.getVarden().get(11);
-    studiefinansieringKod = next.getVarden().get(12);
-    studiefinansieringBenamning = next.getVarden().get(13);
+    studiefinansieringKod = next.getVarden().size() > 12 ? next.getVarden().get(12) : "";
+    studiefinansieringBenamning = next.getVarden().size() > 12 ? next.getVarden().get(13) : "";
   }
 
   public String getUid() {

@@ -26,7 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.kth.infosys.smx.ladok3</groupId>
   <artifactId>ladok3</artifactId>
-  <version>1.50.7</version>
+  <version>1.50.8</version>
   <packaging>pom</packaging>
 
   <name>KTH Ladok3 Integration</name>
@@ -125,6 +125,7 @@
         <configuration>
           <outputDirectory>dependency-check</outputDirectory>
           <rubygemsAnalyzerEnabled>false</rubygemsAnalyzerEnabled>
+          <failOnError>false</failOnError>
 	      <suppressionFiles>
             <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
           </suppressionFiles>
