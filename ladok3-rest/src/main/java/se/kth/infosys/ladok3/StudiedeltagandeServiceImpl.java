@@ -144,6 +144,13 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
           typ.getUtdataAvgransningsvarden().add((String)params.get("utbildningstypsgrupper"));
           fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(typ);
         }
+        
+        if(params.get("dokumenteradaktivitet") != null) {
+          UtdataAvgransning aktivitet = new UtdataAvgransning();
+          aktivitet.setUtdataAvgransningstyp(UtdataAvgransningstyp.DOKUMENTERADAKTIVITET);
+          aktivitet.getUtdataAvgransningsvarden().add((String)params.get("dokumenteradaktivitet"));
+          fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(aktivitet);
+        }
       }
       return fraga;
     }
