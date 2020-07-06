@@ -132,17 +132,28 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
         }
         fraga.setSidstorlek(limit);
 
-        if(params.get("datumperiod") != null) {
+        final String datumPeriod = (String) params.get("datumperiod");
+        if(datumPeriod != null) {
           UtdataAvgransning datum = new UtdataAvgransning();
           datum.setUtdataAvgransningstyp(UtdataAvgransningstyp.REGISTRERING_ELLER_AKTIVITET_INOM);
-          datum.getUtdataAvgransningsvarden().add((String)params.get("datumperiod"));
+          datum.getUtdataAvgransningsvarden().add(datumPeriod);
           fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(datum);
         }
-        if(params.get("utbildningstypsgrupper") != null) {
+
+        final String utbildningsTypsGrupper = (String) params.get("utbildningstypsgrupper");
+        if(utbildningsTypsGrupper != null) {
           UtdataAvgransning typ = new UtdataAvgransning();
           typ.setUtdataAvgransningstyp(UtdataAvgransningstyp.UTBILDNINGSTYPSGRUPPER);
-          typ.getUtdataAvgransningsvarden().add((String)params.get("utbildningstypsgrupper"));
+          typ.getUtdataAvgransningsvarden().add(utbildningsTypsGrupper);
           fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(typ);
+        }
+
+        final String dokumenteradAktivitet = (String) params.get("dokumenteradaktivitet");
+        if(dokumenteradAktivitet != null) {
+          UtdataAvgransning aktivitet = new UtdataAvgransning();
+          aktivitet.setUtdataAvgransningstyp(UtdataAvgransningstyp.DOKUMENTERADAKTIVITET);
+          aktivitet.getUtdataAvgransningsvarden().add(dokumenteradAktivitet);
+          fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(aktivitet);
         }
       }
       return fraga;
