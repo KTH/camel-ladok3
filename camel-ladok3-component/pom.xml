@@ -77,12 +77,6 @@
       <version>${cxf-client-version}</version>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.enterprise</artifactId>
-      <version>5.0.0</version>
-      <scope>runtime</scope>
-    </dependency>
 
     <!-- logging -->
     <dependency>
@@ -91,11 +85,6 @@
     </dependency>
 
     <!-- testing -->
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-jacksonxml</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-spring</artifactId>
