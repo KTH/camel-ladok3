@@ -35,14 +35,14 @@
 
   <distributionManagement>
     <repository>
-      <id>kth-integration</id>
+      <id>integration</id>
       <url>https://pkgs.dev.azure.com/kth-integration/_packaging/integration/maven/v1</url>
     </repository>
   </distributionManagement>
 
   <repositories>
     <repository>
-      <id>kth-integration</id>
+      <id>integration</id>
       <url>https://pkgs.dev.azure.com/kth-integration/_packaging/integration/maven/v1</url>
       <releases>
         <enabled>true</enabled>
