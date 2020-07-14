@@ -171,6 +171,8 @@
 
   <xs:element name="Land" type="sd:Land"/>
 
+  <xs:element name="Metadatavarde" type="sd:Metadatavarde"/>
+
   <xs:element name="MigreradAktor" type="sd:MigreradAktor"/>
 
   <xs:element name="MisslyckatBorttagForvantatDeltagande" type="sd:MisslyckatBorttagForvantatDeltagande"/>
@@ -407,7 +409,7 @@
 
   <xs:element name="UtdataAvgransning" type="sd:UtdataAvgransning"/>
 
-  <xs:element name="UtdataAvgransningar" type="sd:UtdataAvgransningar"/>
+  <xs:element name="UtdataAvgransningarLista" type="sd:UtdataAvgransningarLista"/>
 
   <xs:element name="UtdataMetadata" type="sd:UtdataMetadata"/>
 
@@ -3974,9 +3976,15 @@ representationer.]]></xs:documentation>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="UtdataAvgransningar">
+  <xs:complexType name="UtdataAvgransningarLista">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="UtdataAvgransningar" type="sd:UtdataAvgransning"/>
+      <xs:element minOccurs="0" name="UtdataAvgransningar">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="sd:UtdataAvgransning"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 
@@ -3984,7 +3992,7 @@ representationer.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" ref="sd:UtdataAvgransningar"/>
+          <xs:element minOccurs="0" name="UtdataAvgransningar" type="sd:UtdataAvgransningarLista"/>
           <xs:element name="Sida" type="xs:int"/>
           <xs:element name="Sidstorlek" type="xs:int"/>
         </xs:sequence>
@@ -3999,22 +4007,69 @@ representationer.]]></xs:documentation>
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="MetadataDataObjektfalt">
+    <xs:complexContent>
+      <xs:extension base="sd:UtdataMetadataData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Falt" type="xs:string"/>
+          <xs:element minOccurs="0" name="Faltdata" type="sd:UtdataMetadataData"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="UtdataMetadataData">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="MetadataDataVarde">
+    <xs:complexContent>
+      <xs:extension base="sd:UtdataMetadataData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Varde" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MetadataDataLista">
+    <xs:complexContent>
+      <xs:extension base="sd:UtdataMetadataData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Vardelista">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Element" type="sd:UtdataMetadataData"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="UtdataMetadata">
     <xs:sequence>
-      <xs:element name="metadata">
+      <xs:element minOccurs="0" name="Metadata" type="sd:Metadatavardelista"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Metadatavardelista">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Metadatavarden">
         <xs:complexType>
           <xs:sequence>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element minOccurs="0" name="key" type="sd:UtdataMetadataTyp"/>
-                  <xs:element minOccurs="0" name="value" type="xs:anyType"/>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="sd:Metadatavarde"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Metadatavarde">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Typ" type="sd:UtdataMetadataTyp"/>
+      <xs:element minOccurs="0" name="Data" type="sd:UtdataMetadataData"/>
     </xs:sequence>
   </xs:complexType>
 
