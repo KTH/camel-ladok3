@@ -24,18 +24,15 @@
 package se.kth.infosys.ladok3;
 
 import java.util.Map;
-
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.PeriodLista;
-import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 import se.ladok.schemas.studiedeltagande.UtdataAvgransning;
-import se.ladok.schemas.studiedeltagande.UtdataAvgransningar;
+import se.ladok.schemas.studiedeltagande.UtdataAvgransningarLista;
 import se.ladok.schemas.studiedeltagande.UtdataAvgransningstyp;
 import se.ladok.schemas.studiedeltagande.UtdataResultat;
 import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
@@ -114,7 +111,7 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
 
     public Utdatafraga createUtdatafraga(Map<String, Object> params) {
       Utdatafraga fraga = new Utdatafraga();
-      fraga.setUtdataAvgransningar(new UtdataAvgransningar());
+      fraga.setUtdataAvgransningar(new UtdataAvgransningarLista());
       if(params != null) {
         if(params.get("page") != null) {
           fraga.setSida((int)params.get("page"));
@@ -133,13 +130,13 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
           UtdataAvgransning datum = new UtdataAvgransning();
           datum.setUtdataAvgransningstyp(UtdataAvgransningstyp.REGISTRERING_ELLER_AKTIVITET_INOM);
           datum.getUtdataAvgransningsvarden().add((String)params.get("datumperiod"));
-          fraga.getUtdataAvgransningar().getUtdataAvgransningar().add(datum);
+          fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(datum);
         }
         if(params.get("utbildningstypsgrupper") != null) {
           UtdataAvgransning typ = new UtdataAvgransning();
           typ.setUtdataAvgransningstyp(UtdataAvgransningstyp.UTBILDNINGSTYPSGRUPPER);
           typ.getUtdataAvgransningsvarden().add((String)params.get("utbildningstypsgrupper"));
-          fraga.getUtdataAvgransningar().getUtdataAvgransningar().add(typ);
+          fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(typ);
         }
       }
       return fraga;
