@@ -5,3 +5,9 @@ dependency-check/
 /.settings
 /.classpath
 pom.xml.versionsBackup
+.idea/
+camel-ladok3-component/camel-ladok3-component.iml
+camel-ladok3-test-utils/camel-ladok3-test-utils.iml
+ladok3-model/ladok3-model.iml
+ladok3-rest/ladok3-rest.iml
+ladok3.iml
