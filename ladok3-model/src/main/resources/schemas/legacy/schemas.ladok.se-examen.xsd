@@ -103,6 +103,10 @@
 
   <xs:element name="Kolumntitel" type="ex:Kolumntitel"/>
 
+  <xs:element name="KopieraUtfardatBevisKandidat" type="ex:KopieraUtfardatBevisKandidat"/>
+
+  <xs:element name="KopieraUtfardatBevisKandidatLista" type="ex:KopieraUtfardatBevisKandidatLista"/>
+
   <xs:element name="Kurslista" type="ex:Kurslista"/>
 
   <xs:element name="Kursoverlapp" type="ex:Kursoverlapp"/>
@@ -242,6 +246,8 @@
   <xs:element name="UtfardatBevisInrapportering" type="ex:UtfardatBevisInrapportering"/>
 
   <xs:element name="UtfardatBevisLista" type="ex:UtfardatBevisLista"/>
+
+  <xs:element name="UtfardatBevisListaForErsattandeStudent" type="ex:UtfardatBevisListaForErsattandeStudent"/>
 
   <xs:element name="UtfardatBevisNyNationellBevistypEvent" type="ex:UtfardatBevisNyNationellBevistypEvent"/>
 
@@ -1891,6 +1897,60 @@ beviskombination och förvalda kursresultat.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="KopieraUtfardatBevisKandidatLista">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Kandidat" type="ex:KopieraUtfardatBevisKandidat"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="KopieraUtfardatBevisKandidat">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Hinder" type="base:Hinder"/>
+          <xs:element name="KanKopieras" type="xs:boolean"/>
+          <xs:element name="Kopierad" type="xs:boolean"/>
+          <xs:element minOccurs="0" ref="ex:UtfardatBevis"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UtfardatBevis">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AndraMeriter" type="ex:AnnanMerit"/>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="BeslutsfattareUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="BeslutsfattareVisningsnamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Bevisbenamningskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="BevismetadataUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Bevistyp" type="ex:NationellBevistyp"/>
+          <xs:element name="Borttaget" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="DatumForAvslutadeStudier" type="xs:date"/>
+          <xs:element minOccurs="0" ref="ex:Enhet"/>
+          <xs:element minOccurs="0" name="GemensamExamen" type="xs:boolean"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="GiltigaMeriterForBevis" type="ex:GiltigMeritForBevis"/>
+          <xs:element minOccurs="0" name="HuvudsakligKurspaketeringsinstansUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendePart" type="ex:InganendePart"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Preciseringar" type="ex:Precisering"/>
+          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="UnderliggandeKurspaketeringsinstansUID" type="xs:string"/>
+          <xs:element minOccurs="0" ref="ex:Utbildningssamarbete"/>
+          <xs:element minOccurs="0" name="UtfardandeLarosateID" type="xs:int"/>
+          <xs:element minOccurs="0" name="Utfardandedatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Arendenummer" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UtfardatBevisListaForErsattandeStudent">
+    <xs:sequence/>
+  </xs:complexType>
+
   <xs:complexType name="Kurslista">
     <xs:complexContent>
       <xs:extension base="dap:Base">
@@ -1935,37 +1995,6 @@ beviskombination och förvalda kursresultat.]]></xs:documentation>
       <xs:extension base="dap:Base">
         <xs:sequence>
           <xs:element maxOccurs="unbounded" minOccurs="0" ref="ex:UtfardatBevis"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="UtfardatBevis">
-    <xs:complexContent>
-      <xs:extension base="base:BaseEntitet">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="AndraMeriter" type="ex:AnnanMerit"/>
-          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element minOccurs="0" name="BeslutsfattareUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="BeslutsfattareVisningsnamn" type="xs:string"/>
-          <xs:element minOccurs="0" name="Bevisbenamningskod" type="xs:string"/>
-          <xs:element minOccurs="0" name="BevismetadataUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="Bevistyp" type="ex:NationellBevistyp"/>
-          <xs:element name="Borttaget" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="DatumForAvslutadeStudier" type="xs:date"/>
-          <xs:element minOccurs="0" ref="ex:Enhet"/>
-          <xs:element minOccurs="0" name="GemensamExamen" type="xs:boolean"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="GiltigaMeriterForBevis" type="ex:GiltigMeritForBevis"/>
-          <xs:element minOccurs="0" name="HuvudsakligKurspaketeringsinstansUID" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="IngaendePart" type="ex:InganendePart"/>
-          <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Preciseringar" type="ex:Precisering"/>
-          <xs:element minOccurs="0" name="StudentUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="UnderliggandeKurspaketeringsinstansUID" type="xs:string"/>
-          <xs:element minOccurs="0" ref="ex:Utbildningssamarbete"/>
-          <xs:element minOccurs="0" name="UtfardandeLarosateID" type="xs:int"/>
-          <xs:element minOccurs="0" name="Utfardandedatum" type="xs:date"/>
-          <xs:element minOccurs="0" name="Arendenummer" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

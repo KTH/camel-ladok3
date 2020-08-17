@@ -185,6 +185,7 @@ länk betyder det att innehållet inte kan laddas ned.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Anvandarnamn" type="xs:string"/>
           <xs:element name="Bilagenamn" type="xs:string"/>
         </xs:sequence>
       </xs:extension>

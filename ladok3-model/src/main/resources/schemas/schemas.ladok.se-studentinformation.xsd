@@ -19,11 +19,11 @@
 
   <xs:element name="ExternStudent" type="si:ExternStudent"/>
 
-  <xs:element name="Felkalla" type="si:Felkalla"/>
-
   <xs:element name="Hinder" type="base:Hinder"/>
 
   <xs:element name="Identitetsuppgifter" type="si:Identitetsuppgifter"/>
+
+  <xs:element name="IdentitetsuppgifterFalt" type="si:IdentitetsuppgifterFalt"/>
 
   <xs:element name="Kontaktuppgifter" type="si:Kontaktuppgifter"/>
 
@@ -559,16 +559,16 @@ För att få en mer komplett bild av studenten kan klienten följa self-länken.
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:simpleType name="Felkalla">
+  <xs:simpleType name="IdentitetsuppgifterFalt">
 <xs:annotation>
 <xs:documentation><![CDATA[Representerar den felkälla som ett hinder eller en varning kan ha.]]></xs:documentation>
 </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:enumeration value="PERSONNUMMER"/>
-      <xs:enumeration value="EFTERNAMN"/>
-      <xs:enumeration value="FORNAMN"/>
-      <xs:enumeration value="FODELSEDATUM"/>
-      <xs:enumeration value="KON"/>
+      <xs:enumeration value="identitetsuppgifter.falt.personnummer"/>
+      <xs:enumeration value="identitetsuppgifter.falt.efternamn"/>
+      <xs:enumeration value="identitetsuppgifter.falt.fornamn"/>
+      <xs:enumeration value="identitetsuppgifter.falt.fodelsedatum"/>
+      <xs:enumeration value="identitetsuppgifter.falt.kon"/>
     </xs:restriction>
   </xs:simpleType>
 

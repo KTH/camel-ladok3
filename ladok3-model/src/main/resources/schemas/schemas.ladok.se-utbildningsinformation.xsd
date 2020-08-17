@@ -435,6 +435,7 @@ utbildningsinstans som även innehåller information om utbildningsform, studieo
           <xs:element minOccurs="0" name="Benamning" type="xs:string"/>
           <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="GiltigFranPeriodID" type="xs:int"/>
+          <xs:element name="Installt" type="xs:boolean"/>
           <xs:element minOccurs="0" name="Omfattningsvarde" type="xs:string"/>
           <xs:element name="SenasteVersion" type="xs:boolean"/>
           <xs:element minOccurs="0" name="Sprakkod" type="xs:string"/>
