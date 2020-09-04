@@ -28,7 +28,7 @@
   <parent>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
     <artifactId>ladok3</artifactId>
-    <version>1.51.1-SNAPSHOT</version>
+    <version>1.52.0</version>
   </parent>
 
   <artifactId>ladok3-model</artifactId>
@@ -52,7 +52,7 @@
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>4.2.1</version>
         <extensions>true</extensions>
         <configuration>
           <instructions>
