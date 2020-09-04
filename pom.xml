@@ -62,8 +62,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <camel-version>2.24.3</camel-version>
+    <camel-version>2.25.2</camel-version>
     <cxf-client-version>3.3.6</cxf-client-version>
+    <java.version>1.8</java.version>
   </properties>
 
   <dependencyManagement>
@@ -142,8 +143,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
         </configuration>
       </plugin>
 
