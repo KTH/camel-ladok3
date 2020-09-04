@@ -1538,7 +1538,6 @@ beviskombination och förvalda kursresultat.]]></xs:documentation>
       <xs:extension base="dap:Base">
         <xs:sequence>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Hinder" type="base:Hinder"/>
-          <xs:element name="KanKopieras" type="xs:boolean"/>
           <xs:element name="Kopierad" type="xs:boolean"/>
           <xs:element minOccurs="0" ref="ex:UtfardatBevis"/>
         </xs:sequence>
@@ -1578,7 +1577,10 @@ beviskombination och förvalda kursresultat.]]></xs:documentation>
   </xs:complexType>
 
   <xs:complexType name="UtfardatBevisListaForErsattandeStudent">
-    <xs:sequence/>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErsattandeStudent" type="base:Student"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="UtfardatBevisForErsattandeStudent" type="ex:UtfardatBevis"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="Kurslista">

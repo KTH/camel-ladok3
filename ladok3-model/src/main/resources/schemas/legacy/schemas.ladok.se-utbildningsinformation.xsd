@@ -329,7 +329,7 @@
 
   <xs:element name="UtbildningstillfalleAvgransning" type="ui:UtbildningstillfalleAvgransning"/>
 
-  <xs:element name="UtbildningstillfalleAvgransningar" type="ui:UtbildningstillfalleAvgransningar"/>
+  <xs:element name="UtbildningstillfalleAvgransningarLista" type="ui:UtbildningstillfalleAvgransningarLista"/>
 
   <xs:element name="UtbildningstillfalleBorttagetEvent" type="ui:UtbildningstillfalleBorttagetEvent"/>
 
@@ -3148,22 +3148,32 @@ attributen för en utbildningsinstansen, dvs. kod, benämningar och versionsinfo
 
   <xs:complexType name="UtbildningstillfalleAvgransning">
     <xs:sequence>
-      <xs:element minOccurs="0" name="UtbildningstillfalleAvgransningstyp" type="ui:UtbildningstillfalleAvgransningstyp"/>
+      <xs:element name="UtbildningstillfalleAvgransningstyp" type="ui:UtbildningstillfalleAvgransningstyp"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="UtbildningstillfalleAvgransningsvarden" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="UtbildningstillfalleAvgransningar">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="UtbildningstillfalleAvgransningar" type="ui:UtbildningstillfalleAvgransning"/>
-    </xs:sequence>
+  <xs:complexType name="UtbildningstillfalleAvgransningarLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="UtbildningstillfalleAvgransningar">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="ui:UtbildningstillfalleAvgransning"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="Utbildningstillfallefraga">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element minOccurs="0" ref="ui:UtbildningstillfalleAvgransningar"/>
+          <xs:element minOccurs="0" name="UtbildningstillfalleAvgransningar" type="ui:UtbildningstillfalleAvgransningarLista"/>
           <xs:element name="Sida" type="xs:int"/>
           <xs:element name="Sidstorlek" type="xs:int"/>
         </xs:sequence>
