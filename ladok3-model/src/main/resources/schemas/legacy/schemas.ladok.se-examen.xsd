@@ -115,6 +115,10 @@
 
   <xs:element name="LokalBevistypsinformation" type="ex:LokalBevistypsinformation"/>
 
+  <xs:element name="LokalFotnotskategoriLista" type="ex:LokalFotnotskategoriLista"/>
+
+  <xs:element name="Lokalfotnotskategori" type="ex:Lokalfotnotskategori"/>
+
   <xs:element name="Markning" type="ex:Markning"/>
 
   <xs:element name="MarkningEvent" type="ex:MarkningEvent"/>
@@ -953,6 +957,23 @@ Konsekvenser för verksamheten:
           <xs:element minOccurs="0" name="ExterntBeslut" type="xs:boolean"/>
           <xs:element name="ProjekttitelSkrivsUtIBevis" type="xs:boolean"/>
           <xs:element name="TillatModulerIUtfardatBevis" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="LokalFotnotskategoriLista">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="LokalaFotnotskategori" type="ex:Lokalfotnotskategori"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Lokalfotnotskategori">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="SvenskBenamning" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

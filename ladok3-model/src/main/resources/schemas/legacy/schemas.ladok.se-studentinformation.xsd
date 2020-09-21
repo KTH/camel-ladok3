@@ -851,10 +851,9 @@ För att få en mer komplett bild av studenten kan klienten följa self-länken.
 
   <xs:simpleType name="Avgiftsskyldighetsvarde">
 <xs:annotation>
-<xs:documentation><![CDATA[Definierar möjliga värden rörande en students avgiftsskyldighet för studieavgifter. Möjliga värden är Avgiftsskyldig eller Ej
-Avgiftsskyldig.
-Avsaknad av dokumenterad avgiftsskyldighet innebär per automatik att studenten är Ej Prövad. Det explicita värdet EJ_PRÖVAD behövs
-alltså inte och kommer fasas ut.]]></xs:documentation>
+<xs:documentation><![CDATA[Definierar möjliga värden rörande en students avgiftsskyldighet för studieavgifter. Möjliga värden är 1 (Avgiftsskyldig), 2 (Ej
+avgiftsskyldig) och 3 (Ej prövad). Avsaknad av dokumenterad avgiftsskyldighet innebär per automatik att studenten är Ej Prövad. Det
+explicita värdet EJ_PRÖVAD behövs alltså inte och kommer fasas ut.]]></xs:documentation>
 </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="1"/>
