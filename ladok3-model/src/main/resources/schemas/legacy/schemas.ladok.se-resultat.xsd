@@ -81,6 +81,8 @@
 
   <xs:element name="AnnatResultatStudent" type="rr:AnnatResultatStudent"/>
 
+  <xs:element name="AntalRapporteringsrattigheter" type="rr:AntalRapporteringsrattigheter"/>
+
   <xs:element name="AnvandareSomKlarmarkerat" type="rr:AnvandareSomKlarmarkerat"/>
 
   <xs:element name="AttAttestera" type="rr:AttAttestera"/>
@@ -274,6 +276,10 @@
   <xs:element name="Noteringstyp" type="rr:Noteringstyp"/>
 
   <xs:element name="Noteringstyper" type="rr:Noteringstyper"/>
+
+  <xs:element name="OrganisationViaMedarbetarrattigheter" type="rr:OrganisationViaMedarbetarrattigheter"/>
+
+  <xs:element name="OrganisationerViaMedarbetarrattigheter" type="rr:OrganisationerViaMedarbetarrattigheter"/>
 
   <xs:element name="Organisationsrattighet" type="rr:Organisationsrattighet"/>
 
@@ -1824,6 +1830,7 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
     <xs:complexContent>
       <xs:extension base="base:BaseKatalogEntitet">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
           <xs:element name="GiltigSomSlutbetyg" type="xs:boolean"/>
         </xs:sequence>
       </xs:extension>
@@ -2286,6 +2293,8 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
         <xs:sequence>
           <xs:element ref="rr:Aktivitetstillfalle"/>
           <xs:element minOccurs="0" ref="rr:Aktivitetstillfallesmojlighet"/>
+          <xs:element minOccurs="0" name="KursinstansUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2297,6 +2306,7 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
         <xs:sequence>
           <xs:element maxOccurs="unbounded" name="Aktiviteter" type="rr:Aktivitetsreferens"/>
           <xs:element name="AktivitetstillfallestypID" type="xs:int"/>
+          <xs:element minOccurs="0" name="AktivitetstillfallestypBenamning" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="Anmalan" type="xs:boolean"/>
           <xs:element minOccurs="0" name="Anmalningsperiod" type="base:Datumperiod"/>
           <xs:element minOccurs="0" name="Anonymt" type="xs:boolean"/>
@@ -2326,7 +2336,9 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Kursinstans" type="rr:Utbildningsinstans"/>
           <xs:element minOccurs="0" name="KursinstansUID" type="xs:string"/>
+          <xs:element minOccurs="0" ref="rr:Utbildningsinstans"/>
           <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
@@ -2433,6 +2445,7 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Enhet" type="xs:string"/>
           <xs:element minOccurs="0" name="Omfattning" type="xs:decimal"/>
           <xs:element minOccurs="0" name="UtbildningsinstansIdentitet" type="xs:string"/>
           <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
@@ -4053,12 +4066,24 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
       <xs:element minOccurs="0" name="Examinationsdatum" type="xs:date"/>
       <xs:element name="GiltigSomSlutbetyg" type="xs:boolean"/>
       <xs:element name="GallerModulbetyg" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="KursUid" type="xs:string"/>
+      <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
       <xs:element minOccurs="0" name="Kursbenamning" type="base:Benamningar"/>
       <xs:element minOccurs="0" name="Modulbenamning" type="base:Benamningar"/>
       <xs:element minOccurs="0" name="OmfattningKurs" type="xs:decimal"/>
       <xs:element minOccurs="0" name="OmfattningModul" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AntalRapporteringsrattigheter">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AntalKursrattigheter" type="xs:int"/>
+          <xs:element minOccurs="0" name="AntalOrganisationsrattigheter" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="KontrollAvResultatrattighetPaOrganisation">
@@ -4146,6 +4171,31 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
         <xs:sequence>
           <xs:element minOccurs="0" name="Benamning" type="xs:string"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="Informationsbehorighetsavgransning" type="rr:InformationsbehorighetEnumRepresentation"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="OrganisationViaMedarbetarrattigheter">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Medarbetartyp" type="rr:Resultatmedarbetaretyp"/>
+          <xs:element minOccurs="0" name="Organisationsbenamning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Organisationskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="TypAvRattighet" type="rr:RattighetenArAvTyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="OrganisationerViaMedarbetarrattigheter">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="OrganisationerViaAttestantrattigheter" type="rr:OrganisationViaMedarbetarrattigheter"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="OrganisationerViaRapportorsrattigheter" type="rr:OrganisationViaMedarbetarrattigheter"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -5168,6 +5218,13 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
   <xs:simpleType name="Scopetyp">
     <xs:restriction base="xs:string">
       <xs:enumeration value="ORGANISATION"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="RattighetenArAvTyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="KURSRATTIGHET"/>
+      <xs:enumeration value="ORGANISATIONSRATTIGHET"/>
     </xs:restriction>
   </xs:simpleType>
 

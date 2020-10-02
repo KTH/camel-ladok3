@@ -115,7 +115,11 @@
 
   <xs:element name="LokalBevistypsinformation" type="ex:LokalBevistypsinformation"/>
 
+  <xs:element name="LokalFotnotLista" type="ex:LokalFotnotLista"/>
+
   <xs:element name="LokalFotnotskategoriLista" type="ex:LokalFotnotskategoriLista"/>
+
+  <xs:element name="Lokalfotnot" type="ex:Lokalfotnot"/>
 
   <xs:element name="Lokalfotnotskategori" type="ex:Lokalfotnotskategori"/>
 
@@ -962,21 +966,39 @@ Konsekvenser för verksamheten:
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="LokalFotnotskategoriLista">
+  <xs:complexType name="LokalFotnotLista">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="LokalaFotnotskategori" type="ex:Lokalfotnotskategori"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="LokalaFotnoter" type="ex:Lokalfotnot"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Lokalfotnot">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="LokalFotnotskategori" type="ex:Lokalfotnotskategori"/>
+          <xs:element minOccurs="0" name="SvenskBenamning" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="Lokalfotnotskategori">
     <xs:complexContent>
-      <xs:extension base="dap:Base">
+      <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
           <xs:element minOccurs="0" name="SvenskBenamning" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="LokalFotnotskategoriLista">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="LokalaFotnotskategori" type="ex:Lokalfotnotskategori"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="MarkningstypLista">
