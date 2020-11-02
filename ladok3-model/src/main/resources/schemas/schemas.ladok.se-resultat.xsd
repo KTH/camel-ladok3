@@ -15,6 +15,10 @@
 
   <xs:element name="AktivitetstillfalleForStudent" type="rr:AktivitetstillfalleForStudent"/>
 
+  <xs:element name="AktivitetstillfalleForStudentForNyStudentwebLista" type="rr:AktivitetstillfalleForStudentForNyStudentwebLista"/>
+
+  <xs:element name="AktivitetstillfalleForStudentForStudentweb" type="rr:AktivitetstillfalleForStudentForStudentweb"/>
+
   <xs:element name="AktivitetstillfalleForStudentLista" type="rr:AktivitetstillfalleForStudentLista"/>
 
   <xs:element name="AktivitetstillfalleLattvikt" type="rr:AktivitetstillfalleLattvikt"/>
@@ -28,6 +32,8 @@
   <xs:element name="Aktivitetstillfallesmojlighet" type="rr:Aktivitetstillfallesmojlighet"/>
 
   <xs:element name="Aktivitetstillfallesmojligheter" type="rr:Aktivitetstillfallesmojligheter"/>
+
+  <xs:element name="AktivitetstillfallesreferensForStudent" type="rr:AktivitetstillfallesreferensForStudent"/>
 
   <xs:element name="Aktivitetstillfallestyp" type="rr:Aktivitetstillfallestyp"/>
 
@@ -1545,6 +1551,39 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
 <xs:documentation><![CDATA[Lista med poster som kan vara en delmängd av det totala resultatet, givet paginering]]></xs:documentation>
 </xs:annotation>
 </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AktivitetstillfalleForStudentForNyStudentwebLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AktivitetstillfalleForStudentForNyStudentweb" type="rr:AktivitetstillfalleForStudentForStudentweb"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AktivitetstillfalleForStudentForStudentweb">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element ref="rr:Aktivitetstillfalle"/>
+          <xs:element minOccurs="0" ref="rr:Aktivitetstillfallesmojlighet"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AktivitetstillfallesreferenserSkapaAktivitetstillfallesmojlighet" type="rr:AktivitetstillfallesreferensForStudent"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AktivitetstillfallesreferensForStudent">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element name="Kursinstans" type="rr:Utbildningsinstans"/>
+          <xs:element ref="rr:Utbildningsinstans"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

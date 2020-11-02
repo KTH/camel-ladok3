@@ -267,6 +267,16 @@
 
   <xs:element name="Studielokalisering" type="sd:Studielokalisering"/>
 
+  <xs:element name="StudieperiodDeltagande" type="sd:StudieperiodDeltagande"/>
+
+  <xs:element name="StudieperiodDeltagandeKurspaketering" type="sd:StudieperiodDeltagandeKurspaketering"/>
+
+  <xs:element name="StudieperiodDeltagandeLista" type="sd:StudieperiodDeltagandeLista"/>
+
+  <xs:element name="StudieperiodDeltagandeSokFraga" type="sd:StudieperiodDeltagandeSokFraga"/>
+
+  <xs:element name="StudieperiodDeltagandeUtbildning" type="sd:StudieperiodDeltagandeUtbildning"/>
+
   <xs:element name="Studietakt" type="sd:Studietakt"/>
 
   <xs:element name="Studievalvy" type="sd:Studievalvy"/>
@@ -2144,6 +2154,72 @@ studier.]]></xs:documentation>
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="StudieperiodDeltagandeKurspaketering">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Kod" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudieperiodDeltagandeLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="Deltagare" type="sd:StudieperiodDeltagande"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudieperiodDeltagande">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Kurspaketering" type="sd:StudieperiodDeltagandeKurspaketering"/>
+          <xs:element minOccurs="0" name="Registreringsperiod" type="base:Datumperiod"/>
+          <xs:element name="Student" type="base:Student"/>
+          <xs:element minOccurs="0" name="Studieperiod" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="Tillfallesperiodensomfattning" type="base:Omfattning"/>
+          <xs:element minOccurs="0" name="Tillstand" type="sd:Perioddeltagaretillstand"/>
+          <xs:element minOccurs="0" name="Utbildning" type="sd:StudieperiodDeltagandeUtbildning"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudieperiodDeltagandeUtbildning">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="Kod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Omfattning" type="base:Omfattning"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StudieperiodDeltagandeSokFraga">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Kursbenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Kurskod" type="xs:string"/>
+          <xs:element minOccurs="0" name="Kurspaketeringsbenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Kurspaketeringskod" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" name="OrganisationUIDs" type="xs:string"/>
+          <xs:element name="Sida" type="xs:int"/>
+          <xs:element name="Sidstorlek" type="xs:int"/>
+          <xs:element name="Studieperiod" type="base:Datumperiod"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="BerettUnderlagForImportAvTillfallesantagning">
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
@@ -3019,6 +3095,16 @@ representationer.]]></xs:documentation>
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="Perioddeltagaretillstand">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.ej_paborjad"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.registrerad"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.omregistrerad"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.tidigtavbrott"/>
+      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.deltar_ej"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="Boxtyp">
     <xs:restriction base="xs:string">
       <xs:enumeration value="UTBILDNINGSTILLFALLE"/>
@@ -3049,16 +3135,6 @@ representationer.]]></xs:documentation>
       <xs:enumeration value="studiedeltagande.studenthantering.deltagare.tillstand.avbrott"/>
       <xs:enumeration value="studiedeltagande.studenthantering.deltagare.tillstand.aterbud"/>
       <xs:enumeration value="studiedeltagande.studenthantering.deltagare.tillstand.avklarad"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="Perioddeltagaretillstand">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.ej_paborjad"/>
-      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.registrerad"/>
-      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.omregistrerad"/>
-      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.tidigtavbrott"/>
-      <xs:enumeration value="studiedeltagande.domain.tillstandsdefinition.deltar_ej"/>
     </xs:restriction>
   </xs:simpleType>
 

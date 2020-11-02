@@ -13,6 +13,10 @@
 
   <xs:element name="AnnanMerit" type="ex:AnnanMerit"/>
 
+  <xs:element name="ArendeMedDetaljerForStodent" type="ex:ArendeMedDetaljerForStodent"/>
+
+  <xs:element name="ArendenMedDetaljerForStodent" type="ex:ArendenMedDetaljerForStodent"/>
+
   <xs:element name="BeslutsinformationUtfardaBevis" type="ex:BeslutsinformationUtfardaBevis"/>
 
   <xs:element name="BevisDokumentunderlagRepresentation" type="ex:BevisDokumentunderlagRepresentation"/>
@@ -175,6 +179,8 @@
 
   <xs:element name="SkapaLokalBevistypsinformation" type="ex:SkapaLokalBevistypsinformation"/>
 
+  <xs:element name="SkapaUppdateraLokalFotnot" type="ex:SkapaUppdateraLokalFotnot"/>
+
   <xs:element name="SokresultatUtfardatBevisUtdata" type="ex:SokresultatUtfardatBevisUtdata"/>
 
   <xs:element name="Studieintygsgrund" type="ex:Studieintygsgrund"/>
@@ -287,11 +293,19 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="BevisbenamningLista">
+  <xs:complexType name="ArendeMedDetaljerForStodent">
     <xs:complexContent>
       <xs:extension base="dap:Base">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" ref="ex:Bevisbenamning"/>
+          <xs:element minOccurs="0" ref="ex:Bevisbenamning"/>
+          <xs:element minOccurs="0" ref="ex:Enhet"/>
+          <xs:element minOccurs="0" name="Handlaggare" type="ar:Handlaggare"/>
+          <xs:element minOccurs="0" name="InkommetDatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Omfattning" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Preciseringar" type="ex:Precisering"/>
+          <xs:element minOccurs="0" name="Status" type="ar:Arendestatus"/>
+          <xs:element minOccurs="0" name="ArendeUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Arendenummer" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -336,6 +350,47 @@
           <xs:element minOccurs="0" name="KanGrupperasMed" type="xs:string"/>
           <xs:element minOccurs="0" name="Namn" type="xs:string"/>
           <xs:element name="Ordningstal" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Enhet">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Precisering">
+    <xs:complexContent>
+      <xs:extension base="base:EnkeltGrunddatavarde">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Markningsvarden" type="xs:int"/>
+          <xs:element minOccurs="0" name="PreciseringsgrupperingID" type="xs:int"/>
+          <xs:element ref="ex:Preciseringstyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ArendenMedDetaljerForStodent">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Arenden" type="ex:ArendeMedDetaljerForStodent"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="BevisbenamningLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="ex:Bevisbenamning"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -415,19 +470,6 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="Precisering">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Anteckning" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="Markningsvarden" type="xs:int"/>
-          <xs:element minOccurs="0" name="PreciseringsgrupperingID" type="xs:int"/>
-          <xs:element ref="ex:Preciseringstyp"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
   <xs:complexType name="Utbildningssamarbete">
     <xs:complexContent>
       <xs:extension base="base:EnkeltGrunddatavarde">
@@ -461,14 +503,6 @@
         <xs:sequence>
           <xs:element name="Markningstyp" type="ex:Markningstyp"/>
         </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="Enhet">
-    <xs:complexContent>
-      <xs:extension base="base:EnkeltGrunddatavarde">
-        <xs:sequence/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -604,9 +638,26 @@
   </xs:complexType>
 
   <xs:complexType name="LokalFotnotskategoriLista">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="LokalaFotnotskategori" type="ex:Lokalfotnotskategori"/>
-    </xs:sequence>
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="LokalaFotnotskategori" type="ex:Lokalfotnotskategori"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SkapaUppdateraLokalFotnot">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="LokalFotnotUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="LokalFotnotskategegoriUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="SvenskBenamning" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="MarkningstypLista">
@@ -1780,6 +1831,7 @@ flexibilitet ökar skulle denna enum kunna ersättas av en grunddatakategori ist
       <xs:enumeration value="PRECISERINGSTYPER"/>
       <xs:enumeration value="PRECISERINGSIDENTITETER"/>
       <xs:enumeration value="INOMPERIOD"/>
+      <xs:enumeration value="BEVISGRUNDTYP"/>
     </xs:restriction>
   </xs:simpleType>
 

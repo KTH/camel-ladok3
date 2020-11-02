@@ -19,6 +19,12 @@
 
   <xs:element name="ExternStudent" type="si:ExternStudent"/>
 
+  <xs:element name="FolkbokforingsuppgifterNamnsokResultat" type="si:FolkbokforingsuppgifterNamnsokResultat"/>
+
+  <xs:element name="FolkbokforingsuppgifterNamnsokResultatLista" type="si:FolkbokforingsuppgifterNamnsokResultatLista"/>
+
+  <xs:element name="FolkbokforingsuppgifterPersonsokResultat" type="si:FolkbokforingsuppgifterPersonsokResultat"/>
+
   <xs:element name="Hinder" type="base:Hinder"/>
 
   <xs:element name="Identitetsuppgifter" type="si:Identitetsuppgifter"/>
@@ -149,6 +155,52 @@
       <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
       <xs:element minOccurs="0" name="KonID" type="xs:int"/>
       <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FolkbokforingsuppgifterNamnsokResultatLista">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FolkbokforingsuppgifterLista">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Folkbokforingsuppgifter" type="si:FolkbokforingsuppgifterNamnsokResultat"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FolkbokforingsuppgifterNamnsokResultat">
+<xs:annotation>
+<xs:documentation><![CDATA[REST-representation av folkbokföringsuppgifter.]]></xs:documentation>
+</xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CareOfAdress" type="xs:string"/>
+      <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+      <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
+      <xs:element minOccurs="0" name="Gatuadress" type="xs:string"/>
+      <xs:element minOccurs="0" name="Mellannamn" type="xs:string"/>
+      <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
+      <xs:element minOccurs="0" name="Postnummer" type="xs:string"/>
+      <xs:element minOccurs="0" name="Postort" type="xs:string"/>
+      <xs:element minOccurs="0" name="Tilltalsnamn" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FolkbokforingsuppgifterPersonsokResultat">
+<xs:annotation>
+<xs:documentation><![CDATA[REST-representation av folkbokföringsuppgifter.]]></xs:documentation>
+</xs:annotation>
+    <xs:sequence>
+      <xs:element name="Avgiftsbefriad" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="CareOfAdress" type="xs:string"/>
+      <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+      <xs:element minOccurs="0" name="Fodelsedatum" type="xs:string"/>
+      <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
+      <xs:element minOccurs="0" name="Gatuadress" type="xs:string"/>
+      <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
+      <xs:element minOccurs="0" name="Postnummer" type="xs:string"/>
+      <xs:element minOccurs="0" name="Postort" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -569,6 +621,18 @@ För att få en mer komplett bild av studenten kan klienten följa self-länken.
       <xs:enumeration value="identitetsuppgifter.falt.fornamn"/>
       <xs:enumeration value="identitetsuppgifter.falt.fodelsedatum"/>
       <xs:enumeration value="identitetsuppgifter.falt.kon"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="FolkbokforingsuppgifterNamnsokParametrarEnumRepresentation">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="fornamn"/>
+      <xs:enumeration value="efternamn"/>
+      <xs:enumeration value="adress"/>
+      <xs:enumeration value="postort"/>
+      <xs:enumeration value="fodelsedatumFrom"/>
+      <xs:enumeration value="fodelsedatumTom"/>
+      <xs:enumeration value="kon"/>
     </xs:restriction>
   </xs:simpleType>
 
