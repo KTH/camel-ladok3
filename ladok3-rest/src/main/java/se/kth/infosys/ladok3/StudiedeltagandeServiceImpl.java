@@ -28,17 +28,17 @@ import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.PeriodLista;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 import se.ladok.schemas.studiedeltagande.UtdataAvgransning;
 import se.ladok.schemas.studiedeltagande.UtdataAvgransningarLista;
+import se.ladok.schemas.studiedeltagande.UtdataAvgransningarLista.UtdataAvgransningar;
 import se.ladok.schemas.studiedeltagande.UtdataAvgransningstyp;
 import se.ladok.schemas.studiedeltagande.UtdataResultat;
-import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
 import se.ladok.schemas.studiedeltagande.Utdatafraga;
 import se.ladok.schemas.studiedeltagande.Utdatatyp;
-
 /**
  * Real implementation of the Ladok studiedeltagande service. It is using JAX RS
  * which means that errors will be thrown as unchecked runtime exceptions. See
@@ -90,65 +90,73 @@ public class StudiedeltagandeServiceImpl extends AbstractLadok3Service implement
         return target.path("/studiestruktur/student/{studentuid}").resolveTemplate("studentuid", uid).request()
                 .accept(SERVICE_TYPE).get(IngaendeKurspaketeringstillfalleLista.class);
     }
-    /**
+   /**
      * {@inheritDoc}
      */
     public UtdataResultat utdataStudieaktivitetOchFinansiering(final Utdatafraga utdatafraga) {
-        WebTarget request = target.path("/utdata/" + Utdatatyp.STUDIEDELTAGANDE_UTDATA_STUDIEAKTIVITET_OCH_FINANSIERING.value());
+      WebTarget request = target.path("/utdata/" + Utdatatyp.STUDIEDELTAGANDE_UTDATA_STUDIEAKTIVITET_OCH_FINANSIERING.value());
 
-        Utdatafraga fraga = utdatafraga;
-        if(fraga == null) {
-          fraga = new Utdatafraga();
-          fraga.setSida(1);
-          fraga.setSidstorlek(400);
-        }
+      Utdatafraga fraga = utdatafraga;
+      if(fraga == null) {
+        fraga = new Utdatafraga();
+        fraga.setSida(1);
+        fraga.setSidstorlek(400);
+      }
 
-        return request
-                .request()
-                .put(Entity.entity(fraga, SERVICE_TYPE), UtdataResultat.class);
+      return request
+              .request()
+              .put(Entity.entity(fraga, SERVICE_TYPE), UtdataResultat.class);
 
-    }
+  }
 
-    public Utdatafraga createUtdatafraga(Map<String, Object> params) {
-      Utdatafraga fraga = new Utdatafraga();
-      fraga.setUtdataAvgransningar(new UtdataAvgransningarLista());
-      if(params != null) {
-        if(params.get("page") != null) {
-          fraga.setSida((int)params.get("page"));
-        }
-        int limit = 400;
-        if(params.get("limit") != null) {
-          if (params.get("limit") instanceof Integer) {
-            limit = (Integer) params.get("limit");
-          } else {
-            limit = Integer.parseInt((String) params.get("limit"));
-          }
-        }
-        fraga.setSidstorlek(limit);
-
-        if(params.get("datumperiod") != null) {
-          UtdataAvgransning datum = new UtdataAvgransning();
-          datum.setUtdataAvgransningstyp(UtdataAvgransningstyp.REGISTRERING_ELLER_AKTIVITET_INOM);
-          datum.getUtdataAvgransningsvarden().add((String)params.get("datumperiod"));
-          fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(datum);
-        }
-        if(params.get("utbildningstypsgrupper") != null) {
-          UtdataAvgransning typ = new UtdataAvgransning();
-          typ.setUtdataAvgransningstyp(UtdataAvgransningstyp.UTBILDNINGSTYPSGRUPPER);
-          typ.getUtdataAvgransningsvarden().add((String)params.get("utbildningstypsgrupper"));
-          fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(typ);
+  public Utdatafraga createUtdatafraga(Map<String, Object> params) {
+    Utdatafraga fraga = new Utdatafraga();
+    fraga.setUtdataAvgransningar(new UtdataAvgransningarLista());
+    fraga.getUtdataAvgransningar().setUtdataAvgransningar(new UtdataAvgransningar());
+    if(params != null) {
+      if(params.get("page") != null) {
+        fraga.setSida((int)params.get("page"));
+      }
+      int limit = 400;
+      if(params.get("limit") != null) {
+        if (params.get("limit") instanceof Integer) {
+          limit = (Integer) params.get("limit");
+        } else {
+          limit = Integer.parseInt((String) params.get("limit"));
         }
       }
-      return fraga;
-    }
+      fraga.setSidstorlek(limit);
 
-    /**
-     * {@inheritDoc}
-     */
-    public Iterable<UtdataResultatrad> utdataStudieaktivitetOchFinansieringIteraterable(Map<String, Object> params) {
-        return new StudieaktivitetUtdataResultat(this, params);
-    }
+      final String datumPeriod = (String) params.get("datumperiod");
+      if(datumPeriod != null) {
+        UtdataAvgransning datum = new UtdataAvgransning();
+        datum.setUtdataAvgransningstyp(UtdataAvgransningstyp.REGISTRERING_ELLER_AKTIVITET_INOM);
+        datum.getUtdataAvgransningsvarden().add(datumPeriod);
+        fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(datum);
+      }
 
+      final String utbildningsTypsGrupper = (String) params.get("utbildningstypsgrupper");
+      if(utbildningsTypsGrupper != null) {
+        UtdataAvgransning typ = new UtdataAvgransning();
+        typ.setUtdataAvgransningstyp(UtdataAvgransningstyp.UTBILDNINGSTYPSGRUPPER);
+        typ.getUtdataAvgransningsvarden().add(utbildningsTypsGrupper);
+        fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(typ);
+      }
+
+      final String dokumenteradAktivitet = (String) params.get("dokumenteradaktivitet");
+      if(dokumenteradAktivitet != null) {
+        UtdataAvgransning aktivitet = new UtdataAvgransning();
+        aktivitet.setUtdataAvgransningstyp(UtdataAvgransningstyp.DOKUMENTERADAKTIVITET);
+        aktivitet.getUtdataAvgransningsvarden().add(dokumenteradAktivitet);
+        fraga.getUtdataAvgransningar().getUtdataAvgransningar().getUtdataAvgransning().add(aktivitet);
+      }
+    }
+    return fraga;
+  }
+
+    public Iterable<StudieaktivitetOchFinansiering> utdataStudieaktivitetOchFinansieringIteraterable(Map<String, Object> params) {
+      return new StudieaktivitetUtdataResultat(this, params);
+    }
 
     /**
      * {@inheritDoc}
