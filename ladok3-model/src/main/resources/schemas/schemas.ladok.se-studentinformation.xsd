@@ -175,6 +175,7 @@
 <xs:documentation><![CDATA[REST-representation av folkbokföringsuppgifter.]]></xs:documentation>
 </xs:annotation>
     <xs:sequence>
+      <xs:element minOccurs="0" name="Avregistreringsorsak" type="base:Benamningar"/>
       <xs:element minOccurs="0" name="CareOfAdress" type="xs:string"/>
       <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
       <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
@@ -192,7 +193,8 @@
 <xs:documentation><![CDATA[REST-representation av folkbokföringsuppgifter.]]></xs:documentation>
 </xs:annotation>
     <xs:sequence>
-      <xs:element name="Avgiftsbefriad" type="xs:boolean"/>
+      <xs:element name="AvgiftsbefriadBaseratPaMedborgarskap" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="Avregistreringsorsak" type="base:Benamningar"/>
       <xs:element minOccurs="0" name="CareOfAdress" type="xs:string"/>
       <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
       <xs:element minOccurs="0" name="Fodelsedatum" type="xs:string"/>
@@ -201,6 +203,10 @@
       <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
       <xs:element minOccurs="0" name="Postnummer" type="xs:string"/>
       <xs:element minOccurs="0" name="Postort" type="xs:string"/>
+      <xs:element name="Sekretessmarkering" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="SenastUppdaterad" type="xs:string"/>
+      <xs:element name="SkyddadFolkbokforing" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="Tilltalsnamn" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 

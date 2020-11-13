@@ -59,6 +59,8 @@
 
   <xs:element name="AntalRapporteringsrattigheter" type="rr:AntalRapporteringsrattigheter"/>
 
+  <xs:element name="AnvandareMedResultatrattighetSokvarden" type="rr:AnvandareMedResultatrattighetSokvarden"/>
+
   <xs:element name="AnvandareSomKlarmarkerat" type="rr:AnvandareSomKlarmarkerat"/>
 
   <xs:element name="AttAttestera" type="rr:AttAttestera"/>
@@ -76,6 +78,8 @@
   <xs:element name="Attesteringsinformation" type="rr:Attesteringsinformation"/>
 
   <xs:element name="Avbrott" type="rr:Avbrott"/>
+
+  <xs:element name="AviseratTill" type="rr:AviseratTill"/>
 
   <xs:element name="Benamning" type="rr:Benamning"/>
 
@@ -237,6 +241,10 @@
 
   <xs:element name="Organisationsrattighet" type="rr:Organisationsrattighet"/>
 
+  <xs:element name="PagaendeRapporteringSokvarden" type="rr:PagaendeRapporteringSokvarden"/>
+
+  <xs:element name="PagaendeRapporteringsresultat" type="rr:PagaendeRapporteringsresultat"/>
+
   <xs:element name="Period" type="rr:Period"/>
 
   <xs:element name="Perioder" type="rr:Perioder"/>
@@ -368,6 +376,8 @@
   <xs:element name="SokresultatKurstillfalleResultat" type="rr:SokresultatKurstillfalleResultat"/>
 
   <xs:element name="SokresultatKurstillfallesdeltagare" type="rr:SokresultatKurstillfallesdeltagare"/>
+
+  <xs:element name="SokresultatPagaendeRapportering" type="rr:SokresultatPagaendeRapportering"/>
 
   <xs:element name="SokresultatResultatUtdata" type="rr:SokresultatResultatUtdata"/>
 
@@ -1572,7 +1582,7 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
         <xs:sequence>
           <xs:element ref="rr:Aktivitetstillfalle"/>
           <xs:element minOccurs="0" ref="rr:Aktivitetstillfallesmojlighet"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="AktivitetstillfallesreferenserSkapaAktivitetstillfallesmojlighet" type="rr:AktivitetstillfallesreferensForStudent"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AktivitetstillfallesreferenserForStudenten" type="rr:AktivitetstillfallesreferensForStudent"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2913,6 +2923,57 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="AviseratTill">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Datum" type="xs:date"/>
+      <xs:element minOccurs="0" name="Namn" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PagaendeRapporteringSokvarden">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AviseringTillUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="KlarmarkeratAvUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="KlarmarkeratInom" type="base:Datumperiod"/>
+          <xs:element minOccurs="0" name="KursUID" type="xs:string"/>
+          <xs:element default="25" minOccurs="0" name="Limit" type="xs:int"/>
+          <xs:element minOccurs="0" name="OrganisationUID" type="xs:string"/>
+          <xs:element default="1" minOccurs="0" name="Page" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PagaendeRapporteringsresultat">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="rr:AviseratTill"/>
+          <xs:element minOccurs="0" name="Efternamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
+          <xs:element minOccurs="0" name="KlarmarkeratAv" type="xs:string"/>
+          <xs:element minOccurs="0" name="Klarmarkeringsdatum" type="xs:date"/>
+          <xs:element minOccurs="0" name="Kursbenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
+          <xs:element minOccurs="0" name="RapporteratPa" type="xs:string"/>
+          <xs:element minOccurs="0" name="SenasteAviseringsdatum" type="xs:date"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SokresultatPagaendeRapportering">
+    <xs:complexContent>
+      <xs:extension base="base:Sokresultat">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Pagaenderapportering" type="rr:PagaendeRapporteringsresultat"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="PraktikLista">
     <xs:complexContent>
       <xs:extension base="dap:Base">
@@ -3153,6 +3214,13 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AnvandareMedResultatrattighetSokvarden">
+    <xs:sequence>
+      <xs:element name="OrganisationUID" type="xs:string"/>
+      <xs:element minOccurs="0" name="TypAvMedarbetare" type="rr:Resultatmedarbetaretyp"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="KontrollAvResultatrattighetPaOrganisation">
