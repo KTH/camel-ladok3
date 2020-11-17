@@ -35,6 +35,8 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
@@ -74,20 +76,21 @@ public class Ladok3StudiedeltagandeServiceTest {
         assert(tillfallen.getStudiestrukturer().getStudiestruktur().size() > 0);
     }
 
-    // @Test
-    // public void testUtdataStudieaktivitetOchFinansieringIterator() {
-    //     Map<String, Object> params = new HashMap<String, Object>();
-    //     params.put("datumperiod", "2018-01-16_2018-06-04");
-    //     params.put("limit", 5);
+    @Test
+    public void testUtdataStudieaktivitetOchFinansieringIterator() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("datumperiod", "2018-01-16_2018-06-04");
+        params.put("limit", 5);
 
-    //     Iterator<StudieaktivitetUtdata> iterator = studiedeltagandeService.utdataStudieaktivitetOchFinansieringIteraterable(params).iterator();
-    //     assertNotNull(iterator);
-    //     assertTrue(iterator.hasNext());
+        Iterator<StudieaktivitetOchFinansiering> iterator = studiedeltagandeService.utdataStudieaktivitetOchFinansieringIteraterable(params).iterator();
 
-    //     for (int i = 0; i < 7; i++) {
-    //         assertNotNull(iterator.next());
-    //     }
-    // }
+        assertNotNull(iterator);
+        assertTrue(iterator.hasNext());
+
+        for (int i = 0; i < 7; i++) {
+            assertNotNull(iterator.next());
+        }
+    }
     @Test
     public void testCreateUtdatafraga() {
       Map<String, Object> params = new HashMap<String, Object>();

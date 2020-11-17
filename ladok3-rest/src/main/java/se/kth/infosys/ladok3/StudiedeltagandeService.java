@@ -25,6 +25,7 @@ package se.kth.infosys.ladok3;
 
 import java.util.Map;
 
+import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
 import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
@@ -81,7 +82,7 @@ public interface StudiedeltagandeService extends Ladok3Service {
      * @param params A map between parameter strings and their object values.
      * @return an iterable for all search results matching params.
      */
-    public Iterable<UtdataResultatrad> utdataStudieaktivitetOchFinansieringIteraterable(final Map<String, Object> params);
+    public Iterable<StudieaktivitetOchFinansiering> utdataStudieaktivitetOchFinansieringIteraterable(final Map<String, Object> params);
 
     /**
      * Hämta alla kurstillfällesdeltaganden för en student.

@@ -28,7 +28,7 @@
   <parent>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
     <artifactId>camel-ladok3</artifactId>
-    <version>3.50.10.SNAPSHOT</version>
+    <version>3.56.2</version>
   </parent>
 
   <artifactId>ladok3-rest</artifactId>
@@ -37,13 +37,21 @@
   <name>ladok3-rest</name>
   <url>https://www.kth.se</url>
 
+  <properties>
+  <ladok-api-model-version>1.56.2</ladok-api-model-version>
+  </properties>
+
   <dependencies>
-    <dependency>
+    <!-- <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>ladok3-model</artifactId>
       <version>${project.version}</version>
+    </dependency> -->
+    <dependency>
+      <groupId>se.kth.it.ladok</groupId>
+      <artifactId>ladok-api-model</artifactId>
+      <version>${ladok-api-model-version}</version>
     </dependency>
-
     <!-- logging -->
     <dependency>
       <groupId>org.slf4j</groupId>

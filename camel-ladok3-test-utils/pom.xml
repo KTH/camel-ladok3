@@ -3,7 +3,7 @@
   <parent>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
     <artifactId>camel-ladok3</artifactId>
-    <version>3.50.10.SNAPSHOT</version>
+    <version>3.56.2</version>
   </parent>
   <artifactId>camel-ladok3-test-utils</artifactId>
   <name>Camel Ladok3 test utilities</name>

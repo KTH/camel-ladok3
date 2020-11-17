@@ -3,22 +3,46 @@ package se.kth.infosys.ladok3;
 import java.util.Iterator;
 import java.util.Map;
 
+import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
 import se.ladok.schemas.studiedeltagande.UtdataResultat;
 import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
 import se.ladok.schemas.studiedeltagande.Utdatafraga;
 
-public class StudieaktivitetUtdataResultat implements Iterable<UtdataResultatrad> {
-    private UtdataResultatradIterator iterator;
+public class StudieaktivitetUtdataResultat implements Iterable<StudieaktivitetOchFinansiering> {
+    private StudieaktivitetOchFinansieringIterator iterator;
 
     public StudieaktivitetUtdataResultat(
             final StudiedeltagandeService studiedeltagandeService,
             final Map<String, Object> params) {
-        this.iterator = new UtdataResultatradIterator(studiedeltagandeService, params);
+        this.iterator = new StudieaktivitetOchFinansieringIterator(studiedeltagandeService, params);
     }
 
     @Override
-    public Iterator<UtdataResultatrad> iterator() {
+    public StudieaktivitetOchFinansieringIterator iterator() {
         return iterator;
+    }
+
+    public class StudieaktivitetOchFinansieringIterator implements Iterator<StudieaktivitetOchFinansiering> {
+      private Iterator<UtdataResultatrad> iterator;
+
+      public StudieaktivitetOchFinansieringIterator(
+              final StudiedeltagandeService studiedeltagandeService,
+              final Map<String, Object> params) {
+                this.iterator = new UtdataResultatradIterator(studiedeltagandeService, params);
+      }
+
+      @Override
+      public boolean hasNext() {
+          return iterator.hasNext();
+      }
+
+      @Override
+      public StudieaktivitetOchFinansiering next() {
+          if (iterator.hasNext()) {
+              return new StudieaktivitetOchFinansiering(iterator.next());
+          }
+          return null;
+      }
     }
 
     public class UtdataResultatradIterator implements Iterator<UtdataResultatrad> {

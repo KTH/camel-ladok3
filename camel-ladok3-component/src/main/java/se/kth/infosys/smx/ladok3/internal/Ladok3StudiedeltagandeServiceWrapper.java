@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import se.kth.infosys.ladok3.StudiedeltagandeService;
 import se.kth.infosys.ladok3.StudiedeltagandeServiceImpl;
+import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
@@ -86,7 +87,7 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
 
         log.debug("Getting Ladok data for studieaktivetet och finansiering request with params: {}",
                 params);
-        Iterator<UtdataResultatrad> fromLadok =
+        Iterator<StudieaktivitetOchFinansiering> fromLadok =
                 service.utdataStudieaktivitetOchFinansieringIteraterable(params).iterator();
         exchange.getIn().setBody(fromLadok);
     }
