@@ -192,3 +192,69 @@ Add calls referencing ladok3-rest to
 If adding a new Ladok3 service not previously used, create a new wrapper similar to the
 `Ladok3StudentInformationServiceWrapper` and add a registration of it to the
 `Ladok3Producer` constructor.
+
+### Writing integration tests for routes which uses this component
+
+The camel-ladok3-component cannot easily be mocked, but must be replaced in the route using a fake-processor.
+The end result is then mocked ussing Mockito. An example of code using this approach:
+
+```java
+package se.kth.integral.ths.fakeprocessor;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import java.util.Iterator;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
+import se.kth.infosys.ladok3.StudieaktivitetUtdataResultat;
+import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
+import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
+import se.ladok.schemas.studiedeltagande.UtdataResultatrad.Metadata;
+import se.ladok.schemas.studiedeltagande.UtdataResultatrad.Metadata.Entry;
+
+public class FakeLadok3StudieaktivitetOchFinansieringProcessor implements Processor {
+
+  @Override
+  public void process(Exchange exchange) throws Exception {
+  
+    Metadata metadata = new Metadata();
+
+    Entry entry = new Entry();
+    entry.setKey(0);
+    entry.setValue("01ed6247-e3f2-4daa-9450-8d73d735f491");
+
+    metadata.getEntry().add(entry);
+
+    UtdataResultatrad utdata = new UtdataResultatrad();
+    utdata.setMetadata(metadata);
+    utdata.getVarden().add(0, "19710321-1234");
+    utdata.getVarden().add(1, "Jönsson, Fredrik");
+    utdata.getVarden().add(2, "ELSYSETS");
+    utdata.getVarden().add(3, "Elektro- och systemteknik");
+    utdata.getVarden().add(4, "240,0 hp");
+    utdata.getVarden().add(5, "EB");
+    utdata.getVarden().add(6, "EES/skolkansli, forskarämnen");
+    utdata.getVarden().add(7, "KONV-03309");
+    utdata.getVarden().add(8, "2014-10-01 — ");
+    utdata.getVarden().add(9, "2020-07-01 — 2020-12-31");
+    utdata.getVarden().add(10, "80");
+    utdata.getVarden().add(11, "100");
+    utdata.getVarden().add(12, "ÖVR");
+    utdata.getVarden().add(13, "Yrkesverksamhet utan anknytning till utbildning på forskarnivå, eller studiemedel, eller studiefinansiering saknas");
+
+    StudieaktivitetOchFinansiering fakeStudieaktivitet = new StudieaktivitetOchFinansiering(utdata);
+
+    /**
+     * Mocks the invocation of the camel-ladok3-component and it's query to Ladok. 
+     */
+    Iterator<StudieaktivitetOchFinansiering> iterator = mock(
+        StudieaktivitetUtdataResultat.StudieaktivitetOchFinansieringIterator.class);
+    
+    when(iterator.hasNext()).thenReturn(Boolean.TRUE);
+    when(iterator.next()).thenReturn(fakeStudieaktivitet);
+    
+  
+    exchange.getIn().setBody(iterator);
+  }
+}
+```
