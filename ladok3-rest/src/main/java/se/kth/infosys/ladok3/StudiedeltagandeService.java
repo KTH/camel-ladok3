@@ -27,11 +27,9 @@ import java.util.Map;
 
 import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
-import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 import se.ladok.schemas.studiedeltagande.PeriodLista;
 import se.ladok.schemas.studiedeltagande.UtdataResultat;
-import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
 import se.ladok.schemas.studiedeltagande.Utdatafraga;
 
 /**
@@ -40,7 +38,7 @@ import se.ladok.schemas.studiedeltagande.Utdatafraga;
 public interface StudiedeltagandeService extends Ladok3Service {
     /**
      * Lista alla påbörjade kurspaketeringar för en student.
-     * 
+     *
      * @param uid student UID
      * @return påbörjade kurspaketeringar.
      */
@@ -48,7 +46,7 @@ public interface StudiedeltagandeService extends Ladok3Service {
 
     /**
      * Hämta studiestrukturer för student, en per rotkurspaketeringstillfälle.
-     * 
+     *
      * @param uid student UID
      * @return studiestrukturer för student.
      */
@@ -91,7 +89,7 @@ public interface StudiedeltagandeService extends Ladok3Service {
      * @return kurstillfällesdeltagande för student.
      */
     public TillfallesdeltagandeLista kurstillfallesdeltagandeStudent(String uid);
-    
+
     /**
      * Hämta alla perioder för studiedeltagande.
      *

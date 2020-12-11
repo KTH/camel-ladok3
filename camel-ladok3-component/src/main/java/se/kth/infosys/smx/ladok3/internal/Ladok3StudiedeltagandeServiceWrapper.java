@@ -18,9 +18,7 @@ import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
 import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
-import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
-import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
 import se.ladok.schemas.studiedeltagande.PeriodLista;
 
 public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrapper {
@@ -127,6 +125,6 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
     private void getStudiedeltagandePerioder(Exchange exchange) throws Exception {
         PeriodLista fromLadok = service.studiedeltagandePeriod();
         exchange.getIn().setBody(fromLadok);
-        
+
     }
 }

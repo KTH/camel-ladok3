@@ -42,7 +42,7 @@ public class ResultatServiceImpl extends AbstractLadok3Service implements Result
 
   /**
    * Constructor Web Service client end representing the Ladok resultat endpoint.
-   * 
+   *
    * @param host     The hostname of the targeted Ladok environment, e.g.
    *                 api.integrationstest.ladok.se
    * @param certFile The path to the certificate to use for authentication.
@@ -55,7 +55,7 @@ public class ResultatServiceImpl extends AbstractLadok3Service implements Result
 
   /**
    * Constructor Web Service client end representing the Ladok resultat endpoint.
-   * 
+   *
    * @param host    The hostname of the targeted Ladok environment, e.g.
    *                api.integrationstest.ladok.se
    * @param context the SSLContext containing necessary information.
@@ -87,95 +87,93 @@ public class ResultatServiceImpl extends AbstractLadok3Service implements Result
    */
   public SokresultatStudieresultatResultat sokresultatStudieresultatResultat(String aktivitetstillfalleUID,
       Map<String, Object> sokVarden) {
-    
+
     WebTarget req = target.path("/studieresultat/rapportera/aktivitetstillfalle/{aktivitetstillfalleUID}/sok")
                     .resolveTemplate("aktivitetstillfalleUID", aktivitetstillfalleUID);
-    
+
     StudieresultatForRapporteringPaAktivitetstillfalleSokVarden varden = createSokresultatStudieResultatSokVarden(sokVarden);
-    
+
     return req.request()
             .put(Entity.entity(varden, SERVICE_TYPE), SokresultatStudieresultatResultat.class);
 
   }
 
-  /** 
+  /**
    * Creates a SokresultatStudieResultatSokVarden object used to filter the query to Ladok
-   * based on the params sent in the request. 
+   * based on the params sent in the request.
    * @param params as Map<String, Object>. Will default to Limit 400, Page 1 and ALLA on "anmaldaFiltrering"
-   * if nothing else is supplied. 
+   * if nothing else is supplied.
    * @return the StudieresultatForRapporteringPaAktivitetstillfalleSokVarden object
    */
   public StudieresultatForRapporteringPaAktivitetstillfalleSokVarden createSokresultatStudieResultatSokVarden(
       Map<String, Object> params) {
-    
+
         StudieresultatForRapporteringPaAktivitetstillfalleSokVarden sokVarden = new StudieresultatForRapporteringPaAktivitetstillfalleSokVarden();
-        
+
         params.putIfAbsent("limit", 400);
         params.putIfAbsent("page", 1);
         params.putIfAbsent("anmaldafiltrering", StudieresultatAnmaldaEnum.ALLA.value());
 
-        if(params != null) {
-          int page = 1;
-          if(params.get("page") != null) {
-            if(params.get("page") instanceof Integer) {
-              page = (Integer) params.get("page");
-            } else {
-              page = Integer.parseInt((String) params.get("page"));
-            }
-            sokVarden.setPage(page);
-          }
-          
-          if(params.get("limit") != null) {
-            int limit = 400;
-            if(params.get("limit") instanceof Integer) {
-              limit = (Integer) params.get("limit");
-            } else {
-              limit = Integer.parseInt((String) params.get("limit"));
-            }
-            sokVarden.setLimit(limit);
-          }
+    int page = 1;
+    if(params.get("page") != null) {
+      if(params.get("page") instanceof Integer) {
+        page = (Integer) params.get("page");
+      } else {
+        page = Integer.parseInt((String) params.get("page"));
+      }
+      sokVarden.setPage(page);
+    }
 
-          if(params.get("anmaldafiltrering") != null) {
-            sokVarden.setAnmaldafiltrering(StudieresultatAnmaldaEnum.fromValue(
-              (String)params.get("anmaldafiltrering")));
-          }
+    if(params.get("limit") != null) {
+      int limit = 400;
+      if(params.get("limit") instanceof Integer) {
+        limit = (Integer) params.get("limit");
+      } else {
+        limit = Integer.parseInt((String) params.get("limit"));
+      }
+      sokVarden.setLimit(limit);
+    }
 
-          if(params.get("filtrering") != null) {
-            String[] filters = ((String) params.get("filtrering")).split(",");
+    if(params.get("anmaldafiltrering") != null) {
+      sokVarden.setAnmaldafiltrering(StudieresultatAnmaldaEnum.fromValue(
+        (String)params.get("anmaldafiltrering")));
+    }
 
-            for(String filter : filters) {
-              sokVarden.getFiltrering().add(
-                StudieresultatTillstandVidRapporteringEnum.fromValue(filter.toUpperCase())
-              );
-            }
+    if(params.get("filtrering") != null) {
+      String[] filters = ((String) params.get("filtrering")).split(",");
 
-          }
+      for(String filter : filters) {
+        sokVarden.getFiltrering().add(
+          StudieresultatTillstandVidRapporteringEnum.fromValue(filter.toUpperCase())
+        );
+      }
 
-          if(params.get("orderby") != null) {
-            String[] orderBy = ((String) params.get("orderby")).split(",");
-            
-            for(String order : orderBy ) {
-              sokVarden.getOrderBy().add(
-                StudieresultatOrderByEnum.fromValue(order.toUpperCase())
-              );
-            }
-          }
+    }
 
-          if(params.get("gruppuid") != null) {
-            sokVarden.setGruppUID((String)params.get("gruppuid"));
-          }
+    if(params.get("orderby") != null) {
+      String[] orderBy = ((String) params.get("orderby")).split(",");
 
-          if(params.get("kurstillfallenuid") != null) {
-            String[] uids = ((String) params.get("kurstillfallenuid")).split(",");
+      for(String order : orderBy ) {
+        sokVarden.getOrderBy().add(
+          StudieresultatOrderByEnum.fromValue(order.toUpperCase())
+        );
+      }
+    }
 
-            for(String uid : uids) {
-              sokVarden.getKurstillfallenUID().add(uid);
-            }
-          }
-        }
-        
+    if(params.get("gruppuid") != null) {
+      sokVarden.setGruppUID((String)params.get("gruppuid"));
+    }
+
+    if(params.get("kurstillfallenuid") != null) {
+      String[] uids = ((String) params.get("kurstillfallenuid")).split(",");
+
+      for(String uid : uids) {
+        sokVarden.getKurstillfallenUID().add(uid);
+      }
+    }
+
     return sokVarden;
   }
 
-  
+
 }

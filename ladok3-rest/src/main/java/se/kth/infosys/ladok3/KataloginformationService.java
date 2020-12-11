@@ -25,8 +25,6 @@ package se.kth.infosys.ladok3;
 
 import java.util.Map;
 
-import se.ladok.schemas.Identiteter;
-import se.ladok.schemas.kataloginformation.Anvandarbehorighetsstatus;
 import se.ladok.schemas.kataloginformation.Anvandare;
 import se.ladok.schemas.kataloginformation.AnvandareLista;
 import se.ladok.schemas.kataloginformation.Anvandarinformation;
