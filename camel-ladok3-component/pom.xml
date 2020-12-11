@@ -29,7 +29,7 @@
   <parent>
     <groupId>se.kth.infosys.smx.ladok3</groupId>
     <artifactId>camel-ladok3</artifactId>
-    <version>3.56.2</version>
+    <version>3.59.1</version>
   </parent>
 
   <artifactId>camel-ladok3-component</artifactId>
@@ -42,8 +42,6 @@
   <properties>
     <checkstyle.failOnViolation>false</checkstyle.failOnViolation>
     <checkstyle.skip>true</checkstyle.skip>
-    <ladok-api-model-version>1.56.2</ladok-api-model-version>
-    <ladok-event-model-version>1.56.2</ladok-event-model-version>
   </properties>
 
   <dependencies>
@@ -76,13 +74,13 @@
     <dependency>
       <groupId>se.kth.it.ladok</groupId>
       <artifactId>ladok-api-model</artifactId>
-      <version>${ladok-api-model-version}</version>
+      <version>${ladok-version}</version>
     </dependency>
 
     <dependency>
       <groupId>se.kth.it.ladok</groupId>
       <artifactId>ladok-event-model</artifactId>
-      <version>${ladok-event-model-version}</version>
+      <version>${ladok-version}</version>
     </dependency>
 
     <dependency>
