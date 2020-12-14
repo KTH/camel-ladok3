@@ -1010,9 +1010,8 @@ Konsekvenser för verksamheten:
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="LokalFotnotskategori" type="ex:Lokalfotnotskategori"/>
-          <xs:element minOccurs="0" name="SvenskBenamning" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -1022,8 +1021,7 @@ Konsekvenser för verksamheten:
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
-          <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
-          <xs:element minOccurs="0" name="SvenskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -1044,9 +1042,8 @@ Konsekvenser för verksamheten:
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element minOccurs="0" name="LokalFotnotUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="Benamning" type="base:Benamningar"/>
           <xs:element minOccurs="0" name="LokalFotnotskategegoriUID" type="xs:string"/>
-          <xs:element minOccurs="0" name="SvenskBenamning" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

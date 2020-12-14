@@ -241,6 +241,8 @@
 
   <xs:element name="PeriodtypLista" type="ki:PeriodtypLista"/>
 
+  <xs:element name="Postadress" type="ki:Postadress"/>
+
   <xs:element name="Praktiktyp" type="ki:Praktiktyp"/>
 
   <xs:element name="Praktiktyper" type="ki:Praktiktyper"/>
@@ -1240,10 +1242,24 @@ enum-representationer endast kommer med i xml-schemat vid generering via schemag
     <xs:complexContent>
       <xs:extension base="base:EnkeltGrunddatavarde">
         <xs:sequence>
+          <xs:element minOccurs="0" name="EpostadressForAdmingranssnitt" type="xs:string"/>
+          <xs:element minOccurs="0" name="EpostadressForStudentgranssnitt" type="xs:string"/>
           <xs:element minOccurs="0" name="OrtID" type="xs:int"/>
+          <xs:element minOccurs="0" ref="ki:Postadress"/>
+          <xs:element minOccurs="0" name="Telefonnummer" type="xs:string"/>
+          <xs:element minOccurs="0" name="Webbplats" type="xs:string"/>
+          <xs:element minOccurs="0" name="WebbplatsEngelsk" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Postadress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Postnummer" type="xs:string"/>
+      <xs:element minOccurs="0" name="Postort" type="xs:string"/>
+      <xs:element minOccurs="0" name="Utdelningsadress" type="xs:string"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="Markningsnycklar">

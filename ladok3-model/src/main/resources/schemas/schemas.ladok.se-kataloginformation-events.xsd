@@ -573,8 +573,16 @@ Konsekvenser för verksamheten:
     <xs:complexContent>
       <xs:extension base="events:grunddataBaseEvent">
         <xs:sequence>
+          <xs:element minOccurs="0" name="EpostadressForAdmingranssnitt" type="xs:string"/>
+          <xs:element minOccurs="0" name="EpostadressForStudentgranssnitt" type="xs:string"/>
           <xs:element minOccurs="0" name="LarosateID" type="xs:string"/>
           <xs:element minOccurs="0" name="OrtID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Postnummer" type="xs:string"/>
+          <xs:element minOccurs="0" name="Postort" type="xs:string"/>
+          <xs:element minOccurs="0" name="Telefonnummer" type="xs:string"/>
+          <xs:element minOccurs="0" name="Utdelningsadress" type="xs:string"/>
+          <xs:element minOccurs="0" name="Webbplats" type="xs:string"/>
+          <xs:element minOccurs="0" name="WebbplatsEngelsk" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

@@ -119,6 +119,8 @@
 
   <xs:element name="DokumenteratbeslutForUppnaddAndelEvent" type="sd:DokumenteratbeslutForUppnaddAndelEvent"/>
 
+  <xs:element name="Dokumenttyp" type="sd:Dokumenttyp"/>
+
   <xs:element name="EjHanteradAntagning" type="sd:EjHanteradAntagning"/>
 
   <xs:element name="Enhet" type="sd:Enhet"/>
@@ -1379,6 +1381,7 @@ Konsekvenser för verksamheten:
       <xs:extension base="events:BaseEvent">
         <xs:sequence>
           <xs:element name="Dokumentation" type="xs:string"/>
+          <xs:element minOccurs="0" name="Dokumenttyp" type="xs:string"/>
           <xs:element name="Eventtyp" type="xs:string"/>
           <xs:element name="StudentUID" type="xs:string"/>
           <xs:element name="StudiebehorighetKalla" type="xs:int">
@@ -3462,6 +3465,7 @@ studier.]]></xs:documentation>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
           <xs:element name="Dokumentation" type="xs:string"/>
+          <xs:element minOccurs="0" ref="sd:Dokumenttyp"/>
           <xs:element name="Giltighetsperiod" type="base:Datumperiod"/>
           <xs:element name="Kalla" type="sd:Studiebehorighetkalla"/>
           <xs:element name="StudentUID" type="xs:string"/>
@@ -4435,6 +4439,14 @@ representationer.]]></xs:documentation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="intygforvantatdeltagande"/>
       <xs:enumeration value="registreringsintyg"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Dokumenttyp">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EXAMEN"/>
+      <xs:enumeration value="FRITEXT"/>
+      <xs:enumeration value="UNDANTAG"/>
     </xs:restriction>
   </xs:simpleType>
 

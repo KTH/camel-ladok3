@@ -43,6 +43,8 @@
 
   <xs:element name="KontaktuppgifterSysteminterntEvent" type="si:KontaktuppgifterSysteminterntEvent"/>
 
+  <xs:element name="LISAdapterStudent" type="si:LISAdapterStudent"/>
+
   <xs:element name="Larosatesinformation" type="si:Larosatesinformation"/>
 
   <xs:element name="LarosatesinformationLista" type="si:LarosatesinformationLista"/>
@@ -835,6 +837,20 @@ För att få en mer komplett bild av studenten kan klienten följa self-länken.
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="LISAdapterStudent">
+<xs:annotation>
+<xs:documentation><![CDATA[Enkel representation som används av LIS-adaptern för att på ett så enkelt sätt som möjligt kunna etablera en ny student]]></xs:documentation>
+</xs:annotation>
+    <xs:sequence>
+      <xs:element name="Efternamn" type="xs:string"/>
+      <xs:element name="Fodelsedata" type="xs:string"/>
+      <xs:element name="Fornamn" type="xs:string"/>
+      <xs:element name="Kon" type="si:LISAdapterKon"/>
+      <xs:element name="StudentUID" type="xs:string"/>
+      <xs:element minOccurs="0" name="OnskatInterimspersonnummer" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="Avskiljandebeslut">
     <xs:complexContent>
       <xs:extension base="si:Studentrestriktion">
@@ -955,6 +971,13 @@ explicita värdet EJ_PRÖVAD behövs alltså inte och kommer fasas ut.]]></xs:do
       <xs:enumeration value="fodelsedatumFrom"/>
       <xs:enumeration value="fodelsedatumTom"/>
       <xs:enumeration value="kon"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LISAdapterKon">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="KVINNA"/>
+      <xs:enumeration value="MAN"/>
     </xs:restriction>
   </xs:simpleType>
 
