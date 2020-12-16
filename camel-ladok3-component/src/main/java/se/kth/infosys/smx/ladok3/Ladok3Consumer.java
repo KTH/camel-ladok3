@@ -120,7 +120,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
 
         if (shouldHandleEvent(rootElement)) {
           Class<?> eventClass = Class.forName(ladokEventClass(rootElement));
-          Unmarshaller unmarshaller = Ladok3UnmarshallerFactory.unmarshaller(eventClass.getPackage().getName());
+          Unmarshaller unmarshaller = Ladok3UnmarshallerFactory.unmarshaller(eventClass.getPackage().getName(), eventClass);
           JAXBElement<?> root = unmarshaller.unmarshal(rootElement, eventClass);
           BaseEvent event = (BaseEvent) root.getValue();
 
