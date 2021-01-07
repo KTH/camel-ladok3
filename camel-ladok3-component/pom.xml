@@ -60,11 +60,6 @@
       <artifactId>ladok3-rest</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <!-- <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>ladok3-model</artifactId>
-      <version>${ladok3.model.version}</version>
-    </dependency> -->
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-support</artifactId>
@@ -74,13 +69,13 @@
     <dependency>
       <groupId>se.kth.it.ladok</groupId>
       <artifactId>ladok-api-model</artifactId>
-      <version>${ladok-version}</version>
+      <version>${ladok-api-model-version}</version>
     </dependency>
 
     <dependency>
       <groupId>se.kth.it.ladok</groupId>
       <artifactId>ladok-event-model</artifactId>
-      <version>${ladok-version}</version>
+      <version>${ladok-event-model-version}</version>
     </dependency>
 
     <dependency>

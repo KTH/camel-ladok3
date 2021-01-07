@@ -1,24 +1,145 @@
 trigger:
   - camel3
-  
+
+schedules:
+  - cron: "0 09 30 * MON,WED,FRI"
+    displayName: Run at 0930 every other day
+    branches:
+      include:
+        - camel3
+    always: true 
+
+resources:
+  repositories: 
+    - repository: pipelinehelper
+      type: github
+      endpoint: KTH
+      name: KTH/integral-azpipeline-helper
+
 pool:
-    vmImage: 'ubuntu-latest'
-  
-steps:
-  - task: MavenAuthenticate@0
-    displayName: Authenticate to Azure Artifacts 
-    inputs:
-      artifactsFeeds: 'integration'
+  vmImage: 'ubuntu-latest'
+
+stages: 
+  - stage: Download_and_build
+    jobs:
+      - job: Download_and_check_packages
+        steps:
+        - checkout: self
+          clean: true
+          persistCredentials: true
+          path: component
+        - checkout: pipelinehelper
+          path: tools
+
+        - task: DownloadPackage@1
+          displayName: Download API model artifact
+          inputs:
+            packageType: 'maven'
+            feed: '/886f0719-97f5-4915-991f-619a1b556ad0'
+            view: 'dee13f99-a311-4a7d-ac7c-0a0de4be4096'
+            definition: '8f9e14c5-b002-4d44-92de-d780365f00c6'
+            version: 'latest'
+            files: '**.pom'
+            downloadPath: '$(System.ArtifactsDirectory)/api'
+
+        - task: DownloadPackage@1
+          displayName: Download Event model artifact
+          inputs:
+            packageType: 'maven'
+            feed: '/886f0719-97f5-4915-991f-619a1b556ad0'
+            view: 'dee13f99-a311-4a7d-ac7c-0a0de4be4096'
+            definition: '676e3e27-c300-4a3d-bb3a-b20f5fc93686'
+            version: 'latest'
+            files: '**.pom'
+            downloadPath: '$(System.ArtifactsDirectory)/event'
+
+        - task: PowerShell@2
+          displayName: Check versions and update
+          name: CheckBuild
+          inputs:
+            filePath: $(Agent.BuildDirectory)/tools/camel-component-build.ps1
+
+        - task: MavenAuthenticate@0
+          displayName: Authenticate Maven repository
+          inputs:
+            artifactsFeeds: 'integration'
+    
+        - task: Maven@3
+          displayName: Run Maven clean package 
+          inputs:
+            mavenPomFile: '$(Agent.BuildDirectory)/component/pom.xml'
+            mavenOptions: '-Xmx3072m'
+            javaHomeOption: 'JDKVersion'
+            jdkVersionOption: '1.11'
+            jdkArchitectureOption: 'x64'
+            publishJUnitResults: true
+            checkStyleRunAnalysis: true
+            testResultsFiles: '**/surefire-reports/TEST-*.xml'
+            goals: 'clean package'
+
+  - stage: Deploy_artifact
+    dependsOn: Download_and_build
+    jobs:
+    - job: ReleaseNewVersion
+      condition: eq(stageDependencies.Download_and_build.Download_and_check_packages.outputs['CheckBuild.doNewRelease'], 'Yes') 
+      steps: 
+        - checkout: self
+          clean: true
+          path: component 
+
+        - task: MavenAuthenticate@0
+          displayName: Authenticate Maven repository
+          inputs:
+            artifactsFeeds: 'integration'
+
+        - task: Maven@3
+          displayName: Run Maven cleacn package 
+          inputs:
+            mavenPomFile: '$(Agent.BuildDirectory)/component/pom.xml'
+            mavenOptions: '-Xmx3072m'
+            javaHomeOption: 'JDKVersion'
+            jdkVersionOption: '1.11'
+            jdkArchitectureOption: 'x64'
+            publishJUnitResults: true
+            checkStyleRunAnalysis: true
+            testResultsFiles: '**/surefire-reports/TEST-*.xml'
+            goals: 'clean package'
+
+    - job: PublishMessageIfSucceeded
+      condition: succeeded()
+      dependsOn: ReleaseNewVersion
+      variables:
+        ladokVersion: $[ stageDependencies.Download_and_build.Download_and_check_packages.outputs['CheckBuild.currentLadokVersion'] ]
+      pool: server
+      steps:
+        - task: PublishToAzureServiceBus@1
+          inputs:
+            azureSubscription: 'azpipeline-servicebus'
+            messageBody: |
+              {
+              "build" : "${{variables['Build.DefinitionName']}}",
+              "status" : "Build completed",
+              "version": "$(ladokVersion)"
+              }
+            signPayload: false
+            waitForCompletion: false
       
-  - task: Maven@3
-    displayName: Run Maven Deploy 
-    inputs:
-      mavenPomFile: 'pom.xml'
-      mavenOptions: '-Xmx3072m'
-      javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.11'
-      jdkArchitectureOption: 'x64'
-      publishJUnitResults: true
-      checkStyleRunAnalysis: true
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      goals: 'deploy'
+    - job: PublishMessageIfFailed
+      condition: Failed()
+      dependsOn: ReleaseNewVersion
+      variables:
+        ladokVersion: $[ stageDependencies.Download_and_build.Download_and_check_packages.outputs['CheckBuild.currentLadokVersion'] ]
+      pool: server
+      steps:
+        - task: PublishToAzureServiceBus@1
+          inputs:
+            azureSubscription: 'azpipeline-servicebus'
+            messageBody: |
+              {
+              "build" : "${{variables['Build.DefinitionName']}}",
+              "status" : "Build failed",
+              "version": "$(ladokVersion)"
+              }
+            signPayload: false
+            waitForCompletion: false
+      
