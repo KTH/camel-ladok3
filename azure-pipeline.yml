@@ -93,7 +93,7 @@ stages:
             artifactsFeeds: 'integration'
 
         - task: Maven@3
-          displayName: Run Maven cleacn package 
+          displayName: Run Maven clean deploy 
           inputs:
             mavenPomFile: '$(Agent.BuildDirectory)/component/pom.xml'
             mavenOptions: '-Xmx3072m'
@@ -103,7 +103,7 @@ stages:
             publishJUnitResults: true
             checkStyleRunAnalysis: true
             testResultsFiles: '**/surefire-reports/TEST-*.xml'
-            goals: 'clean package'
+            goals: 'clean deploy'
 
     - job: PublishMessageIfSucceeded
       condition: succeeded()
