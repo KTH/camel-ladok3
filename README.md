@@ -13,8 +13,6 @@ There are three parts in the project
    I.e., focus is on methods useful for identity, group and authorization
    management purposes. Other integrations concerning student records and such may
    be driven by other technology and possibly never warrant implementation in Java at KTH.
-1. [ladok3-model](ladok3-model) is a library with data model for events and other objects
-   derived from the XSD published by Ladok.
 1. [camel-ladok3-component](camel-ladok3-component) is Camel Component defining a
    ladok3 endpoint to use in Camel routes. As a consumer it consumes events from Ladok3 
    atom-feeds (complete), and as a producer it uses the REST interface to query and 
@@ -22,14 +20,10 @@ There are three parts in the project
 1. [camel-ladok3-test-utils](camel-ladok3-test-utils) is a collection of tools to use 
    when testing camel routes using camel-ladok3-component. Currently only `DataSet`s 
    to emulate the `Ladok3Consumer`.
-1. [ladok3-feature](ladok3-feature) is a Karaf Feature packaging of the camel-ladok3-component. It
-   is currently not used by us and untested but included for completeness.
    
 ## Using
 
-All components are published to Maven central with groupId
-[se.kth.infosys.smx.ladok3](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22se.kth.infosys.smx.ladok3%22).
-See the readme of each component for details.
+All components are published to a private Maven repository and therefore is not publicly available. 
 
 ### Authentication
 
@@ -67,20 +61,19 @@ Set the version in all components with `mvn versions:set` from project root.
 
 ### Update the model
 
-A common task is to update the model due to changes in the Ladok3 api.
+A common task is to update the model dependencies due to changes in the Ladok3 api.
+The model dependencies are in separate projects and automatically builds new versions whenever there's a 
+new version of either Ladok API or Ladok Event-models. 
 
-1. Download XSD files from https://www.mit-integration.ladok.se/restdoc/
-1. Copy them to ladok3-model/src/main/resources/schemas/
-1. Make a new release, see below.
+This component then automatically builds, tests and pushes a new version using a scheduled build pipeline. 
+
 
 ### Building
 
 A complete local build of the image can be made with `mvn clean install`.
 
 Builds can be pushed to Maven central with `mvn clean deploy` but that
-requires additional setup with accounts to push to central.
-
-Pre-built binaries are available in Maven central. 
+requires additional setup with accounts to push to the private Maven artifact repository.
 
 ### Testing
 
