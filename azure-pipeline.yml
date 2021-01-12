@@ -63,12 +63,15 @@ stages:
           displayName: Authenticate Maven repository
           inputs:
             artifactsFeeds: 'integration'
-        #- task: SonarQubePrepare@4
-        #  displayName: Prepare SonarQube
-        #  inputs:
-        #    SonarQube: 'integral-sqube'
-        #    scannerMode: 'Other'
-
+        - task: SonarQubePrepare@4
+          displayName: Prepare SonarQube
+          inputs:
+            SonarQube: 'integral-sqube'
+            scannerMode: 'Other'
+            
+        - powershell: |
+            $params = "$env:SONARQUBE_SCANNER_PARAMS" -replace '"sonar.branch.name":"[\w,/,-]*"\,?'
+            Write-Host "##vso[task.setvariable variable=SONARQUBE_SCANNER_PARAMS]$params"
         - task: Maven@3
           displayName: Run Maven clean package 
           inputs:
@@ -80,13 +83,13 @@ stages:
             publishJUnitResults: true
             checkStyleRunAnalysis: true
             testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        #    sonarQubeRunAnalysis: true
+            sonarQubeRunAnalysis: true
             goals: 'clean package'
 
-        #- task: SonarQubePublish@4
-        #  displayName: Publish SonarQube results
-        #  inputs:
-        #    pollingTimeoutSec: '300'
+        - task: SonarQubePublish@4
+          displayName: Publish SonarQube results
+          inputs:
+            pollingTimeoutSec: '300'
 
   - stage: Deploy_artifact
     dependsOn: Download_and_build
