@@ -74,12 +74,14 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
     return new Ladok3Producer(this);
   }
 
+  @Override
   public Consumer createConsumer(Processor processor) throws Exception {
     Ladok3Consumer consumer = new Ladok3Consumer(this, processor);
     configureConsumer(consumer);
     return consumer;
   }
 
+  @Override
   public boolean isSingleton() {
     return false;
   }
