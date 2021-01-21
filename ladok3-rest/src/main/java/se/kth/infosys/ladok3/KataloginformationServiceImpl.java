@@ -21,17 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package se.kth.infosys.ladok3;
 
-import se.ladok.schemas.kataloginformation.Anvandare;
-import se.ladok.schemas.kataloginformation.AnvandareLista;
-import se.ladok.schemas.kataloginformation.Anvandarinformation;
-import se.ladok.schemas.kataloginformation.OrganisationLista;
+import java.util.Map;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import java.util.Map;
+import se.ladok.schemas.kataloginformation.Anvandare;
+import se.ladok.schemas.kataloginformation.AnvandareLista;
+import se.ladok.schemas.kataloginformation.Anvandarinformation;
+import se.ladok.schemas.kataloginformation.OrganisationLista;
 
 /**
  * Real implementation of the Ladok kataloginformation service. It is using JAX RS
@@ -39,136 +40,136 @@ import java.util.Map;
  * JAX RS client documentation.
  */
 public class KataloginformationServiceImpl extends AbstractLadok3Service implements KataloginformationService {
-    private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-kataloginformation+xml");
-    private static final String SERVICE = "kataloginformation";
+  private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-kataloginformation+xml");
+  private static final String SERVICE = "kataloginformation";
 
-    /**
-     * Constructor Web Service client end representing the Ladok kataloginformation endpoint.
-     *
-     * @param host     The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
-     * @param certFile The path to the certificate to use for authentication.
-     * @param key      The key to certificate.
-     * @throws Exception on errors.
-     */
-    public KataloginformationServiceImpl(final String host, final String certFile, final String key) throws Exception {
-        super(host, certFile, key, SERVICE);
+  /**
+   * Constructor Web Service client end representing the Ladok kataloginformation endpoint.
+   *
+   * @param host     The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
+   * @param certFile The path to the certificate to use for authentication.
+   * @param key      The key to certificate.
+   * @throws Exception on errors.
+   */
+  public KataloginformationServiceImpl(final String host, final String certFile, final String key) throws Exception {
+    super(host, certFile, key, SERVICE);
+  }
+
+  /**
+   * Constructor Web Service client end representing the Ladok studentinformation endpoint.
+   *
+   * @param host    The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
+   * @param context the SSLContext containing necessary information.
+   * @throws Exception on errors.
+   */
+  public KataloginformationServiceImpl(final String host, final SSLContext context) throws Exception {
+    super(host, context, SERVICE);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Anvandare anvandare(final String uid) {
+    return target.path("/anvandare/{uid}")
+            .resolveTemplate("uid", uid)
+            .request()
+            .accept(SERVICE_TYPE)
+            .get(Anvandare.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public AnvandareLista anvandare(final Map<String, Object> params) {
+    WebTarget request = target.path("/anvandare");
+
+    for (String param : params.keySet()) {
+      request = request.queryParam(param, params.get(param));
     }
 
-    /**
-     * Constructor Web Service client end representing the Ladok studentinformation endpoint.
-     *
-     * @param host    The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
-     * @param context the SSLContext containing necessary information.
-     * @throws Exception on errors.
-     */
-    public KataloginformationServiceImpl(final String host, final SSLContext context) throws Exception {
-        super(host, context, SERVICE);
+    return request
+            .request()
+            .accept(SERVICE_TYPE)
+            .get(AnvandareLista.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Anvandare createAnvandare(final Anvandare anvandare) {
+    return target.path("/anvandare")
+            .request()
+            .accept(SERVICE_TYPE)
+            .post(Entity.entity(anvandare, SERVICE_TYPE), Anvandare.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Anvandare updateAnvandare(final Anvandare anvandare) {
+    return target.path("/anvandare/{uid}")
+            .resolveTemplate("uid", anvandare.getUid())
+            .request()
+            .accept(SERVICE_TYPE)
+            .put(Entity.entity(anvandare, SERVICE_TYPE), Anvandare.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Anvandarinformation anvandarinformation(final String uid) {
+    return target.path("/anvandare/{uid}/anvandarinformation")
+            .resolveTemplate("uid", uid)
+            .request()
+            .accept(SERVICE_TYPE)
+            .get(Anvandarinformation.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Anvandarinformation createAnvandarinformation(final Anvandarinformation anvandarinformation) {
+    return target.path("/anvandare/{uid}/anvandarinformation")
+            .resolveTemplate("uid", anvandarinformation.getAnvandareUID())
+            .request()
+            .accept(SERVICE_TYPE)
+            .post(Entity.entity(anvandarinformation, SERVICE_TYPE), Anvandarinformation.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Anvandarinformation updateAnvandarinformation(final Anvandarinformation anvandarinformation) {
+    return target.path("/anvandare/{uid}/anvandarinformation")
+            .resolveTemplate("uid", anvandarinformation.getAnvandareUID())
+            .request()
+            .accept(SERVICE_TYPE)
+            .put(Entity.entity(anvandarinformation, SERVICE_TYPE), Anvandarinformation.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public AnvandareLista anvandareFiltrerade(final Map<String, Object> params) {
+    WebTarget request = target.path("/anvandare/filtrerade");
+
+    for (String param : params.keySet()) {
+      request = request.queryParam(param, params.get(param));
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public Anvandare anvandare(final String uid) {
-        return target.path("/anvandare/{uid}")
-                .resolveTemplate("uid", uid)
-                .request()
-                .accept(SERVICE_TYPE)
-                .get(Anvandare.class);
-    }
+    return request
+            .request()
+            .accept(SERVICE_TYPE)
+            .get(AnvandareLista.class);
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    public Anvandare createAnvandare(final Anvandare anvandare) {
-        return target.path("/anvandare")
-                .request()
-                .accept(SERVICE_TYPE)
-                .post(Entity.entity(anvandare, SERVICE_TYPE), Anvandare.class);
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public OrganisationLista organisationLista() {
+    WebTarget request = target.path("/organisation");
 
-    /**
-     * {@inheritDoc}
-     */
-    public Anvandare updateAnvandare(final Anvandare anvandare) {
-        return target.path("/anvandare/{uid}")
-                .resolveTemplate("uid", anvandare.getUid())
-                .request()
-                .accept(SERVICE_TYPE)
-                .put(Entity.entity(anvandare, SERVICE_TYPE), Anvandare.class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Anvandarinformation anvandarinformation(final String uid) {
-        return target.path("/anvandare/{uid}/anvandarinformation")
-                .resolveTemplate("uid", uid)
-                .request()
-                .accept(SERVICE_TYPE)
-                .get(Anvandarinformation.class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Anvandarinformation createAnvandarinformation(final Anvandarinformation anvandarinformation) {
-        return target.path("/anvandare/{uid}/anvandarinformation")
-                .resolveTemplate("uid", anvandarinformation.getAnvandareUID())
-                .request()
-                .accept(SERVICE_TYPE)
-                .post(Entity.entity(anvandarinformation, SERVICE_TYPE), Anvandarinformation.class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Anvandarinformation updateAnvandarinformation(final Anvandarinformation anvandarinformation) {
-        return target.path("/anvandare/{uid}/anvandarinformation")
-                .resolveTemplate("uid", anvandarinformation.getAnvandareUID())
-                .request()
-                .accept(SERVICE_TYPE)
-                .put(Entity.entity(anvandarinformation, SERVICE_TYPE), Anvandarinformation.class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public AnvandareLista anvandare(final Map<String, Object> params) {
-        WebTarget request = target.path("/anvandare");
-
-        for (String param : params.keySet()) {
-            request = request.queryParam(param, params.get(param));
-        }
-
-        return request
-                .request()
-                .accept(SERVICE_TYPE)
-                .get(AnvandareLista.class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public AnvandareLista anvandareFiltrerade(final Map<String, Object> params) {
-        WebTarget request = target.path("/anvandare/filtrerade");
-
-        for (String param : params.keySet()) {
-            request = request.queryParam(param, params.get(param));
-        }
-
-        return request
-                .request()
-                .accept(SERVICE_TYPE)
-                .get(AnvandareLista.class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public OrganisationLista organisationLista() {
-        WebTarget request = target.path("/organisation");
-
-        return request.request().accept(SERVICE_TYPE).get(OrganisationLista.class);
-    }
+    return request.request().accept(SERVICE_TYPE).get(OrganisationLista.class);
+  }
 
 }

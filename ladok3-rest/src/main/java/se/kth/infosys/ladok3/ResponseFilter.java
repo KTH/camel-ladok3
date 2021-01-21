@@ -21,17 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package se.kth.infosys.ladok3;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.nio.charset.StandardCharsets;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientResponseContext;
 import javax.ws.rs.client.ClientResponseFilter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,34 +40,34 @@ import org.slf4j.LoggerFactory;
  * using SLF4J logging. To trace responses in your application, setup SLF4J logging
  * appropriately and crank up the log level for se.kth.infosys.ladok3 to trace level.
  *
- * Tracing responses may be memory and cpu intensive due to the streams paradigm being
+ * <p>Tracing responses may be memory and cpu intensive due to the streams paradigm being
  * bypassed with the stream loaded into memory in full, logged, and a new stream generated
  * out of memory to the receiving application, depending on your payload.
  */
 public class ResponseFilter implements ClientResponseFilter {
-    private static final Logger LOG = LoggerFactory.getLogger(ResponseFilter.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ResponseFilter.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void filter(ClientRequestContext requestContext, ClientResponseContext responseContext) throws IOException {
-        if (LOG.isTraceEnabled()) {
-            LOG.trace("Response status: {} {}", responseContext.getStatus(), responseContext.getStatusInfo().toString());
-            LOG.trace("Response headers: {}", responseContext.getHeaders());
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void filter(ClientRequestContext requestContext, ClientResponseContext responseContext) throws IOException {
+    if (LOG.isTraceEnabled()) {
+      LOG.trace("Response status: {} {}", responseContext.getStatus(), responseContext.getStatusInfo().toString());
+      LOG.trace("Response headers: {}", responseContext.getHeaders());
 
-            InputStream stream = responseContext.getEntityStream();
-            ByteArrayOutputStream result = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = stream.read(buffer)) != -1) {
-                result.write(buffer, 0, length);
-            }
-            stream.close();
-            LOG.trace("Response body: {}", result.toString("UTF-8"));
+      InputStream stream = responseContext.getEntityStream();
+      ByteArrayOutputStream result = new ByteArrayOutputStream();
+      byte[] buffer = new byte[1024];
+      int length;
+      while ((length = stream.read(buffer)) != -1) {
+        result.write(buffer, 0, length);
+      }
+      stream.close();
+      LOG.trace("Response body: {}", result.toString(StandardCharsets.UTF_8));
 
-            responseContext.setEntityStream(new ByteArrayInputStream(result.toByteArray()));
-        }
+      responseContext.setEntityStream(new ByteArrayInputStream(result.toByteArray()));
     }
+  }
 
 }

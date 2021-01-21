@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package se.kth.infosys.ladok3;
 
 import java.util.Map;
@@ -70,8 +71,8 @@ public class ResultatServiceImpl extends AbstractLadok3Service implements Result
    */
   public Aktivitetstillfalle aktivitetstillfalle(String aktivitetstillfalleUID) {
     return target.path("/aktivitetstillfalle/{aktivitetstillfalleUID}")
-        .resolveTemplate("aktivitetstillfalleUID", aktivitetstillfalleUID).request().accept(SERVICE_TYPE)
-        .get(Aktivitetstillfalle.class);
+            .resolveTemplate("aktivitetstillfalleUID", aktivitetstillfalleUID).request().accept(SERVICE_TYPE)
+            .get(Aktivitetstillfalle.class);
   }
 
   /**
@@ -79,19 +80,20 @@ public class ResultatServiceImpl extends AbstractLadok3Service implements Result
    */
   public AktivitetstillfalleForStudentLista aktivitetstillfalleForStudentLista(String uid) {
     return target.path("/aktivitetstillfalle/student/{studentUID}").resolveTemplate("studentUID", uid).request()
-        .accept(SERVICE_TYPE).get(AktivitetstillfalleForStudentLista.class);
+            .accept(SERVICE_TYPE).get(AktivitetstillfalleForStudentLista.class);
   }
 
-   /**
+  /**
    * {@inheritDoc}
    */
   public SokresultatStudieresultatResultat sokresultatStudieresultatResultat(String aktivitetstillfalleUID,
-      Map<String, Object> sokVarden) {
+                                                                             Map<String, Object> sokVarden) {
 
     WebTarget req = target.path("/studieresultat/rapportera/aktivitetstillfalle/{aktivitetstillfalleUID}/sok")
-                    .resolveTemplate("aktivitetstillfalleUID", aktivitetstillfalleUID);
+            .resolveTemplate("aktivitetstillfalleUID", aktivitetstillfalleUID);
 
-    StudieresultatForRapporteringPaAktivitetstillfalleSokVarden varden = createSokresultatStudieResultatSokVarden(sokVarden);
+    StudieresultatForRapporteringPaAktivitetstillfalleSokVarden varden =
+            createSokresultatStudieResultatSokVarden(sokVarden);
 
     return req.request()
             .put(Entity.entity(varden, SERVICE_TYPE), SokresultatStudieresultatResultat.class);
@@ -101,22 +103,24 @@ public class ResultatServiceImpl extends AbstractLadok3Service implements Result
   /**
    * Creates a SokresultatStudieResultatSokVarden object used to filter the query to Ladok
    * based on the params sent in the request.
-   * @param params as Map<String, Object>. Will default to Limit 400, Page 1 and ALLA on "anmaldaFiltrering"
-   * if nothing else is supplied.
+   *
+   * @param params as Map&lt;String, Object&gt;. Will default to Limit 400, Page 1 and ALLA on "anmaldaFiltrering"
+   *               if nothing else is supplied.
    * @return the StudieresultatForRapporteringPaAktivitetstillfalleSokVarden object
    */
   public StudieresultatForRapporteringPaAktivitetstillfalleSokVarden createSokresultatStudieResultatSokVarden(
-      Map<String, Object> params) {
+          Map<String, Object> params) {
 
-        StudieresultatForRapporteringPaAktivitetstillfalleSokVarden sokVarden = new StudieresultatForRapporteringPaAktivitetstillfalleSokVarden();
+    StudieresultatForRapporteringPaAktivitetstillfalleSokVarden sokVarden = new
+            StudieresultatForRapporteringPaAktivitetstillfalleSokVarden();
 
-        params.putIfAbsent("limit", 400);
-        params.putIfAbsent("page", 1);
-        params.putIfAbsent("anmaldafiltrering", StudieresultatAnmaldaEnum.ALLA.value());
+    params.putIfAbsent("limit", 400);
+    params.putIfAbsent("page", 1);
+    params.putIfAbsent("anmaldafiltrering", StudieresultatAnmaldaEnum.ALLA.value());
 
     int page = 1;
-    if(params.get("page") != null) {
-      if(params.get("page") instanceof Integer) {
+    if (params.get("page") != null) {
+      if (params.get("page") instanceof Integer) {
         page = (Integer) params.get("page");
       } else {
         page = Integer.parseInt((String) params.get("page"));
@@ -124,9 +128,9 @@ public class ResultatServiceImpl extends AbstractLadok3Service implements Result
       sokVarden.setPage(page);
     }
 
-    if(params.get("limit") != null) {
+    if (params.get("limit") != null) {
       int limit = 400;
-      if(params.get("limit") instanceof Integer) {
+      if (params.get("limit") instanceof Integer) {
         limit = (Integer) params.get("limit");
       } else {
         limit = Integer.parseInt((String) params.get("limit"));
@@ -134,40 +138,40 @@ public class ResultatServiceImpl extends AbstractLadok3Service implements Result
       sokVarden.setLimit(limit);
     }
 
-    if(params.get("anmaldafiltrering") != null) {
+    if (params.get("anmaldafiltrering") != null) {
       sokVarden.setAnmaldafiltrering(StudieresultatAnmaldaEnum.fromValue(
-        (String)params.get("anmaldafiltrering")));
+              (String) params.get("anmaldafiltrering")));
     }
 
-    if(params.get("filtrering") != null) {
+    if (params.get("filtrering") != null) {
       String[] filters = ((String) params.get("filtrering")).split(",");
 
-      for(String filter : filters) {
+      for (String filter : filters) {
         sokVarden.getFiltrering().add(
-          StudieresultatTillstandVidRapporteringEnum.fromValue(filter.toUpperCase())
+                StudieresultatTillstandVidRapporteringEnum.fromValue(filter.toUpperCase())
         );
       }
 
     }
 
-    if(params.get("orderby") != null) {
+    if (params.get("orderby") != null) {
       String[] orderBy = ((String) params.get("orderby")).split(",");
 
-      for(String order : orderBy ) {
+      for (String order : orderBy) {
         sokVarden.getOrderBy().add(
-          StudieresultatOrderByEnum.fromValue(order.toUpperCase())
+                StudieresultatOrderByEnum.fromValue(order.toUpperCase())
         );
       }
     }
 
-    if(params.get("gruppuid") != null) {
-      sokVarden.setGruppUID((String)params.get("gruppuid"));
+    if (params.get("gruppuid") != null) {
+      sokVarden.setGruppUID((String) params.get("gruppuid"));
     }
 
-    if(params.get("kurstillfallenuid") != null) {
+    if (params.get("kurstillfallenuid") != null) {
       String[] uids = ((String) params.get("kurstillfallenuid")).split(",");
 
-      for(String uid : uids) {
+      for (String uid : uids) {
         sokVarden.getKurstillfallenUID().add(uid);
       }
     }

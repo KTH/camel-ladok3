@@ -21,30 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package se.kth.infosys.smx.ladok3;
 
 public class Ladok3Message {
-    public final class Header {
-        public static final String EntryId = "ladok3AtomEntryId";
-        public static final String EntryUpdated = "ladok3AtomEntryUpdated";
-        public static final String Feed = "ladok3AtomFeed";
-        public static final String EventType = "ladok3EventType";
-        public static final String EventId = "ladok3EventId";
-        public static final String KeyType = "ladok3KeyType";
-        public static final String KeyValue = "ladok3KeyValue";
-        public static final String Service = "ladok3Service";
-        public static final String Operation = "ladok3ServiceOperation";
-        public static final String Params = "ladok3Params";
-        public static final String IsLastFeed = "ladok3IsLastFeed";
-        public static final String MessageType = "ladok3MessageType";
-        public static final String SequenceNumber = "ladok3MessageSequenceNumber";
-        public static final String EntryItemIndex = "ladok3AtomEntryIndexInFeed";
-        public static final String Username = "ladok3Username";
-    }
+  public static final class Header {
+    public static final String EntryId = "ladok3AtomEntryId";
+    public static final String EntryUpdated = "ladok3AtomEntryUpdated";
+    public static final String Feed = "ladok3AtomFeed";
+    public static final String EventType = "ladok3EventType";
+    public static final String EventId = "ladok3EventId";
+    public static final String KeyType = "ladok3KeyType";
+    public static final String KeyValue = "ladok3KeyValue";
+    public static final String Service = "ladok3Service";
+    public static final String Operation = "ladok3ServiceOperation";
+    public static final String Params = "ladok3Params";
+    public static final String IsLastFeed = "ladok3IsLastFeed";
+    public static final String MessageType = "ladok3MessageType";
+    public static final String SequenceNumber = "ladok3MessageSequenceNumber";
+    public static final String EntryItemIndex = "ladok3AtomEntryIndexInFeed";
+    public static final String Username = "ladok3Username";
+  }
 
-    public final class MessageType {
-        public static final String Start = "ladok3FeedStart";
-        public static final String Event = "ladok3Event";
-        public static final String Done = "ladok3FeedDone";
-    }
+  public static final class MessageType {
+    public static final String Start = "ladok3FeedStart";
+    public static final String Event = "ladok3Event";
+    public static final String Done = "ladok3FeedDone";
+  }
 }

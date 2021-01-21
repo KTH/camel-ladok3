@@ -32,12 +32,12 @@ import org.json.simple.JSONObject;
 
 /**
  * A ListDataSet that reads JSON encoded Ladok3 payloads from a file.
- * 
+ *
  * <p>The file is assumed to contain a JSON array of objects representing Ladok3
  * ATOM events encoded as XML. See README.md for details.</p>
- * 
+ *
  * <p>Relevant headers will be added to messages produced by this dataset.</p>
- * 
+ *
  * <p>Example of use:
  * <pre>
  * &lt;bean id="dataSet" class="se.kth.infosys.smx.ladok3.Ladok3JsonDataSet"&gt;
@@ -56,7 +56,7 @@ public class Ladok3XMLDataSet extends Ladok3JsonDataSet {
 
   /**
    * Constructor using a file name string.
-   * 
+   *
    * @param sourceFileName The file name.
    * @throws Exception on file access and parse problems.
    */
@@ -77,15 +77,15 @@ public class Ladok3XMLDataSet extends Ladok3JsonDataSet {
   /**
    * Read the source file and intializes the internal list of message bodies.
    * Can be overridden by subclasses to tweak behaviour.
-   * 
+   *
    * @throws Exception on file access and parse problems.
    */
   protected void readSourceFile() throws Exception {
-    List<Object> bodies = new LinkedList<Object>();
+    List<Object> bodies = new LinkedList<>();
     jsonObjects = (JSONArray) parser.parse(new FileReader(sourceFile));
 
-    for (int i = 0; i < jsonObjects.size(); i++) {
-      JSONObject jsonObject = (JSONObject) jsonObjects.get(i);
+    for (Object object : jsonObjects) {
+      JSONObject jsonObject = (JSONObject) object;
       String body = (String) jsonObject.get("body");
       bodies.add(body.getBytes());
     }

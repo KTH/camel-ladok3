@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package se.kth.infosys.smx.ladok3;
 
 import java.io.IOException;
@@ -42,7 +43,7 @@ import org.apache.camel.support.DefaultPollingEndpoint;
 /**
  * Represents a ladok3 endpoint.
  */
-@UriEndpoint(scheme = "ladok3", title = "ladok3", syntax = "ladok3://", consumerClass = Ladok3Consumer.class, label = "ladok3")
+@UriEndpoint(scheme = "ladok3", title = "ladok3", syntax = "ladok3://")
 public class Ladok3Endpoint extends DefaultPollingEndpoint {
   @UriParam(label = "consumer", name = "lastEntry", defaultValue = "", description = "Entry id to start consuming from")
   private String lastEntry = "";
@@ -51,10 +52,11 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
   private String lastFeed = "";
 
   @UriParam(label = "consumer", name = "includeEvents", description = "List of event names to generate messages for.")
-  private HashSet<String> includeEvents = new HashSet<String>();
+  private HashSet<String> includeEvents = new HashSet<>();
 
-  @UriParam(label = "consumer", name = "excludeEvents", description = "List of event names NOT to generate messages for.")
-  private HashSet<String> excludeEvents = new HashSet<String>();
+  @UriParam(label = "consumer", name = "excludeEvents", description =
+          "List of event names NOT to generate messages for.")
+  private HashSet<String> excludeEvents = new HashSet<>();
 
   @UriPath(label = "producer", description = "Ladok3 REST API path")
   private String api;
@@ -127,7 +129,7 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
   }
 
   public void setIncludeEvents(String events) {
-    this.includeEvents = new HashSet<String>();
+    this.includeEvents = new HashSet<>();
     for (String event : events.split(",")) {
       if (! event.isEmpty()) {
         this.includeEvents.add(event);
@@ -144,7 +146,7 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
   }
 
   public void setExcludeEvents(String events) {
-    this.excludeEvents = new HashSet<String>();
+    this.excludeEvents = new HashSet<>();
     for (String event : events.split(",")) {
       if (! event.isEmpty()) {
         this.excludeEvents.add(event);
@@ -162,6 +164,7 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
 
   /**
    * The Ladok3 host environment, api.mit-ik.ladok.se etc.
+   *
    * @return the host name
    */
   public String getHost() {

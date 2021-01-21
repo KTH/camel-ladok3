@@ -29,7 +29,8 @@ public final class StockholmLocalDateTimeFormatter {
 
   /**
    * Parse date string as formatted by formatAsStockolmLocalDateTime into Date.
-   * @param dateStr date string as formatted by formatAsStockolmLocalDateTime 
+   *
+   * @param dateStr date string as formatted by formatAsStockolmLocalDateTime
    * @return corresponding Date instance.
    */
   public static Date parse(String dateStr) {

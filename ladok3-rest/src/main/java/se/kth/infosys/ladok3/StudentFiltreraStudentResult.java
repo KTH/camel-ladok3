@@ -22,22 +22,22 @@ package se.kth.infosys.ladok3;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 import java.util.Iterator;
 import java.util.Map;
-
 import se.ladok.schemas.studentinformation.Student;
 
 class StudentFiltreraStudentResult implements Iterable<Student> {
-    private StudentFiltreraStudentIterator iterator;
+  private StudentFiltreraStudentIterator iterator;
 
-    public StudentFiltreraStudentResult(
-            final StudentinformationServiceImpl ladok3StudentInformationService,
-            final Map<String, Object> params) {
-        this.iterator = new StudentFiltreraStudentIterator(ladok3StudentInformationService, params);
-    }
+  public StudentFiltreraStudentResult(
+          final StudentinformationServiceImpl ladok3StudentInformationService,
+          final Map<String, Object> params) {
+    this.iterator = new StudentFiltreraStudentIterator(ladok3StudentInformationService, params);
+  }
 
-    @Override
-    public Iterator<Student> iterator() {
-        return iterator;
-    }
+  @Override
+  public Iterator<Student> iterator() {
+    return iterator;
+  }
 }

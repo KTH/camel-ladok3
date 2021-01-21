@@ -3,13 +3,10 @@ package se.kth.infosys.smx.ladok3.internal;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.net.ssl.SSLContext;
-
 import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.kth.infosys.ladok3.ResultatService;
 import se.kth.infosys.ladok3.ResultatServiceImpl;
 import se.kth.infosys.smx.ladok3.Ladok3Message;
@@ -20,11 +17,11 @@ import se.ladok.schemas.resultat.SokresultatStudieresultatResultat;
 public class Ladok3ResultatServiceWrapper implements Ladok3ServiceWrapper {
   private static final Logger log = LoggerFactory.getLogger(Ladok3StudentInformationServiceWrapper.class);
   private static final Pattern URL_PATTERN = Pattern.compile(
-        "^/resultat(/(?<operation>"
-        + "aktivitetstillfalle|"
-        + "aktivitetstillfalle/student|" 
-        + "studieresultat/rapportera/aktivitetstillfalle"
-        + "))");
+          "^/resultat(/(?<operation>"
+          + "aktivitetstillfalle|"
+          + "aktivitetstillfalle/student|"
+          + "studieresultat/rapportera/aktivitetstillfalle"
+          + "))");
 
   private ResultatService service;
   private String pathOperation;
@@ -33,7 +30,7 @@ public class Ladok3ResultatServiceWrapper implements Ladok3ServiceWrapper {
     this.service = new ResultatServiceImpl(host, context);
     Matcher matcher = URL_PATTERN.matcher(path);
     if (matcher.matches()) {
-        pathOperation = matcher.group("operation").toLowerCase();
+      pathOperation = matcher.group("operation").toLowerCase();
     }
   }
 
@@ -43,7 +40,7 @@ public class Ladok3ResultatServiceWrapper implements Ladok3ServiceWrapper {
     switch (operation) {
       case "aktivitetstillfalle":
         handleAktivitetsfillfalleRequest(exchange);
-      break;
+        break;
       case "aktivitetstillfalle/student":
         handleAktivitetstillfalleForStudent(exchange);
         break;
@@ -57,7 +54,7 @@ public class Ladok3ResultatServiceWrapper implements Ladok3ServiceWrapper {
 
   private void handleAktivitetsfillfalleRequest(final Exchange exchange) throws Exception {
     String uid = exchange.getMessage().getHeader(Ladok3Message.Header.KeyValue, String.class);
-    
+
     if (uid.isBlank()) {
       Aktivitetstillfalle akt = exchange.getMessage().getMandatoryBody(Aktivitetstillfalle.class);
       uid = akt.getUid();
@@ -77,20 +74,22 @@ public class Ladok3ResultatServiceWrapper implements Ladok3ServiceWrapper {
   private void handleSokresultatStudieresultatResultat(final Exchange exchange) throws Exception {
     String aktivitetstillfalleUID = exchange.getMessage().getHeader(Ladok3Message.Header.KeyValue, String.class);
     @SuppressWarnings("unchecked")
-    HashMap<String, Object> params = exchange.getIn().getHeader(Ladok3Message.Header.Params, new HashMap<String, Object>(), HashMap.class);
+    HashMap<String, Object> params = exchange.getIn().getHeader(Ladok3Message.Header.Params, new HashMap<String,
+            Object>(), HashMap.class);
 
-    SokresultatStudieresultatResultat fromLadok = service.sokresultatStudieresultatResultat(aktivitetstillfalleUID, params);
+    SokresultatStudieresultatResultat fromLadok = service.sokresultatStudieresultatResultat(aktivitetstillfalleUID,
+            params);
     exchange.getMessage().setBody(fromLadok);
   }
-  
+
   private String currentOperation(final Exchange exchange) throws Exception {
-    if (pathOperation != null && ! pathOperation.isEmpty()) {
-        return pathOperation;
+    if (pathOperation != null && !pathOperation.isEmpty()) {
+      return pathOperation;
     }
 
     String headerOperation = exchange.getIn().getHeader(Ladok3Message.Header.Operation, String.class);
-    if (headerOperation != null && ! headerOperation.isEmpty()) {
-        return headerOperation;
+    if (headerOperation != null && !headerOperation.isEmpty()) {
+      return headerOperation;
     }
 
     return "uid";

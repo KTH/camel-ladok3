@@ -21,40 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package se.kth.infosys.ladok3;
 
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.core.MediaType;
 
 /**
- * Real implementation of the Ladok utbildningsinformation service. It is using JAX RS 
- * which means that errors will be thrown as unchecked runtime exceptions. See 
+ * Real implementation of the Ladok utbildningsinformation service. It is using JAX RS
+ * which means that errors will be thrown as unchecked runtime exceptions. See
  * JAX RS client documentation.
  */
 public class UtbildningsinformationServiceImpl extends AbstractLadok3Service implements UtbildningsinformationService {
-    private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok-utbdildningsinformation+xml");
-    private static final String SERVICE = "utbildningsinformation";
+  private static final MediaType SERVICE_TYPE = new MediaType("application",
+          "vnd.ladok-utbdildningsinformation+xml");
+  private static final String SERVICE = "utbildningsinformation";
 
-    /**
-     * Constructor Web Service client end representing the Ladok utbildningsinformation endpoint.
-     * 
-     * @param host The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
-     * @param certFile The path to the certificate to use for authentication.
-     * @param key The key to certificate.
-     * @throws Exception on errors.
-     */
-    public UtbildningsinformationServiceImpl(final String host, final String certFile, final String key) throws Exception {
-        super(host, certFile, key, SERVICE);
-    }
+  /**
+   * Constructor Web Service client end representing the Ladok utbildningsinformation endpoint.
+   *
+   * @param host     The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
+   * @param certFile The path to the certificate to use for authentication.
+   * @param key      The key to certificate.
+   * @throws Exception on errors.
+   */
+  public UtbildningsinformationServiceImpl(final String host, final String certFile, final String key)
+          throws Exception {
+    super(host, certFile, key, SERVICE);
+  }
 
-    /**
-     * Constructor Web Service client end representing the Ladok utbildningsinformation endpoint.
-     * 
-     * @param host The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
-     * @param context the SSLContext containing necessary information. 
-     * @throws Exception on errors.
-     */
-    public UtbildningsinformationServiceImpl(final String host, final SSLContext context) throws Exception {
-        super(host, context, SERVICE);
-    }
+  /**
+   * Constructor Web Service client end representing the Ladok utbildningsinformation endpoint.
+   *
+   * @param host    The hostname of the targeted Ladok environment, e.g. mit-ik.ladok.se
+   * @param context the SSLContext containing necessary information.
+   * @throws Exception on errors.
+   */
+  public UtbildningsinformationServiceImpl(final String host, final SSLContext context) throws Exception {
+    super(host, context, SERVICE);
+  }
 }

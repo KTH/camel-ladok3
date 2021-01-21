@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package se.kth.infosys.ladok3;
 
 import java.util.Map;
-
 import se.ladok.schemas.studentinformation.Kontaktuppgifter;
 import se.ladok.schemas.studentinformation.SokresultatStudentinformationRepresentation;
 import se.ladok.schemas.studentinformation.Student;
@@ -36,73 +36,77 @@ import se.ladok.schemas.studentinformation.Studenthistorikposter;
  * Interface representing the Ladok studentinformation service.
  */
 public interface StudentinformationService extends Ladok3Service {
-    /**
-     * Retrieve a student given a personnummer.
-     * @param personnummer identifying the student.
-     * @return The student matching the personnummer
-     */
-    public Student studentPersonnummer(final String personnummer);
+  /**
+   * Retrieve a student given a personnummer.
+   *
+   * @param personnummer identifying the student.
+   * @return The student matching the personnummer
+   */
+  public Student studentPersonnummer(final String personnummer);
 
-    /**
-     * Retrieve a student given its UID.
-     * @param uid The unique identifier for the student.
-     * @return The student matching the UID
-     */
-    public Student student(final String uid);
+  /**
+   * Retrieve a student given its UID.
+   *
+   * @param uid The unique identifier for the student.
+   * @return The student matching the UID
+   */
+  public Student student(final String uid);
 
-    /**
-     * Retrieve contact information for a student given its UID.
-     * @param uid The unique identifier for the student.
-     * @return The contact information matching the UID
-     */
-    public Kontaktuppgifter studentKontaktuppgifter(final String uid);
+  /**
+   * Retrieve contact information for a student given its UID.
+   *
+   * @param uid The unique identifier for the student.
+   * @return The contact information matching the UID
+   */
+  public Kontaktuppgifter studentKontaktuppgifter(final String uid);
 
-    /**
-     * Retrieve history information for a student given its UID.
-     * @param uid The unique identifier for the student.
-     * @return The history information matching the UID
-     */
-    public Studenthistorikposter studentHistorik(final String uid);
+  /**
+   * Retrieve history information for a student given its UID.
+   *
+   * @param uid The unique identifier for the student.
+   * @return The history information matching the UID
+   */
+  public Studenthistorikposter studentHistorik(final String uid);
 
-    /**
-     * Calls /student/filtrera with query parameters as specified in the params Map. 
-     * See Ladok REST documentation for more information about parameters. Only 
-     * difference is that this method will default to "limit=400" and "page=1"
-     * unless something else is specified. E.g:
-     *
-     * <pre>
-     * {@code
-     * Map<String, Object> params = new HashMap<String, Object>();
-     * params.put("personnummer", "19870412031234");
-     * SokresultatStudentinformationRepresentation res =
-     *     studentInformationService.studentFiltrera(params);
-     * }
-     * </pre>
-     * 
-     * Objects passed as values will be rendered into parameters using their 
-     * toString() method.
-     *
-     * @param params A map between parameter strings and their object values.
-     * @return The search result.
-     */
-    public SokresultatStudentinformationRepresentation studentFiltrera(final Map<String, Object> params);
+  /**
+   * Calls /student/filtrera with query parameters as specified in the params Map.
+   * See Ladok REST documentation for more information about parameters. Only
+   * difference is that this method will default to "limit=400" and "page=1"
+   * unless something else is specified. E.g:
+   *
+   * <pre>
+   * {@code
+   * Map<String, Object> params = new HashMap<String, Object>();
+   * params.put("personnummer", "19870412031234");
+   * SokresultatStudentinformationRepresentation res =
+   *     studentInformationService.studentFiltrera(params);
+   * }
+   * </pre>
+   *
+   * <p>Objects passed as values will be rendered into parameters using their
+   * toString() method.
+   *
+   * @param params A map between parameter strings and their object values.
+   * @return The search result.
+   */
+  public SokresultatStudentinformationRepresentation studentFiltrera(final Map<String, Object> params);
 
-    /**
-     * Higher abstraction of {@link #studentFiltrera} method which returns 
-     * an iterable of StudentISokresultat hiding all paging related issues.
-     * 
-     * @param params A map between parameter strings and their object values.
-     * @return an iterable for all search results matching params.
-     */
-    public Iterable<StudentISokresultat> studentFiltreraIterable(final Map<String, Object> params);
+  /**
+   * Higher abstraction of {@link #studentFiltrera} method which returns
+   * an iterable of StudentISokresultat hiding all paging related issues.
+   *
+   * @param params A map between parameter strings and their object values.
+   * @return an iterable for all search results matching params.
+   */
+  public Iterable<StudentISokresultat> studentFiltreraIterable(final Map<String, Object> params);
 
-    /**
-     * Higher abstraction of {@link #studentFiltrera} method which returns 
-     * an iterable of Student hiding all paging related and call to student information
-     * service issues.
-     * 
-     * @param params A map between parameter strings and their object values.
-     * @return an iterable for all search results matching params.
-     */
-    public Iterable<Student> studentFiltreraStudentIterable(final Map<String, Object> params);
+  /**
+   * Higher abstraction of {@link #studentFiltrera} method which returns
+   * an iterable of Student hiding all paging related and call to student information
+   * service issues.
+   *
+   * @param params A map between parameter strings and their object values.
+   * @return an iterable for all search results matching params.
+   */
+  public Iterable<Student> studentFiltreraStudentIterable(final Map<String, Object> params);
 }

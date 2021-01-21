@@ -21,13 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package se.kth.infosys.ladok3;
 
 import java.io.IOException;
-
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,20 +36,20 @@ import org.slf4j.LoggerFactory;
  * appropriately and crank up the log level for se.kth.infosys.ladok3 to trace level.
  */
 public class RequestFilter implements ClientRequestFilter {
-    private static final Logger LOG = LoggerFactory.getLogger(RequestFilter.class);
+  private static final Logger LOG = LoggerFactory.getLogger(RequestFilter.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void filter(ClientRequestContext requestContext) throws IOException {
-        if (LOG.isTraceEnabled()) {
-            LOG.trace("Target: {}", requestContext.getUri().toString());
-            LOG.trace("Method: {}", requestContext.getMethod());
-            LOG.trace("Headers: {}", requestContext.getStringHeaders());
-            if (requestContext.getEntity() != null) {
-                LOG.trace(requestContext.getEntity().toString());
-            }
-        }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void filter(ClientRequestContext requestContext) throws IOException {
+    if (LOG.isTraceEnabled()) {
+      LOG.trace("Target: {}", requestContext.getUri().toString());
+      LOG.trace("Method: {}", requestContext.getMethod());
+      LOG.trace("Headers: {}", requestContext.getStringHeaders());
+      if (requestContext.getEntity() != null) {
+        LOG.trace(requestContext.getEntity().toString());
+      }
     }
+  }
 }

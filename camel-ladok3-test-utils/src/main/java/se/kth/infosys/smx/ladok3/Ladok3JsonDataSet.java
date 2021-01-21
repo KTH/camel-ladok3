@@ -37,12 +37,12 @@ import org.json.simple.parser.JSONParser;
 
 /**
  * A ListDataSet that reads JSON encoded Ladok3 payloads from a file.
- * 
+ *
  * <p>The file is assumed to contain a JSON array of objects representing Ladok3
  * JSON encoded ATOM events. See README.md for details.</p>
- * 
+ *
  * <p>Relevant headers will be added to messages produced by this dataset.</p>
- * 
+ *
  * <p>Example of use:
  * <pre>
  * &lt;bean id="dataSet" class="se.kth.infosys.smx.ladok3.Ladok3JsonDataSet"&gt;
@@ -66,7 +66,7 @@ public class Ladok3JsonDataSet extends ListDataSet {
 
   /**
    * Constructor using a file name string.
-   * 
+   *
    * @param sourceFileName The file name.
    * @throws Exception on file access and parse problems.
    */
@@ -86,7 +86,7 @@ public class Ladok3JsonDataSet extends ListDataSet {
 
   /**
    * Get the source file object.
-   * 
+   *
    * @return the source file.
    */
   public File getSourceFile() {
@@ -95,7 +95,7 @@ public class Ladok3JsonDataSet extends ListDataSet {
 
   /**
    * Set the source file object and intialize dataset from contents.
-   * 
+   *
    * @param sourceFile the source file object.
    * @throws Exception on file access and parse problems.
    */
@@ -106,7 +106,7 @@ public class Ladok3JsonDataSet extends ListDataSet {
 
   /**
    * Gets the internal JSONArray of JSON objects.
-   * 
+   *
    * @return the internal array of JSON objects.
    */
   public JSONArray getJsonObjects() {
@@ -115,7 +115,7 @@ public class Ladok3JsonDataSet extends ListDataSet {
 
   /**
    * Sets the internal JSONArray of JSON objects.
-   * 
+   *
    * @param jsonObjects an array of JSON objects.
    */
   public void setJsonObjects(JSONArray jsonObjects) {
@@ -125,15 +125,15 @@ public class Ladok3JsonDataSet extends ListDataSet {
   /**
    * Read the source file and intializes the internal list of message bodies.
    * Can be overridden by subclasses to tweak behaviour.
-   * 
+   *
    * @throws Exception on file access and parse problems.
    */
   protected void readSourceFile() throws Exception {
-    List<Object> bodies = new LinkedList<Object>();
+    List<Object> bodies = new LinkedList<>();
     jsonObjects = (JSONArray) parser.parse(new FileReader(sourceFile));
 
-    for (int i = 0; i < jsonObjects.size(); i++) {
-      JSONObject jsonObject = (JSONObject) jsonObjects.get(i);
+    for (Object object : jsonObjects) {
+      JSONObject jsonObject = (JSONObject) object;
       JSONObject body = (JSONObject) jsonObject.get("body");
       bodies.add(body.toJSONString().getBytes());
     }
@@ -141,11 +141,11 @@ public class Ladok3JsonDataSet extends ListDataSet {
   }
 
   /**
-   * {@inheritDoc} 
+   * {@inheritDoc}
    */
   @Override
   protected void applyHeaders(Exchange exchange, long messageIndex) {
-    Map<String, Object> headers = new HashMap<String, Object>();
+    Map<String, Object> headers = new HashMap<>();
     headers.put(Ladok3Message.Header.MessageType, Ladok3Message.MessageType.Event);
     headers.put(Ladok3Message.Header.SequenceNumber, messageIndex);
     headers.put(Ladok3Message.Header.IsLastFeed, true);
@@ -153,7 +153,7 @@ public class Ladok3JsonDataSet extends ListDataSet {
     JSONObject jsonObject = (JSONObject) getJsonObjects().get((int) messageIndex);
     JSONObject eventHeaders = (JSONObject) jsonObject.get("headers");
     for (Object key : eventHeaders.keySet()) {
-      headers.put((String) key, (String) eventHeaders.get(key));
+      headers.put((String) key, eventHeaders.get(key));
     }
     exchange.getIn().setHeaders(headers);
   }

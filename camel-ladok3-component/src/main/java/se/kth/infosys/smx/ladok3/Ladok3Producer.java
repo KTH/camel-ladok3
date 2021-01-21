@@ -46,12 +46,12 @@ public class Ladok3Producer extends DefaultProducer {
   @SuppressWarnings("unused")
   private static final Logger log = LoggerFactory.getLogger(Ladok3Producer.class);
 
-  // First segment of URL (or ladok3Service header) should match the list 
+  // First segment of URL (or ladok3Service header) should match the list
   // of "supported" services in the HashMap apis.
 
   private static final Pattern API_PATTERN = Pattern.compile("(^/(?<api>[a-zA-Z]*))+.*");
 
-  private final HashMap<String, Ladok3ServiceWrapper> services = new HashMap<String, Ladok3ServiceWrapper>();
+  private final HashMap<String, Ladok3ServiceWrapper> services = new HashMap<>();
 
   public Ladok3Producer(Ladok3Endpoint endpoint) throws Exception {
     super(endpoint);

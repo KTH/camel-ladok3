@@ -25,40 +25,43 @@
 package se.kth.infosys.ladok3;
 
 import java.util.Map;
-
 import se.ladok.schemas.resultat.Aktivitetstillfalle;
 import se.ladok.schemas.resultat.AktivitetstillfalleForStudentLista;
 import se.ladok.schemas.resultat.SokresultatStudieresultatResultat;
 import se.ladok.schemas.resultat.StudieresultatForRapporteringPaAktivitetstillfalleSokVarden;
 
 /**
- * Interface representing the Ladok Resultat service
+ * Interface representing the Ladok Resultat service.
  */
 public interface ResultatService extends Ladok3Service {
-  
+
   /**
-   * Retrieve an Aktivitetstillfälle 
-   * @param aktivitetstillfalleUID
-   * @return the Aktivitetsfillfälle 
+   * Retrieve an Aktivitetstillfälle.
+   *
+   * @param aktivitetstillfalleUID the UID
+   * @return the Aktivitetsfillfälle
    */
   public Aktivitetstillfalle aktivitetstillfalle(final String aktivitetstillfalleUID);
 
   /**
-   * Retrieve aktivitetstillfallen for a student
-   * @param uid
+   * Retrieve aktivitetstillfallen for a student.
+   *
+   * @param uid a UID
    * @return a list of aktivitestillfallen for a student
    */
   public AktivitetstillfalleForStudentLista aktivitetstillfalleForStudentLista(final String uid);
-  
-  /**
-   * Retrieve studieresultat for reporting of results on an Aktivitetstillfalle
-   */
-  public SokresultatStudieresultatResultat sokresultatStudieresultatResultat(final String aktivitetstillfalleUID, final Map<String, Object> sokVarden); 
 
   /**
-   * Creates a representation for SokresultatStudieresultatResultat 
+   * Retrieve studieresultat for reporting of results on an Aktivitetstillfalle.
    */
-  public StudieresultatForRapporteringPaAktivitetstillfalleSokVarden createSokresultatStudieResultatSokVarden(Map<String, Object> params); 
+  public SokresultatStudieresultatResultat sokresultatStudieresultatResultat(final String aktivitetstillfalleUID,
+                                                                             final Map<String, Object> sokVarden);
+
+  /**
+   * Creates a representation for SokresultatStudieresultatResultat.
+   */
+  public StudieresultatForRapporteringPaAktivitetstillfalleSokVarden createSokresultatStudieResultatSokVarden(
+          Map<String, Object> params);
 
 }
 

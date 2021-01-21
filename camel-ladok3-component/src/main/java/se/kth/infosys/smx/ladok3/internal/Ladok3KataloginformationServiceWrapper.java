@@ -20,16 +20,16 @@ import se.ladok.schemas.kataloginformation.OrganisationLista;
 public class Ladok3KataloginformationServiceWrapper implements Ladok3ServiceWrapper {
   private static final Logger log = LoggerFactory.getLogger(Ladok3KataloginformationServiceWrapper.class);
   private static final Pattern URL_PATTERN = Pattern.compile(
-          "^/kataloginformation(/(?<operation>" +
-                  "anvandare|" +
-                  "createAnvandare|" +
-                  "updateAnvandare|" +
-                  "filtrera|" +
-                  "anvandarinformation|" +
-                  "createAnvandarinformation|" +
-                  "updateAnvandarinformation|" +
-                  "organisation" +
-                  "))+.*");
+          "^/kataloginformation(/(?<operation>"
+                  + "anvandare|"
+                  + "createAnvandare|"
+                  + "updateAnvandare|"
+                  + "filtrera|"
+                  + "anvandarinformation|"
+                  + "createAnvandarinformation|"
+                  + "updateAnvandarinformation|"
+                  + "organisation"
+                  + "))+.*");
 
   private final KataloginformationService service;
   private final String pathOperation;
@@ -38,9 +38,9 @@ public class Ladok3KataloginformationServiceWrapper implements Ladok3ServiceWrap
     this.service = new KataloginformationServiceImpl(host, context);
     Matcher matcher = URL_PATTERN.matcher(path);
     if (matcher.matches()) {
-        pathOperation = matcher.group("operation").toLowerCase();
+      pathOperation = matcher.group("operation").toLowerCase();
     } else {
-        pathOperation = null;
+      pathOperation = null;
     }
   }
 
@@ -49,32 +49,32 @@ public class Ladok3KataloginformationServiceWrapper implements Ladok3ServiceWrap
 
     switch (operation) {
       case "anvandare":
-          handleAnvandareRequest(exchange);
-          break;
+        handleAnvandareRequest(exchange);
+        break;
       case "createAnvandare":
-          handleCreateAnvandareRequest(exchange);
-          break;
+        handleCreateAnvandareRequest(exchange);
+        break;
       case "updateAnvandare":
-          handleUpdateAnvandareRequest(exchange);
-          break;
+        handleUpdateAnvandareRequest(exchange);
+        break;
       case "filtrera":
-          handleFiltreraRequest(exchange);
-          break;
+        handleFiltreraRequest(exchange);
+        break;
       case "anvandarinformation":
-          handleAnvandarinformationRequest(exchange);
-          break;
+        handleAnvandarinformationRequest(exchange);
+        break;
       case "createAnvandarinformation":
-          handleCreateAnvandarinformationRequest(exchange);
-          break;
+        handleCreateAnvandarinformationRequest(exchange);
+        break;
       case "updateAnvandarinformation":
-          handleUpdateAnvandarinformationRequest(exchange);
-          break;
+        handleUpdateAnvandarinformationRequest(exchange);
+        break;
       case "organisation":
         handleGetOrganisationRequest(exchange);
         break;
       default:
-          throw new CamelExchangeException("Unupported operation: %s" + operation, exchange);
-      }
+        throw new CamelExchangeException("Unupported operation: %s" + operation, exchange);
+    }
   }
 
   private void handleAnvandareRequest(final Exchange exchange) throws Exception {
@@ -107,9 +107,8 @@ public class Ladok3KataloginformationServiceWrapper implements Ladok3ServiceWrap
   }
 
   private void handleFiltreraRequest(final Exchange exchange) {
-    @SuppressWarnings("unchecked")
-    final HashMap<String, Object> params = exchange.getIn().getHeader(
-        Ladok3Message.Header.Params, new HashMap<String, Object>(), HashMap.class);
+    @SuppressWarnings("unchecked") final HashMap<String, Object> params = exchange.getIn().getHeader(
+            Ladok3Message.Header.Params, new HashMap<String, Object>(), HashMap.class);
 
     log.debug("Getting anvandare for filtrera request with params: {}", params);
     final Iterator<Anvandare> fromLadok = service.anvandareFiltrerade(params).getAnvandare().iterator();
@@ -145,17 +144,18 @@ public class Ladok3KataloginformationServiceWrapper implements Ladok3ServiceWrap
     exchange.getIn().setBody(fromLadok);
   }
 
-  private void handleGetOrganisationRequest(final Exchange exchange) throws Exception {
+  private void handleGetOrganisationRequest(final Exchange exchange) {
 
     log.debug("Getting organisation information");
     final OrganisationLista fromLadok = service.organisationLista();
     exchange.getIn().setBody(fromLadok);
   }
+
   private String currentOperation(final Exchange exchange) throws Exception {
-    if (pathOperation != null && ! pathOperation.isEmpty()) {
+    if (pathOperation != null && !pathOperation.isEmpty()) {
       return pathOperation;
     }
 
     return ExchangeHelper.getMandatoryHeader(exchange, Ladok3Message.Header.Operation, String.class);
-    }
+  }
 }

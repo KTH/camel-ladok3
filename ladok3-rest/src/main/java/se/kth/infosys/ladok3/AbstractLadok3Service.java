@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package se.kth.infosys.ladok3;
 
 import java.io.File;
@@ -28,7 +29,6 @@ import java.io.FileInputStream;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.security.KeyStore;
-
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.ws.rs.client.Client;
@@ -40,68 +40,70 @@ import javax.ws.rs.core.MediaType;
  * Abstract base class for Ladok REST services.
  */
 abstract class AbstractLadok3Service implements Ladok3Service {
-    private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok+xml");
+  private static final MediaType SERVICE_TYPE = new MediaType("application", "vnd.ladok+xml");
 
-    /** The constructed web target to use in sub classes. */
-    protected final WebTarget target;
+  /**
+   * The constructed web target to use in sub classes.
+   */
+  protected final WebTarget target;
 
-    static {
-        if (CookieHandler.getDefault() == null) {
-            CookieManager cookieManager = new CookieManager();
-            CookieHandler.setDefault(cookieManager);
-        }
+  static {
+    if (CookieHandler.getDefault() == null) {
+      CookieManager cookieManager = new CookieManager();
+      CookieHandler.setDefault(cookieManager);
     }
+  }
 
-    /**
-     * Initialize the service client with authentication certificates using a PKCS12
-     * certificate file and key.
-     * 
-     * @param host The targeted Ladok environment, e.g mit-integration.ladok.se.
-     * @param certFile The path to the certificate file.
-     * @param key The certificate file key phrase.
-     * @param service The Ladok3 service path, e.g. "studentinformation".
-     * @throws Exception on errors.
-     */
-    protected AbstractLadok3Service(
-            final String host,
-            final String certFile,
-            final String key,
-            final String service) throws Exception {
-        KeyStore keyStore = KeyStore.getInstance("PKCS12");
-        keyStore.load(new FileInputStream(new File(certFile)), key.toCharArray());
+  /**
+   * Initialize the service client with authentication certificates using a PKCS12
+   * certificate file and key.
+   *
+   * @param host     The targeted Ladok environment, e.g mit-integration.ladok.se.
+   * @param certFile The path to the certificate file.
+   * @param key      The certificate file key phrase.
+   * @param service  The Ladok3 service path, e.g. "studentinformation".
+   * @throws Exception on errors.
+   */
+  protected AbstractLadok3Service(
+          final String host,
+          final String certFile,
+          final String key,
+          final String service) throws Exception {
+    KeyStore keyStore = KeyStore.getInstance("PKCS12");
+    keyStore.load(new FileInputStream(new File(certFile)), key.toCharArray());
 
-        KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        kmf.init(keyStore, key.toCharArray());
+    KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+    kmf.init(keyStore, key.toCharArray());
 
-        SSLContext context = SSLContext.getInstance("TLS");
-        context.init(kmf.getKeyManagers(), null, null);
+    SSLContext context = SSLContext.getInstance("TLS");
+    context.init(kmf.getKeyManagers(), null, null);
 
-        target = clientFactory(context).target(String.format("https://%s/%s", host, service));
-    }
+    target = clientFactory(context).target(String.format("https://%s/%s", host, service));
+  }
 
-    /**
-     * Initialize the service client with authentication certificates using 
-     * a SSLContext configured by some other means in the application.
-     * 
-     * @param host The targeted Ladok environment, e.g mit-integration.ladok.se.
-     * @param context the SSLContext containing necessary information.
-     * @param service The Ladok3 service path, e.g. "studentinformation".
-     * @throws Exception on errors.
-     */
-    protected AbstractLadok3Service(
-            final String host,
-            final SSLContext context,
-            final String service) throws Exception {
-        target = clientFactory(context).target(String.format("https://%s/%s", host, service));
-    }
+  /**
+   * Initialize the service client with authentication certificates using
+   * a SSLContext configured by some other means in the application.
+   *
+   * @param host    The targeted Ladok environment, e.g mit-integration.ladok.se.
+   * @param context the SSLContext containing necessary information.
+   * @param service The Ladok3 service path, e.g. "studentinformation".
+   * @throws Exception on errors.
+   */
+  protected AbstractLadok3Service(
+          final String host,
+          final SSLContext context,
+          final String service) throws Exception {
+    target = clientFactory(context).target(String.format("https://%s/%s", host, service));
+  }
 
-    /*
-     * Private helper method.
-     */
-    private static Client clientFactory(final SSLContext context) {
-        return ClientBuilder.newBuilder().sslContext(context)
+  /*
+   * Private helper method.
+   */
+  private static Client clientFactory(final SSLContext context) {
+    return ClientBuilder.newBuilder().sslContext(context)
             .build()
             .register(RequestFilter.class)
             .register(ResponseFilter.class);
-    }
+  }
 }
