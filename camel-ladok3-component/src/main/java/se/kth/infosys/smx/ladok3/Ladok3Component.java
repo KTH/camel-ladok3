@@ -61,7 +61,7 @@ public class Ladok3Component extends DefaultComponent {
     KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
     kmf.init(keyStore, key.toCharArray());
 
-    SSLContext context = SSLContext.getInstance("TLS");
+    SSLContext context = SSLContext.getInstance("TLSv1.2");
     context.init(kmf.getKeyManagers(), null, null);
 
     Ladok3Endpoint endpoint = new Ladok3Endpoint(uri, this, getHost(), context);
