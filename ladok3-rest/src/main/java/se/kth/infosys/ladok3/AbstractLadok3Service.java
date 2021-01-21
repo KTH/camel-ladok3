@@ -70,7 +70,7 @@ abstract class AbstractLadok3Service implements Ladok3Service {
           final String key,
           final String service) throws Exception {
     KeyStore keyStore = KeyStore.getInstance("PKCS12");
-    keyStore.load(new FileInputStream(new File(certFile)), key.toCharArray());
+    keyStore.load(new FileInputStream(certFile), key.toCharArray());
 
     KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
     kmf.init(keyStore, key.toCharArray());

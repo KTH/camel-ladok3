@@ -56,7 +56,7 @@ public class Ladok3Component extends DefaultComponent {
     }
 
     KeyStore keyStore = KeyStore.getInstance("PKCS12");
-    keyStore.load(new FileInputStream(new File(cert)), key.toCharArray());
+    keyStore.load(new FileInputStream(cert), key.toCharArray());
 
     KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
     kmf.init(keyStore, key.toCharArray());
