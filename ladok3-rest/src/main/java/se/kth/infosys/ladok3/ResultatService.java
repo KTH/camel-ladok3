@@ -41,7 +41,7 @@ public interface ResultatService extends Ladok3Service {
    * @param aktivitetstillfalleUID the UID
    * @return the Aktivitetsfillfälle
    */
-  public Aktivitetstillfalle aktivitetstillfalle(final String aktivitetstillfalleUID);
+  Aktivitetstillfalle aktivitetstillfalle(final String aktivitetstillfalleUID);
 
   /**
    * Retrieve aktivitetstillfallen for a student.
@@ -49,18 +49,18 @@ public interface ResultatService extends Ladok3Service {
    * @param uid a UID
    * @return a list of aktivitestillfallen for a student
    */
-  public AktivitetstillfalleForStudentLista aktivitetstillfalleForStudentLista(final String uid);
+  AktivitetstillfalleForStudentLista aktivitetstillfalleForStudentLista(final String uid);
 
   /**
    * Retrieve studieresultat for reporting of results on an Aktivitetstillfalle.
    */
-  public SokresultatStudieresultatResultat sokresultatStudieresultatResultat(final String aktivitetstillfalleUID,
-                                                                             final Map<String, Object> sokVarden);
+  SokresultatStudieresultatResultat sokresultatStudieresultatResultat(final String aktivitetstillfalleUID,
+                                                                      final Map<String, Object> sokVarden);
 
   /**
    * Creates a representation for SokresultatStudieresultatResultat.
    */
-  public StudieresultatForRapporteringPaAktivitetstillfalleSokVarden createSokresultatStudieResultatSokVarden(
+  StudieresultatForRapporteringPaAktivitetstillfalleSokVarden createSokresultatStudieResultatSokVarden(
           Map<String, Object> params);
 
 }

@@ -42,7 +42,7 @@ public interface StudiedeltagandeService extends Ladok3Service {
    * @param uid student UID
    * @return påbörjade kurspaketeringar.
    */
-  public TillfallesdeltagandeLista pabarjadutbildningKurspaketeringStudent(final String uid);
+  TillfallesdeltagandeLista pabarjadutbildningKurspaketeringStudent(final String uid);
 
   /**
    * Hämta studiestrukturer för student, en per rotkurspaketeringstillfälle.
@@ -50,7 +50,7 @@ public interface StudiedeltagandeService extends Ladok3Service {
    * @param uid student UID
    * @return studiestrukturer för student.
    */
-  public IngaendeKurspaketeringstillfalleLista studiestrukturStudent(final String uid);
+  IngaendeKurspaketeringstillfalleLista studiestrukturStudent(final String uid);
 
   /**
    * Sök studieaktivitet och finansiering.
@@ -70,9 +70,9 @@ public interface StudiedeltagandeService extends Ladok3Service {
    * @param utdatafraga A <code>Utdatafraga</code>.
    * @return The search result.
    */
-  public UtdataResultat utdataStudieaktivitetOchFinansiering(final Utdatafraga utdatafraga);
+  UtdataResultat utdataStudieaktivitetOchFinansiering(final Utdatafraga utdatafraga);
 
-  public Utdatafraga createUtdatafraga(Map<String, Object> params);
+  Utdatafraga createUtdatafraga(Map<String, Object> params);
 
   /**
    * Higher abstraction of {@link #utdataStudieaktivitetOchFinansiering} method which returns
@@ -81,7 +81,7 @@ public interface StudiedeltagandeService extends Ladok3Service {
    * @param params A map between parameter strings and their object values.
    * @return an iterable for all search results matching params.
    */
-  public Iterable<StudieaktivitetOchFinansiering> utdataStudieaktivitetOchFinansieringIteraterable(final Map<String,
+  Iterable<StudieaktivitetOchFinansiering> utdataStudieaktivitetOchFinansieringIteraterable(final Map<String,
           Object> params);
 
   /**
@@ -90,12 +90,12 @@ public interface StudiedeltagandeService extends Ladok3Service {
    * @param uid student UID
    * @return kurstillfällesdeltagande för student.
    */
-  public TillfallesdeltagandeLista kurstillfallesdeltagandeStudent(String uid);
+  TillfallesdeltagandeLista kurstillfallesdeltagandeStudent(String uid);
 
   /**
    * Hämta alla perioder för studiedeltagande.
    *
    * @return perioder för studiedeltagande
    */
-  public PeriodLista studiedeltagandePeriod();
+  PeriodLista studiedeltagandePeriod();
 }

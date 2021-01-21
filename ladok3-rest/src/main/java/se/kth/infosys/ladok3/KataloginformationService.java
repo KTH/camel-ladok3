@@ -41,7 +41,7 @@ public interface KataloginformationService extends Ladok3Service {
    * @param uid The unique identifier for the user.
    * @return The user matching the UID
    */
-  public Anvandare anvandare(final String uid);
+  Anvandare anvandare(final String uid);
 
   /**
    * Calls /anvandare with query parameters as specified in the params Map.
@@ -65,7 +65,7 @@ public interface KataloginformationService extends Ladok3Service {
    * @param params A map between parameter strings and their object values.
    * @return The search result.
    */
-  public AnvandareLista anvandare(final Map<String, Object> params);
+  AnvandareLista anvandare(final Map<String, Object> params);
 
   /**
    * Create a user.
@@ -73,7 +73,7 @@ public interface KataloginformationService extends Ladok3Service {
    * @param anvandare The user object.
    * @return The created user.
    */
-  public Anvandare createAnvandare(final Anvandare anvandare);
+  Anvandare createAnvandare(final Anvandare anvandare);
 
   /**
    * Update a user.
@@ -81,7 +81,7 @@ public interface KataloginformationService extends Ladok3Service {
    * @param anvandare The user object.
    * @return The updated user.
    */
-  public Anvandare updateAnvandare(final Anvandare anvandare);
+  Anvandare updateAnvandare(final Anvandare anvandare);
 
   /**
    * Retrieve Anvandarinformation for a user (anvandare) given its UID.
@@ -89,7 +89,7 @@ public interface KataloginformationService extends Ladok3Service {
    * @param uid The unique identifier for the user.
    * @return The user information matching the UID
    */
-  public Anvandarinformation anvandarinformation(final String uid);
+  Anvandarinformation anvandarinformation(final String uid);
 
   /**
    * Create Anvandarinformation for a user (anvandare).
@@ -97,7 +97,7 @@ public interface KataloginformationService extends Ladok3Service {
    * @param anvandarinformation the user information object.
    * @return The resulting user information.
    */
-  public Anvandarinformation createAnvandarinformation(final Anvandarinformation anvandarinformation);
+  Anvandarinformation createAnvandarinformation(final Anvandarinformation anvandarinformation);
 
   /**
    * Update Anvandarinformation for a user (anvandare).
@@ -105,7 +105,7 @@ public interface KataloginformationService extends Ladok3Service {
    * @param anvandarinformation the user information object.
    * @return The resulting user information.
    */
-  public Anvandarinformation updateAnvandarinformation(final Anvandarinformation anvandarinformation);
+  Anvandarinformation updateAnvandarinformation(final Anvandarinformation anvandarinformation);
 
   /**
    * Calls /anvandare/filtrerade with query parameters as specified in the params Map.
@@ -126,8 +126,8 @@ public interface KataloginformationService extends Ladok3Service {
    * @param params A map between parameter strings and their object values.
    * @return The search result.
    */
-  public AnvandareLista anvandareFiltrerade(final Map<String, Object> params);
+  AnvandareLista anvandareFiltrerade(final Map<String, Object> params);
 
-  public OrganisationLista organisationLista();
+  OrganisationLista organisationLista();
 
 }
