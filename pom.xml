@@ -62,7 +62,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <camel-version>3.7.0</camel-version>
+        <camel-version>3.7.1</camel-version>
         <ladok-version>1.59.1</ladok-version>
         <cxf-client-version>3.4.2</cxf-client-version>
         <maven.compiler.release>11</maven.compiler.release>
@@ -116,14 +116,13 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <configLocation>https://raw.githubusercontent.com/KTH/integral-settings/master/kth_checkstyle.xml
-                    </configLocation>
+                    <configLocation>https://raw.githubusercontent.com/KTH/integral-settings/master/kth_checkstyle.xml</configLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
                     <sourceDirectories>
                         <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
-                        <sourceDirectory>${project.build.testSourceDirectory}</sourceDirectory>
+                        <!-- <sourceDirectory>${project.build.testSourceDirectory}</sourceDirectory> -->
                     </sourceDirectories>
                 </configuration>
             </plugin>
@@ -151,6 +150,9 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.7</version>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
