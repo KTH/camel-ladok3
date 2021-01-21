@@ -43,6 +43,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
@@ -76,7 +77,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
   private final DocumentBuilder builder;
   private long sequenceNumber = 0;
 
-  public Ladok3Consumer(Ladok3Endpoint endpoint, Processor processor) throws Exception {
+  public Ladok3Consumer(Ladok3Endpoint endpoint, Processor processor) throws ParserConfigurationException {
     super(endpoint, processor);
     this.endpoint = endpoint;
 
@@ -306,7 +307,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     /*
      * True if feed is currently the last available.
      */
-    private boolean isLast() throws MalformedURLException {
+    private boolean isLast() {
       return last;
     }
 
