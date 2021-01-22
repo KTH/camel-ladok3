@@ -65,7 +65,7 @@
     <ladok-version>1.59.1</ladok-version>
     <cxf-client-version>3.4.1</cxf-client-version>
     <maven.compiler.release>11</maven.compiler.release>
-    <ladok-api-model-version>1.60.0</ladok-api-model-version>
+    <ladok-api-model-version>1.59.1</ladok-api-model-version>
     <ladok-event-model-version>1.59.1</ladok-event-model-version>
   </properties>
 
