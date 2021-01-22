@@ -7,10 +7,10 @@ schedules:
     branches:
       include:
         - camel3
-    always: true 
+    always: true
 
 resources:
-  repositories: 
+  repositories:
     - repository: pipelinehelper
       type: github
       endpoint: KTH
@@ -19,7 +19,7 @@ resources:
 pool:
   vmImage: 'ubuntu-latest'
 
-stages: 
+stages:
   - stage: Download_and_build
     jobs:
       - job: Download_and_check_packages
@@ -68,12 +68,12 @@ stages:
           inputs:
             SonarQube: 'integral-sqube'
             scannerMode: 'Other'
-            
+
         - powershell: |
             $params = "$env:SONARQUBE_SCANNER_PARAMS" -replace '"sonar.branch.name":"[\w,/,-]*"\,?'
             Write-Host "##vso[task.setvariable variable=SONARQUBE_SCANNER_PARAMS]$params"
         - task: Maven@3
-          displayName: Run Maven clean package 
+          displayName: Run Maven clean package
           inputs:
             mavenPomFile: '$(Agent.BuildDirectory)/component/pom.xml'
             mavenOptions: '-Xmx3072m'
@@ -95,11 +95,11 @@ stages:
     dependsOn: Download_and_build
     jobs:
     - job: ReleaseNewVersion
-      #condition: eq(stageDependencies.Download_and_build.Download_and_check_packages.outputs['CheckBuild.doNewRelease'], 'Yes') 
-      steps: 
+      condition: eq(stageDependencies.Download_and_build.Download_and_check_packages.outputs['CheckBuild.doNewRelease'], 'Yes')
+      steps:
         - checkout: self
           clean: true
-          path: component 
+          path: component
 
         - task: MavenAuthenticate@0
           displayName: Authenticate Maven repository
@@ -113,10 +113,10 @@ stages:
               git config --global user.email "integral-devops-jenkins@kth.onmicrosoft.com"
               git config --global user.name "Azure DevOps Automatic"
 
-              git config pull.rebase false 
+              git config pull.rebase false
               git pull origin HEAD:camel3
         - task: Maven@3
-          displayName: Run Maven clean deploy 
+          displayName: Run Maven clean deploy
           inputs:
             mavenPomFile: '$(Agent.BuildDirectory)/component/pom.xml'
             mavenOptions: '-Xmx3072m'
@@ -146,7 +146,7 @@ stages:
               }
             signPayload: false
             waitForCompletion: false
-      
+
     - job: PublishMessageIfFailed
       condition: Failed()
       dependsOn: ReleaseNewVersion
@@ -165,4 +165,4 @@ stages:
               }
             signPayload: false
             waitForCompletion: false
-      
+

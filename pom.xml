@@ -22,222 +22,218 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>se.kth.infosys.smx.ladok3</groupId>
-    <artifactId>camel-ladok3</artifactId>
-    <version>3.59.2</version>
-    <packaging>pom</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>se.kth.infosys.smx.ladok3</groupId>
+  <artifactId>camel-ladok3</artifactId>
+  <version>3.60.1</version>
+  <packaging>pom</packaging>
 
-    <name>KTH Ladok3 Integration</name>
-    <description>Project for components making up the ladok3 integration.</description>
+  <name>KTH Ladok3 Integration</name>
+  <description>Project for components making up the ladok3 integration.</description>
+  <url>https://www.kth.se</url>
+
+  <distributionManagement>
+    <repository>
+      <id>integration</id>
+      <url>https://pkgs.dev.azure.com/kth-integration/_packaging/integration/maven/v1</url>
+    </repository>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>integration</id>
+      <url>https://pkgs.dev.azure.com/kth-integration/_packaging/integration/maven/v1</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <modules>
+    <module>ladok3-rest</module>
+    <module>camel-ladok3-component</module>
+    <module>camel-ladok3-test-utils</module>
+  </modules>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <camel-version>3.2.0</camel-version>
+    <ladok-version>1.59.1</ladok-version>
+    <cxf-client-version>3.4.1</cxf-client-version>
+    <maven.compiler.release>11</maven.compiler.release>
+    <ladok-api-model-version>1.60.0</ladok-api-model-version>
+    <ladok-event-model-version>1.59.1</ladok-event-model-version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-parent</artifactId>
+        <version>${camel-version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <defaultGoal>clean deploy</defaultGoal>
+      </build>
+    </profile>
+  </profiles>
+
+  <build>
+    <defaultGoal>install</defaultGoal>
+
+    <plugins>
+    	<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.1.1</version>
+	<dependencies>
+	<dependency>
+	    <groupId>com.puppycrawl.tools</groupId>
+	    <artifactId>checkstyle</artifactId>
+	    <version>8.36</version>
+	</dependency>
+    	</dependencies>
+        <executions>
+          <execution>
+          <id>checkstyle</id>
+          <phase>validate</phase>
+          <goals>
+            <goal>check</goal>
+          </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <configLocation>https://raw.githubusercontent.com/KTH/integral-settings/master/kth_checkstyle.xml</configLocation>
+          <encoding>UTF-8</encoding>
+          <consoleOutput>true</consoleOutput>
+          <failsOnError>true</failsOnError>
+          <sourceDirectories>
+            <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+            <sourceDirectory>${project.build.testSourceDirectory}</sourceDirectory>
+          </sourceDirectories>
+        </configuration>
+        </plugin>
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>5.3.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>aggregate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <outputDirectory>dependency-check</outputDirectory>
+          <rubygemsAnalyzerEnabled>false</rubygemsAnalyzerEnabled>
+	        <suppressionFiles>
+            <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
+          </suppressionFiles>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>2.7</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <parameters>true</parameters>
+          <compilerArgs>
+            <arg>-Xlint:all</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+
+      <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-enforcer-plugin</artifactId>
+      <version>3.0.0-M3</version>
+      <executions>
+        <execution>
+          <id>enforce-maven</id>
+          <goals>
+            <goal>enforce</goal>
+          </goals>
+          <configuration>
+            <rules>
+              <requireMavenVersion>
+                <version>(3.6,)</version>
+              </requireMavenVersion>
+              <requireJavaVersion>
+                <version>(11,)</version>
+              </requireJavaVersion>
+            </rules>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.22.2</version>
+      </plugin>
+    </plugins>
+  </build>
+
+  <organization>
+    <name>Kungliga Tekniska högskolan</name>
     <url>https://www.kth.se</url>
+  </organization>
 
-    <distributionManagement>
-        <repository>
-            <id>integration</id>
-            <url>https://pkgs.dev.azure.com/kth-integration/_packaging/integration/maven/v1</url>
-        </repository>
-    </distributionManagement>
+  <licenses>
+    <license>
+      <name>The MIT License (MIT)</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
 
-    <repositories>
-        <repository>
-            <id>integration</id>
-            <url>https://pkgs.dev.azure.com/kth-integration/_packaging/integration/maven/v1</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+  <scm>
+    <url>https://github.com/kth/camel-ladok3</url>
+    <developerConnection>fjo@kth.se</developerConnection>
+    <connection>https://github.com/kth/camel-ladok3</connection>
+  </scm>
 
-    <modules>
-        <module>ladok3-rest</module>
-        <module>camel-ladok3-component</module>
-        <module>camel-ladok3-test-utils</module>
-    </modules>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/kth/camel-ladok3/issues</url>
+  </issueManagement>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <camel-version>3.7.1</camel-version>
-        <ladok-version>1.59.1</ladok-version>
-        <cxf-client-version>3.4.2</cxf-client-version>
-        <maven.compiler.release>11</maven.compiler.release>
-        <ladok-api-model-version>1.60.0</ladok-api-model-version>
-        <ladok-event-model-version>1.59.1</ladok-event-model-version>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-parent</artifactId>
-                <version>${camel-version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <build>
-                <defaultGoal>clean deploy</defaultGoal>
-            </build>
-        </profile>
-    </profiles>
-
-    <build>
-        <defaultGoal>install</defaultGoal>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.1</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>8.36</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>checkstyle</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <configLocation>https://raw.githubusercontent.com/KTH/integral-settings/master/kth_checkstyle.xml</configLocation>
-                    <encoding>UTF-8</encoding>
-                    <consoleOutput>true</consoleOutput>
-                    <failsOnError>true</failsOnError>
-                    <sourceDirectories>
-                        <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
-                        <!-- <sourceDirectory>${project.build.testSourceDirectory}</sourceDirectory> -->
-                    </sourceDirectories>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>6.0.5</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>aggregate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <outputDirectory>dependency-check</outputDirectory>
-                    <rubygemsAnalyzerEnabled>false</rubygemsAnalyzerEnabled>
-                    <suppressionFiles>
-                        <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
-                    </suppressionFiles>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <generateBackupPoms>false</generateBackupPoms>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <parameters>true</parameters>
-                    <compilerArgs>
-                        <arg>-Xlint:all</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M3</version>
-                <executions>
-                    <execution>
-                        <id>enforce-maven</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireMavenVersion>
-                                    <version>(3.6,)</version>
-                                </requireMavenVersion>
-                                <requireJavaVersion>
-                                    <version>(11,)</version>
-                                </requireJavaVersion>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
-            </plugin>
-        </plugins>
-    </build>
-
-    <organization>
-        <name>Kungliga Tekniska högskolan</name>
-        <url>https://www.kth.se</url>
-    </organization>
-
-    <licenses>
-        <license>
-            <name>The MIT License (MIT)</name>
-            <url>https://opensource.org/licenses/MIT</url>
-        </license>
-    </licenses>
-
-    <scm>
-        <url>https://github.com/kth/camel-ladok3</url>
-        <developerConnection>fjo@kth.se</developerConnection>
-        <connection>https://github.com/kth/camel-ladok3</connection>
-    </scm>
-
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/kth/camel-ladok3/issues</url>
-    </issueManagement>
-
-    <developers>
-        <developer>
-            <name>Fredrik Jönsson</name>
-            <email>fjo@kth.se</email>
-            <organization>KTH</organization>
-            <organizationUrl>http://www.kth.se/profile/fjo</organizationUrl>
-        </developer>
-    </developers>
+  <developers>
+    <developer>
+      <name>Fredrik Jönsson</name>
+      <email>fjo@kth.se</email>
+      <organization>KTH</organization>
+      <organizationUrl>http://www.kth.se/profile/fjo</organizationUrl>
+    </developer>
+  </developers>
 
 </project>
