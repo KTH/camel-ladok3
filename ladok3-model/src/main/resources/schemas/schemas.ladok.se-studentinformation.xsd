@@ -202,6 +202,7 @@
       <xs:element minOccurs="0" name="Fodelsedatum" type="xs:string"/>
       <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
       <xs:element minOccurs="0" name="Gatuadress" type="xs:string"/>
+      <xs:element minOccurs="0" name="Mellannamn" type="xs:string"/>
       <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
       <xs:element minOccurs="0" name="Postnummer" type="xs:string"/>
       <xs:element minOccurs="0" name="Postort" type="xs:string"/>

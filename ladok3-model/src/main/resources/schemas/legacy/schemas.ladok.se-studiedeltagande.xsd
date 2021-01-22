@@ -179,6 +179,8 @@
 
   <xs:element name="MinGrupp" type="sd:MinGrupp"/>
 
+  <xs:element name="MinGruppKolumn" type="sd:MinGruppKolumn"/>
+
   <xs:element name="MinGruppKurspaketering" type="sd:MinGruppKurspaketering"/>
 
   <xs:element name="MinGruppKurspaketeringstillfalle" type="sd:MinGruppKurspaketeringstillfalle"/>
@@ -4429,6 +4431,28 @@ representationer.]]></xs:documentation>
       <xs:enumeration value="ENLIGT_EXTERN_ANTAGNING"/>
       <xs:enumeration value="FRISTÅENDE"/>
       <xs:enumeration value="ENLIGT_ANGIVEN_STUDIESTRUKTURREFERENS"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="MinGruppKolumn">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.personnummer"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.namn"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.kurspaketering"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.kurspaketeringstillfalle"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.senaste.registrering.inom.kurspaketering"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.senaste.registrering.fristaende.kurs"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.handledare"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.avses.leda.till"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.senaste.studieaktivitet"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.senaste.beslut.isp"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.uppnaddandel"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.utbytesavtal"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.utbytestillfalle"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.extern.part"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.utbytesprogram"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.land"/>
+      <xs:enumeration value="studiedeltagande.domain.mina.grupper.notering"/>
     </xs:restriction>
   </xs:simpleType>
 

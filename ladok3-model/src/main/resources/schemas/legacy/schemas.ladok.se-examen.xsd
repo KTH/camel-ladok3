@@ -1367,6 +1367,7 @@ det huvudområdet.]]></xs:documentation>
           <xs:element minOccurs="0" name="Grundtyp" type="xs:string"/>
           <xs:element minOccurs="0" name="UtbildningsinstansUID" type="xs:string"/>
           <xs:element minOccurs="0" name="Utbildningskod" type="xs:string"/>
+          <xs:element minOccurs="0" ref="ex:Utbildningstyp"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
