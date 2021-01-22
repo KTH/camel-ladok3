@@ -95,7 +95,7 @@ stages:
     dependsOn: Download_and_build
     jobs:
     - job: ReleaseNewVersion
-      #condition: eq(stageDependencies.Download_and_build.Download_and_check_packages.outputs['CheckBuild.doNewRelease'], 'Yes') 
+      condition: eq(stageDependencies.Download_and_build.Download_and_check_packages.outputs['CheckBuild.doNewRelease'], 'Yes') 
       steps: 
         - checkout: self
           clean: true
