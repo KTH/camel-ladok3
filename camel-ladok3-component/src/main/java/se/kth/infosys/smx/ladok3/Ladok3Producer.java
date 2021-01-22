@@ -26,6 +26,7 @@ package se.kth.infosys.smx.ladok3;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.camel.Exchange;
@@ -51,7 +52,7 @@ public class Ladok3Producer extends DefaultProducer {
 
   private static final Pattern API_PATTERN = Pattern.compile("(^/(?<api>[a-zA-Z]*))+.*");
 
-  private final HashMap<String, Ladok3ServiceWrapper> services = new HashMap<>();
+  private final Map<String, Ladok3ServiceWrapper> services = new HashMap<>();
 
   public Ladok3Producer(Ladok3Endpoint endpoint) throws Exception {
     super(endpoint);

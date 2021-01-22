@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.Set;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import org.apache.camel.Consumer;
@@ -45,18 +46,18 @@ import org.apache.camel.support.DefaultPollingEndpoint;
  */
 @UriEndpoint(scheme = "ladok3", title = "ladok3", syntax = "ladok3://")
 public class Ladok3Endpoint extends DefaultPollingEndpoint {
-  @UriParam(label = "consumer", name = "lastEntry", defaultValue = "", description = "Entry id to start consuming from")
+  @UriParam(label = "consumer", name = "lastEntry", description = "Entry id to start consuming from")
   private String lastEntry = "";
 
-  @UriParam(label = "consumer", name = "lastFeed", defaultValue = "", description = "Feed to start consuming from")
+  @UriParam(label = "consumer", name = "lastFeed", description = "Feed to start consuming from")
   private String lastFeed = "";
 
   @UriParam(label = "consumer", name = "includeEvents", description = "List of event names to generate messages for.")
-  private HashSet<String> includeEvents = new HashSet<>();
+  private Set<String> includeEvents = new HashSet<>();
 
   @UriParam(label = "consumer", name = "excludeEvents", description =
           "List of event names NOT to generate messages for.")
-  private HashSet<String> excludeEvents = new HashSet<>();
+  private Set<String> excludeEvents = new HashSet<>();
 
   @UriPath(label = "producer", description = "Ladok3 REST API path")
   private String api;
@@ -64,7 +65,7 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
   private final String host;
   private final SSLContext context;
 
-  public Ladok3Endpoint(String uri, Ladok3Component component, String host, SSLContext context) throws Exception {
+  public Ladok3Endpoint(String uri, Ladok3Component component, String host, SSLContext context) {
     super(uri, component);
     this.host = host;
     this.context = context;
@@ -122,11 +123,11 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
     return context;
   }
 
-  public HashSet<String> getIncludeEvents() {
+  public Set<String> getIncludeEvents() {
     return includeEvents;
   }
 
-  public void setIncludeEvents(HashSet<String> events) {
+  public void setIncludeEvents(Set<String> events) {
     this.includeEvents = events;
   }
 
@@ -139,11 +140,11 @@ public class Ladok3Endpoint extends DefaultPollingEndpoint {
     }
   }
 
-  public HashSet<String> getExcludeEvents() {
+  public Set<String> getExcludeEvents() {
     return excludeEvents;
   }
 
-  public void setExcludeEvents(HashSet<String> events) {
+  public void setExcludeEvents(Set<String> events) {
     this.excludeEvents = events;
   }
 

@@ -23,7 +23,7 @@ public class Ladok3ResultatServiceWrapper implements Ladok3ServiceWrapper {
           + "studieresultat/rapportera/aktivitetstillfalle"
           + "))");
 
-  private ResultatService service;
+  private final ResultatService service;
   private String pathOperation;
 
   public Ladok3ResultatServiceWrapper(String host, String path, SSLContext context) throws Exception {

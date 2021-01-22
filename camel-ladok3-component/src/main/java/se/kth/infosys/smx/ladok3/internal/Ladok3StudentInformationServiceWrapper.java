@@ -20,7 +20,7 @@ public class Ladok3StudentInformationServiceWrapper implements Ladok3ServiceWrap
   private static final Logger log = LoggerFactory.getLogger(Ladok3StudentInformationServiceWrapper.class);
   private static final Pattern URL_PATTERN = Pattern
           .compile("^/student(/(?<operation>personnummer|kontaktinformation|filtrera|historik))+.*");
-  private StudentinformationService service;
+  private final StudentinformationService service;
   private String pathOperation;
 
   public Ladok3StudentInformationServiceWrapper(String host, String path, SSLContext context) throws Exception {

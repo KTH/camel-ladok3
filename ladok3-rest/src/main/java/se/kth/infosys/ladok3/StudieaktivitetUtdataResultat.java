@@ -8,7 +8,7 @@ import se.ladok.schemas.studiedeltagande.UtdataResultatrad;
 import se.ladok.schemas.studiedeltagande.Utdatafraga;
 
 public class StudieaktivitetUtdataResultat implements Iterable<StudieaktivitetOchFinansiering> {
-  private StudieaktivitetOchFinansieringIterator iterator;
+  private final StudieaktivitetOchFinansieringIterator iterator;
 
   public StudieaktivitetUtdataResultat(
           final StudiedeltagandeService studiedeltagandeService,
@@ -22,7 +22,7 @@ public class StudieaktivitetUtdataResultat implements Iterable<StudieaktivitetOc
   }
 
   public class StudieaktivitetOchFinansieringIterator implements Iterator<StudieaktivitetOchFinansiering> {
-    private Iterator<UtdataResultatrad> iterator;
+    private final Iterator<UtdataResultatrad> iterator;
 
     public StudieaktivitetOchFinansieringIterator(
             final StudiedeltagandeService studiedeltagandeService,
@@ -45,14 +45,14 @@ public class StudieaktivitetUtdataResultat implements Iterable<StudieaktivitetOc
   }
 
   public class UtdataResultatradIterator implements Iterator<UtdataResultatrad> {
-    private StudiedeltagandeService service;
+    private final StudiedeltagandeService service;
     private Iterator<UtdataResultatrad> iterator;
     private UtdataResultat result;
 
     //private Map<String, Object> params;
     private int page = 0;
-    private int limit = 400;
-    private Utdatafraga utdatafraga;
+    private final int limit = 400;
+    private final Utdatafraga utdatafraga;
 
     public UtdataResultatradIterator(
             final StudiedeltagandeService studiedeltagandeService,

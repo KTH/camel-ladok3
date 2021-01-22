@@ -29,8 +29,8 @@ import se.ladok.schemas.studentinformation.Student;
 import se.ladok.schemas.studentinformation.StudentISokresultat;
 
 class StudentFiltreraStudentIterator implements Iterator<Student> {
-  private StudentinformationServiceImpl service;
-  private Iterator<StudentISokresultat> iterator;
+  private final StudentinformationServiceImpl service;
+  private final Iterator<StudentISokresultat> iterator;
 
   public StudentFiltreraStudentIterator(
           final StudentinformationServiceImpl ladok3StudentInformationService,

@@ -24,7 +24,6 @@
 
 package se.kth.infosys.smx.ladok3;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.net.CookieHandler;
 import java.net.CookieManager;

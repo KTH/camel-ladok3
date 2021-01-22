@@ -10,7 +10,7 @@ class StudentFiltreraIterator implements Iterator<StudentISokresultat> {
   protected SokresultatStudentinformationRepresentation result;
   protected Iterator<StudentISokresultat> iterator;
 
-  private Map<String, Object> params;
+  private final Map<String, Object> params;
   private int page = 0;
   private int limit = 400;
 

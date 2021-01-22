@@ -28,7 +28,7 @@ import java.util.Map;
 import se.ladok.schemas.studentinformation.Student;
 
 class StudentFiltreraStudentResult implements Iterable<Student> {
-  private StudentFiltreraStudentIterator iterator;
+  private final StudentFiltreraStudentIterator iterator;
 
   public StudentFiltreraStudentResult(
           final StudentinformationServiceImpl ladok3StudentInformationService,

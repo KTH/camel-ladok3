@@ -28,7 +28,7 @@ public class Ladok3StudiedeltagandeServiceWrapper implements Ladok3ServiceWrappe
                   + "studiestruktur/student|"
                   + "period"
                   + "))+.*");
-  private StudiedeltagandeService service;
+  private final StudiedeltagandeService service;
   private String pathOperation;
 
   public Ladok3StudiedeltagandeServiceWrapper(String host, String path, SSLContext context)
