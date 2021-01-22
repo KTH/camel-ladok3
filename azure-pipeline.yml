@@ -95,7 +95,7 @@ stages:
     dependsOn: Download_and_build
     jobs:
     - job: ReleaseNewVersion
-      condition: eq(stageDependencies.Download_and_build.Download_and_check_packages.outputs['CheckBuild.doNewRelease'], 'Yes') 
+      #condition: eq(stageDependencies.Download_and_build.Download_and_check_packages.outputs['CheckBuild.doNewRelease'], 'Yes') 
       steps: 
         - checkout: self
           clean: true
@@ -105,7 +105,16 @@ stages:
           displayName: Authenticate Maven repository
           inputs:
             artifactsFeeds: 'integration'
+        - task: PowerShell@2
+          displayName: Download latest commits
+          inputs:
+            targetType: 'inline'
+            script: |
+              git config --global user.email "integral-devops-jenkins@kth.onmicrosoft.com"
+              git config --global user.name "Azure DevOps Automatic"
 
+              git config pull.rebase false 
+              git pull origin HEAD:camel3
         - task: Maven@3
           displayName: Run Maven clean deploy 
           inputs:
