@@ -105,7 +105,13 @@ stages:
           displayName: Authenticate Maven repository
           inputs:
             artifactsFeeds: 'integration'
-
+        - task: PowerShell@2
+          displayName: Download latest commits
+          inputs:
+            targetType: 'inline'
+            script: |
+              git config pull.rebase false 
+              git pull origin HEAD:camel3
         - task: Maven@3
           displayName: Run Maven clean deploy 
           inputs:
