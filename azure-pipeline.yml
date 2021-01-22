@@ -110,6 +110,9 @@ stages:
           inputs:
             targetType: 'inline'
             script: |
+              git config --global user.email "integral-devops-jenkins@kth.onmicrosoft.com"
+              git config --global user.name "Azure DevOps Automatic"
+
               git config pull.rebase false 
               git pull origin HEAD:camel3
         - task: Maven@3
