@@ -114,7 +114,7 @@ stages:
               git config --global user.name "Azure DevOps Automatic"
 
               git config pull.rebase false
-              git pull origin HEAD:camel3
+              git pull origin camel3
         - task: Maven@3
           displayName: Run Maven clean deploy
           inputs:
