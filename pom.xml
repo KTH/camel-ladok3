@@ -62,7 +62,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <camel-version>2.25.2</camel-version>
+    <camel-version>2.25.3</camel-version>
     <cxf-client-version>3.3.6</cxf-client-version>
     <java.version>1.8</java.version>
   </properties>
