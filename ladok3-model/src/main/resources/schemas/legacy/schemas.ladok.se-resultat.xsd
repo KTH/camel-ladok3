@@ -4173,6 +4173,8 @@ student-översikten i Studiedeltagande.]]></xs:documentation>
       <xs:element minOccurs="0" name="OmfattningKurs" type="xs:decimal"/>
       <xs:element minOccurs="0" name="OmfattningModul" type="xs:decimal"/>
       <xs:element minOccurs="0" name="ResultatUID" type="xs:string"/>
+      <xs:element minOccurs="0" name="UtbildningskodKurs" type="xs:string"/>
+      <xs:element minOccurs="0" name="UtbildningskodModul" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 

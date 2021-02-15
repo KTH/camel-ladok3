@@ -155,6 +155,7 @@
       <xs:element minOccurs="0" name="ExterntUID" type="xs:string"/>
       <xs:element minOccurs="0" name="Fodelsedata" type="xs:string"/>
       <xs:element minOccurs="0" name="Fornamn" type="xs:string"/>
+      <xs:element minOccurs="0" name="InterntStudentUID" type="xs:string"/>
       <xs:element minOccurs="0" name="KonID" type="xs:int"/>
       <xs:element minOccurs="0" name="Personnummer" type="xs:string"/>
     </xs:sequence>

@@ -19,6 +19,18 @@
 
   <xs:element name="ArendenMedDetaljerForStodent" type="ex:ArendenMedDetaljerForStodent"/>
 
+  <xs:element name="AutomatiskFotnotLista" type="ex:AutomatiskFotnotLista"/>
+
+  <xs:element name="AutomatiskFotnotstyp" type="ex:AutomatiskFotnotstyp"/>
+
+  <xs:element name="Automatiskfotnot" type="ex:Automatiskfotnot"/>
+
+  <xs:element name="AutomatiskfotnotArForhandsgranskad" type="ex:AutomatiskfotnotArForhandsgranskad"/>
+
+  <xs:element name="AutomatiskfotnotArForhandsgranskadLista" type="ex:AutomatiskfotnotArForhandsgranskadLista"/>
+
+  <xs:element name="AutomatiskfotnotForhandsgranska" type="ex:AutomatiskfotnotForhandsgranska"/>
+
   <xs:element name="BeslutsinformationUtfardaBevis" type="ex:BeslutsinformationUtfardaBevis"/>
 
   <xs:element name="BevisDokumentunderlagRepresentation" type="ex:BevisDokumentunderlagRepresentation"/>
@@ -93,6 +105,8 @@
 
   <xs:element name="Fotnoter" type="ex:Fotnoter"/>
 
+  <xs:element name="Fotnotstext" type="ex:Fotnotstext"/>
+
   <xs:element name="GiltigAnnanMeritForBevis" type="ex:GiltigAnnanMeritForBevis"/>
 
   <xs:element name="GiltigaMeriterForBevis" type="ex:GiltigaMeriterForBevis"/>
@@ -106,6 +120,8 @@
   <xs:element name="InganendePart" type="ex:InganendePart"/>
 
   <xs:element name="Kolumntitel" type="ex:Kolumntitel"/>
+
+  <xs:element name="KonfigurationForAutomatiskFotnot" type="ex:KonfigurationForAutomatiskFotnot"/>
 
   <xs:element name="KopieraUtfardatBevisKandidat" type="ex:KopieraUtfardatBevisKandidat"/>
 
@@ -151,6 +167,8 @@
 
   <xs:element name="NationellBevistypLista" type="ex:NationellBevistypLista"/>
 
+  <xs:element name="PlatshallareForAutomatiskaFotnoter" type="ex:PlatshallareForAutomatiskaFotnoter"/>
+
   <xs:element name="Precisering" type="ex:Precisering"/>
 
   <xs:element name="PreciseringEvent" type="ex:PreciseringEvent"/>
@@ -181,6 +199,8 @@
 
   <xs:element name="ResultatFotnot" type="ex:ResultatFotnot"/>
 
+  <xs:element name="ResultatFotnotForhandsgranskaAterstallning" type="ex:ResultatFotnotForhandsgranskaAterstallning"/>
+
   <xs:element name="ResultatIntygParametrar" type="ex:ResultatIntygParametrar"/>
 
   <xs:element name="ResultatPaUtbildning" type="ex:ResultatPaUtbildning"/>
@@ -191,9 +211,15 @@
 
   <xs:element name="SkapaLokalBevistypsinformation" type="ex:SkapaLokalBevistypsinformation"/>
 
+  <xs:element name="SkapaUppdaterKonfigurationForAutomatiskFotnot" type="ex:SkapaUppdaterKonfigurationForAutomatiskFotnot"/>
+
+  <xs:element name="SkapaUppdateraAutomatiskFotnot" type="ex:SkapaUppdateraAutomatiskFotnot"/>
+
   <xs:element name="SkapaUppdateraLokalFotnot" type="ex:SkapaUppdateraLokalFotnot"/>
 
   <xs:element name="SokresultatUtfardatBevisUtdata" type="ex:SokresultatUtfardatBevisUtdata"/>
+
+  <xs:element name="SpecificeratResultatfotnotsmal" type="ex:SpecificeratResultatfotnotsmal"/>
 
   <xs:element name="Studieintygsgrund" type="ex:Studieintygsgrund"/>
 
@@ -788,6 +814,133 @@ Konsekvenser för verksamheten:
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="AutomatiskfotnotForhandsgranska">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FotnotstextEngelsk" type="ex:Fotnotstext"/>
+          <xs:element minOccurs="0" name="FotnotstextSvensk" type="ex:Fotnotstext"/>
+          <xs:element minOccurs="0" name="Typ" type="ex:AutomatiskFotnotstyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Fotnotstext">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Efterled" type="xs:string"/>
+          <xs:element minOccurs="0" name="Forled" type="xs:string"/>
+          <xs:element minOccurs="0" name="ItererandeDel" type="xs:string"/>
+          <xs:element minOccurs="0" name="Separator" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AutomatiskFotnotstyp">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
+          <xs:element name="Id" type="xs:int"/>
+          <xs:element minOccurs="0" name="TypNamn" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AutomatiskFotnotLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AutomatiskaFotnoter" type="ex:Automatiskfotnot"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="Automatiskfotnot">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FotnotstextEngelsk" type="ex:Fotnotstext"/>
+          <xs:element minOccurs="0" name="FotnotstextEngelskNationell" type="ex:Fotnotstext"/>
+          <xs:element minOccurs="0" name="FotnotstextSvensk" type="ex:Fotnotstext"/>
+          <xs:element minOccurs="0" name="FotnotstextSvenskNationell" type="ex:Fotnotstext"/>
+          <xs:element minOccurs="0" name="Konfiguration" type="ex:KonfigurationForAutomatiskFotnot"/>
+          <xs:element minOccurs="0" name="NamnPaIterandeDel" type="base:Benamningar"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="TillgangligaPlatshallare" type="ex:PlatshallareForAutomatiskaFotnoter"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="TillgangligaTextfalt" type="xs:string"/>
+          <xs:element minOccurs="0" name="Typ" type="ex:AutomatiskFotnotstyp"/>
+          <xs:element name="VisaNationellaFotnotstexter" type="xs:boolean"/>
+          <xs:element name="ArNationell" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="KonfigurationForAutomatiskFotnot">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element name="FotnotstexterKanAndrasIBevisarende" type="xs:boolean"/>
+          <xs:element name="FotnotstexterKanAndrasLokalt" type="xs:boolean"/>
+          <xs:element name="KanKonfigurerasLokalt" type="xs:boolean"/>
+          <xs:element name="ArAktiv" type="xs:boolean"/>
+          <xs:element name="ArAndringsbarNationellt" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PlatshallareForAutomatiskaFotnoter">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element name="Id" type="xs:int"/>
+          <xs:element minOccurs="0" name="Namn" type="xs:string"/>
+          <xs:element minOccurs="0" name="Placering" type="xs:string"/>
+          <xs:element minOccurs="0" name="Platshallare" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AutomatiskfotnotArForhandsgranskadLista">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AutomatiskaFotnoter" type="ex:AutomatiskfotnotArForhandsgranskad"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AutomatiskfotnotArForhandsgranskad">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ExempelTexter" type="base:Benamningar"/>
+          <xs:element minOccurs="0" name="FotnotstextEngelsk" type="base:Benamning"/>
+          <xs:element minOccurs="0" name="FotnotstextSvensk" type="base:Benamning"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SkapaUppdaterKonfigurationForAutomatiskFotnot">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element name="SkaAktiveras" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Typ" type="ex:AutomatiskFotnotstyp"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="BevisbenamningLista">
     <xs:complexContent>
       <xs:extension base="dap:Base">
@@ -1032,6 +1185,19 @@ Konsekvenser för verksamheten:
       <xs:extension base="dap:Base">
         <xs:sequence>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="LokalaFotnotskategori" type="ex:Lokalfotnotskategori"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SkapaUppdateraAutomatiskFotnot">
+    <xs:complexContent>
+      <xs:extension base="base:BaseEntitet">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AutomatiskFotnotUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="AutomatiskFotnotskategegoriUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="EngelskBenamning" type="xs:string"/>
+          <xs:element minOccurs="0" name="SvenskBenamning" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -1948,10 +2114,28 @@ beviskombination och förvalda kursresultat.]]></xs:documentation>
     <xs:complexContent>
       <xs:extension base="base:BaseEntitet">
         <xs:sequence>
+          <xs:element minOccurs="0" name="AutomatiskFotnotUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="AutomatiskFotnotTyp" type="ex:AutomatiskFotnotstyp"/>
           <xs:element minOccurs="0" name="Benamningar" type="base:Benamningar"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="ResultatPaUtbildningUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Jamforelsestrang" type="xs:string"/>
           <xs:element minOccurs="0" name="Typ" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ResultatPaUtbildningUID" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="SpecificeradeMal" type="ex:SpecificeratResultatfotnotsmal"/>
           <xs:element name="Andringsbar" type="xs:boolean"/>
+          <xs:element name="AutomatiskFotnotSomBlivitForLang" type="xs:boolean"/>
+          <xs:element name="ArEnAutomatiskFotnot" type="xs:boolean"/>
+          <xs:element name="ArEnAutomatiskFotnotOchArAndradAvHandlaggare" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SpecificeratResultatfotnotsmal">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="GiltigMeritUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="SpecificeringInomGiltigMeritUID" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2055,6 +2239,17 @@ beviskombination och förvalda kursresultat.]]></xs:documentation>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="GiltigaMeriterPaUtbildningstyper" type="xs:string"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" ref="ex:Kursoverlapp"/>
           <xs:element minOccurs="0" name="Studieordning" type="ex:StudieordningRepresentation"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ResultatFotnotForhandsgranskaAterstallning">
+    <xs:complexContent>
+      <xs:extension base="dap:Base">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ResultatfotnotUID" type="xs:string"/>
+          <xs:element minOccurs="0" name="Fotnotstexter" type="base:Benamningar"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
