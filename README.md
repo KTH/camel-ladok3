@@ -1,3 +1,5 @@
+![Azure Artifact version](https://feeds.dev.azure.com/kth-integration/_apis/public/Packaging/Feeds/886f0719-97f5-4915-991f-619a1b556ad0/Packages/e5bb1b25-63c4-4256-bfc1-d5d7a503a93a/Badge)
+
 # camel-ladok3
 
 Components to use for integrating with Ladok3 from Java in general and with
