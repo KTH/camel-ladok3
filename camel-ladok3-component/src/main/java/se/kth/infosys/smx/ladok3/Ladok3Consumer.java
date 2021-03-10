@@ -24,6 +24,7 @@
 
 package se.kth.infosys.smx.ladok3;
 
+import javax.xml.XMLConstants;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -81,7 +82,7 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
     super(endpoint, processor);
     this.endpoint = endpoint;
 
-    DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+    DocumentBuilderFactory builderFactory = createDocumentBuilderFactory();
     builderFactory.setNamespaceAware(true);
     builder = builderFactory.newDocumentBuilder();
   }
@@ -366,4 +367,11 @@ public class Ladok3Consumer extends ScheduledPollConsumer {
       return unmatchedEntries;
     }
   }
+
+    private static DocumentBuilderFactory createDocumentBuilderFactory() {
+      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+      factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+      return factory;
+    }
 }
