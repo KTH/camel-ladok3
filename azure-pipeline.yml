@@ -1,6 +1,8 @@
 trigger:
   - camel3
 
+pr: none 
+
 schedules:
   - cron: "30 09 * * Mon,Wed,Fri"
     displayName: Run at 0930 every other day
@@ -95,7 +97,7 @@ stages:
     dependsOn: Download_and_build
     jobs:
     - job: ReleaseNewVersion
-      condition: eq(stageDependencies.Download_and_build.Download_and_check_packages.outputs['CheckBuild.doNewRelease'], 'Yes')
+      condition: or(eq(stageDependencies.Download_and_build.Download_and_check_packages.outputs['CheckBuild.doNewRelease'], 'Yes'), eq(variables['Build.Reason'], 'IndividualCI'))
       steps:
         - checkout: self
           clean: true
