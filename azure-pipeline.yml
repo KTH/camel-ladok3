@@ -4,8 +4,8 @@ trigger:
 pr: none 
 
 schedules:
-  - cron: "30 09 * * Mon,Wed,Fri"
-    displayName: Run at 0930 every other day
+  - cron: "30 07 * * Mon,Wed,Fri"
+    displayName: Run at 0930 every other day (UTC +2)
     branches:
       include:
         - camel3
