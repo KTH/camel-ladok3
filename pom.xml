@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
   MIT License
 
@@ -64,8 +64,8 @@
     <camel-version>3.7.2</camel-version>
     <cxf-client-version>3.4.1</cxf-client-version>
     <maven.compiler.release>11</maven.compiler.release>
-    <ladok-api-model-version>1.74.7</ladok-api-model-version>
-    <ladok-event-model-version>1.74.7</ladok-event-model-version>
+    <ladok-api-model-version>1.76.1</ladok-api-model-version>
+    <ladok-event-model-version>1.76.1</ladok-event-model-version>
   </properties>
 
   <dependencyManagement>
