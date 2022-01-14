@@ -4,7 +4,7 @@ trigger:
 pr: none 
 
 schedules:
-  - cron: "30 09 * * Mon,Wed,Fri"
+  - cron: "30 10 * * Mon,Wed,Fri"
     displayName: Run at 0930 every other day (UTC +2)
     branches:
       include:
