@@ -133,11 +133,6 @@
       <artifactId>junit-vintage-engine</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-spring-javaconfig</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
