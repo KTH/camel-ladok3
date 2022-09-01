@@ -4,4 +4,5 @@ dependency-check/
 *~
 /.settings
 /.classpath
+/.idea
 pom.xml.versionsBackup
