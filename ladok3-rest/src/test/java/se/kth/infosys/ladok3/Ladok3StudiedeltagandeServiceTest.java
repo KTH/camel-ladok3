@@ -23,10 +23,7 @@
  */
 package se.kth.infosys.ladok3;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,10 +32,8 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
 import se.kth.infosys.ladok3.utdata.StudieaktivitetOchFinansiering;
 import se.ladok.schemas.studiedeltagande.IngaendeKurspaketeringstillfalleLista;
-import se.ladok.schemas.studiedeltagande.StudieaktivitetUtdata;
 import se.ladok.schemas.studiedeltagande.TillfallesdeltagandeLista;
 import se.ladok.schemas.studiedeltagande.Utdatafraga;
 
