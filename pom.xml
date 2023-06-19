@@ -26,7 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.kth.infosys.smx.ladok3</groupId>
   <artifactId>camel-ladok3</artifactId>
-  <version>4.19.1</version>
+  <version>4.20.2</version>
   <packaging>pom</packaging>
 
   <name>KTH Ladok3 Integration</name>
@@ -64,8 +64,8 @@
     <camel-version>3.18.1</camel-version>
     <cxf-client-version>3.5.3</cxf-client-version>
     <maven.compiler.release>11</maven.compiler.release>
-    <ladok-api-model-version>2.19.1</ladok-api-model-version>
-    <ladok-event-model-version>2.19.0</ladok-event-model-version>
+    <ladok-api-model-version>2.20.2</ladok-api-model-version>
+    <ladok-event-model-version>2.20.2</ladok-event-model-version>
   </properties>
 
   <dependencyManagement>
